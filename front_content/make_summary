@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.17 2004/06/25 17:27:25 edhill Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.18 2004/07/08 21:32:07 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -190,7 +190,7 @@ cat > $LATEST << EOF
       <tr bgcolor="#bbffdd"> <td> SGI Origin 2000 </td> <td>"hopper"</td>
         <td><a href="http://www.nas.nasa.gov/User/Systemsdocs/O2K/o2k.html">
         NAS SGI Origin 2000 </a></td> </tr>
-      <tr bgcolor="#bbddff"> <td> SGI Origin 3000 </td> <td>"lomax"</td>
+      <tr bgcolor="#bbddff"> <td> SGI Origin 3000 </td> <td>"lomax"/"turing"</td>
         <td><a href="http://www.nas.nasa.gov/User/Systemsdocs/O3K/o3k.html">
         NAS SGI Origin 3000 </a></td> </tr>
 
@@ -252,7 +252,7 @@ color="#bbffdd"
 ncolor="#bbddff"
 res_url="http://mitgcm.org/testing/"
 
-MACHINES="faulks shelley myrinet eaps halem hopper lomax orion bf bs slough sea"
+MACHINES="faulks shelley myrinet eaps halem hopper lomax turing orion bf bs slough sea"
 MACHINES="$MACHINES  eddy adams dolphin hemmingway altix350"
 
 ( cd $INDIR ; ls -1 -t ) > ./dir_all
