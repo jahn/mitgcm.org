@@ -1,0 +1,107 @@
+#! /usr/bin/env bash
+
+#  Ed Hill
+#  Sat Apr  2 16:02:21 EST 2005
+
+echo "These are notes meant to be read."
+echo "They are not a complete script."
+exit 1
+#  The following notes explain how the forge setup was moved from the
+#  existing FC2 system to the new FC3 system.
+
+
+#  =========  Fedora Extras  =========
+#
+cd /etc/yum.repos.d/
+cat > extras.repo <<EOF
+[extras]
+name=Fedora Extras - $releasever - $basearch
+baseurl=http://download.fedora.redhat.com/pub/fedora/linux/extras/$releasever/$basearch/
+gpgcheck=1
+gpgkey=http://download.fedora.redhat.com/pub/fedora/linux/extras/RPM-GPG-KEY-Fedora-Extras
+
+EOF
+rpm --import http://download.fedora.redhat.com/pub/fedora/linux/extras/RPM-GPG-KEY-Fedora-Extras
+yum install cvs cvsweb which php gcc-g77 netcdf\* 
+
+
+#  =========  cvs  =========
+#
+#  pull over pserver config from old-forge and put it in 
+#    /etc/xinetd.d/cvspserver
+
+
+#  =========  sendmail  =========
+#
+yum install sendmail-cf
+cat >>/etc/mail/local-host-names <<EOF
+# local-host-names - include all aliases for your machine here.
+dev.mitgcm.org
+mitgcm.org
+cpt-emilie.org
+cpt-gce.org
+acesgrid.org
+
+EOF
+#  EDIT: /etc/mail/sendmail.mc
+#  see:  diff -u /etc/mail/sendmail.mc_ORIG /etc/mail/sendmail.mc
+make -C /etc/mail
+/etc/init.d/sendmail restart
+
+
+#  =========  mailman  =========
+#
+#  set "fqdn = 'mitgcm.org'" in /usr/lib/mailman/Mailman/mm_cfg.py
+#    though it is probably not 100% necessary
+#  copy over the relevant mailman aliases from old-forge and add
+#    them to /etc/aliases then restart sendmail
+#  copy over the old lists from old-forge:
+#    /var/mailman/lists/*  ==>  /var/lib/mailman/lists/*
+#    /var/mailman/archives/*  ==>  /var/lib/mailman/archives/*
+#  then fix the old, annoying mailman URLs to get rid of 
+#    "dev.mitgcm.org" references:
+cd /usr/lib/mailman/bin/
+for i in mitgcm-support mitgcm-devel mitgcm-cvs 12003 ; do
+    ./withlist -l -r fix_url $i  -u mitgcm.org -v
+done
+#  check setup
+./check_perms
+#  start it
+/etc/init.d/mailman start
+
+
+#  =========  apache  =========
+#
+#  permanently disable the overly restrictive SELinux web server policy
+#    but note that we could (maybe?) revisit this at a later date :
+#      http://fedora.redhat.com/docs/selinux-apache-fc3/
+setsebool -P httpd_disable_trans=1
+#
+#  bring over apache config file from old-forge and meld it into the 
+#    slightly different syntax (VirtualHost-s) needed by the newer 
+#    apache in FC3
+#
+/etc/init.d/httpd restart
+
+
+#  =========  mediawiki & mysql  =========
+#
+#  basic setup & permissions
+ssh forge
+yum install php-mysql
+scp belle:/etc/httpd/ecco_wikki_htpasswd /etc/httpd/
+#
+#  the mediawiki content is all in mysql databases, and this is
+#    a whole-hog approach to getting the mysql data
+ssh belle
+  mysqldump -A > /scratch/edhill/mysql_dump_all.sql
+
+ssh forge
+  scp belle:/scratch/edhill/mysql_dump_all.sql /scratch/edhill/
+  /etc/init.d/mysqld restart
+  cd /var/lib/mysql/
+  rm -rf mysql test
+  mysql < /scratch/edhill/mysql_dump_all.sql
+  /etc/init.d/mysqld restart
+
+
