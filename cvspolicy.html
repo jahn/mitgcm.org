@@ -1,3 +1,7 @@
+<html>
+<head>
+</head>
+<body>
          GCMPACK CVS policies
          ====================
 
@@ -13,7 +17,8 @@ o Why have a policy?
   tracked. If CVS is used without any other policy the result can be a 
   collection of files each of which has complex, multiply branched set of 
   interelated versions. This sort of CVS repository can be come like a 
-  library where books are simply stored in a huge heap. Although nothing is   actually lost, the task of finding a coherent collection of material soon 
+  library where books are simply stored in a huge heap. Although nothing is 
+  actually lost, the task of finding a coherent collection of material soon 
   becomes impossible.
 
   The policies we employ address two areas 
@@ -79,9 +84,25 @@ o Checkpoint tree policies
 
   3. Testing
 
+     Things in a checkpoint tree require a test case that
+     can be used to validate the component. 
+
   4. Checkpoint tagging
 
+     No code should be left in limbo. Checking in code and then
+     leaving it in the repository untagged is bad. When you check
+     in code you are creating a new checkpoint. That means you don't
+     check in some code which you "know" works 100% and then go away 
+     for two weeks. When you start checking in code you make sure
+     you have time to do the process end-to-end as described in section
+     2.
+
   5. Release tagging
+
+     Releases are only based on checkpoint tree code. Maintenance fixes
+     to releases are also maintained within the checkpoint tree. Files
+     within a release must have accompanying documentation. The form of this
+     documentation depends on the file type.
 
   6. Branches
 
@@ -106,4 +127,5 @@ o What about bitkeeper
   Watch this space!
 
 Questions, comments e-mail: gcmpack.code.czars@mitgcm.org
-
+</body>
+</html>
