@@ -2,7 +2,7 @@
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-   <meta name="GENERATOR" content="Mozilla/4.74 [en]C-CCK-MCD   (Win98; U) [Netscape]">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (X11; U; Linux 2.2.14-5.0 i686) [Netscape]">
    <title>viaCVS</title>
 </head>
 <body text="#000000" bgcolor="#FFFFFF" link="#0000EF" vlink="#51188E" alink="#FF0000">
@@ -10,17 +10,71 @@
 <center>
 <h2>
 Hardware/software requirements</h2></center>
+This page summarises computer system requirements for using MITgcm in a
+<a href=../online_documents/manual/sarch.html#fig:mitgcm_architecture_goals>
+range of scenarios</a> that spans simulations on a desktop PC to simulations
+run on a high-end supercomputer.&nbsp; The side bar on the left contains
+links to sites from which third party software and hardware, which you
+may require, can be obtained. The text below and the 
+<a href=../online_documents/index.html target=mainFrame>online document</a> explain
+in what situations&nbsp; you will need these items. In many cases the software
+you need will already be installed on your computer system and you can
+go straight ahead and <a href=../getting_started/index.html target=mainFrame>start using</a> the model.
+<p><b>MITgcm</b>
+<ul>
+<li>
+runs on a wide <a href=../online_documents/manual/targethw.html>range of computer systems.</a></li>
 
+<li>
+includes special software (called <a href=../online_documents/manual/wrapper.html>WRAPPER</a>) 
+to support efficient execution and relatively easy portablity.</li>
+</ul>
+<b>Platforms where MITgcm is run regularly include</b>
+<ul>
+<li>
+PC's ( both Intel and AMD processor based) running Linux.</li>
 
-<p>MITgcm has been designed to run efficiently on a wide range of computer
-platforms. This is made possible by its WRAPPER interface which 
-largely insulates the 'under the hood stuff' from the user.
-<p>MITgcm also runs on a single PC and PC clusters.
-<p>The minimum you require to run the model is a PC running linux and a
-FORTRAN compiler.
-<p>.............
-<p>Once you have your computer set up, go here to download the model.
-<br>
+<li>
+Unix workstations from Sun, SGI, HP, IBM, Compaq.</li>
+
+<li>
+Unix based PC and workstation clusters.</li>
+
+<li>
+high-end symetric multi-processor systems.</li>
+</ul>
+
+<ul>Under the WRAPPER, code also runs very efficiently on high-end vector
+processing systems, if you have one.</ul>
+<b>The minimum you require to run the model is</b>
+<ul>
+<li>
+a computer runing a Unix style operating system.</li>
+
+<li>
+a Fortran 77, Fortran 90 or Fortran 95 compiler.</li>
+
+<li>
+a C compiler.</li>
+</ul>
+<b>To run parallel configurations you also need either</b>
+<ul>
+<li>
+a system that supports multi-threaded programs.</li>
+
+<li>
+a system with an implementation of the MPI&nbsp;library installed.</li>
+</ul>
+
+<ul>Specialized communication software to optimizes performance on a specific
+platform can also be introduced into the WRAPPER.</ul>
+<b></b>
+<p><br><b>Once you have your computer set up</b>
+<blockquote>go here to download the model. The full distribution (including
+examples with input datasets and sample output) is around 50MB. Instructions
+on estimating the computing resource requirements (CPU time, memory usage
+and disk space) for a set of numerical experiments can be found here.</blockquote>
+
 <hr WIDTH="100%">
 <table CELLSPACING=0 CELLPADDING=0 WIDTH="100%" NOSAVE >
 <tr NOSAVE>
