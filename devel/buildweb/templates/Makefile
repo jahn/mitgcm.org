@@ -1,4 +1,4 @@
-TARGS = about.htm browse.htm documentation.htm install.htm tutorials.htm search.htm
+TARGS = about.htm browse.htm documentation.htm install.htm tutorials.htm search.htm sitemap.htm
 
 HEADERS = bits/header.html bits/topbar.html
 FOOTERS = bits/footer.html
@@ -17,6 +17,8 @@ install.htm: bits/install_side.htm $(COMMONFILES)
 tutorials.htm: bits/tutorials_side.htm $(COMMONFILES)
 	cat $(HEADERS) $<  $(FOOTERS) > $@
 search.htm: bits/search_side.htm $(COMMONFILES)
+	cat $(HEADERS) $<  $(FOOTERS) > $@
+sitemap.htm: bits/about_side.htm $(COMMONFILES)
 	cat $(HEADERS) $<  $(FOOTERS) > $@
 
 clean:
