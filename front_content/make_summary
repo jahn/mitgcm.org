@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.20 2004/08/02 18:05:17 edhill Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.21 2004/08/03 03:13:08 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -252,7 +252,7 @@ color="#bbffdd"
 ncolor="#bbddff"
 res_url="http://mitgcm.org/testing/"
 
-MACHINES="faulks shelley myrinet eaps halem"
+MACHINES="faulks shelley myrinet eaps halem columbia"
 MACHINES="$MACHINES hopper lomax turing orion bf bs slough sea"
 MACHINES="$MACHINES eddy adams dolphin hemmingway altix350"
 
