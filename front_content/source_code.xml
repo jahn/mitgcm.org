@@ -33,7 +33,7 @@
 	  <ul>
 	    
 	    <li>View through an <a
-		href="http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/">HTML-enabled CVS
+		href="http://mitgcm.org/cgi-bin/viewcvs.cgi/">HTML-enabled CVS
 		code browser [ViewCVS Web interface]</a></li>
 	    
 	    <li><b>WARNING: cvs pserver has been temporarily
@@ -65,7 +65,7 @@
 	  <ul>
 	    
 	    <li>View through an <a
-		href="http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm/?only_with_tag=release1_p8">
+		href="http://mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm/?only_with_tag=release1_p8">
 		HTML-enabled CVS code browser [ViewCVS Web interface]</a></li>
 	    
 	    <li>Download <a href="./using_cvs.html">using CVS pserver</a>:
