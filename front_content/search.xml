@@ -22,16 +22,14 @@
 
   <body>
 
-<center><h1>Search the <a href="http://mitgcm.org/">MITgcm.org</a> 
-Domain</h1></center>
-
-<p>This page is here to help you search publicly available 
-pages within the <a href="http://mitgcm.org/">MITgcm.org</a> domain.  
-While essentially all of the static content has been indexed, 
-limited resources prevent the indexing of programmatically generated 
-content such as the CVS web interface and portions of the GForge-enabled 
-site.  For your convenience, searches comprising various subsections 
-have been pre-defined.<br></p>
+<p>This page is here to help you search publicly available pages
+within the <a href="http://mitgcm.org/">MITgcm.org</a> domain.  While
+essentially all of the static content has been indexed, limited
+resources prevent the indexing of programmatically generated content
+such as the CVS web interface and portions of the GForge-enabled <a
+href="http://dev.mitgcm.org">development site</a>.  For your
+convenience, searches comprising various subsections have been
+pre-defined.<br></p>
 
 <hr size="4">
 
