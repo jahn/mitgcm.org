@@ -2,13 +2,13 @@
 #
 # Apply code parsing programs to a set of source files
 #
-set SRCDIR     = work
+set SRCDIR     = ./work
 set CURDIR     = `pwd`
 
 echo 'Parsing code'
-echo 'Code revision requested is '$1
+#eh3  echo 'Code revision requested is '$1
 
-\rm -fr $SRCDIR
+\rm -f $SRCDIR
 
 # A simple example
 #mkdir -p $SRCDIR
@@ -19,23 +19,34 @@ echo 'Code revision requested is '$1
 #cp -pr ${CURDIR}/callTree.header .
 
 # Applying it to the whole code ( first -d will only work on local 18.24.3 system )
-cvs -d /u/gcmpack co -d $SRCDIR -P -r $1 MITgcm > checkout.log
+#eh3  Replace CVS checkout with a soft-link
+#eh3 cvs -d /u/gcmpack co -d $SRCDIR -P -r $1 MITgcm > checkout.log
+if (-d ../../../../../MITgcm) then
+  ln -s ../../../../../MITgcm work
+else
+  echo "ERROR:  please get a copy of the MITgcm code and locate it at:"
+  echo "        "`pwd`"../../../../../MITgcm"
+endif
+#eh3
+cp -fpr callTree.F $SRCDIR
+cp -fpr callTree.header $SRCDIR
 cd $SRCDIR
-cp -pr ${CURDIR}/callTree.F .
-cp -pr ${CURDIR}/callTree.header .
 
-set fl = `find . -name '*.F'`
-set hl = `find . -name '*.h'`
+set fl = `/usr/bin/find . -name '*.F'`
+set hl = `/usr/bin/find . -name '*.h'`
 
 # Extract definition information
-echo "o Extracting definition information"
-( cd ${CURDIR}/../DefinitionParser; make )
-cat $fl $hl | ${CURDIR}/../DefinitionParser/a.out > thedefs
+### echo "o Extracting definition information"
+### ( cd ${CURDIR}/../DefinitionParser; make )
+### cat $fl $hl | ${CURDIR}/../DefinitionParser/a.out > thedefs
 
 # Generate hyperlinked code and browser files.
 echo "o Generating hyperlinked code (this takes a few minutes)"
 ( cd ${CURDIR}/../F90Mapper; make )
 ${CURDIR}/../F90Mapper/f90mapper -d thedefs $fl $hl >& mapper.log
+
+#cnh debugging
+#cnh exit
 
 # Make the calling tree hyperlinked
 # callTree.F was hand-extracted from model/src/the_model_main.F

@@ -1,4 +1,4 @@
-/* $Id: dd.c,v 1.1 1997/03/22 20:02:35 cnh Exp $ */
+/* $Id: dd.c,v 1.1.1.1 2002/09/20 19:47:31 adcroft Exp $ */
 #include <stdio.h>
 #include <string.h>
 #include "GLOBALS.h"
@@ -53,6 +53,13 @@ ddRecord *rec;
 
   /* Now set values that are not NULL */
   dd[ddCurrent].name = strdup(rec->name);
+
+  /* CNH Debug starts */
+  printf("ddAdd name=\"%s\", rec. no. = %d\n",rec->name,ddKey+1);
+
+  /* CNH Debug ends   */
+
+
   if ( dd[ddCurrent].name == NULL ) return((ddRecord *)NULL);
   dd[ddCurrent].id   = ddKey+1;
   dd[ddCurrent].key  = strdup(ddkey(ddKey+1));

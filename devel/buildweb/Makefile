@@ -1,11 +1,13 @@
 # Paths
 
 SHELL       = /bin/bash
-TARGETDIR   = /u/httpd/html/devel/sealion
+#eh3  TARGETDIR   = /u/httpd/html/devel/sealion
+TARGETDIR   = ../../../scratch/dev_docs
 BUILDWEBDIR = $(PWD)
 
 SKELETON    = $(BUILDWEBDIR)/skeleton
-LATEXROOT   = $(BUILDWEBDIR)/latex
+#eh3 LATEXROOT   = $(BUILDWEBDIR)/latex
+LATEXROOT   = ../../../mitgcmdoc
 VDBROOT     = $(BUILDWEBDIR)/vdb
 BINDIR      = $(BUILDWEBDIR)/bin
 PFILESDIR   = $(BUILDWEBDIR)/program_files
@@ -20,6 +22,7 @@ Templates:
 InstallSkeleton:
 	rm -rf $(TARGETDIR)
 	cp -rp $(SKELETON) $(TARGETDIR)
+	chmod -R u+w $(TARGETDIR)
 
 InstallLatex:
 	cp -rp $(LATEXROOT)/manual/* $(TARGETDIR)/online_documents/
@@ -34,7 +37,8 @@ InstallVDB:
 	cp -rp $(VDBROOT) $(TARGETDIR)/code_reference/
 
 Bonniefy: $(TARGETDIR)
-	$(BINDIR)/bonniefy.pl --targetdir=$(TARGETDIR) --homedir=$(HOMEDIR)
+	chmod -R u+w $(TARGETDIR)
+	$(BINDIR)/bonniefy.pl --targetdir=$(TARGETDIR) --homedir=$(BUILDWEBDIR)
 
 Index: $(TARGETDIR)/home_page/frontpage.html
 	cat $(TARGETDIR)/home_page/frontpage.html \
@@ -42,14 +46,13 @@ Index: $(TARGETDIR)/home_page/frontpage.html
 
 SiteMap:
 	echo $(SHELL)
-	cd $(TARGETDIR)/sitemap; ../../buildweb/bin/makesitemap ../online_documents > index.html
+	cd $(TARGETDIR)/sitemap; $(BUILDWEBDIR)/bin/makesitemap ../online_documents > index.html
 
 Search:
-	cd $(TARGETDIR); $(BINDIR)/swish-e -c $(PFILESDIR)/Swish-e.conf
-
+#	cd $(TARGETDIR); $(BINDIR)/swish-e -c $(PFILESDIR)/Swish-e.conf
 Search2:
-	cd $(TARGETDIR); $(BINDIR)/swish-e -c $(PFILESDIR)/Swish-e.conf \
-		-S prog -i $(BINDIR)/DirTree.pl
+#	cd $(TARGETDIR); $(BINDIR)/swish-e -c $(PFILESDIR)/Swish-e.conf \
+#		-S prog -i $(BINDIR)/DirTree.pl
 
 Latex: latex
 	cd $(LATEXROOT); make html
@@ -62,10 +65,11 @@ VDB:
 
 Clean:
 	cd templates; make clean
-	cd latex; make Clean
+	cd $(LATEXROOT); make Clean
 
 TestSearch:
 	$(BINDIR)/swish-e -f $(TARGETDIR)/index.swish-e -w adcroft
 
+#eh3	cvs co -d latex manual -d -P
 latex:
-	cvs co -d latex manual -d -P
+	cd $(LATEXROOT); cvs up

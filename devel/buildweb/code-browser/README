@@ -18,5 +18,5 @@
 #
 # Note - 'release1_p5' is specified below this could be taken from an environment variable.
 #
-( cd MakeBrowseableMITGCM; ./makebrowseablecodepages.sh release1_p5; cp work/web.tgz ..; \rm -fr work )
+( cd MakeBrowseableMITGCM; ./makebrowseablecodepages.sh release1_p5; cp work/web.tgz ..; \rm -f work )
 ( cd ..; tar -xzf code-browser/web.tgz; \rm code-browser/web.tgz)

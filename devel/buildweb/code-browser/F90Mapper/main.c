@@ -1,4 +1,4 @@
-/* $Id: main.c,v 1.1 1997/03/22 20:02:35 cnh Exp cnh $ */
+/* $Id: main.c,v 1.1.1.1 2002/09/20 19:47:31 adcroft Exp $ */
 
 /*
  Driver routine for generating hypertext instrumented code
@@ -1072,14 +1072,18 @@ int GenerateVarTables()
   vLast = NULL; vdictfd = NULL;
  
   while ( fscanf(tabfd,"%[^\n]%*[\n]",ioBuff) != EOF ) {
+   /* Begin CNH debug */
+   /* printf("ioBuff = \"%s\"\n",ioBuff); */
+   /* exit(1); */
+   /* End CNH debug */
    vNam    = strtok(ioBuff,",");
-   lineRef = strtok(NULL,",");
    /* Trick here that should be fixed.                    */
    /* Testing lineRef != NULL checks to see whether the   */
    /* there was a format error in the sorted file. The    */
    /* file will only have an error if the parsing rules   */
    /* are incomplete.                                     */
-   if ( lineRef != NULL ) {
+   if ( vNam != NULL ) {
+   lineRef = strtok(NULL,",");
    fileRef = strtok(NULL,",");
    procRef = strtok(NULL,",");
    codeRec = procRef+strlen(procRef)+1;

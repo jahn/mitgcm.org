@@ -7,17 +7,24 @@ $BUILDALLFILES=0;
 #DIRECTORIES (ABSOLUTE PATHS)
 $targetdir     = "/u/httpd/html/devel/sealion/";	# Web site location
 $homedir       = "/u/httpd/html/devel/buildweb/";	# This code dir
-$latexroot     = $homedir."latex/";			# LaTeX pages
-$vdbroot       = $homedir."vdb/";			# VDB pages
-$templatedir   = $homedir."templates/";			# Conversion templates
-$pfilesdir     = $homedir."program_files/";		# Program/config files
+$latexroot   = $homedir."latex/";          # LaTeX pages
+$vdbroot     = $homedir."vdb/";            # VDB pages
+$templatedir = $homedir."templates/";      # Conversion templates
+$pfilesdir   = $homedir."program_files/";  # Program/config files
 
 # PROCESS COMMAND LINE ARGUMENTS
 foreach $_ (@ARGV) {
  if (/--targetdir=(.*)/) {$targetdir=endslash($1);
                           print "Setting targetdir = $targetdir\n";};
- if (/--homedir=(.*)/) {$homedir=endslash($1);
-                          print "Setting homedir = $homedir\n";};
+ if (/--homedir=(.*)/) {
+     $homedir=endslash($1);
+     #eh3 subdirectories of homedir
+     $latexroot   = $homedir."latex/";            # LaTeX pages
+     $vdbroot     = $homedir."vdb/";	          # VDB pages
+     $templatedir = $homedir."templates/";	  # Conversion templates
+     $pfilesdir   = $homedir."program_files/";    # Program/config files
+     print "Setting homedir = $homedir\n";
+ };
  if (/--latexroot=(.*)/) {$latexroot=endslash($1);
                           print "Setting latexroot = $latexroot\n";};
  if (/--vdbroot=(.*)/) {$vdbroot=endslash($1);
@@ -27,6 +34,7 @@ foreach $_ (@ARGV) {
  if (/--pfilesdir=(.*)/) {$pfilesdir=endslash($1);
                           print "Setting pfilesdir = $pfilesdir\n";};
 }
+
 
 #DIRECTORIS WITHIN WEB SITE
 $webbase = "../";
