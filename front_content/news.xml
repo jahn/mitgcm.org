@@ -63,11 +63,13 @@
 	output is now much easier to read and understand.  For further NetCDF
 	information please see:
 	<ul>
-	  <li><a href="http://mitgcm.org/pelican/online_documents/node234.html">
+	  <li><a href="http://mitgcm.org/cmi_redir.php/package_mnc">
 	      Manual entry for the MNC package.</a></li>
-	  <li><a
+	  <li>Directions <a 
 	      href="http://mitgcm.org/pipermail/mitgcm-support/2004-September/002589.html">
-	      Directions for installing NetCDF</a></li>
+	      from our email archives</a> and <a 
+	      href="http://mitgcm.org/mwiki/index.php/MNC_Package">from our 
+	      wiki</a> for installing NetCDF.</li>
 	  <li>The <a
 	      href="http://my.unidata.ucar.edu/content/software/netcdf/index.html">
 	      main NetCDF web site</a>.</li>
