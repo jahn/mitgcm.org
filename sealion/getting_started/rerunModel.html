@@ -55,10 +55,12 @@ This time we'll load in multiple time-steps:
 <blockquote>
 <pre>% matlab</pre>
 
-<pre>>></pre>
-</blockquote>
+<pre>>> eta=rdmds('Eta',0:18:432);</pre>
 
-<p><br>
+<pre>>> for k=2:25;contourf(eta(:,:,k)',[-1:.1:1]*.26);colorbar;drawnow;pause(.4);end</pre>
+</blockquote>
+You should see the sea-surface evolve.
+<p>
 <hr WIDTH="100%">
 <table CELLSPACING=0 CELLPADDING=0 WIDTH="100%" NOSAVE >
 <tr NOSAVE>
