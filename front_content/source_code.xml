@@ -90,7 +90,8 @@
           you get started with MITgcm development and customization.</li>
       </ul>
     </p>
-    
+
+<!--
     <p>A verification suite is run periodically on a range of different
       machines and the results can be seen at:
       <ul>
@@ -98,6 +99,7 @@
 	<li><a href="./testing/summary/">All testing results to date</a></li>
       </ul>
     </p>
+-->
 
   </body>
 </html>

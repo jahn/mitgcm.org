@@ -1,3 +1,8 @@
+#  $ Header: $
+#
+#  Makefile for the "front-end" of the mitgcm.org domain.
+#
+
 
 all:
 	-rm -rf html
@@ -13,4 +18,6 @@ tidy:
 	tidy -i -wrap 80 -clean -asxml template_003.xml > template_004.xml
 
 clean:
-	-rm -rf html
+	-rm -rf html ptmp
+
+

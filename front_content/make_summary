@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/u3/gcmpack/mitgcm.org/front_content/make_summary,v 1.1 2003/12/06 20:06:58 edhill Exp $
+# $Header: /u/u3/gcmpack/mitgcm.org/front_content/make_summary,v 1.2 2003/12/06 21:10:18 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -163,10 +163,10 @@ cat > $LATEST << EOF
 
   </head>
   <body>
-    <p>To enhance and maintain portability, the MITgcm model is tested 
+    <p>The MITgcm model is tested 
       (compiled and run) in an automated fashion on a varirety of 
       different machines.  The following is a summary of the MITgcm 
-      testing/verification suite for the time period: <b>$PERIOD</b>.</p>
+      verification suite for the time period: <b>$PERIOD</b>.</p>
 
     <p>The machine naming scheme is:<br /></p>
     <table align="center" cellpadding="0" border="0">
@@ -211,7 +211,7 @@ cat > $LATEST << EOF
     </table>
 
     <p><br />
-      The complete output for the testing/verification runs can be found in
+      The complete output for the verification runs can be found in
       <a href="http://mitgcm.org/testing/summary/">the summary pages</a>. 
       The latest reports are:</p>
     <table align="center" cellpadding="0" cellspacing="0" border="0" width="95%">
@@ -226,7 +226,7 @@ EOF
 color="#bbffdd"
 res_url="http://mitgcm.org/testing/"
 
-MACHINES="faulks shelley myrinet halem hopper lomax orion bf bs"
+MACHINES="faulks shelley myrinet eaps halem hopper lomax orion bf bs"
 
 ( cd $INDIR ; ls -1 ) > ./dir_all
 
@@ -252,12 +252,13 @@ for mname in $MACHINES ; do
 	    OPTFILE=${OPTFILE##*/}
 	fi
 	if test "x$OPTFILE" = x -a -r "$dir/genmake_state" ; then
-	    comm=`grep 'OPTFILE=' $dir/genmake_state`
+	    comm=`grep 'OPTFILE=' $dir/genmake_state 2>/dev/null`
 	    eval $comm
 	    OPTFILE=${OPTFILE##*/}
 	fi
 	if test "x$OPTFILE" = x ; then
-	    comm=`grep '^# OPTFILE=' $dir/*/Makefile 2>/dev/null | head -1 | sed -e 's|^# ||'`
+	    comm=`grep '^# OPTFILE=' $dir/*/Makefile 2>/dev/null | head -1`
+	    comm=${comm##*#}
 	    eval $comm
 	    OPTFILE=${OPTFILE##*/}
 	fi
