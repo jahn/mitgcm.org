@@ -6,5 +6,6 @@ cvs_policy.xml
 testing.xml
 docs.xml
 projects.xml
+contact_us.xml
 links.xml
 

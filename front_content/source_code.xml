@@ -76,30 +76,6 @@
       </ul>
     </p>
 
-    <p>A GForge-based <a href="http://dev.mitgcm.org/projects/mitgcm/">MITgcm
-        development server</a> is available which includes:
-      <ul>
-        <li>the <a href="http://dev.mitgcm.org/mailman/listinfo/mitgcm-support">
-            MITgcm-support</a> mailing list with a web-browsable archive, <br
-            /><br /></li>
-        
-        <li>a <a href="http://dev.mitgcm.org/forum/?group_id=6">web-based
-            forum</a> suitable for quick questions, and<br /><br /></li>
-        
-        <li>a <a href="http://mitgcm.org/dev_docs/devel_HOWTO">HOWTO</a> to help
-          you get started with MITgcm development and customization.</li>
-      </ul>
-    </p>
-
-<!--
-    <p>A verification suite is run periodically on a range of different
-      machines and the results can be seen at:
-      <ul>
-	<li><a href="./testing/latest.html">Latest testing/verification runs</a></li>
-	<li><a href="./testing/summary/">All testing results to date</a></li>
-      </ul>
-    </p>
--->
 
   </body>
 </html>
