@@ -15,7 +15,6 @@ multi-threaded.html
 multi-process.html
 communication.html
 autodiff.html
-adexample.html
 packages.html
 diags.html
 ecco.html
@@ -26,8 +25,11 @@ looking.html
 doing.html
 eg_barotrop.html
 eg_baroclin.html
+eg_hs.html
+eg_surf.html
 global4x4.html
-sens.html
+plume.html
+adexample.html
 illustrations.html
 continuous.html
 atmos.html
