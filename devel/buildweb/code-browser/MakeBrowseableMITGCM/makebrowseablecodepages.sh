@@ -10,14 +10,6 @@ echo 'Parsing code'
 
 \rm -f $SRCDIR
 
-# A simple example
-#mkdir -p $SRCDIR
-#cd  $SRCDIR
-#cp -pr ${CURDIR}/model .
-#cp -pr ${CURDIR}/pkg   .
-#cp -pr ${CURDIR}/callTree.F .
-#cp -pr ${CURDIR}/callTree.header .
-
 # Applying it to the whole code ( first -d will only work on local 18.24.3 system )
 #eh3  Replace CVS checkout with a soft-link
 #eh3 cvs -d /u/gcmpack co -d $SRCDIR -P -r $1 MITgcm > checkout.log
@@ -27,7 +19,6 @@ else
   echo "ERROR:  please get a copy of the MITgcm code and locate it at:"
   echo "        "`pwd`"../../../../../MITgcm"
 endif
-#eh3
 cp -fpr callTree.F $SRCDIR
 cp -fpr callTree.header $SRCDIR
 cd $SRCDIR
@@ -44,9 +35,6 @@ set hl = `/usr/bin/find . -name '*.h'`
 echo "o Generating hyperlinked code (this takes a few minutes)"
 ( cd ${CURDIR}/../F90Mapper; make )
 ${CURDIR}/../F90Mapper/f90mapper -d thedefs $fl $hl >& mapper.log
-
-#cnh debugging
-#cnh exit
 
 # Make the calling tree hyperlinked
 # callTree.F was hand-extracted from model/src/the_model_main.F
@@ -70,6 +58,7 @@ mv vdb buildweb/vdb
 #eh3  Create a "byname" directory containing soft-links that tie the symbol
 #eh3  names to the short-URL occurance tables:
 #eh3  makeByname.pl < 
+( cd buildweb ;  ${CURDIR}/create_name_links )
 
 # Tar up buildweb part
 ( cd  buildweb ; rm vdb/tmp1; rm vdb/tmp2; tar -czvf ../web.tgz . >& /dev/null )

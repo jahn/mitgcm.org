@@ -60,8 +60,6 @@ Latex:
 pdf:
 	cd $(LATEXROOT); make ps pdf ps.gz
 
-#eh3 VDB:
-#eh3	cd code-browser; source README
 VDB:
 	cd code-browser; make dev
 
@@ -72,6 +70,3 @@ Clean:
 TestSearch:
 	$(BINDIR)/swish-e -f $(TARGETDIR)/index.swish-e -w adcroft
 
-#eh3	cvs co -d latex manual -d -P
-#eh3 latex:
-#eh3	cd $(LATEXROOT); cvs up
