@@ -1,4 +1,4 @@
-#! /usr/bin/env perl
+#! /usr/bin/perl
 
 #  Ed Hill
 #  Tue Dec  2 20:17:27 EST 2003
