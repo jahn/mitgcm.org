@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/u3/gcmpack/mitgcm.org/front_content/make_summary,v 1.11 2004/02/10 22:22:10 edhill Exp $
+# $Header: /u/u3/gcmpack/mitgcm.org/front_content/make_summary,v 1.12 2004/03/04 21:48:42 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -177,8 +177,8 @@ cat > $LATEST << EOF
 
       <tr bgcolor="#bbffdd"> <td>Intel P4</td> <td>"faulks"</td> 
         <td>Red Hat 7.3 (the "original" testing machine)</td> </tr>
-      <tr bgcolor="#bbddff"> <td>Intel P4</td> <td>"shelley"</td>
-        <td>Red Hat 9</td> </tr>
+      <tr bgcolor="#bbddff"> <td>Intel P4</td> <td>"hemmingway"</td>
+        <td>Fedora Core release 1 (gcc 3.3.2)</td> </tr>
 
       <tr bgcolor="#bbffdd"> <td> Intel P3/P4 Beowulf </td> <td>"myrinet"</td>
         <td><a href="http://mitgcm.org/projects/MITGCM_CLUSTER/">MITgcm cluster 
@@ -212,15 +212,16 @@ cat > $LATEST << EOF
       <tr bgcolor="#bbddff"> <td> Intel P4 Mosix Cluster </td> <td>"sea"</td>
         <td>Red Hat v7.2</td> </tr>
 
-      <tr bgcolor="#bbffdd"> <td> AMD Athlon </td> <td>"eddy"</td>
-        <td>Fedora Core release 1.90 (FC2 Test 1) [gcc 3.3.3]</td> </tr>
+      <tr bgcolor="#bbffdd"> <td> AMD Athlon XP 2500+</td> <td>"eddy"</td>
+        <td>Fedora Core release 1.91 (FC2 Test 2) [gcc 3.3.3]</td> </tr>
       <tr bgcolor="#bbddff"> <td> AMD Opteron cluster </td> <td>"dolphin"</td>
         <td>SuSE SLES v8.1</td> </tr>
+
+      <!--
 
       <tr bgcolor="#bbffdd"> <td> Intel P4 </td> <td>"hemmingway"</td>
         <td>Fedora Core release 1 (gcc 3.3.2) </td> </tr>
 
-      <!--
       <tr bgcolor="#bbddff"> <td>  </td> <td>""</td>
         <td></td> </tr>
       -->
