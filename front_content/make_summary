@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/u3/gcmpack/mitgcm.org/front_content/make_summary,v 1.2 2003/12/06 21:10:18 edhill Exp $
+# $Header: /u/u3/gcmpack/mitgcm.org/front_content/make_summary,v 1.3 2003/12/07 00:23:45 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -170,7 +170,7 @@ cat > $LATEST << EOF
 
     <p>The machine naming scheme is:<br /></p>
     <table align="center" cellpadding="0" border="0">
-      <tr bgcolor="#00cccc"> <td><b>Machine Type</b></td> <td><b>"Nickname"</b></td>
+      <tr bgcolor="#00cccc"> <td><b>Machine Type</b></td> <td><b>Nickname</b></td>
         <td><b>Notes</b></td> </tr>
 
       <tr bgcolor="#bbffdd"> <td>Intel P4</td> <td>"faulks"</td> 
@@ -202,6 +202,8 @@ cat > $LATEST << EOF
       <tr bgcolor="#bbffdd"> <td> IBM POWER4 SP </td> <td>"bs"</td>
         <td><a href="http://www.scd.ucar.edu/computers/bluesky/">NCAR Bluesky
         </a></td> </tr>
+      <tr bgcolor="#bbddff"> <td> AMD Opteron </td> <td>"eaps"</td>
+        <td>SuSE Linux 9.0 (x86-64)</td> </tr>
 
       <!--
       <tr bgcolor="#bbddff"> <td>  </td> <td>""</td>
@@ -216,9 +218,11 @@ cat > $LATEST << EOF
       The latest reports are:</p>
     <table align="center" cellpadding="0" cellspacing="0" border="0" width="95%">
 <tr bgcolor="#00cccc">
-  <td height="0"> <b>"Nickname"</b> </td>
+  <td height="0"> <b>Nickname</b> </td>
   <td> <b>OPTFILE Name</b> </td>
-  <td> <b>Date (YYYYMMDD)</b> </td>
+  <td> <b>Type</b> </td>
+  <td> <b>Date (yyyymmdd)</b> </td>
+  <td> <b>Summary</b> </td>
 </tr>
 
 EOF
@@ -265,6 +269,18 @@ for mname in $MACHINES ; do
 	if test "x$OPTFILE" = x ; then
 	    OPTFILE="not_explicitly_specified"
 	fi
+
+	ADJOINT=
+	if test -r $dir/summary.txt ; then
+	    comm=`grep 'ADJOINT=true' $dir/summary.txt 2>/dev/null`
+	    eval $comm
+	fi
+	if test "x$ADJOINT" = x ; then
+	    kind="forward"
+	else
+	    test "x$ADJOINT" = xtrue  &&  kind="adjoint"
+	fi
+
 	tokens=`echo $i | sed -e 's|_| |g'`
 	echo "" > ./ms_tmp
 	for tok in $tokens ; do
@@ -272,7 +288,8 @@ for mname in $MACHINES ; do
 	done
 	DAY=`cat ./ms_tmp | awk '(length($1)==8 && substr($1,0,3)=="200")'`
 	rm -f ./ms_tmp
-	echo "$OPTFILE $DAY $i" >> ./mlist
+
+	echo "$OPTFILE$kind $DAY $OPTFILE $kind $i" >> ./mlist
 
     done
 
@@ -282,16 +299,22 @@ for mname in $MACHINES ; do
     #  Do we have any data?  If so, create the latest pointer.
     num=`wc -l ./mlist | awk '{print $1}'`
     if test $num -gt 0 ; then
-	optfiles=`cat ./mlist | cut -d " " -f 1 | sort | uniq`
+	keys=`cat ./mlist | cut -d " " -f 1 | sort | uniq`
 
-	for optf in $optfiles ; do
-	    ldir=`grep "^$optf " ./mlist | sort -r | head -1 | cut -d " " -f 3`
+	for key in $keys ; do
+	    tline=`grep "^$key " ./mlist | sort -r | head -1`
+	    ldir=`echo $tline | cut -d " " -f 5`
+	    kind=`echo $tline | cut -d " " -f 4`
+	    optf=`echo $tline | cut -d " " -f 3`
+	    DAY=`echo $tline | cut -d " " -f 2`
 	    URL="results/$PERIOD/$ldir"
 	    cat <<EOF >>$LATEST
 <tr bgcolor="$color">
-  <td height="0"><a href="$res_url$URL"> $mname </a></td>
+  <td height="0"> $mname </td>
   <td> $optf </td>
-  <td> $DAY </td>
+  <td> $kind </td>
+  <td> <a href="$res_url$URL">$DAY</a> </td>
+  <td> <a href="$res_url$URL/summary.txt"> summary.txt </a> </td>
 </tr>
 EOF
 	done

@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header:  $
+# $Header: /u/u3/gcmpack/mitgcm.org/front_content/parse_emails,v 1.1 2003/12/06 20:06:58 edhill Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -94,7 +94,7 @@ echo -n "Unpacking the emails ..."
 for file in $all_files ; do
 
     #  create local copy
-    rm -rf $TEMPDIR
+    test -e $TEMPDIR  &&  rm -rf $TEMPDIR
     mkdir $TEMPDIR
     cp $INDIR"/"$file $TEMPDIR
 
@@ -118,7 +118,7 @@ for file in $all_files ; do
     if test "x$RETVAL" != x0 ; then
 	continue
     fi
-    tdir=`cat $TEMPDIR"/out" | head -1 | cut -d '/' -f 1`
+    tdir=`cat $TEMPDIR"/out" | head -1 | sed -e 's|^./||g' | cut -d '/' -f 1`
     rm -f $TEMPDIR"/out"
 
     #  copy to $OUTDIR and rename if necessary

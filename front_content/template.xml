@@ -30,9 +30,9 @@
       <tr align="center" valign="top">
         <td colspan="2" align="center">
           <div class="c1">
-            <img src="TitleImage.gif"
+            <a href="http://mitgcm.org/"> <img src="TitleImage.gif"
             alt="Montage of Applications Original concept by CNH Put into practice by AJA"
-             height="189" width="628" /><br />
+            border="0" height="189" width="628" /></a><br />
              
           </div>
         </td>
@@ -42,24 +42,38 @@
         <!-- Menu Table -->
 
         <td width="15%">
-          <table bgcolor="#bbffbb" align="left" border="0" cellpadding="3"
+          <table bgcolor="#ffffff" align="left" border="0" cellpadding="3"
           width="100%" summary="">
-            <tr>
+            <tr bgcolor="#bbffbb">
               <td><!-- Menu -->
 		<span class="c3">
 		  <center><b><a href="http://mitgcm.org/">
-			<img src="MITgcm_logo.png"
-			  alt="MITgcm logo" border="0" width="150" height="50">
+			<img src="MITgcm_new.gif"
+			  alt="MITgcm logo" border="0" width="150" height="55">
 			</a></b></center>
 		</span>
 		<span class="c2">
 
               <!--ADDMENU-->
 
-		</span>
+		</span><br />
 	      </td>
             </tr>
-          </table>
+	    <tr align="center" bgcolor="#7577B5">
+	      <td align="center">
+		<a href="http://paoc.mit.edu/cmi/">
+		 <img src="cmilogoinv.gif" alt="CMI logo" border="0" width="86" height="85" />
+		</a>
+	      </td>
+	    </tr>
+            <tr align="center" width="66" >
+              <td align="center" bgcolor="#FFFFFF" >
+                <a href="http://www.mit.edu/">
+                 <img src="mit-redgrey3.gif" alt="MIT logo" border="0" width="62" height="36" />
+                </a>
+              </td>
+            </tr>
+           </table>
         </td>
         <!-- Content Table -->
 
