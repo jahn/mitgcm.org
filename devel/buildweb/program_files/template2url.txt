@@ -1,6 +1,7 @@
 #TEMPLATE            URL
 about.htm           home_page/frontpage.html
-search.htm           search/search.html
+sitemap.htm           sitemap/index.html
+search.htm          search/search.html
 browse.htm          code_reference/*.htm*
 #browse-1.htm        code_reference/vdb/*.htm*
 #browse-2.htm        code_reference/vdb/names/*.htm*
