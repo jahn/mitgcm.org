@@ -1,5 +1,6 @@
 # Paths
 
+SHELL       = /bin/bash
 TARGETDIR   = /u/httpd/html/devel/sealion
 BUILDWEBDIR = $(PWD)
 
@@ -9,8 +10,9 @@ VDBROOT     = $(BUILDWEBDIR)/vdb
 BINDIR      = $(BUILDWEBDIR)/bin
 PFILESDIR   = $(BUILDWEBDIR)/program_files
 
-all: Templates InstallSkeleton Search2 Bonniefy Index
-All: Latex VDB all
+all: Templates InstallSkeleton InstallLatex InstallPDF InstallOLF InstallVDB SiteMap Search2 Bonniefy Index
+All: pdf Latex VDB all
+quick: Templates InstallSkeleton InstallLatex InstallPDF SiteMap Search2 Bonniefy Index
 
 Templates:
 	cd templates; make
@@ -18,8 +20,17 @@ Templates:
 InstallSkeleton:
 	rm -rf $(TARGETDIR)
 	cp -rp $(SKELETON) $(TARGETDIR)
+
+InstallLatex:
 	cp -rp $(LATEXROOT)/manual/* $(TARGETDIR)/online_documents/
+
+InstallPDF:
+	cp -p $(LATEXROOT)/manual.p* $(TARGETDIR)/online_documents/
+
+InstallOLF:
 	cp -rp $(LATEXROOT)/on-line-figs/* $(TARGETDIR)/on-line-figs/
+
+InstallVDB:
 	cp -rp $(VDBROOT) $(TARGETDIR)/code_reference/
 
 Bonniefy: $(TARGETDIR)
@@ -29,6 +40,10 @@ Index: $(TARGETDIR)/home_page/frontpage.html
 	cat $(TARGETDIR)/home_page/frontpage.html \
 	 | sed 's:\.\./::' > $(TARGETDIR)/index.html
 
+SiteMap:
+	echo $(SHELL)
+	cd $(TARGETDIR)/sitemap; ../../buildweb/bin/makesitemap ../online_documents > index.html
+
 Search:
 	cd $(TARGETDIR); $(BINDIR)/swish-e -c $(PFILESDIR)/Swish-e.conf
 
@@ -37,7 +52,10 @@ Search2:
 		-S prog -i $(BINDIR)/DirTree.pl
 
 Latex: latex
-	cd latex; make html
+	cd $(LATEXROOT); make html
+
+pdf:
+	cd $(LATEXROOT); make ps pdf ps.gz
 
 VDB:
 	cd code-browser; source README

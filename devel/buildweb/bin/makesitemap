@@ -1,0 +1,37 @@
+#!/bin/tcsh
+
+cat << EOFA
+<HTML>
+<HEAD>
+<TITLE>Site Index</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Alphabetical list of page titles</H2>
+
+<UL>
+
+EOFA
+
+\rm -f $0.tmp
+foreach fl (`find $1 -name "*.html" -type f -print`)
+ (echo -n $fl " " ; awk '/<TITLE>/,/<\/TITLE>/{print $0}' $fl | tr -d '\n') \
+   | sed 's,\(.*\) .*TITLE>\([0-9\. ]*\)\(.*\)</TITLE.*,<LI><A HREF=\1> \3 (\2)</A></LI>,' \
+   | awk 'NF>5 {print}' \
+   | sed 's/()//' >> $0.tmp 
+end
+sort -d -b -f -k 3 $0.tmp
+\rm -f $0.tmp
+#fgrep TITLE $1/*.html \
+#find $1 -name "*.html" -type f -printf '%p ' -exec awk '/<TITLE>/,/<\/TITLE>/{print $0}' {} \;  \
+#   | sed 's,\(.*\) .*TITLE>\([0-9\. ]*\)\(.*\)</TITLE.*,<LI><A HREF=\1> \3 (\2)</A></LI>,' \
+#   | awk 'NF>5 {print}' \
+#   | sed 's/()//'
+#   | sort -d -b -f -k 3
+
+cat << EOFA
+
+</UL>
+
+</BODY>
+EOFA
