@@ -29,6 +29,9 @@ yum install cvs cvsweb which php gcc-g77 netcdf\*
 #
 #  pull over pserver config from old-forge and put it in 
 #    /etc/xinetd.d/cvspserver
+#
+#  add cvsgraph
+yum install cvsgraph
 
 
 #  =========  sendmail  =========
