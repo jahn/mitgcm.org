@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.16 2004/06/02 19:08:03 edhill Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.17 2004/06/25 17:27:25 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -194,9 +194,12 @@ cat > $LATEST << EOF
         <td><a href="http://www.nas.nasa.gov/User/Systemsdocs/O3K/o3k.html">
         NAS SGI Origin 3000 </a></td> </tr>
 
-      <tr bgcolor="#bbffdd"> <td> SGI Altix </td> <td>"orion"</td>
+      <!-- <tr bgcolor="#bbffdd"> <td> SGI Altix </td> <td>"orion"</td>
         <td><a href="http://sc.jpl.nasa.gov/">JPL Supercomputing and 
-        Visualization Facility</a></td> </tr>
+        Visualization Facility</a></td> </tr> -->
+      <tr bgcolor="#bbffdd"> <td> SGI Altix 350 </td> <td>"altix350"</td>
+        <td><a href="http://acesgrid.org/geocluster/">MIT ACESgrid 
+        GeoCluster</a></td> </tr>
       <tr bgcolor="#bbddff"> <td> IBM POWER3 SP </td> <td>"bf"</td>
         <td><a href="http://www.scd.ucar.edu/computers/blackforest/">NCAR Blackforest
         </a></td> </tr>
@@ -250,7 +253,7 @@ ncolor="#bbddff"
 res_url="http://mitgcm.org/testing/"
 
 MACHINES="faulks shelley myrinet eaps halem hopper lomax orion bf bs slough sea"
-MACHINES="$MACHINES  eddy adams dolphin hemmingway"
+MACHINES="$MACHINES  eddy adams dolphin hemmingway altix350"
 
 ( cd $INDIR ; ls -1 -t ) > ./dir_all
 
