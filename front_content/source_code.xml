@@ -56,11 +56,11 @@
 	    </li>
 
 	    <li>Download the most recent checkpoint 
-                <a href="./download">as a "tar" file.</a><br /><br /></li>
+                <a href="./download">as a "tar" file.</a></li>
 	    
 	    <li>Download one of the <a
 		href="http://mitgcm.org/download/daily_snapshot/">daily
-		snap-shots</a>.</li>
+		snap-shots</a>.<br /><br /></li>
 	    
 	  </ul>
 	</li>
