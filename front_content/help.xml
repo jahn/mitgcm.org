@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <base href="http:/mitgcm.org" />
+
+    <!-- Hinting for menu generation -->
+    <meta name="add_name_0" content="Help" />
+    <meta name="add_name_1" content="" />
+    <meta name="add_name_2" content="" />
+    <meta name="add_title" content="Help" />
+    <!-- Hinting for menu generation -->
+
+    <title>MITgcm: <!--ADDTITLE--></title>
+<style type="text/css">
+ span.c2 {font-size: 110%}
+ div.c1 {text-align: center}
+</style>
+  </head>
+
+  <body>
+
+    <p>Please see the <a href= "http://dev.mitgcm.org/projects/mitgcm/">MITgcm
+	development server</a> which includes:</p>
+
+    <ul>
+      <li>a <a href= "http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/">Web interface
+	  to the CVS repository</a>,</li>
+      
+      <li>the <a href= "http://dev.mitgcm.org/mailman/listinfo/mitgcm-support">
+	  MITgcm-support</a> mailing list with a web-browsable archive,</li>
+
+      <li>a <a href="http://dev.mitgcm.org/forum/?group_id=6">web-based
+	  forum</a> suitable for quick questions, and</li>
+
+      <li>a <a href="http://mitgcm.org/dev_docs/devel_HOWTO">HOWTO</a> to help
+	  you get started with MITgcm development and customization.</li>
+    </ul>
+
+    <p>Our <a href="http://dev.mitgcm.org/htdig/">search engine</a> currently
+      indexes most of the <a href= "http://mitgcm.org">mitgcm.org</a> and <a
+	href="http://dev.mitgcm.org">dev.mitgcm.org</a> web pages.</p>
+
+
+  </body>
+</html>
+

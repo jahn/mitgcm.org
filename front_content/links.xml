@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <base href="http:/mitgcm.org" />
+
+    <!-- Hinting for menu generation -->
+    <meta name="add_name_0" content="Links" />
+    <meta name="add_name_1" content="" />
+    <meta name="add_name_2" content="" />
+    <meta name="add_title" content="Links" />
+    <!-- Hinting for menu generation -->
+
+    <title>MITgcm: <!--ADDTITLE--></title>
+<style type="text/css">
+ span.c2 {font-size: 110%}
+ div.c1 {text-align: center}
+</style>
+  </head>
+
+  <body>
+
+    <ul>
+
+      <!--
+      <li><a href="http://mitgcm.org/people">Who's who?</a>: List of people with
+	contact information.</li>
+      -->
+
+      <li>At MIT: <a href="http://www-paoc.mit.edu/">PAOC</a> (Program in
+            Atmospheres, Oceans and Climate), <a href=
+            "http://web.mit.edu/cgcs/www/cmi.html">CMI</a> (Climate Modeling
+            Initiative)</li>
+
+      <li>Directories of: 
+	<ul>
+	  <li><a href="http://stommel.tamu.edu/~baum/ocean_models.html"> Ocean
+	      Circulation Models</a>, and </li>
+	  <li> <a href="http://stommel.tamu.edu/~baum/climate_modeling.html">
+	      Climate Modeling Groups</a>.</li>
+	</ul>
+      </li>
+
+      <li>Other sources of information:
+ 	<ul>
+
+	  <li><a href="http://www-pcmdi.llnl.gov/amip/">AMIP</a>,</li>
+
+	  <li><a href="http://www-pcmdi.llnl.gov/cmip/cmiphome.html"> CMIP
+	    </a>,</li>
+
+	  <li><a href="http://www.ipsl.jussieu.fr/OCMIP/">OCMIP</a>,</li>
+
+	  <li><a href="http://www-pcmdi.llnl.gov/amip/OINTS/oints.html"> *MIP
+	    </a>,</li>
+
+	  <li>LDEO <a href="http://www.ldeo.columbia.edu/datarep/index.html">
+	      Climate Data Repository</a>.</li>
+ 	</ul>
+      </li>
+    </ul>
+    
+
+  </body>
+</html>
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <base href="http:/mitgcm.org" />
+
+    <!-- Hinting for menu generation -->
+    <meta name="add_name_0" content="News" />
+    <meta name="add_name_1" content="" />
+    <meta name="add_name_2" content="" />
+    <meta name="add_title" content="News" />
+    <!-- Hinting for menu generation -->
+
+    <title>MITgcm: <!--ADDTITLE--></title>
+<style type="text/css">
+ span.c2 {font-size: 110%}
+ div.c1 {text-align: center}
+</style>
+  </head>
+
+  <body>
+
+    <p>The MITgcm (MIT General Circulation Model) is a numerical model for
+      studying the ocean and atmosphere. It is capable of simulating these
+      fluids at a wide range of scales and can resolve many different
+      processes. It has a non-hydrostatic capability (Marshall et al., JGR 1997a
+      &amp; b) and uses the finite volume method to accurately represent the
+      bottom boundary position (Adcroft et al., MWR 1998).<br /><br /></p>
+
+    <p><b>October 27th 2003&nbsp;:</b><br />
+
+	<b><a href="http://paoc.mit.edu/cmi/">MIT Climate Modeling Initiative
+	  (CMI)</a></b> web pages introduce the MITgcm model, its applications, and
+	  the development team.<br /><br /></p>
+
+    <p><b>October 27th 2003&nbsp;:</b><br />
+
+	MITgcm and ECCO-JPL team <b><a
+	    href="http://www.sgi.com/newsroom/press_releases/2003/october/linux.html">
+	    feature as showcase application</a></b> in NASA-SGI large shared
+	memory system program.<br /><br /></p>
+		
+  </body>
+</html>
+

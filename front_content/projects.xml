@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <base href="http:/mitgcm.org" />
+
+    <!-- Hinting for menu generation -->
+    <meta name="add_name_0" content="Projects" />
+    <meta name="add_name_1" content="" />
+    <meta name="add_name_2" content="" />
+    <meta name="add_title" content="Projects" />
+    <!-- Hinting for menu generation -->
+
+    <title>MITgcm: <!--ADDTITLE--></title>
+<style type="text/css">
+ span.c2 {font-size: 110%}
+ div.c1 {text-align: center}
+</style>
+  </head>
+
+  <body>
+
+    <ul>
+      <li><a href="http://www.ecco-group.org">Main project site for ECCO</a>:
+	"<b><u>E</u></b>stimating the <b><u>C</u></b>irculation and
+	<b><u>C</u></b>limate of the <b><u>O</u></b>cean"; also see <a
+	href="http://ecco.mit.edu/">ECCO @ MIT</a>, <a
+	href="http://ecco.ucsd.edu/">ECCO @ UCSD</a>, <a
+	href="http://ecco.jpl.nasa.gov/odap">ECCO @ JPL</a>.</li>
+
+      <li>Gridding the sphere using <a
+	  href="http://mitgcm.lcs.mit.edu/cubedsphere">expanded cubic
+	  grids</a>.</li>
+
+      <li>Biogeochemical Tracers in a High Resolution Simulation of the <a
+      href="http://mitgcm.org/projects/atlantic0.166/">North Atlantic</a>.</li>
+    </ul>
+
+  </body>
+</html>
+

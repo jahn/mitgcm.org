@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <base href="http:/mitgcm.org" />
+
+    <!-- <meta name="" content="" /> -->
+
+    <title>MITgcm: <!--ADDTITLE--></title>
+<style type="text/css">
+ span.c2 {font-size: 110%}
+ div.c1 {text-align: center}
+</style>
+  </head>
+
+  <body>
+    <table align="center" border="0" cellpadding="10" width="100%" summary="">
+      <!-- Image Bar -->
+
+      <tr align="center" valign="top">
+        <td colspan="2" align="center">
+          <div class="c1">
+            <img src="TitleImage.gif"
+            alt="Montage of Applications Original concept by CNH Put into practice by AJA"
+             height="189" width="628" /><br />
+             
+
+            <h1>MITgcm</h1>
+          </div>
+        </td>
+      </tr>
+
+      <tr align="left" valign="top">
+        <!-- Menu Table -->
+
+        <td width="150">
+          <table bgcolor="#bbffff" align="center" border="0" cellpadding="3"
+          width="100%" summary="">
+            <tr>
+              <td><!-- Menu -->
+              <span class="c2">
+
+              <!--ADDMENU-->
+
+              </span> </td>
+            </tr>
+          </table>
+        </td>
+        <!-- Content Table -->
+
+        <td>
+          <table align="center" border="0" cellpadding="3" width="100%"
+          summary="">
+            <tr>
+              <td><!-- Content -->
+
+              <!--ADDCONTENT-->
+
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+
