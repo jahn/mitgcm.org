@@ -2,11 +2,21 @@
 
 findnode()
 {
+# findnode html_file search_string
+cd manual
 echo ln -s `egrep "$2" node*.html | sed 's/:.*//'` $1 1>&2
 ln -sf `egrep "$2" node*.html | sed 's/:.*//'` $1 1>&2
+cd ..
+createframeset $1
 }
 
-cd manual
+createframeset()
+{
+# createframeset html_file
+echo sed 's:onlineDocuments.html:manual/'$1':' index.html ">" $1
+sed 's:onlineDocuments.html:manual/'$1':' index.html > $1
+}
+
 findnode contents.html "^Contents"
 findnode overview.html "^1.[0-9] Introduction"
 findnode discrete.html "^2. Discretization and Algorithm"
