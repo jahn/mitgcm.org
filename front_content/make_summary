@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/u3/gcmpack/mitgcm.org/front_content/make_summary,v 1.3 2003/12/07 00:23:45 edhill Exp $
+# $Header: /u/u3/gcmpack/mitgcm.org/front_content/make_summary,v 1.4 2003/12/07 06:52:17 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -143,6 +143,7 @@ echo "done"
 #  Create the "latest" links
 echo "Creating the \"latest\" file for each machine: "
 LATEST=$OUTDIR"/latest_"$PERIOD".html"
+the_date=`date`
 cat > $LATEST << EOF
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -214,14 +215,15 @@ cat > $LATEST << EOF
 
     <p><br />
       The complete output for the verification runs can be found in
-      <a href="http://mitgcm.org/testing/summary/">the summary pages</a>. 
+      <a href="http://mitgcm.org/testing/summary/">the summary pages</a>
+      and the <a href="http://mitgcm.org/testing/results/">testing archives</a>. 
       The latest reports are:</p>
     <table align="center" cellpadding="0" cellspacing="0" border="0" width="95%">
 <tr bgcolor="#00cccc">
   <td height="0"> <b>Nickname</b> </td>
   <td> <b>OPTFILE Name</b> </td>
   <td> <b>Type</b> </td>
-  <td> <b>Date (yyyymmdd)</b> </td>
+  <td> <b>Date</b> </td>
   <td> <b>Summary</b> </td>
 </tr>
 
@@ -323,6 +325,11 @@ EOF
 done
 
 cat >> $LATEST << EOF
+<tr bgcolor="#00cccc">
+  <td height="0" colspan="5" align="center" >
+    === This table generated on: $the_date ===
+  </td>     
+</tr>       
 
     </table>
   </body>

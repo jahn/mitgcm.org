@@ -22,7 +22,8 @@
 
   <body>
 
-    <p>The MITgcm (MIT General Circulation Model) is a numerical model for
+    <p>The <b>MITgcm</b> (<b>MIT</b> <b>G</b>eneral <b>C</b>irculation 
+      <b>M</b>odel) is a numerical model for
       studying the ocean and atmosphere. It is capable of simulating these
       fluids at a wide range of scales and can resolve many different
       processes. It has a non-hydrostatic capability (Marshall et al., JGR 1997a
