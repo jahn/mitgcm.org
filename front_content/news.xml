@@ -41,21 +41,19 @@
     <hr align="center" size="1" width="75%" />
 
     <div class="c1"><br /><span class="c3"><b>News</b></span></div>
-
-      <!--
       
+      <!--
       To add News items, please copy the following block outside these comments
       and replace the ===DATE=== and ===MESSAGE=== place-holders with your date
       and your text:
-
-      <p><b>===DATE===&nbsp;:</b><br /></p>
-        <blockquote>
-          ===MESSAGE===<br /><br />
-        </blockquote>
-
+      
+      <p><b>===DATE===&nbsp;:</b></p>
+      <blockquote>
+      ===MESSAGE===
+      </blockquote>
       -->
-
-      <p><b>Sep 24, 2004&nbsp;:</b><br /></p>
+      
+      <p><b>Sep 24, 2004&nbsp;:</b></p>
       <blockquote>
 	MITgcm is now able to write and (to a lesser extent) read NetCDF files.
 	The framework (the "MNC" package) has been tested by numerous developers
@@ -66,26 +64,24 @@
 	information please see:
 	<ul>
 	  <li><a href="http://mitgcm.org/pelican/online_documents/node234.html">
-	    Manual entry for the MNC package.</a></li>
+	      Manual entry for the MNC package.</a></li>
 	  <li><a
 	      href="http://mitgcm.org/pipermail/mitgcm-support/2004-September/002589.html">
 	      Directions for installing NetCDF</a></li>
 	  <li>The <a
-	    href="http://my.unidata.ucar.edu/content/software/netcdf/index.html">
+	      href="http://my.unidata.ucar.edu/content/software/netcdf/index.html">
 	      main NetCDF web site</a>.</li>
 	</ul>
       </blockquote>
-
-    <p><b>May 20, 2004 at 05:01 EDT&nbsp;:</b><br /></p>
-    
+      
+      <p><b>May 20, 2004 at 05:01 EDT&nbsp;:</b></p>
       <blockquote>
 	Congratulations to Ed and Boo on the birth this
 	morning of a 7lb 1oz, baby girl, 
 	<a href="http://eddy.csail.mit.edu/gallery/Alex-Arrives">Alexandra Sophia</a>.
-	<br /><br />
       </blockquote>
       
-    <p><b>April 13, 2004&nbsp;:</b><br /></p>
+      <p><b>April 13, 2004&nbsp;:</b></p>
       <blockquote>
 	A new movie by Dimitris Menemenlis and Chris Henze shows ice dynamics
 	over the North Pole. The viscous-plastic behavior of ice sheets subject
@@ -95,65 +91,32 @@
 	pages with summary information regarding MITgcm simulations being
 	carried out in the ECCO high resolution global ocean state estimation
 	initiative can be found <a href="http://ecco.jpl.nasa.gov/cube_sphere">
-	here</a>.
+	  here</a>.
       </blockquote>
 
-    <p><b>March 26, 2004 at 01:38 EST&nbsp;:</b><br /></p>
-    
+      <p><b>March 26, 2004 at 01:38 EST&nbsp;:</b></p>
       <blockquote>
 	Congratulations to Alistair and Sonya on the birth this
 	morning of a 7lb 3oz, 19.5 inches long baby girl, Ariane Jade.
-	<br /><br />
       </blockquote>
 
-    <p><b>January 22, 2004&nbsp;:</b><br /></p>
-
-        <blockquote>
-          A spectacular movie by Chris Henze of NASA AMES beautifully captures an 
-          eddy permitting expanded cube sphere MITgcm simulation being carried out, 
-          as part of the <a href=http://www.ecco-group.org>ECCO</a> project, by 
-          Dimitris Menemenlis and others at JPL with help from core MITgcm team members 
-          and staff from NASA AMES. The animation 
-          shows the speed of ocean currents at 15m depth from the simulation, it can be 
-          downloaded <a href=news/cube_6.mpg>here</a> (its 47MB 
-          but worth waiting for!). A second animation with different perspectives and 
-          rotation can be downloaded <a href=news/cube_7.mpg>here</a>.
-          As described <a href=news/agu_2004/menemenlis_et_al.pdf>here</a> Dimitris Menemenlis
-          will be presenting aspects of this calculation at AGU in Portland.
-          A list of some other AGU 2004 presentation abstracts related to MITgcm can be
-          found <a href=news/agu_2004>here</a>.
-        </blockquote>
-
-    <p><b>December 9th 2003&nbsp;:</b><br /></p>
-
-	<blockquote>
-	  The new continuous testing page at <a
-          href="http://mitgcm.org/testing.html">
-          http://mitgcm.org/testing.html</a> provides information on the status
-          of the latest development code. The page shows summary pass/fail
-          ratios for the MITgcm regression tests on various platforms.  Details
-          on the platforms being tested and detailed information on the status
-          of individual regression tests can be viewed from links on the test
-          page.  <br /><br />
-        </blockquote>
-
-    <p><b>October 27th 2003&nbsp;:</b><br /></p>
-
-	<blockquote>
-      <b><a href="http://paoc.mit.edu/cmi/">MIT Climate Modeling Initiative
-	      (CMI)</a></b> web pages introduce the MITgcm model, its
-	      applications, and the development team.<br /><br />
-        </blockquote>
-    
-    <p><b>October 21st 2003&nbsp;:</b><br /></p>
-
-	<blockquote>
-	  MITgcm and ECCO-JPL team <b><a
-	    href="http://www.sgi.com/newsroom/press_releases/2003/october/linux.html">
-	    feature as showcase application</a></b> in NASA-SGI large shared
-	    memory system program.<br /><br />
-        </blockquote>
-	
+      <p><b>January 22, 2004&nbsp;:</b></p>
+      <blockquote>
+	A spectacular movie by Chris Henze of NASA AMES beautifully captures an 
+	eddy permitting expanded cube sphere MITgcm simulation being carried out, 
+	as part of the <a href="http://www.ecco-group.org">ECCO</a> project, by 
+	Dimitris Menemenlis and others at JPL with help from core MITgcm team members 
+	and staff from NASA AMES. The animation 
+	shows the speed of ocean currents at 15m depth from the simulation, it can be 
+	downloaded <a href=news/cube_6.mpg>here</a> (its 47MB 
+	but worth waiting for!). A second animation with different perspectives and 
+	rotation can be downloaded <a href=news/cube_7.mpg>here</a>.
+	As described <a href=news/agu_2004/menemenlis_et_al.pdf>here</a> Dimitris Menemenlis
+	will be presenting aspects of this calculation at AGU in Portland.
+	A list of some other AGU 2004 presentation abstracts related to MITgcm can be
+	found <a href=news/agu_2004>here</a>.
+      </blockquote>
+            
   </body>
 </html>
 

@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <base href="http:/mitgcm.org" />
+
+    <!-- Hinting for menu generation -->
+    <meta name="add_name_0" content="News" />
+    <meta name="add_name_1" content="Past News Items" />
+    <meta name="add_name_2" content="" />
+    <meta name="add_title" content="Past News Items" />
+    <!-- Hinting for menu generation -->
+
+<style type="text/css">
+ span.c2 {font-size: 110%}
+ div.c1 {text-align: center}
+</style>
+  </head>
+
+  <body>
+
+    <div class="c1"><br /><span class="c3"><b>Past News Items</b></span></div>
+                
+      <p><b>December 9th 2003&nbsp;:</b></p>
+      <blockquote>
+	The <a href="http://mitgcm.org/testing.html"> new continuous testing
+	  page at </a> provides information on the status of the latest
+	development code. The page shows summary pass-fail ratios for the
+	MITgcm regression tests on various platforms.  Details on the
+	platforms being tested and detailed information on the status of
+	individual regression tests can be viewed from links on the test page.
+      </blockquote>
+      
+      <p><b>October 27th 2003&nbsp;:</b></p>
+      <blockquote>
+	<b><a href="http://paoc.mit.edu/cmi/">MIT Climate Modeling Initiative
+	    (CMI)</a></b> web pages introduce the MITgcm model, its
+	applications, and the development team.
+      </blockquote>
+    
+      <p><b>October 21st 2003&nbsp;:</b></p>
+      <blockquote>
+	MITgcm and ECCO-JPL team <b><a
+	    href="http://www.sgi.com/newsroom/press_releases/2003/october/linux.html">
+	    feature as showcase application</a></b> in NASA-SGI large shared
+	memory system program.
+      </blockquote>
+      
+  </body>
+</html>
+
