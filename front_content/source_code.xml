@@ -47,11 +47,13 @@
 	      
 	    </li>
 	    
-	    <!-- <li>Download <a href="./download">as a "tar" file.</a></li> -->
+	    <li>Download the most recent checkpoint 
+                <a href="./download">as a "tar" file.</a><br /><br /></li>
 	    
 	  </ul>
 	</li>
-	<li>Release1_patch8 :
+	<li>Release1_patch8 (older--please consider using more recent 
+            checkpoints if possible) :
 	  <ul>
 	    
 	    <li>View through an <a
@@ -69,7 +71,7 @@
 	      
 	    </li>
 	    
-	    <li>Download <a href="./download">as a "tar" file.</a></li>
+	    <li>Download <a href="./download/old_r1">as a "tar" file.</a></li>
 	    <br />
 	  </ul>
 	</li>
