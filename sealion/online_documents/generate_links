@@ -4,8 +4,15 @@ findnode()
 {
 # findnode html_file search_string
 cd manual
+rm $1
 echo ln -s `egrep "$2" node*.html | sed 's/:.*//'` $1 1>&2
 ln -sf `egrep "$2" node*.html | sed 's/:.*//'` $1 1>&2
+if  [ ! -f $1 ];  then
+ echo Search for \"$2\" failed.
+ exit
+else
+ echo Found \"$2\".
+fi
 cd ..
 createframeset $1
 echo $1 >> .cvsignore
@@ -21,7 +28,7 @@ sed 's:onlineDocuments.html:manual/'$1':' index.html > $1
 echo manual > .cvsignore
 
 findnode contents.html "^Contents"
-findnode overview.html "^1.[0-9] Introduction"
+findnode overview.html "^1.* Introduction"
 findnode discrete.html "^2. Discretization and Algorithm"
 findnode horizcurve.html "^2.* Vector invariant"
 findnode fvol.html "^2.* The finite volume method:"
@@ -34,26 +41,29 @@ findnode tiles.html    "^4.* Tiles<"
 findnode using_wrapper.html "^4.3 Using the WRAPPER"
 findnode multi-threaded.html "^4.* Multi-threaded execution"
 findnode multi-process.html "^4.* Multi-process execution"
-findnode communication.html "^4.* Controlling communication<"
+findnode communication.html "^4.* Controlling communication"
 findnode autodiff.html "^5. Automatic Differentiation"
-findnode adexample.html "^5.* AD-specific setup by example:"
 findnode packages.html "^6. Physical Parameterization and Packages"
 findnode diags.html "^7. Diagnostics and tools"
 findnode ecco.html "^8. Interface with ECCO"
 
-findnode obtaining.html "^3.[0-9] Obtaining the code"
-findnode compiling.html "^3.[0-9] Building the code"
-findnode running.html "^3.[0-9] Running the model"
-findnode looking.html "^3.[0-9].[0-9] Looking at the output"
-findnode doing.html "^3.[0-9] Doing it yourself: customizing the code"
+findnode obtaining.html "^3.* Obtaining the code"
+findnode compiling.html "^3.* Building the code"
+findnode running.html "^3.* Running the model"
+findnode looking.html "^3.* Looking at the output"
+findnode doing.html "^3.* Doing it yourself: customizing the code"
 
-findnode eg_barotrop.html "^3.[0-9] Example: Barotropic Ocean Gyre"
-findnode eg_baroclin.html "^3.[0-9] Example: Four layer Baroclinic"
-findnode global4x4.html "^3.10 Example: 4"
+findnode eg_barotrop.html "^3.* Barotropic Ocean Gyre"
+findnode eg_baroclin.html "^3.* Four Layer Baroclinic"
+findnode eg_hs.html       "^3.* Held-Suarez"
+findnode eg_surf.html     "^3.* Surface Driven"
+findnode global4x4.html "^3.* Global Ocean"
+findnode plume.html "^3.* Gravity"
+findnode adexample.html "^5.* Sensitivity of Air-Sea Exchange"
 
-findnode illustrations.html "^1.[0-9] Illustrations of the model"
-findnode continuous.html "^1.[0-9] Continuous equations"
-findnode atmos.html "^1.[0-9].[0-9] Global atmosphere:"
-findnode ocean.html "^1.[0-9].[0-9] Global ocean circulation"
-findnode nonhydro.html "^1.[0-9].[0-9] Convection and mixing over topography"
-findnode paramsens.html "^1.[0-9].[0-9] Parameter sensitivity"
+findnode illustrations.html "^1.* Illustrations of the model"
+findnode continuous.html "^1.* Continuous equations"
+findnode atmos.html "^1.* Global atmosphere:"
+findnode ocean.html "^1.* Global ocean circulation"
+findnode nonhydro.html "^1.* Convection and mixing over topography"
+findnode paramsens.html "^1.* Parameter sensitivity"
