@@ -29,8 +29,17 @@
 	<li>The complete <a href="http://mitgcm.org/sealion/">MITgcm User's
 	    Manual</a><br /><br /></li>
 
-	<li>An MITgcm <a href="http://mitgcm.org/devel_HOWTO/">"Developer's
-	  HOWTO" </a></li>
+	<li>An MITgcm "Developer's HOWTO" is available in multiple formats:
+	  <ul>
+	    <li><a href="./devel_HOWTO/devel_HOWTO_onepage/"> Single-page
+		HTML</a></li>
+	    <li><a href="./devel_HOWTO/devel_HOWTO_multipage/"> Multi-page
+		HTML</a></li>
+	    <li><a href="./devel_HOWTO/devel_HOWTO.pdf"> PDF file </a></li>
+	    <li><a href="./devel_HOWTO/devel_HOWTO.pdf"> PostScript file
+		</a></li>
+	  </ul>
+	</li>
 
       </ul>
     </p>

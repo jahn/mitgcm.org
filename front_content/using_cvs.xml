@@ -39,17 +39,17 @@
 <blockquote>
 Using a Bourne, "bash", or "sh-compatible" shell:
 <pre>
-$  export CVSROOT=':pserver:cvsanon@mitgcm.org:/usr/local/gcmpack'
+$  export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
 $  cvs login 
-( enter the CVS password: "cvsanon" )
+   ( enter the CVS password: "cvsanon" )
 $  cvs co MITgcm MITgcm_contrib
 </pre><br />
 
 Using a "C", "csh", or "tcsh" shell:
 <pre>
-$  setenv CVSROOT ':pserver:cvsanon@mitgcm.org:/usr/local/gcmpack'
+$  setenv CVSROOT ':pserver:cvsanon@mitgcm.org:/u/gcmpack'
 $  cvs login
-( enter the CVS password: "cvsanon" )
+   ( enter the CVS password: "cvsanon" )
 $  cvs co MITgcm MITgcm_contrib
 </pre>
 </blockquote>
@@ -82,9 +82,9 @@ $  cvs co MITgcm MITgcm_contrib
       </tr>
       <tr bgcolor="#bbddff">
  	<td width="25%">MITgcm_verif_basic</td>
-	<td>Source code plus three of the verification examples
-	  ("adjustment.128x64x1", "internal_wave", and
-	  "solid-body.cs-32x32x1").</td>
+	<td>Source code plus a small set of the verification examples
+	  ("global_ocean.90x40x15", "aim.5l_cs", "hs94.128x64x5", 
+	  "front_relax").</td>
      </tr>
       <tr bgcolor="#bbffdd">
 	<td width="25%">MITgcm_verif_atmos</td>
