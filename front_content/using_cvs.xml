@@ -33,26 +33,24 @@
       to use the CVS "pserver" mechanism.  This method only allows you to "check
       out" (or obtain a local copy) of the source.  It does not provide a
       mechanism for "committing" or "checking in" changes (please see below).
-      Using CVS pserver from the command line requires just a three
-      commands:</p>
+      Using CVS pserver from the command line requires just a three commands.
+      Using a Bourne, "bash", or "sh-compatible" shell they are:</p>
     
-<blockquote>
-Using a Bourne, "bash", or "sh-compatible" shell:
 <pre>
-$  export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
-$  cvs login 
-   ( enter the CVS password: "cvsanon" )
-$  cvs co MITgcm MITgcm_contrib
-</pre><br />
-
-Using a "C", "csh", or "tcsh" shell:
-<pre>
-$  setenv CVSROOT ':pserver:cvsanon@mitgcm.org:/u/gcmpack'
-$  cvs login
-   ( enter the CVS password: "cvsanon" )
-$  cvs co MITgcm MITgcm_contrib
+  $ export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
+  $ cvs login 
+    ( enter the CVS password: "cvsanon" )
+  $ cvs co MITgcm MITgcm_contrib
 </pre>
-</blockquote>
+
+    <p>Using a "C", "csh", or "tcsh" shell the commands are:</p>
+
+<pre>
+  $ setenv CVSROOT ':pserver:cvsanon@mitgcm.org:/u/gcmpack'
+  $ cvs login
+    ( enter the CVS password: "cvsanon" )
+  $ cvs co MITgcm MITgcm_contrib
+</pre>
 
     <p>Note that you will only need to perform the "cvs login" once.  And for
       convenience, you may want to add the CVSROOT variable to your shell's
@@ -123,12 +121,10 @@ $  cvs co MITgcm MITgcm_contrib
       development.  One can check out these versions using the "-r TAG_NAME" CVS
       option such as: </p>
 
-<blockquote>
 <pre>
-$  cvs co -r release1_p5 MITgcm
-$  cvs co -r checkpoint52a_post MITgcm
+  $ cvs co -r release1_p5 MITgcm
+  $ cvs co -r checkpoint52a_post MITgcm
 </pre>
-</blockquote>
 
     <p>By default (that is, when no tag is specified), CVS will retrieve the
       latest version of all files.</p>
@@ -140,27 +136,29 @@ $  cvs co -r checkpoint52a_post MITgcm
       that you yourself have made since obtaining the code.  From within
       your working directory:</p>
 
-<blockquote>
-<pre>cvs diff</pre>
-</blockquote>
+<pre>
+  cvs diff
+</pre>
+
 
     <p>will show the differences between your version and the version that you
       checked out. It acts recursively on all directories below your current
       directory. You can limit the operation to just one file or directory by
       specifying those as arguments:</p>
 
-<blockquote>
-<pre>cvs diff <i>file</i></pre>
-</blockquote>
+<pre>
+  cvs diff <i>file</i>
+</pre>
+
 
     <h4>Show changes to the repository that you don't have</h4>
 
     <p>The source code evolves continuously and you should try to stay up to
       date.  To see what needs to be updated:</p>
 
-<blockquote>
-<pre>cvs -n update</pre>
-</blockquote>
+<pre>
+  cvs -n update
+</pre>
 
     <p>behaves just as "cvs update" but doesn't actually change anything. This
       is a useful way of summarizing the state of your code. The meaning of the
@@ -171,31 +169,31 @@ $  cvs co -r checkpoint52a_post MITgcm
     <p>You can download and merge updates from the repository to bring you
       working code up to date:</p>
 
-<blockquote>
-<pre>cvs update -d -P</pre>
-</blockquote>
+<pre>
+  cvs update -d -P
+</pre>
 
       <p>will work recursively on all files in the current directory and below.
 	To update just a specific file or directory:</p>
 
-<blockquote>
-<pre>cvs update <i>file</i></pre>
-</blockquote>
+<pre>
+  cvs update <i>file</i>
+</pre>
 
     <p>You can also update to a specific version, just as you could check out
       a specific version.</p>
 
-<blockquote>
-<pre>cvs update -d -P -r release1_p5</pre>
-</blockquote>
+<pre>
+  cvs update -d -P -r release1_p5
+</pre>
 
     <p>If you checked out a specific version and want to update to the very
       latest use the -A option will remove associated with a specific version as
       follows:</p>
 
-<blockquote>
-<pre>cvs update -d -P -A</pre>
-</blockquote>
+<pre>
+  cvs update -d -P -A
+</pre>
 
     <p>"cvs update" produces output to the terminal with the following
       meanings:</p>

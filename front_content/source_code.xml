@@ -39,14 +39,12 @@
 	    
 	    <li>Download <a href="./using_cvs.html">using CVS pserver</a>:
 
-<blockquote>
 <pre>
-$  export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
-$  cvs login 
-   ( enter the CVS password: "cvsanon" )
-$  cvs co -r 'release1_p8' MITgcm
+  $ export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
+  $ cvs login 
+    ( enter the CVS password: "cvsanon" )
+  $ cvs co -r 'release1_p8' MITgcm
 </pre>
-</blockquote>
 	      
 	    </li>
 	    
@@ -63,14 +61,12 @@ $  cvs co -r 'release1_p8' MITgcm
 	    
 	    <li>Download <a href="./using_cvs.html">using CVS pserver</a>
 
-<blockquote>
 <pre>
-$  export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
-$  cvs login 
-   ( enter the CVS password: "cvsanon" )
-$  cvs co MITgcm
+  $ export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
+  $ cvs login 
+    ( enter the CVS password: "cvsanon" )
+  $ cvs co MITgcm
 </pre>
-</blockquote>
 	      
 	    </li>
 	    
