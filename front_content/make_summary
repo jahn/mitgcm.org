@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/u3/gcmpack/mitgcm.org/front_content/make_summary,v 1.7 2003/12/10 20:37:24 edhill Exp $
+# $Header: /u/u3/gcmpack/mitgcm.org/front_content/make_summary,v 1.8 2003/12/13 20:25:04 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -204,13 +204,16 @@ cat > $LATEST << EOF
       <tr bgcolor="#bbffdd"> <td> IBM POWER4 SP </td> <td>"bs"</td>
         <td><a href="http://www.scd.ucar.edu/computers/bluesky/">NCAR Bluesky
         </a></td> </tr>
-      <tr bgcolor="#bbddff"> <td> AMD Opteron </td> <td>"eaps"</td>
+      <tr bgcolor="#bbddff"> <td> AMD Opteron </td> <td>"adams"</td>
         <td>SuSE Linux 9.0 (x86-64)</td> </tr>
 
       <tr bgcolor="#bbffdd"> <td> Sun UltraSparc </td> <td>"slough"</td>
         <td>Solaris 8</td> </tr>
       <tr bgcolor="#bbddff"> <td> Intel P4 Mosix Cluster </td> <td>"sea"</td>
         <td>Red Hat v7.2</td> </tr>
+
+      <tr bgcolor="#bbddff"> <td> AMD Athlon </td> <td>"eddy"</td>
+        <td>Red Hat 9</td> </tr>
 
       <!--
       <tr bgcolor="#bbddff"> <td>  </td> <td>""</td>
@@ -239,7 +242,7 @@ EOF
 color="#bbffdd"
 res_url="http://mitgcm.org/testing/"
 
-MACHINES="faulks shelley myrinet eaps halem hopper lomax orion bf bs slough sea"
+MACHINES="faulks shelley myrinet eaps halem hopper lomax orion bf bs slough sea eddy adams"
 
 ( cd $INDIR ; ls -1 ) > ./dir_all
 
