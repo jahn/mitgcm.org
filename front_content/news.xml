@@ -22,15 +22,25 @@
 
   <body>
 
-    <p>The <b>MITgcm</b> (<b>MIT</b> <b>G</b>eneral <b>C</b>irculation 
-      <b>M</b>odel) is a numerical model for
-      studying the ocean and atmosphere. It is capable of simulating these
-      fluids at a wide range of scales and can resolve many different
-      processes. It has a non-hydrostatic capability (Marshall et al., JGR 1997a
-      &amp; b) and uses the finite volume method to accurately represent the
-      bottom boundary position (Adcroft et al., MWR 1998).<br /><br /></p>
+    <p>The <b>MITgcm</b> (<b>MIT</b> <b>G</b>eneral <b>C</b>irculation
+      <b>M</b>odel) is a numerical model designed for study of the
+      atmosphere, ocean, and climate. Its non-hydrostatic formulation
+      enables it to simulate fluid phenomena over a wide range of
+      scales; its adjoint capability enables it to be applied to
+      parameter and state estimation problems. By employing fluid
+      isomorphisms, one hydrodynamical kernel can be used to simulate
+      flow in both the atmosphere and ocean.</p>
 
-    <div class="c1"><span class="c3"><b>News</b></span></div>
+    <p>You are welcome to <a href="http://mitgcm.org/source_code.html">
+      download</a> and use MITgcm.</p>
+
+    <p>Papers charting the development of MITgcm <a
+      href="http://paoc.mit.edu/cmi/publications.htm">can be found here.
+      </a></p>
+
+    <hr align="center" size="1" width="75%" />
+
+    <div class="c1"><br /><span class="c3"><b>News</b></span></div>
 
 <!--
 
