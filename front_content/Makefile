@@ -13,7 +13,7 @@ all:
 
 install:
 	@make all
-	scp html/*.html cmi_redir.php mitgcm.org:/u/u0/httpd/html/
+	cp html/*.html cmi_redir.php /u/u0/httpd/html/
 
 tidy:
 	tidy -i -wrap 80 -clean -asxml template_003.xml > template_004.xml
