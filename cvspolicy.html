@@ -1,131 +1,163 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
 <head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.75 [en] (X11; U; Linux 2.2.14-5.0 i686) [Netscape]">
 </head>
 <body>
-         MITGCM CVS policies
-         ===================
 
-o Introduction
+<h2>
+Introduction</h2>
+This note describes policies that apply to the MITGCM CVS repository.
+<h2>
+Why have a policy?</h2>
+CVS itself is a liberal free-for-all product that can be used in a variety
+of ways. It is designed to provide a system for storing arbitrary files
+in a way that allows the change history of the individual files to be tracked.
+If CVS is used without any other policy the result can be a collection
+of files each of which has complex, multiply branched set of interelated
+versions. This sort of CVS repository can be come like a library where
+books are simply stored in a huge heap. Although nothing is actually lost,
+the task of finding a coherent collection of material soon becomes impossible.
+<p>The policies we employ address two areas
+<ol>
+<li>
+Maintaining an orderly and easily identifiable, coherent set of evolving
+"products".</li>
 
-  This note describes policies that apply to the MITGCM CVS repository
- 
-o Why have a policy?
+<li>
+Allowing concurrent, on-going development of product components.</li>
+</ol>
 
-  CVS itself is a liberal free-for-all product that can be used in a variety
-  of ways. It is designed to provide a system for storing arbitrary files 
-  in a way that allows the change history of the individual files to be 
-  tracked. If CVS is used without any other policy the result can be a 
-  collection of files each of which has complex, multiply branched set of 
-  interelated versions. This sort of CVS repository can be come like a 
-  library where books are simply stored in a huge heap. Although nothing is 
-  actually lost, the task of finding a coherent collection of material soon 
-  becomes impossible.
+<h2>
+Development trees and checkpoint trees</h2>
+A directory within the MITGCM repository resides under either the development
+branch or the checkpoint branch. Files within each branch follow different
+policies.
+<h2>
+Development tree policies</h2>
+Development trees are intended to be flexible areas where arbitrary files
+can be stored with multiple versions, many branches supporting multiple
+ongoing streams of development. Development trees have no policies in place
+to control complexity. Development trees might be associated with a particular
+person, a certain project or a particular special piece of work. These
+trees are intended to be useful areas for storing current work and for
+archiving partially finished work so that it doesn't get mislaid and so
+that some record of the development history can be easily maintained. The
+only policy that applies to development trees is that this style of tree
+is not intended to be used for providing a "checkpoint" distribution. Tagged
+configurations of tools built from this style of tree can be distributed,
+but because these trees do not have any polcies regarding testing of functionality,
+platform coverage or documentation these trees are not allowed to form
+the basis of "checkpoint" distrbutions or formal "releases". Other policies
+can be defined by individuals users of these trees but there are no further
+global policies. The MITGCM repository development_tree/ subdirectory is
+reserved for holding development trees. Development trees also serve as
+experimental areas for exploring new code management policies.
+<h2>
+Checkpoint tree policies</h2>
+Checkpoint trees are intended to provide structured storage areas for holding
+code that is intended for open distribution and is to be readily downloaded.
+There are policies governing the operation of these trees which are designed
+to ensure that distributed codes are early identified and meet certain
+levels of quality.
+<ol>
+<li>
+Check-out</li>
 
-  The policies we employ address two areas 
-    1. Maintaining an orderly and easily identifiable, coherent set of 
-       evolving "products".
-    2. Allowing concurrent, on-going development of product components.
-  
-o Development trees and checkpoint trees
-  
-  A directory within the MITGCM repository resides under either the
-  development branch or the checkpoint branch. Files within each branch
-  follow different policies.
-  
-o Development tree policies
+<br>Just do it! Two mechanisms are available. cvsanon for read only access
+and regular cvs co .... for read/write access.
+<li>
+Check-in</li>
 
-  Development trees are intended to be flexible areas where arbitrary files
-  can be stored with multiple versions, many branches supporting multiple 
-  ongoing streams of development. Development trees have no policies in 
-  place to control complexity. Development trees might be associated with 
-  a particular person, a certain project or a particular special piece of 
-  work. These trees are intended to be useful areas for storing current 
-  work and for archiving partially finished work so that it doesn't get 
-  mislaid and so that some record of the development history can be easily 
-  maintained. The only policy that applies to development trees is that 
-  this style of tree is not intended to be used for providing a 
-  "checkpoint" distribution. Tagged configurations of tools built from this
-  style of tree can be distributed, but because these trees do not have any
-  polcies regarding testing of functionality, platform coverage or 
-  documentation these trees are not allowed to form the basis of 
-  "checkpoint" distrbutions or formal "releases". Other policies can 
-  be defined by individuals users of these trees but there are no further 
-  global policies. The MITGCM repository development_tree/ subdirectory is 
-  reserved for holding development trees. Development trees also serve as 
-  experimental areas for exploring new code management policies.
+<br>The code check in procedure for a "checkpoint" tree is as follows
+<ol>
+<li>
+Check out the latest main branch revision.</li>
 
-o Checkpoint tree policies
+<li>
+Merge your changes into that revision.</li>
 
-  Checkpoint trees are intended to provide structured storage areas for 
-  holding code that is intended for open distribution and is to be readily 
-  downloaded. There are policies governing the operation of these trees 
-  which are designed to ensure that distributed codes are clearly 
-  identified and meet certain levels of quality.
+<li>
+Build and validate new code.</li>
 
-  1. Check-out
+<li>
+Check that there have been no further changes to the repository. Repeat
+from 2.1 if repository has changed.</li>
 
-     Just do it! Two mechanisms are available. cvsanon for read only access
-     and regular cvs co .... for read/write access.
+<li>
+Get clearance from other developers to check in your changes.</li>
 
-  2. Check-in.
+<li>
+Check in your changed main branch.</li>
 
-     The code check in procedure for a "checkpoint" tree is as follows
-     2.1  Check out the latest main branch revision.
-     2.2  Merge your changes into that revision.
-     2.3  Build and validate new code. 
-     2.4  Check that there have been no further changes to the
-          repository. Repeat from 2.1 if repository has changed.
-     2.5  Get clearance from other developers to check in your changes.
-     2.6  Check in your changed main branch.
-     2.8  Build and validate the new changes.
-     2.9  Tag code as "checkpointNN". Add records to docs/tag-index.
-     2.10 Build and validate test cases (see testing).
-     2.11 Create and install checkpointNN.tar.gz
+<li>
+Build and validate the new changes.</li>
 
-  3. Testing
+<li>
+Tag code as "checkpointNN". Add records to docs/tag-index.</li>
 
-     Things in a checkpoint tree require a test case that
-     can be used to validate the component. 
+<li>
+Build and validate test cases (see testing).</li>
 
-  4. Checkpoint tagging
+<li>
+Create and install checkpointNN.tar.gz</li>
+</ol>
 
-     No code should be left in limbo. Checking in code and then
-     leaving it in the repository untagged is bad. When you check
-     in code you are creating a new checkpoint. That means you don't
-     check in some code which you "know" works 100% and then go away 
-     for two weeks. When you start checking in code you make sure
-     you have time to do the process end-to-end as described in section
-     2.
+<li>
+Testing</li>
 
-  5. Release tagging
+<br>Things in a checkpoint tree require a test case that can be used to
+validate the component.
+<li>
+Checkpoint tagging</li>
 
-     Releases are only based on checkpoint tree code. Maintenance fixes
-     to releases are also maintained within the checkpoint tree. Files
-     within a release must have accompanying documentation. The form of this
-     documentation depends on the file type.
+<br>No code should be left in limbo. Checking in code and then leaving
+it in the repository untagged is bad. When you check in code you are creating
+a new checkpoint. That means you don't check in some code which you "know"
+works 100% and then go away for two weeks. When you start checking in code
+you make sure you have time to do the process end-to-end as described in
+section 2.
+<li>
+Release tagging</li>
 
-  6. Branches
+<br>Releases are only based on checkpoint tree code. Maintenance fixes
+to releases are also maintained within the checkpoint tree. Files within
+a release must have accompanying documentation. The form of this documentation
+depends on the file type.
+<li>
+Branches</li>
 
-     Branches are to be used for bug-fixes and code patches to releases 
-     only. All other changes e.g. totally new features, bug-fixes to 
-     checkpoints are introduced by moving checkpoint levels forward. The 
-     only historical code maintenance that is employed is for fixes and 
-     patches to formal releases - not checkpoints.
+<br>Branches are to be used for bug-fixes and code patches to releases
+only. All other changes e.g. totally new features, bug-fixes to checkpoints
+are introduced by moving checkpoint levels forward. The only historical
+code maintenance that is employed is for fixes and patches to formal releases
+- not checkpoints.</ol>
 
-o These policies are causing me a big problem, what can I do?
+<h2>
+These policies are causing me a big problem, what can I do?</h2>
+The policies are not enforced by any mechanism other than mutual agreement!
+If you think the policies are not appropriate then let us know and we can
+discuss changing them. However, if you simply ignore the policies regarding
+the checkpoint_release trees then your code may be removed and/or your
+access revoked.
+<h2>
+What about bitkeeper</h2>
+We are looking at bitkeeper (www.bitkeeper.com). It looks cool, but policies
+are still important. Any experience, suggestions let us know. Watch this
+space!
+<p>Questions, comments e-mail: code.czars@mitgcm.org
+<br>
+<hr WIDTH="100%">
+<table CELLSPACING=0 CELLPADDING=0 WIDTH="100%" NOSAVE >
+<tr NOSAVE>
+<td><font size=-1>Last modified on $Date: $</font></td>
 
-  The policies are not enforced by any mechanism other than mutual 
-  agreement! If you think the policies are not appropriate then let us know 
-  and we can discuss changing them. However, if you simply ignore the 
-  policies regarding the checkpoint_release trees then your code may be 
-  removed and/or your access revoked.
+<td>
+<div align=right><font size=-1>CVS: $Source: $Revision: $</font></div>
+</td>
+</tr>
+</table>
 
-o What about bitkeeper
-
-  We are looking at bitkeeper (www.bitkeeper.com). It looks cool, but 
-  policies are still important. Any experience, suggestions let us know. 
-  Watch this space!
-
-Questions, comments e-mail: code.czars@mitgcm.org
 </body>
 </html>
