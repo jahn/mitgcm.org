@@ -14,7 +14,6 @@
     <meta name="add_title" content="Using CVS" />
     <!-- Hinting for menu generation -->
 
-    <title>MITgcm: <!--ADDTITLE--></title>
 <style type="text/css">
  span.c2 {font-size: 110%}
  div.c1 {text-align: center}

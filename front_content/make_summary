@@ -1,0 +1,312 @@
+#! /usr/bin/env bash
+
+# $Header: $
+#
+#  The purpose of this script is to create HTML summaries of the
+#  directories produced by the "parse_emails" script.
+
+
+usage()
+{
+    echo
+    echo "Usage:  $0 [OPTIONS]"
+    echo 
+    echo "where possible OPTIONS are:"
+    echo "  (-help|-h)           print usage"
+    echo "  (-date |-d )PERIOD   run for PERIOD=\"YYYY_MM\""
+    echo "                         [def=\"$PERIOD\"]"
+    echo 
+    exit 1
+}
+
+# defaults
+PERIOD=`date +%Y`"_"`date +%m`
+
+#  Parse options
+ac_prev=
+for ac_option ; do
+        
+    # If the previous option needs an argument, assign it.
+    if test -n "$ac_prev"; then
+        eval "$ac_prev=\$ac_option"
+        ac_prev=
+        continue
+    fi
+    
+    ac_optarg=`expr "x$ac_option" : 'x[^=]*=\(.*\)'`
+    
+    case $ac_option in
+	
+	-help | --help | -h | --h)
+	    usage ;;
+	
+        -date | --date | -d | --d)
+            ac_prev=PERIOD ;;
+        --date=* | -date=*)
+            PERIOD=$ac_optarg ;;
+        
+        *)
+	    echo "Error: don't understand argument \"$ac_option\""
+	    usage
+            ;;
+        
+     esac
+     
+done
+
+INDIR="/u/u0/httpd/html/testing/results/$PERIOD"
+OUTDIR="/u/u0/httpd/html/testing/summary"
+OUTFILE=$OUTDIR"/summary_"$PERIOD".html"
+
+
+#  Create the summary file for $PERIOD
+echo -n "Creating the summary file for the period \"$PERIOD\" ...  "
+cat > $OUTFILE << EOF
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>MITgcm testing summary</title>
+    <meta name="author" content="Ed Hill" />
+    <base href="http://mitgcm.org/testing/summary/" />
+  </head>
+  <body>
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+
+EOF
+
+# all_files=`find $INDIR -name summary.txt`
+all_files=`( cd $INDIR ; find . -name summary.txt )`
+
+for f in $all_files ; do
+
+    file=$INDIR"/"${f/.\//}
+    grep "^fresults" $file > /dev/null 2>&1
+    RETVAL=$?
+    if test "x$RETVAL" != x0 ; then
+	continue
+    fi
+
+    url=`echo $file | sed -e 's|/u/edhill/www|http://mitgcm.org/~edhill|'`
+    url=`echo $url | sed -e 's|summary.txt||'`
+    MACH=
+    fresults=
+    color="#eeeeee"
+
+    source $file
+    echo $fresults | grep FAIL > /dev/null 2>&1
+    if test "x$?" = x0 ; then
+        color="#ff99ff"
+    fi
+    echo $fresults | grep pass > /dev/null 2>&1
+    if test "x$?" = x0 ; then
+        color="#99ffff"
+    fi
+
+    gm_state=`echo $file | sed -e 's/summary.txt/genmake_state/g'`
+    if test -r $gm_state ; then
+	grep '^OPTFILE=' $gm_state > ./tmp_state
+	source ./tmp_state
+    else
+	optfile="unknown"
+    fi
+    optfile=`echo $OPTFILE | awk -F '/' '{print $NF}'`
+
+    echo "<tr bgcolor=\"$color\">" >> $OUTFILE
+    echo "<td height=\"0\">$MACH</td>" >> $OUTFILE
+    echo "<td><a href=\"$url\">$DATE</a></td>" >> $OUTFILE
+    for i in $fresults ; do
+        if test "x$i" = xN ; then
+            echo -n "<td bgcolor=\"#ff6666\">$i</td>" >> $OUTFILE
+        else
+	    echo -n "<td>$i</td>" >> $OUTFILE
+	fi
+    done
+    echo "<td>$optfile</td>" >> $OUTFILE
+    echo "</tr>" >> $OUTFILE
+
+done
+
+cat >> $OUTFILE << EOF
+
+    </table>
+  </body>
+</html>
+
+EOF
+
+chmod a+r $OUTFILE
+echo "done"
+
+
+#  Create the "latest" links
+echo "Creating the \"latest\" file for each machine: "
+LATEST=$OUTDIR"/latest_"$PERIOD".html"
+cat > $LATEST << EOF
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>MITgcm testing summary</title>
+    <meta name="author" content="Ed Hill" />
+
+    <!-- <base href="http://mitgcm.org/testing/summary/" /> -->
+
+    <!-- Hinting for menu generation -->
+    <meta name="add_name_0" content="Source Code" />
+    <meta name="add_name_1" content="Testing" />
+    <meta name="add_name_2" content="" />
+    <meta name="add_title" content="Testing" />
+    <!-- Hinting for menu generation -->
+
+  </head>
+  <body>
+    <p>The following are the most recent MITgcm testing runs for the 
+      time period <b>$PERIOD</b>.<br /><br />
+      The machine naming scheme is:<br /></p>
+    <table align="center" border="0">
+      <tr bgcolor="#00cccc"> <td><b>Machine</b></td> <td><b>"Nickname"</b></td>
+        <td><b>Notes</b></td> </tr>
+
+      <tr bgcolor="#bbffdd"> <td>faulks.lcs.mit.edu</td> <td>"faulks"</td> 
+        <td>Red Hat 7.3 on an Intel P4 (the "original" testing machine)</td> </tr>
+      <tr bgcolor="#bbddff"> <td>shelley.lcs.mit.edu</td> <td>"shelley"</td>
+        <td>Red Hat 9 on an Intel P4</td> </tr>
+
+      <tr bgcolor="#bbffdd"> <td>cg01.lcs.mit.edu cluster</td> <td>"myrinet"</td>
+        <td><a href="http://mitgcm.org/projects/MITGCM_CLUSTER/">MITgcm cluster facility
+        </a></td> </tr>
+      <tr bgcolor="#bbddff"> <td>Alpha cluster</td> <td>"halem"</td>
+        <td><a href="http://webserv.gsfc.nasa.gov/SCB/NCCS/systems/high-end-computing.html">
+        NASA NCCS Halem</a></td> </tr>
+
+      <tr bgcolor="#bbffdd"> <td> SGI Origin 2000 </td> <td>"hopper"</td>
+        <td><a href="http://www.nas.nasa.gov/User/Systemsdocs/O2K/o2k.html">
+        NAS SGI Origin 2000 </a></td> </tr>
+      <tr bgcolor="#bbddff"> <td> SGI Origin 3000 </td> <td>"lomax"</td>
+        <td><a href="http://www.nas.nasa.gov/User/Systemsdocs/O3K/o3k.html">
+        NAS SGI Origin 3000 </a></td> </tr>
+
+      <tr bgcolor="#bbffdd"> <td> SGI Altix </td> <td>"orion"</td>
+        <td><a href="http://sc.jpl.nasa.gov/">JPL Supercomputing and 
+        Visualization Facility</a></td> </tr>
+      <tr bgcolor="#bbddff"> <td> IBM POWER3 SP </td> <td>"bf"</td>
+        <td><a href="http://www.scd.ucar.edu/computers/blackforest/">NCAR Blackforest
+        </a></td> </tr>
+
+      <tr bgcolor="#bbffdd"> <td> IBM POWER4 SP </td> <td>"bs"</td>
+        <td><a href="http://www.scd.ucar.edu/computers/bluesky/">NCAR Bluesky
+        </a></td> </tr>
+
+      <!--
+      <tr bgcolor="#bbddff"> <td>  </td> <td>""</td>
+        <td></td> </tr>
+      -->
+
+    </table>
+    <br />
+    <table align="center" cellpadding="0" cellspacing="0" border="0" width="95%">
+<tr bgcolor="#00cccc">
+  <td height="0"> <b>"Nickname"</b> </td>
+  <td> <b>OPTFILE Name</b> </td>
+  <td> <b>Date (YYYYMMDD)</b> </td>
+</tr>
+
+EOF
+
+color="#bbffdd"
+res_url="http://mitgcm.org/testing/"
+
+MACHINES="faulks shelley myrinet halem hopper lomax orion bf bs"
+
+( cd $INDIR ; ls -1 ) > ./dir_all
+
+for mname in $MACHINES ; do
+
+    echo "  $mname"
+    if test "x$color" = x#bbffdd ; then
+	color="#bbddff"
+    else
+	color="#bbffdd"
+    fi
+
+    dir_list=`grep $mname ./dir_all`
+    echo -n "" > ./mlist
+
+    for i in $dir_list ; do
+
+	dir=$INDIR"/"$i
+	OPTFILE=
+	if test -r $dir/summary.txt ; then
+	    comm=`grep 'OPTFILE=' $dir/summary.txt`
+	    eval $comm
+	    OPTFILE=${OPTFILE##*/}
+	fi
+	if test "x$OPTFILE" = x -a -r "$dir/genmake_state" ; then
+	    comm=`grep 'OPTFILE=' $dir/genmake_state`
+	    eval $comm
+	    OPTFILE=${OPTFILE##*/}
+	fi
+	if test "x$OPTFILE" = x ; then
+	    comm=`grep '^# OPTFILE=' $dir/*/Makefile 2>/dev/null | head -1 | sed -e 's|^# ||'`
+	    eval $comm
+	    OPTFILE=${OPTFILE##*/}
+	fi
+	if test "x$OPTFILE" = x ; then
+	    OPTFILE="not_explicitly_specified"
+	fi
+	tokens=`echo $i | sed -e 's|_| |g'`
+	echo "" > ./ms_tmp
+	for tok in $tokens ; do
+	    echo $tok >> ./ms_tmp
+	done
+	DAY=`cat ./ms_tmp | awk '(length($1)==8 && substr($1,0,3)=="200")'`
+	rm -f ./ms_tmp
+	echo "$OPTFILE $DAY $i" >> ./mlist
+
+    done
+
+    # helpful for debugging
+    # cat ./mlist
+
+    #  Do we have any data?  If so, create the latest pointer.
+    num=`wc -l ./mlist | awk '{print $1}'`
+    if test $num -gt 0 ; then
+	optfiles=`cat ./mlist | cut -d " " -f 1 | sort | uniq`
+
+	for optf in $optfiles ; do
+	    ldir=`grep "^$optf " ./mlist | sort -r | head -1 | cut -d " " -f 3`
+	    URL="results/$PERIOD/$ldir"
+	    cat <<EOF >>$LATEST
+<tr bgcolor="$color">
+  <td height="0"><a href="$res_url$URL"> $mname </a></td>
+  <td> $optf </td>
+  <td> $DAY </td>
+</tr>
+EOF
+	done
+    fi
+
+done
+
+cat >> $LATEST << EOF
+
+    </table>
+  </body>
+</html>
+
+EOF
+
+rm -f ./dir_all ./mlist
+
+CURR_PER=`date +%Y`"_"`date +%m`
+if test "x$PERIOD" = "x$CURR_PER" ; then
+    cp $LATEST ./results.xml
+    (
+	cd $OUTDIR
+	rm -f latest.html
+	ln -s $LATEST latest.html
+    )
+fi

@@ -1,0 +1,160 @@
+#! /usr/bin/env bash
+
+# $Header:  $
+#
+#  The purpose of this script is to parse the emails produced by the
+#  MITgcm/verificaton/testreport script and store the data in a
+#  reasonable location.
+
+
+usage()
+{
+    echo
+    echo "Usage:  $0 [OPTIONS]"
+    echo 
+    echo "where possible OPTIONS are:"
+    echo "  (-help|-h)           print usage"
+    echo "  (-ind |-i )DIR       get mpack-created emails from DIR"
+    echo "                         [def=\"$INDIR\"]"
+    echo "  (-outd |-o )DIR      write the data to DIR"
+    echo "                         [def=\"$OUTDIR\"]"
+    echo "  (-tempd |-t )DIR     use temporary directory DIR"
+    echo "                         [def=\"$TEMPDIR\"]"
+    echo 
+    exit 1
+}
+
+# defaults
+INDIR="/u/edhill/Mail/MITgcm-test"
+OUTDIR=
+TEMPDIR=./ptmp
+MUNPACK=munpack
+
+#  Parse options
+ac_prev=
+for ac_option ; do
+
+    # If the previous option needs an argument, assign it.
+    if test -n "$ac_prev"; then
+        eval "$ac_prev=\$ac_option"
+        ac_prev=
+        continue
+    fi
+
+    ac_optarg=`expr "x$ac_option" : 'x[^=]*=\(.*\)'`
+    
+    case $ac_option in
+	
+	-help | --help | -h | --h)
+	    usage ;;
+	
+        -ind | --ind | -i | --i)
+            ac_prev=INDIR ;;
+        --ind=* | -ind=* | --i=* | -i=*)
+            INDIR=$ac_optarg ;;
+        
+        -outd | --outd | -o | --o)
+            ac_prev=OUTDIR ;;
+        --outd=* | -outd=* | --o=* | -o=*)
+            OUTDIR=$ac_optarg ;;
+        
+        -tempd | --tempd | -t | --t)
+            ac_prev=TEMPDIR ;;
+        --tempd=* | -tempd=* | --t=* | -t=*)
+            TEMPDIR=$ac_optarg ;;
+        
+        *)
+	    # copy the file list to FL_#
+	    echo "Error: don't understand argument \"$ac_option\""
+	    usage
+            ;;
+        
+     esac
+     
+done
+
+if test "x$OUTDIR" = x ; then
+    OUTDIR="/u/u0/httpd/html/testing/results/"`date +%Y`"_"`date +%m`
+fi
+if test ! -e $OUTDIR ; then
+    mkdir $OUTDIR
+    RETVAL=$?
+    if test "x$RETVAL" = x ; then
+	echo "ERROR: directory \"$OUTDIR\" doesn't exist and can't be created"
+	exit 1
+    fi
+fi
+
+echo "Using OUTDIR=\"$OUTDIR\""
+echo "Using INDIR=\"$INDIR\""
+
+all_files=`ls -1 $INDIR`
+
+echo -n "Unpacking the emails ..."
+for file in $all_files ; do
+
+    #  create local copy
+    rm -rf $TEMPDIR
+    mkdir $TEMPDIR
+    cp $INDIR"/"$file $TEMPDIR
+
+    #  ignore multi-part messages
+    grep "Content-Type: message/partial" $INDIR"/"$file > /dev/null 2>&1
+    RETVAL=$?
+    if test "x$RETVAL" = x0 ; then
+        continue
+    fi
+
+    #  munpack
+    mun=`( cd $TEMPDIR ; $MUNPACK $file | cut -d ' ' -f 1 | head -1 )`
+    RETVAL=$?
+    if test "x$RETVAL" != x0 ; then
+	continue
+    fi
+
+    #  un-tar
+    ( cd $TEMPDIR ; tar -xzvf $mun > out )
+    RETVAL=$?
+    if test "x$RETVAL" != x0 ; then
+	continue
+    fi
+    tdir=`cat $TEMPDIR"/out" | head -1 | cut -d '/' -f 1`
+    rm -f $TEMPDIR"/out"
+
+    #  copy to $OUTDIR and rename if necessary
+    if test -e $OUTDIR"/"$tdir ; then
+	ad=0
+	while test -e $OUTDIR"/"$tdir"_"$ad ; do
+	    ad=$(( $ad + 1 ))
+	done
+	mv $TEMPDIR"/"$tdir $OUTDIR"/"$tdir"_"$ad
+    else
+	mv $TEMPDIR"/"$tdir $OUTDIR
+    fi
+
+    #  If it exists, gzip the "output.txt" file.
+    if test -r $OUTDIR"/"$tdir"/output.txt" ; then
+	gzip $OUTDIR"/"$tdir"/output.txt"
+    fi
+
+    #  remove the original file
+    rm -f $INDIR"/"$file
+
+done
+echo "  done"
+
+echo -n "gzipping all the \"output.txt\" files ..."
+(
+    cd $OUTDIR
+    outp=`find . -name output.txt`
+    if test "x$outp" != x ; then
+	gzip $outp
+    fi
+)
+echo "  done"
+
+echo -n "setting permissions to world-readable ..."
+chmod -R a+rx $OUTDIR
+echo "  done"
+
+
