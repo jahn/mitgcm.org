@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.19 2004/08/02 02:29:22 edhill Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.20 2004/08/02 18:05:17 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -292,7 +292,7 @@ for mname in $MACHINES ; do
 	    OPTFILE=${OPTFILE##*/}
 	fi
 	if test "x$OPTFILE" = x ; then
-	    comm=`grep '^# OPTFILE=' $dir/*/Makefile 2>/dev/null | head -1`
+	    comm=`grep '^# OPTFILE=' $dir/*/Makefile* 2>/dev/null | head -1`
 	    comm=${comm##*#}
 	    eval $comm
 	    OPTFILE=${OPTFILE##*/}
