@@ -2,7 +2,7 @@
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-   <meta name="GENERATOR" content="Mozilla/4.75 [en] (X11; U; Linux 2.2.14-5.0 i686) [Netscape]">
+   <meta name="GENERATOR" content="Mozilla/4.76 [en] (X11; U; Linux 2.4.1 i686) [Netscape]">
    <meta name="Author" content="Chris Hill">
    <title>MITgcm CVS policy</title>
 </head>
@@ -10,7 +10,7 @@
 
 <center>
 <h1>
-MITgcm CVS&nbsp;policy</h1></center>
+MITgcm CVS policy</h1></center>
 
 <h2>
 Introduction</h2>
@@ -21,11 +21,11 @@ CVS itself is a liberal free-for-all product that can be used in a variety
 of ways. It is designed to provide a system for storing arbitrary files
 in a way that allows the change history of the individual files to be tracked.
 If CVS is used without any other policy the result can be a collection
-of files each of which has complex, multiply branched set of interelated
+of files each of which has complex, multiply branched set of inter-related
 versions. This sort of CVS repository can be come like a library where
 books are simply stored in a huge heap. Although nothing is actually lost,
 the task of finding a coherent collection of material soon becomes impossible.
-<p>The policies we employ address two areas
+<p>The policies we employ address tree areas
 <ol>
 <li>
 Maintaining an orderly and easily identifiable, coherent set of evolving
@@ -33,6 +33,10 @@ Maintaining an orderly and easily identifiable, coherent set of evolving
 
 <li>
 Allowing concurrent, on-going development of product components.</li>
+
+<li>
+Making the integration&nbsp; of achieved developments easy, rapid, organized
+and clear.</li>
 </ol>
 
 <h2>
@@ -53,13 +57,13 @@ that some record of the development history can be easily maintained. The
 only policy that applies to development trees is that this style of tree
 is not intended to be used for providing a "checkpoint" distribution. Tagged
 configurations of tools built from this style of tree can be distributed,
-but because these trees do not have any polcies regarding testing of functionality,
+but because these trees do not have any policies regarding testing of functionality,
 platform coverage or documentation these trees are not allowed to form
-the basis of "checkpoint" distrbutions or formal "releases". Other policies
+the basis of "checkpoint" distributions or formal "releases". Other policies
 can be defined by individuals users of these trees but there are no further
-global policies. The MITGCM repository development_tree/ subdirectory is
-reserved for holding development trees. Development trees also serve as
-experimental areas for exploring new code management policies.
+global policies. The MITGCM repository development_tree/ sub-directory
+is reserved for holding development trees. Development trees also serve
+as experimental areas for exploring new code management policies.
 <h2>
 Checkpoint tree policies</h2>
 Checkpoint trees are intended to provide structured storage areas for holding
@@ -118,12 +122,13 @@ validate the component.
 <li>
 Checkpoint tagging</li>
 
-<br>No code should be left in limbo. Checking in code and then leaving
-it in the repository untagged is bad. When you check in code you are creating
-a new checkpoint. That means you don't check in some code which you "know"
-works 100% and then go away for two weeks. When you start checking in code
-you make sure you have time to do the process end-to-end as described in
-section 2.
+<br>No code should be left in limbo (un-tagged) for extended periods. On
+the other hand it's unnecessary to create a checkpoint tag for every little
+change. Checkpoint tags should be made after a particularly significant
+code modification or otherwise on a regular basis, say bi-weekly. Very
+often we set a list of goals to be reached by the next checkpoint which
+sometimes takes more than two weeks to achieve. Obviously, in this case
+a bi-weekly checkpoint would not be useful.
 <li>
 Release tagging</li>
 
@@ -134,11 +139,34 @@ depends on the file type.
 <li>
 Branches</li>
 
-<br>Branches are to be used for bug-fixes and code patches to releases
-only. All other changes e.g. totally new features, bug-fixes to checkpoints
-are introduced by moving checkpoint levels forward. The only historical
-code maintenance that is employed is for fixes and patches to formal releases
-- not checkpoints.</ol>
+<br>Branches are a useful tool for making changes prior to checkpoints
+without breaking other working versions but it must be understood that
+branches are short-lived and that releases and checkpoints not be made
+from a branch. Branches are especially useful for adding totally
+<br>new features. bug-fixes to checkpoints are introduced by moving checkpoint
+levels forward. The only historical code maintenance that s employed is
+for fixes and patches to formal releases - not checkpoints.</ol>
+
+<h1>
+Someone checked-in broken code so not my code doesn't work?</h1>
+You have several options:
+<ol>
+<li>
+Politely email everyone at support@mitgcm.org asking what&nbsp; has happened
+and that it be fixed?</li>
+
+<li>
+Figure out why the new code is broken, fix it, check it in and proudly
+send a message to support@mitgcm.org to show how constructive you are.</li>
+
+<li>
+Complain that the quality of work is too low and then do nothing to fix
+the code.<br>
+<BR></li>
+
+<br>We advise you to only use the third option if you are confident that
+your own contributions to the code are bug-free, well written, documented
+and fool proof.&nbsp; :)</ol>
 
 <h2>
 These policies are causing me a big problem, what can I do?</h2>
@@ -157,11 +185,11 @@ space!
 <hr WIDTH="100%">
 <table CELLSPACING=0 CELLPADDING=0 WIDTH="100%" NOSAVE >
 <tr NOSAVE>
-<td><font size=-1>Last modified on $Date: 2001/02/16 02:00:47 $</font></td>
+<td><font size=-1>Last modified on $Date: 2001/02/16 02:03:59 $</font></td>
 
 <td>
 <div align=right><font size=-1>CVS: $Source: /u/gcmpack/mitgcm.org/../cvspolicy.html,v
-$Revision: 1.7 $</font></div>
+$Revision: 1.8 $</font></div>
 </td>
 </tr>
 </table>
