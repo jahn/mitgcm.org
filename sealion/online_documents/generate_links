@@ -8,6 +8,7 @@ echo ln -s `egrep "$2" node*.html | sed 's/:.*//'` $1 1>&2
 ln -sf `egrep "$2" node*.html | sed 's/:.*//'` $1 1>&2
 cd ..
 createframeset $1
+echo $1 >> .cvsignore
 }
 
 createframeset()
@@ -16,6 +17,8 @@ createframeset()
 echo sed 's:onlineDocuments.html:manual/'$1':' index.html ">" $1
 sed 's:onlineDocuments.html:manual/'$1':' index.html > $1
 }
+
+echo manual > .cvsignore
 
 findnode contents.html "^Contents"
 findnode overview.html "^1.[0-9] Introduction"
