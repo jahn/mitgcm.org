@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * $Header:  $
+ * $Header: /u/gcmpack/mitgcm.org/front_content/cmi_redir.php,v 1.1 2004/03/24 23:04:51 edhill Exp $
  *
  * Ed Hill
  *
@@ -37,7 +37,7 @@ while ($file = readdir($all)) {
 }
 closedir($all);
 
-$arr=explode('/',$REQUEST_URI);
+$arr=explode('/',$_SERVER['REQUEST_URI']);
 $url=$code[ $arr[2] ];
 
 if ( strlen($url) > 4 ) {
