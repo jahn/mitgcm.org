@@ -11,78 +11,114 @@
 <h2>
 Hardware/software requirements</h2></center>
 This page summarises computer system requirements for using MITgcm in a
-<a href=../online_documents/manual/sarch.html#fig:mitgcm_architecture_goals>
-range of scenarios</a> that spans simulations on a desktop PC to simulations
+<a href="../online_documents/manual/sarch.html#fig:mitgcm_architecture_goals">range
+of scenarios</a> that spans simulations on a desktop PC to simulations
 run on a high-end supercomputer.&nbsp; The side bar on the left contains
 links to sites from which third party software and hardware, which you
-may require, can be obtained. The text below and the 
-<a href=../online_documents/index.html target=mainFrame>online document</a> explain
-in what situations&nbsp; you will need these items. In many cases the software
-you need will already be installed on your computer system and you can
-go straight ahead and <a href=../getting_started/index.html target=mainFrame>start using</a> the model.
+may require, can be obtained. The text below and the <a href="../online_documents/index.html" target="mainFrame">online
+document</a> explain in what situations&nbsp; you will need these items.
+In many cases the software you need will already be installed on your computer
+system and you can go straight ahead and <a href="../getting_started/index.html" target="mainFrame">start
+using</a> the model.
 <p><b>MITgcm</b>
 <ul>
 <li>
-runs on a wide <a href=../online_documents/manual/targethw.html>range of computer systems.</a></li>
+runs on a wide <a href="../online_documents/manual/targethw.html">range
+of computer systems.</a></li>
 
 <li>
-includes special software (called <a href=../online_documents/manual/wrapper.html>WRAPPER</a>) 
+includes special software (called <a href="../online_documents/manual/wrapper.html">WRAPPER</a>)
 to support efficient execution and relatively easy portablity.</li>
 </ul>
 <b>Platforms where MITgcm is run regularly include</b>
 <ul>
 <li>
-PC's ( both Intel and AMD processor based) running Linux.</li>
+<a href="sideMenuBarFrame.html#hardware" target="sideMenuBarFrame">Unix
+PC's</a> ( both Intel and AMD processor based) running Linux.</li>
 
 <li>
-Unix workstations from Sun, SGI, HP, IBM, Compaq.</li>
+<a href="sideMenuBarFrame.html#hardware" target="sideMenuBarFrame">Unix
+workstations</a> from Sun, SGI, HP, IBM, Compaq.</li>
 
 <li>
-Unix based PC and workstation clusters.</li>
+Unix based PC and workstation <a href="sideMenuBarFrame.html#interconnects" target="sideMenuBarFrame">clusters</a>.</li>
 
 <li>
-high-end symetric multi-processor systems.</li>
+high-end <a href="sideMenuBarFrame.html#hardware" target="sideMenuBarFrame">symetric
+multi-processor systems</a>.</li>
 </ul>
 
-<ul>Under the WRAPPER, code also runs very efficiently on high-end vector
-processing systems, if you have one.</ul>
+<ul>Under the WRAPPER, code can also run very efficiently on high-end vector
+processing systems, but we can't afford one.</ul>
 <b>The minimum you require to run the model is</b>
 <ul>
 <li>
-a computer runing a Unix style operating system.</li>
+a computer runing a <a href="sideMenuBarFrame.html#os" target="sideMenuBarFrame">Unix
+style operating system</a>.</li>
 
 <li>
-a Fortran 77, Fortran 90 or Fortran 95 compiler.</li>
+a Fortran 77, Fortran 90 or Fortran 95 <a href="sideMenuBarFrame.html#compilers" target="sideMenuBarFrame">compiler</a>.</li>
 
 <li>
-a C compiler.</li>
+a <a href="sideMenuBarFrame.html#compilers" target="sideMenuBarFrame">C
+compiler</a>.</li>
 </ul>
-<b>To run parallel configurations you also need either</b>
+<b>To run parallel configurations you need</b>
 <ul>
 <li>
-a system that supports multi-threaded programs.</li>
+a multi-process <a href="sideMenuBarFrame.html#hardware" target="sideMenuBarFrame">computer</a></li>
+
+<br>and either of
+<li>
+a <a href="sideMenuBarFrame.html#compilers" target="sideMenuBarFrame">compiler</a>
+and that supports multi-threaded programs.</li>
 
 <li>
-a system with an implementation of the MPI&nbsp;library installed.</li>
+a system with an implementation of the <a href="sideMenuBarFrame.html#parallelism" target="sideMenuBarFrame">MPI
+library installed</a>.</li><br><br>
+Instructions on running multi-process codes can be found <a href=x>here</a>.
+Instructions regarding muti-threaded execution can be found <a href=x>here</a>.
+Specialized communication software, to optimize performance on a specific
+platform, can also be introduced into the WRAPPER. This process
+is discussed <a href=x>here</a>. Before running a parallel code we recommend you try one of the 
+<a href=x>basic examples</a></ul>
+
+<b>To perform derivative calculations you need</b>
+<ul>
+<li>
+an <a href="sideMenuBarFrame.html#differentiation" target="sideMenuBarFrame">
+automatic differentiation tool</a>.
+</li><br>
+An example experiment illustrating the automatic differentiation
+process can be found <a href=x>here</a>.
 </ul>
 
-<ul>Specialized communication software to optimizes performance on a specific
-platform can also be introduced into the WRAPPER.</ul>
-<b></b>
 <p><br><b>Once you have your computer set up</b>
-<blockquote>go here to download the model. The full distribution (including
+<blockquote>go <a href="../getting_started/index.html" target=mainFrame>here </a>
+to find out how to download the model. The full distribution (including
 examples with input datasets and sample output) is around 50MB. Instructions
 on estimating the computing resource requirements (CPU time, memory usage
 and disk space) for a set of numerical experiments can be found here.</blockquote>
 
+<p><br><b>Simulation output is usually examined</b>
+<blockquote>using one of several 
+<a href="sideMenuBarFrame.html#analysis" target="sideMenuBarFrame">standard analysis tools</a>, 
+depending on individual
+preference and experiemnce.
+</blockquote>
+
+<p><br><b>Still confused?</b>
+<blockquote>send us <a href=mailto:support@mitgcm.org>mail</a>.
+We like our software to be used and are happy to help out if we can.
+
 <hr WIDTH="100%">
 <table CELLSPACING=0 CELLPADDING=0 WIDTH="100%" NOSAVE >
 <tr NOSAVE>
-<td NOSAVE>Last modified on $Date: 2001/10/21 04:23:00 $</td>
+<td NOSAVE>Last modified on $Date: 2001/10/21 18:13:36 $</td>
 
 <td>
 <div align=right>CVS: $Source: /u/gcmpack/mitgcm.org/sealion/download_software/viaCVS.html,v
-$Revision: 1.3 $</div>
+$Revision: 1.5 $</div>
 </td>
 </tr>
 </table>
