@@ -27,36 +27,64 @@
       last official release was called "Release1_patch8" and the current
       development is stabilizing in anticipation of a "Release2_beta"
       announcement.  Both the last stable release and the current CVS
-      contents can be obtained at:</p>
-   
-    <ul>
-      <li>Release1_patch8 :
-	<ul>
+      contents can be obtained at:
+      
+      <ul>
+	<li>Release1_patch8 :
+	  <ul>
+	    
+	    <li>View through an <a
+		href="http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm/?only_with_tag=release1_p8">
+		HTML-enabled CVS code browser</a></li>
+	    
+	    <li>Download <a href="./using_cvs.html">using CVS pserver</a></li>
+	    
+	    <li>Download <a href="./download">as a "tar" file.</a></li>
+	    <br />
+	  </ul>
+	</li>
+	<li>CVS current :
+	  <ul>
+	    
+	    <li>View through an <a
+		href="http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/">HTML-enabled CVS
+		code browser</a></li>
+	    
+	    <li>Download <a href="./using_cvs.html">using CVS pserver</a></li>
+	    
+	    <li>Download <a href="./download">as a "tar" file.</a></li>
+	    
+	  </ul>
+	</li>
+      </ul>
+    </p>
 
-	  <li>View through an <a
-	      href="http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm/?only_with_tag=release1_p8">
-	      HTML-enabled CVS code browser</a></li>
-
-	  <li>Download <a href="./cvs.html">using CVS pserver</a></li>
-
-	  <li>Download <a href="./download">as a "tar" file.</a></li>
-	  <br />
-	</ul>
-      </li>
-      <li>CVS current :
-	<ul>
-
-	  <li>View through an <a
-	  href="http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/">HTML-enabled CVS
-	  code browser</a></li>
-
-	  <li>Download <a href="./cvs.html">using CVS pserver</a></li>
-
-	  <li>Download <a href="./">as a "tar" file.</a></li>
-
-	</ul>
-      </li>
-    </ul>
+    <p>Please see the <a href="http://dev.mitgcm.org/projects/mitgcm/">MITgcm
+        development server</a> which includes:
+      <ul>
+        <li>a <a href="http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/">Web
+            interface to the CVS repository</a>,<br /><br /></li>
+        
+        <li>the <a href="http://dev.mitgcm.org/mailman/listinfo/mitgcm-support">
+            MITgcm-support</a> mailing list with a web-browsable archive, <br
+            /><br />
+	</li>
+        
+        <li>a <a href="http://dev.mitgcm.org/forum/?group_id=6">web-based
+            forum</a> suitable for quick questions, and<br /><br /></li>
+        
+        <li>a <a href="http://mitgcm.org/dev_docs/devel_HOWTO">HOWTO</a> to help
+          you get started with MITgcm development and customization.</li>
+      </ul>
+    </p>
+    
+    <p>A verification suite is run periodically on a range of different
+      machines and the results can be seen at:
+      <ul>
+	<li><a href="./testing/latest.html">Latest results</a></li>
+	<li><a href="./testing/summary/">All testing results to date</a></li>
+      </ul>
+    </p>
 
   </body>
 </html>

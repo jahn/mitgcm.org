@@ -56,7 +56,7 @@ foreach $file (@flist) {
 	$ind = "";
 	$name = $name0{$fm};
 	if (length($name1{$fm}) > 0) {
-	    $ind = "&nbsp;&nbsp;";
+	    $ind = "&nbsp;&nbsp;&nbsp;";
 	    $name = $name1{$fm};
 	}
 	if (length($ind) > 0 and ($name0{$fm} ne $cname)) {
