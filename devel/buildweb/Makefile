@@ -9,7 +9,7 @@ VDBROOT     = $(BUILDWEBDIR)/vdb
 BINDIR      = $(BUILDWEBDIR)/bin
 PFILESDIR   = $(BUILDWEBDIR)/program_files
 
-all: Templates InstallSkeleton Search2 Bonniefy
+all: Templates InstallSkeleton Search2 Bonniefy Index
 All: Latex VDB all
 
 Templates:
@@ -24,6 +24,10 @@ InstallSkeleton:
 
 Bonniefy: $(TARGETDIR)
 	$(BINDIR)/bonniefy.pl --targetdir=$(TARGETDIR) --homedir=$(HOMEDIR)
+
+Index: $(TARGETDIR)/home_page/frontpage.html
+	cat $(TARGETDIR)/home_page/frontpage.html \
+	 | sed 's:\.\./::' > $(TARGETDIR)/index.html
 
 Search:
 	cd $(TARGETDIR); $(BINDIR)/swish-e -c $(PFILESDIR)/Swish-e.conf
