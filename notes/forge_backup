@@ -1,0 +1,29 @@
+#! /bin/bash
+
+#  Ed Hill
+#  Mon Apr  4 11:33:19 EDT 2005
+
+#  A quick script to backup forge to one of the RAID disks
+
+rm -rf /scratch/root/backup
+mkdir -p /scratch/root/backup
+chmod +rx /scratch/root/backup
+
+cd /scratch/root/backup
+/usr/bin/mysqldump -A | gzip > ./mysql_dump_all.sql.gz
+
+dirlist="/etc/httpd /etc/mail /etc/mailman"
+dirlist="$dirlist /var/lib/mailman/lists /var/lib/mailman/archives"
+tar -czf ./forge_etc_dirs.tar.gz  $dirlist > /dev/null 2>&1
+
+chmod -R +r /scratch/root/backup
+today=`date +%Y%m%d`
+su edhill -c "cp -r /scratch/root/backup /u/forge/backups/backup_$today"
+
+cd /u/forge/backups
+remove=`ls -1 | awk '(NR > 3){print $0}'`
+chars=`echo $remove | wc -c`
+if test ! "x$chars" = x ; then
+    su edhill -c "rm -rf $remove"
+fi
+
