@@ -2,7 +2,7 @@
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-   <meta name="GENERATOR" content="Mozilla/4.75 [en] (X11; U; Linux 2.2.14-5.0 i686) [Netscape]">
+   <meta name="GENERATOR" content="Mozilla/4.74 [en]C-CCK-MCD   (Win98; U) [Netscape]">
    <title>manual</title>
 </head>
 <body bgcolor="#FFFFFF">
@@ -22,7 +22,7 @@ descriptions</a>)</font></li>
 
 <center>
 <h2>
-The manual</h2></center>
+The Manual</h2></center>
 The manual, documenting the formulation, descretization and implementation,
 can be accessed by following the links on the left. These take you to the
 main sections of the document:
@@ -31,33 +31,28 @@ main sections of the document:
 <b><font size=+1><a href="manual/overview.html">Overview of MITgcm</a></font></b></li>
 
 <br>Discusses the
-<a href="manual/continuous.html">
-continuous formulation
-</a>
-of the model and illustrates some
+<a href="manual/continuous.html">continuous formulation
+</a>of
+the model and illustrates some
 <a href="manual/illustrations.html">applications</a>
 <li>
 <b><font size=+1><a href="manual/discrete.html">Discretization and Algorithm</a></font></b></li>
 
-<br>describes the integration algorithm for the various formulations and
-gives the spatial discretization of the model equations
+<br>describes the spatial and temporal discretization of the model equations
 <li>
 <b><font size=+1><a href="manual/getting.html">Getting started and using
 the MITgcm</a></font></b></li>
 
-<br>describes how to <a href=../online_documents/manual/obtaining.html>
-download</a>, 
-<a href=../online_documents/manual/compiling.html>compile</a>, 
-<a href=../online_documents/manual/running.html>run</a> and 
-<a href=../online_documents/manual/doing.html>modify</a> the model.
+<br>describes how to <a href="manual/obtaining.html">download</a>,
+<a href="manual/compiling.html">compile</a>,
+<a href="manual/running.html">run</a>
+and <a href="manual/doing.html">modify</a> the model.
 <li>
 <b><font size=+1><a href="manual/sarch.html">Software Architecture</a></font></b></li>
 
-<br><font >describes the software <a href=../online_documents/manual/wrapper.html>infrastructure</a> used for deploying the model 
-efficiently on a wide range of parallel and uniprocessor machines.
-<a href=../online_documents/manual/using_wrapper.html>Running on parallel
-systems</a> is discussed here.
-</font>
+<br>describes the software <a href="manual/wrapper.html">infrastructure</a>
+for
+<a href="manual/using_wrapper.html">running on parallel systems</a>.
 <li>
 <b><font size=+1><a href="manual/autodiff.html">Automatic Differentiation</a></font></b></li>
 
@@ -67,8 +62,8 @@ model.
 <b><font size=+1><a href="manual/packages.html">Physical Parameterizations
 and Packages</a></font></b></li>
 
-<br>describes the optional parameterizations and features supplied in the
-model.
+<br>describes the optional parameterizations and features available in
+the model.
 <li>
 <b><font size=+1><a href="manual/diags.html">Diagnostics and other tools</a></font></b></li>
 
@@ -76,13 +71,11 @@ model.
 <li>
 <b><font size=+1><a href="manual/ecco.html">Interface with ECCO</a></font></b></li>
 
-<br>describes the interface to the 
-<A href=http://www.ecco-group.org target=idontexist>ECCO</a> environment
-(a custom suite of
-optimization software tailored to large-scale ocean 
-state-estimation). </ol>
-or jump to the full <a href="manual/contents.html">table of contents</a>.The
-manual is also downloadable in <a href="manual.ps.gz">PostScript</a> and
+<br>describes the interface of MITgcm in the <a href="http://www.ecco-group.org" target="idontexist">ECCO</a>
+suite of optimization software tailored to large-scale ocean state-estimation</ol>
+Jump to the full <a href="manual/contents.html">table of contents</a>.
+<p>The manual is also downloadable in <a href="manual.ps.gz">PostScript</a>
+and
 <a href="manual.pdf">PDF</a>.
 <br>&nbsp;
 <center>
@@ -91,14 +84,14 @@ manual is also downloadable in <a href="manual.ps.gz">PostScript</a> and
 code</a></font></h2></center>
 This allows you to peruse the source code by following hyper-links for
 variables, subroutines and functions. It allows you to find instances of
-variables, find where subroutines and functions are called from and see
-the actual fortran.
+variables, find where subroutines and functions are called from and inspect
+full model code.
 <center>
 <h2>
 <a NAME="prologues"></a>In-source documentation</h2></center>
-This takes the form of comments in the source code and has been formatted
-to render subroutine descriptions (written as prologues at the top of each
-routine). It is downloadable as:
+Comments in the source code itself have been formatted to render subroutine
+descriptions (written as prologues at the top of each routine). It is downloadable
+as:
 <ul>
 <li>
 <a href="prologues.ps.gz">PostScript</a></li>
