@@ -2,20 +2,26 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta name="generator" content="HTML Tidy, see www.w3.org" />
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-    <base href="http:/mitgcm.org/" />
-
-    <!-- <meta name="" content="" /> -->
-
-    <title>MITgcm: <!--ADDTITLE--></title>
-<style type="text/css">
- span.c2 {font-size: 110%}
- span.c3 {font-size: 140%}
- div.c1 {text-align: center}
-</style>
-  </head>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  <!-- <base href="http:/mitgcm.org/" /> -->
+  <!-- <meta name="" content="" /> -->
+  <title>MITgcm: <!--ADDTITLE--></title>
+  <style type="text/css">
+  /*<![CDATA[*/
+  body {
+  background-color: #FFFFFF;
+  color: #000000;
+  }
+  :link { color: #0000FF }
+  :visited { color: #000080 }
+  :active { color: #FF0000 }
+  span.c2 {font-size: 110%}
+  span.c3 {font-size: 140%}
+  div.c1 {text-align: center}
+  /*]]>*/
+  </style>
+</head>
 
   <body>
     <table align="center" border="0" cellpadding="10" width="100%" summary="">
@@ -35,8 +41,8 @@
       <tr align="left" valign="top">
         <!-- Menu Table -->
 
-        <td width="150">
-          <table bgcolor="#bbffbb" align="center" border="0" cellpadding="3"
+        <td width="15%">
+          <table bgcolor="#bbffbb" align="left" border="0" cellpadding="3"
           width="100%" summary="">
             <tr>
               <td><!-- Menu -->
@@ -57,10 +63,10 @@
         </td>
         <!-- Content Table -->
 
-        <td>
-          <table align="center" border="0" cellpadding="3" width="100%"
+        <td width="85%">
+          <table align="left" border="0" cellpadding="3" width="100%"
           summary="">
-            <tr>
+            <tr align="left">
               <td><!-- Content -->
 
               <!--ADDCONTENT-->
