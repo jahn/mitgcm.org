@@ -6,7 +6,7 @@
 
 all:
 	-rm -rf html
-# export CVSROOT=:ext:@mitgcm.org:/u/gcmpack && export CVS_RSH=ssh && cvs -q up
+	export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack' && cvs -q up
 	./parse_emails
 	./make_summary
 	./Assemble.pl
