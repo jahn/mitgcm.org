@@ -1,4 +1,4 @@
-/* $Id: main.c,v 1.1.1.1 2002/09/20 19:47:31 adcroft Exp $ */
+/* $Id: main.c,v 1.2 2003/07/23 17:54:35 edhill Exp $ */
 
 /*
  Driver routine for generating hypertext instrumented code
@@ -91,7 +91,7 @@ char *argv[];
      argList.dictFile);
    }
    fprintf(stderr," Program ending.\n");
-   exit();
+   exit(0);
   }
 
  /* Scan code to get all variable names */
