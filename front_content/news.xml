@@ -54,6 +54,25 @@
         </blockquote>
 
       -->
+
+      <p><b>Sep 24, 2004&nbsp;:</b><br /></p>
+      <blockquote>
+	MITgcm is now able to write and (to a lesser extent) read NetCDF files.
+	The framework (the "MNC" package) has been tested by numerous developers
+	on literally dozens of machines and, for the past month, has been a
+	working part of our standard verification suite.
+	
+	We encourage MITgcm users (especially new users) to try out the MNC
+	package since tqhe model output is now much easier to read and
+	understand.  For further NetCDF information please see:
+	<ul>
+	  <li><a href="http://mitgcm.org/pelican/online_documents/node234.html">
+	    Manual entry for the MNC package.</a></li> <li><a
+	    href="http://mitgcm.org/pipermail/mitgcm-support/2004-September/002589.html">
+	    Directions for installing NetCDF</a></li>
+	</ul>
+	<blockquote>
+
     <p><b>May 20, 2004 at 05:01 EDT&nbsp;:</b><br /></p>
     
       <blockquote>
