@@ -1,11 +1,12 @@
 
 news.xml
 source_code.xml
-using_cvs.xml
-cvs_policy.xml
+  using_cvs.xml
+  cvs_policy.xml
 testing.xml
 docs.xml
 projects.xml
 contact_us.xml
 links.xml
+search.xml
 

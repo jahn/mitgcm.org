@@ -71,8 +71,8 @@ foreach $file (@flist) {
 	}
 	$menu = join "", $menu, $tmp;
     }
-    $tmp = "<a href=\"./htdig\" />Search</a><br />\n";
-    $menu = join "", $menu, $tmp;
+    # $tmp = "<a href=\"./htdig\" />Search</a><br />\n";
+    # $menu = join "", $menu, $tmp;
 
     #  Create the output
     $_ = $template;
