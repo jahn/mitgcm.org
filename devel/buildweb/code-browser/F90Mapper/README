@@ -1,0 +1,54 @@
+ f90mapper
+ ---------
+
+Program to produce hyperlinked static analysis of a Fortran 90 program.
+
+Usage: f90mapper -d dictionary -o directory sourcefiles.
+
+-d dictionary: dictionary is the name of a text file containing definitions
+               for each variable sourcefiles. No default.
+               The dictionary file has the following format
+               #  Comment
+               variable { HREF="html_reference";
+                          TEXT="Decsription";
+                          UNITS="umits";
+                          NOTES="notes";
+                         }
+               The { } fields are optional.
+               Example dictionary entries:
+               ---------------------------
+               1. Variable called A2MOMXY which holds a diffusion coefficient
+                  in m^2.s^-1. Discussed further in a document called manual
+                  at the marker called LAPL_DIFF. Footnotes a, b and c apply
+                  to A2MOMXY.
+               > A2MOMXY {HREF="manual#LAPL_DIFF";
+               >  TEXT="Used internally to hold lateral diffusion coefficient.";
+               >  UNITS="m<sup>2</sup>s<sup>-1</sup>"; NOTES="a b c";}
+               2. Variable calle ARR. With no hyperlinks, no units and no
+                  footnotes.
+               > ARR     {TEXT="Temporary three-dimensional work array.";}
+
+    The separate utility "DefinitionParser" can be used to create a dictionary
+    of variable definitions from a source code with structured comments.
+
+               Many files are created in a subdirectory called vdb/ these include
+    vdict.html           - variable dictionary. HTML file
+                           containing table of variables and their
+                           defintions.
+    names/variable.html  - for each variable name a file is created 
+                           called "variable_name".html which 
+                           tabulates all the uses of that name throughout
+                           sourcefiles.
+    code/sourcefile.html - for each sourcefile a file is created
+                           called "sourcefile_name".html which 
+                           is a hypertext version of the original source.
+                           Variables and procedures are hyperlinked 
+                           to the variable dictionary. Procedure calls
+                           are also hyperlinked to the procedure source
+                           if it lies within the scope of sourcefiles.
+                In the working directory a set of cross-linked html files
+                with root file named "code_reference.html" are created.
+                The root file can be used to browse through the entire
+                code tree that was parsed.
+            
+

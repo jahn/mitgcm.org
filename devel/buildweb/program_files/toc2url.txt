@@ -1,0 +1,13 @@
+#TOC Entry            REPLACE                URL 
+About                 _ABOUT_                ../home_page/frontpage.html
+Browse Code           _BROWSE_               ../code_reference/callTree.html
+ Subroutines          _SUBROUTINES_          ../code_reference/subroutine.html
+ Parameters           _PARAMETERS_           ../code_reference/parameters.html
+ Source Tree          _SOURCE_               ../code_reference/sourcefiles.html
+ Index of variables   _INDEX_                ../code_reference/variabledictionary.html
+Document Root         _ROOT_                 ../
+Web Server            _SERVER_               http://mitgcm.org
+Home                  _HOME_                 /
+Contact               _CONTACT_              mailto:support@mitgcm.org
+Sitemap               _SITEMAP_              http://mitgcm.org/
+Search                _SEARCH_               http://mitgcm.org/

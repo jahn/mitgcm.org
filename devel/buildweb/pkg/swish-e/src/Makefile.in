@@ -1,0 +1,194 @@
+# 
+# Makefile derived from the Makefile coming with swish-e 1.3.2
+# (original Makefile for SWISH Kevin Hughes, 3/12/95)
+#
+# The code has been tested to compile on Solaris and DEC 
+# G.Hill ghill@library.berkeley.edu 6/11/97
+# 
+# autoconf configuration by Bas Meijer, 11 Dec 2000
+# Cross Platform Compilation on Solaris, HP-UX, IRIX, Mac OS X, BDSi and Linux
+# Several ideas from a Makefile by Christian Lindig <lindig@ips.cs.tu-bs.de>  
+#
+# $Id: Makefile.in,v 1.47 2002/08/23 23:11:06 whmoseley Exp $
+
+# get name and version from configure.in
+NAME        = @PROJECT@
+VERSION     = @VERSION@
+
+# C compiler
+CC          = @CC@
+
+SHELL       = /bin/sh
+prefix      = @prefix@
+bindir      = $(prefix)/bin
+exec_prefix = @exec_prefix@
+libdir      = @libdir@
+cflags      = @CFLAGS@
+ldflags     = @LDFLAGS@
+
+
+
+
+LIBS        = @LIBS@ @LIBXML2_LIB@ @Z_LIBS@
+
+# Library related 
+AR          = ar
+ARFLAGS     = cr
+RANLIB      = @RANLIB@
+
+#
+# The objects for the different methods and
+# some common aliases
+#
+
+
+
+#--- James Clark's Expat ----
+
+XPDIR       = expat
+
+XP_OBJ = $(XPDIR)/xmltok/xmltok.o \
+         $(XPDIR)/xmltok/xmlrole.o \
+         $(XPDIR)/xmlparse/xmlparse.o
+
+XP_INC = -I$(XPDIR)/xmltok -I$(XPDIR)/xmlparse
+
+XP_H   = $(XPDIR)/xmltok/*.h $(XPDIR)/xmlparse/*.h
+
+
+#== Define groups of object files ==
+
+#--- Input methods ---
+FILESYSTEM_OBJS     = fs.o
+HTTP_OBJS           = http.o httpserver.o
+EXTPROG_OBJS        = extprog.o
+INPUT_METHODS_OBJS  = $(FILESYSTEM_OBJS) $(HTTP_OBJS) $(EXTPROG_OBJS) methods.o
+
+#--- Parsers ---
+PARSER_OBJS         = html.o txt.o xml.o $(XP_OBJ) entities.o @LIBXML2_OBJS@
+                      
+
+#--- Indexing modules ---
+INDEXING_OBJS       = $(INPUT_METHODS_OBJS) $(PARSER_OBJS) \
+                      index.o merge.o stemmer.o soundex.o \
+                      filter.o parse_conffile.o swregex.o double_metaphone.o
+
+#--- Logical Groups ---
+
+SEARCHING_OBJS      = swish2.o search.o swish_words.o proplimit.o \
+                      search_alt.o result_output.o rank.o
+
+DB_OBJS             = hash.o compress.o db.o db_native.o ramdisk.o btree.o array.o
+
+UTIL_OBJS           = check.o file.o error.o list.o mem.o string.o \
+                      docprop.o metanames.o result_sort.o \
+                      dump.o swish_qsort.o  date_time.o \
+                      no_better_place_module.o @LIBOBJS@
+
+# Only for building the binary
+SWISH_BINARY_OBJS   = swish.o keychar_out.o                     
+
+
+# Collection of files for building swish library
+# later, separate out indexing from searching
+LIB_OBJS            =   $(INDEXING_OBJS) $(SEARCHING_OBJS) $(DB_OBJS) $(UTIL_OBJS)
+SEARCH_LIB_OBJS     =   $(SEARCHING_OBJS) $(DB_OBJS) $(UTIL_OBJS)
+
+# All objects for make clean target
+OBJS                = $(SWISH_BINARY_OBJS) $(SEARCHING_OBJS) $(INDEXING_OBJS) $(SEARCHING_OBJS) $(DB_OBJS) $(UTIL_OBJS)
+ 
+# Flags for C compiler
+CFLAGS      = -Wall -pedantic @DEFS@ -DSWISH_VERSION=\"$(VERSION)\" $(XP_INC) @LIBXML2_CFLAGS@ @Z_CFLAGS@ $(cflags)
+LDFLAGS     = $(ldflags)
+
+
+
+
+#.SUFFIXES: 
+#.SUFFIXES : .o .c
+
+.c.o:
+	$(CC) $(CFLAGS) -c -o $@ $<
+	
+all:	$(NAME)
+
+$(NAME): libswish-e.a $(SWISH_BINARY_OBJS)
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(SWISH_BINARY_OBJS) libswish-e.a $(LIBS)
+	chmod 755 $@
+
+libswish-e.a: $(LIB_OBJS)
+	$(AR) $(ARFLAGS) $@ $(LIB_OBJS)
+	$(RANLIB) libswish-e.a
+
+swish-search: $(NAME)
+	cp -f $(NAME) swish-search
+
+clean:
+	rm -f ../tests/*.index ../tests/core core  swish-e swish-search swish.o $(OBJS) libswish-e.a libtest.o
+
+realclean: clean
+	rm Makefile
+	rm -f config.cache config.log config.status
+
+test:	$(NAME)
+	@echo -e "\nCreating index..."
+	@(cd ../tests; ../src/swish-e -c test.config)
+
+	@echo -e "\n** Five (5) tests follow..."
+
+	@echo -e "\ntest 1 (Normal search) ..."
+	@(cd ../tests; ../src/swish-e -f ./test.index -w test | egrep  '^[0-9]')
+	
+	@echo -e "\ntest 2 (MetaTag search 1) ..."
+	@(cd ../tests; ../src/swish-e -f ./test.index -w meta1=metatest1 | egrep  '^[0-9]')
+	
+	@echo -e "\ntest 3 (MetaTag search 2) ..."
+	@(cd ../tests; ../src/swish-e -f ./test.index -w meta2=metatest2 | egrep  '^[0-9]')
+	
+	@echo -e "\ntest 4 (XML search) ..."
+	@(cd ../tests; ../src/swish-e -f ./test.index -w meta3=metatest3 | egrep  '^[0-9]')
+	
+	@echo -e "\ntest 5 (Phrase search) ..."
+	@(cd ../tests; ../src/swish-e -f ./test.index -w '"three little pigs"' | egrep  '^[0-9]')
+
+	@echo -e "\n ** All tests completed! **\n"
+
+
+$(LIB_OBJS):	Makefile config.h swish.h
+
+install:
+	cp swish-e $(bindir)/swish-e
+
+install-lib:	
+	cp libswish-e.a $(libdir)/libswish-e.a
+
+
+libtest: all libsearchswish-e.a libtest.o
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) libtest.o libswish-e.a $(LIBS)
+	chmod 755 $@
+
+
+# Just for searching - some day.
+
+libsearchswish-e.a: $(SEARCH_LIB_OBJS)
+	$(AR) $(ARFLAGS) $@ $(SEARCH_LIB_OBJS)
+	$(RANLIB) libsearchswish-e.a
+
+
+libsearchtest: libsearchswish-e.a libtest.o
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) libtest.o libsearchswish-e.a $(LIBS)
+	chmod 755 $@
+	
+
+
+#
+# dependencies
+# 
+*.o: *.h
+
+*.c: *.h
+
+$(XPDIR)/xmltok/*.o: $(XPDIR)/xmltok/*.h
+$(XPDIR)/xmlparse/*.o: $(XPDIR)/xmlparse/*.h
+
+

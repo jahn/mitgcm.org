@@ -1,0 +1,83 @@
+/* 
+ BISON Parser to recognise name definition records.
+ A name definiton record ( or def ) has form
+
+ variable(s) :: decription text
+
+ It is only recognised when in the comment section of a 
+ code. All lines of the form above are treat as def 
+ records. All other comment or executable statements are 
+ ignored.
+
+ The parser is fragile and can have problems with unterminated quotes.
+ 
+*/
+
+%union {
+   int      LineNo;
+   char    *symbolName;
+}
+
+%token <LineNo> OTHER
+%token <LineNo> NL
+%token <symbolName> VNAME
+%token <symbolName> DEF_STRING
+%token <symbolName> DEF_PUNCT 
+%token <symbolName> DEF_COMMA 
+%token <LineNo> CALL
+%token <LineNo> NAMELIST
+%token <LineNo> FSLASH
+%token <LineNo> CPP_IFDEF
+%token <LineNo> CPP_IFNDEF
+%token <LineNo> CPP_DEFINE
+%token <LineNo> CPP_UNDEF
+%token <LineNo> CPP_ELIF
+%token <LineNo> CPP_IF
+%type  <LineNo> call
+
+
+input: 
+      | input def
+      | input OTHER
+     ;
+
+def1:      def_v_list '::' descript NL
+             ;
+
+def2:  ',' def_v_list '::' descript NL
+             ;
+
+def3:                 '::' descript NL
+             ;
+
+def4:   def4 def2
+               | def2
+             ;
+
+def5:  def5 def3
+              | def3
+             ;
+
+def:  def1 
+     | def1 def4
+     | def1 def5
+     | def1 def4 def5
+   ;
+
+descript:  descript sentence
+         | sentence
+        ;
+
+def_v_list:   VNAME 
+            | def_v_list ',' VNAME
+
+sentence:   sentence phrase
+          | phrase
+
+phrase:   DEF_STRING
+        | DEF_STRING def_punct
+        | def_punct
+        | def_punct DEF_STRING
+
+def_punct:  DEF_COMMA
+          | DEF_PUNCT

@@ -1,0 +1,19 @@
+These are example scripts that can be used with SWISH-E.
+
+swish.cgi   - example search script that allows displaying results
+              page-by-page.  Type `perldoc swish.cgi' from the
+              examples directory for instructions.
+
+swish.gif   - Swish-e logo.
+
+swish.tmpl  - HTML::Template file for use with swish.cgi.
+
+search.tt   - Template::Toolkit example template file.
+
+modules     - Directory containing required modules for use with swish.cgi.
+
+
+
+SWISH-Stemmer-0.05.tar.gz
+            - Perl module to provide stemming to swish.cgi and swish2.cgi to
+              support term highlighting when using a stemmed index.

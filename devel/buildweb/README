@@ -1,0 +1,32 @@
+Generally you'll want to use  "make All"  to rebuild everything from
+scratch *but* if you're not changing the Latex or code-browser output
+the  "make all"  will simply re-create the web visible pages without
+changing conents of latex/ or vdb/.
+
+ "make all" takes a few minutes on a P4
+ "make Latex" takes about five minutes on a P4
+ "make VDB" takes about few minutes on a P4
+ "make All" takes about ten minutes on a P4
+
+Targets in Makefile
+ All    - does absolutely everything from scratch
+ all    - removes web site and regenerates it from latex and vdb directories
+ Latex  - regenerate html from latex manual
+ VDB    - regenerate code-browser (vdb directory)
+
+These other targets are not usefully employed out of context
+ Templates       - create templates used in Bonniefy
+ InstallSkeleton - deletes web site, installs sparse structure, manual and vdb
+ Search          - Generate index for search engine
+ Bonniefy        - process pages in web-site and added top/side/bottom bars
+ 
+Makefile variables of particular interest
+ TARGETDIR   - directory where the web site is installed
+ LATEXROOT   - directory where the latex manual is installed
+ VDBROOT     - directory where the vdb html is installed
+
+You are not likely to need to change these other Makefile variables
+ BINDIR      - directory where the bonniefy.pl and swish-e scripts are kept
+ PFILESDIR   - directory where the configuration stuff is kept
+ BUILDWEBDIR - normally the location of this Makefile
+ SKELETON    - sparse structure

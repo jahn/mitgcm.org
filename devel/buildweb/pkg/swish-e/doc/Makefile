@@ -1,0 +1,107 @@
+
+# Makefile for swish-e Documentation
+#
+# $Id: Makefile.in,v 1.11 2001/10/07 18:11:17 whmoseley Exp $
+#
+# Any suggestions to improve this makefile are welcome -- Bill Moseley swish@hank.org
+#
+# To Do: get a portable way to use "echo -e"
+
+prefix      = /u/httpd/html/devel/buildweb
+mandir      = ${prefix}/man/man1
+VERSION     = 2.2rc1
+
+SOURCEPODS = ../pod/CHANGES.pod    ../pod/README.pod   ../pod/SWISH-CONFIG.pod  ../pod/SWISH-LIBRARY.pod \
+             ../pod/SWISH-RUN.pod  ../pod/INSTALL.pod  ../pod/SWISH-3.0.pod     ../pod/SWISH-FAQ.pod \
+             ../pod/SWISH-PERL.pod ../pod/SWISH-SEARCH.pod
+
+
+MANPAGES = SWISH-RUN.1 SWISH-CONFIG.1 SWISH-RUN.1 SWISH-FAQ.1 SWISH-LIBRARY.1 SWISH-PERL.1
+
+
+# How portable is .PHONY?
+.PHONY: all html pod readme pdf man install-man clean realclean
+
+.SUFFIXES:          # remove default rules
+
+
+
+all: readme html
+
+#--- convert README.pod to README ---
+
+../README: ../pod/README.pod
+	pod2text ../pod/README.pod > ../README && chmod 644 ../README
+
+readme: ../README	
+
+
+#--- create/install man pages ----------
+
+%.1: ../pod/%.pod
+	pod2man --center="SWISH-E Documentation" --lax --release='$(VERSION)' $< > $@
+
+$(MANPAGES): ../configure
+
+man: $(MANPAGES)
+
+install-man: man
+	cp $(MANPAGES) $(mandir)
+
+
+
+#--- create html pages ------
+
+
+
+./Version.pm: ../configure
+	echo 'package SWISHE::Doc;$$VERSION=q[$(VERSION)];1' > ./Version.pm
+
+html: ./Version.pm
+	@bin/build
+
+
+#--- split version (for searchable version of documentation ) ---
+
+split: ./Version.pm
+	@echo "Checking for swish binary..."
+	test -x ../src/swish-e
+
+	bin/build -s
+
+	cp ../src/swish-e ../html/split/swish-e
+	../html/split/swish-e -c split.conf
+	chmod 755 ../html/split/search.cgi
+	perl -i.orig -pe 's{<!-- SEARCH -->}{<center>[<a href="split/search.cgi">Search The Documentation</a>]</center>}' ../html/index.html ../html/index_long.html
+	perl -i.orig -pe 's{<!-- SEARCH -->}{<center>[<a href="search.cgi">Search</a>] [<a href="../index.html">Back to Non-Split Documentation</a>]</center>}' ../html/split/index.html ../html/split/index_long.html
+	@echo -e "\n** Don't forget to refresh in your browser to see the new pages! **\n"
+
+
+#--- create PDF and PostScript ----
+
+pdf: ./Version.pm
+	bin/build -d
+	cp -f rel_ps/swish-e_documentation.pdf ..
+	cp -f rel_ps/swish-e_documentation.ps ..
+	rm -rf rel_ps
+	@echo "swish-e_documentation.pdf"
+
+
+#---- clean -------------
+
+# This cleans split and pdf/ps and man pages
+clean:
+	rm -rf rel_ps
+	rm -f ../swish-e_documentation.pdf ../swish-e_documentation.ps
+	rm -rf ../html
+
+	rm -f ./*.1
+	-chmod 644 ../pod/*.pod
+	
+realclean: clean
+	rm -f Makefile
+	rm -f ./pod2html-dircache ./pod2html-itemcache
+
+distclean: realclean
+
+

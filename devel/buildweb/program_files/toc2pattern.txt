@@ -1,0 +1,60 @@
+#TOC Entry            REPLACE               PATTERN
+#The following are used to preformat the table of contents
+Installation          _INSTALL_             ^<TITLE>3. Getting started and using the MITgcm
+ Download             _DOWNLOAD_            ^<TITLE>3.* Obtaining the code
+ Compilation          _COMPILATION_         ^<TITLE>3.* Building the code
+ Running the model    _RUNNING_             ^<TITLE>3.* Running the model
+ Customization        _CUSTOMIZATION_       ^<TITLE>3.* Doing it yourself: customizing the code
+Tutorials             _TUTORIALS_           ^<TITLE>3.* Tutorials
+ Barotropic Gyre      _BAROTROPIC_          ^<TITLE>3.* Barotropic Ocean Gyre In Cartesian Coordinates
+ Baroclinic Gyre      _BAROCLINIC_          ^<TITLE>3.* Four Layer Baroclinic Ocean Gyre In Spherical Coordinates
+ Global Ocean         _GLOBAL_              ^<TITLE>3.* Global Ocean Simulation at 4
+ Held Suarez Atmosphe _HELD_                ^<TITLE>3.* Held-Suarez Atmospheric Simulation at 2.8
+ Open Ocean Convectio _OPEN_                ^<TITLE>3.* Surface Driven Convection
+ Shelf Convection     _SHELF_               ^<TITLE>3.* Gravity Plume
+ Tracer injection     _TRACERINJ_           ^<TITLE>3.* Centennial Time Scale
+# Parallel Global Ocea _PARALLEL_            ^<TITLE>5. Tutorial II - Parallelism
+ Tracer Sensitivity   _TRACER_              ^<TITLE>5.* Sensitivity of Air-Sea Exchange to Tracer Injection Site
+Documentation         _DOCUMENTATION_       ^<TITLE>1. Overview of MITgcm
+ MITgcm in Action     _MITGCM_              ^<TITLE>1.* Introduction
+ Continuous formulati _CONTINUOUS_          ^<TITLE>1.* Continuous
+ Numerical Algorithm  _NUMERICAL_           ^<TITLE>2. Discretization and Algorithm
+ Software Architectur _SOFTWARE_            ^<TITLE>4. Software Architecture
+ Automatic Differenti _AUTOMATIC_           ^<TITLE>5. Automatic Differentiation
+ Optional Packages    _OPTIONAL_            ^<TITLE>6. Physical
+ Diagnostics          _DIAGNOSTICS_         ^<TITLE>7. Diagnostics and tools
+ Interface to ECCO    _INTERFACE_           ^<TITLE>8. Interface with ECCO
+#The following are used to preformat the front_page
+Atmosphere            _ATMOSPHERE_          ^<TITLE>1.* Global atmosphere: `Held-Suarez' benchmark
+Oceanic               _OCEANIC_              ^<TITLE>1.* Global ocean circulation
+Non-Hydrostatic       _NONHYDROSTATIC_       ^<TITLE>1.* Convection and mixing over topography
+Horizontal Orthogonal _HORIZONTAL_           ^<TITLE>2.* Vector invariant momentum equations
+Finite Volume         _FINITE_               fig:finite-volumes
+Physical Parameteriz  _PHYSICAL_             ^<TITLE>6. Physical
+Tangent Linear        _TANGENT_              ^<TITLE>1.* Parameter sensitivity using the adjoint of MITgcm
+Domain Decomposition  _DOMAIN_               The three level domain decomposition
+#Documentation - see above
+#Download - see above
+#Tutorials see above
+#Browse Code - see above
+#The following are used to preformat the Quicklinks menu
+AD                    _AD_                   ^<TITLE>5. Automatic Differentiation
+Adjoint               _ADJOINT_              ^<TITLE>5.1.2 Reverse or adjoint sensitivity
+Atmospheric           _ATMOSPHERIC_          ^<TITLE>1.4.1 Hydrostatic
+CVS                   _CVS_                 ^<TITLE>3.2 Obtaining the code
+Flux-form             _FLUX_                 ^<TITLE>2.13 Flux-form momentum equations
+GM/Redi               _GM_                   ^<TITLE>6.1 Gent/McWiliams/Redi SGS Eddy parameterization
+KPP                   _KPP_                  ^<TITLE>6.2 Ocean vertical mixing
+Linear Advection      _LINEAR_               ^<TITLE>2.16 Linear advection schemes
+MATLAB                _MATLAB_               ^<TITLE>7.1.2 utils/matlab
+Nonlinear Advection   _NONLINEAR_            ^<TITLE>2.17 Non-linear advection schemes
+Ocean Equations       _OCEANEQ_              ^<TITLE>1.5.1 Equations of motion for the ocean
+Operators             _OPERATORS_            ^<TITLE>1.6 Appendix:OPERATORS
+#Runtime Diagnostics  _DIAGNOSTICS           ^<TITLE>7. Diagnostics and tools
+Starting/Restarting   _STARTING_             ^<TITLE>3.6 Running the model
+Tangent-linear        _TANGENT_              ^<TITLE>5.1.1 Forward or direct
+Time-stepping         _TIMESTEP_             ^<TITLE>2.1 Time-stepping
+MPI                   _MPI_                  ^<TITLE>4.2.7 Distributed memory
+Threads               _THREADS_              ^<TITLE>4.2.6 Shared memory
+Vector Invariant      _VECTOR_               ^<TITLE>2.14 Vector invariant momentum equations
+WRAPPER               _WRAPPER_              ^<TITLE>4.2 WRAPPER

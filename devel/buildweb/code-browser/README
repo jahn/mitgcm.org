@@ -1,0 +1,22 @@
+# To generate browseable code for the manual
+# Assuming starting in directory "buildweb/code-browser"
+#
+# Generating the browsable code involves several stages
+# 1. particular revision is checked out from cvs
+# 2. definition comments are extracted
+# 3. hyperlinked form of code is generated
+# 4. hyperlinked form of call tree is generated ( call tree is currently static
+#    and in file MakeBrowseableMITGCM/callTree.F and MakeBrowseableMITGCM/callTree.header )
+#    Really it should be extracted fom the checked out code.
+# 5. Stuff for web manual is put in tar file (web.tgz) and then unpacked into
+#    correct place in buildweb tree.
+#
+# These steps are carried out by the commands below.
+#
+# To execute the commands simply "source" this file from the
+# directory buildweb/code-browser.
+#
+# Note - 'release1_p5' is specified below this could be taken from an environment variable.
+#
+( cd MakeBrowseableMITGCM; ./makebrowseablecodepages.sh release1_p5; cp work/web.tgz ..; \rm -fr work )
+( cd ..; tar -xzf code-browser/web.tgz; \rm code-browser/web.tgz)

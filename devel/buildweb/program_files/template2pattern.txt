@@ -1,0 +1,10 @@
+#TEMPLATE           PATTERN
+# These are the new patterns where we assume first match takes priority
+tutorials.htm       www:tutorials
+install.htm         ^<TITLE>3\.
+documentation.htm   ^<TITLE>
+#
+# These are the old patterns
+#install.htm         ^<TITLE>3\.( |1\.|1 |2\.|2 |3\.|3 |4\.|4 |5\.|5 |6\.|6 |7\.|7 )
+#tutorials.htm       ^<TITLE>(3\.8|3\.9|3\.10|3\.11|3\.12|3\.13|3\.14|3\.15|5\.3)
+#documentation.htm   ^<TITLE>(1\.|2\.|4\.|5\. |5\.1|5\.2|5\.4|5\.5|6\.|7\.|8\.|Contents|manual|Bibliography|About)

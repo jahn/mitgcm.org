@@ -1,0 +1,27 @@
+open paoc.mit.edu
+user paoc-web paoc123
+prompt 
+
+cd mitgcm/templates/webfiles
+lcd /u/httpd/html/sealion3/buildweb/test
+mget *.css
+
+binary
+mget *.class
+
+cd images
+lcd images
+mget *.gif
+mget *.jpg
+
+cd ../home_page
+lcd ../home_page
+ascii
+mget *.html
+
+cd ../code_reference
+lcd ../code_reference
+ascii
+mget *.html
+
+quit

@@ -1,0 +1,9 @@
+open paoc.mit.edu
+user paoc-web paoc123
+prompt 
+
+cd mitgcm/templates
+lcd ../templates
+mget *.htm
+
+quit

@@ -1,0 +1,91 @@
+#!/usr/local/bin/perl -w
+
+# print STDERR "spider $$ [@ARGV]\n";
+
+#
+# SWISH-E http method Spider
+# $Id: swishspider,v 1.8 2002/08/15 05:31:02 whmoseley Exp $ 
+#
+
+use strict;
+
+use LWP::UserAgent;
+use HTTP::Status;
+use HTML::Parser 3.00;
+use HTML::LinkExtor;
+
+if (scalar(@ARGV) != 2) {
+    print STDERR "Usage: SwishSpider localpath url\n";
+    exit(1);
+}
+
+my $ua = new LWP::UserAgent;
+$ua->agent( "SwishSpider http://swish-e.org" );
+
+my $localpath = shift;
+my $url = shift;
+
+my $request = new HTTP::Request( "GET", $url );
+my $response = $ua->simple_request( $request );
+
+#
+# Write out important meta-data.  This includes the HTTP code.  Depending on the
+# code, we write out other data.  Redirects have the location printed, everything
+# else gets the content-type.
+#
+open( RESP, ">$localpath.response" ) || die( "Could not open response file $localpath.response" );
+
+print RESP $response->code() . "\n";
+
+if( $response->code() == RC_OK ) {
+    print RESP $response->header( "content-type" ) . "\n";
+
+} elsif( $response->is_redirect() ) {
+    print RESP ($response->header( "location" ) ||'') . "\n";
+}
+
+print RESP ($response->last_modified || 0), "\n";
+
+close( RESP );
+
+#
+# Write out the actual data assuming the retrieval was succesful.  Also, if
+# we have actual data and it's of type text/html, write out all the links it
+# refers to
+#
+if( $response->code() == RC_OK ) {
+    my $contents = $response->content();
+
+    open( CONTENTS, ">$localpath.contents" ) || die( "Could not open contents file $localpath.contents\n" );
+    print CONTENTS $contents;
+    close( CONTENTS );
+
+    if( $response->header("content-type") =~ "text/html" ) {
+	open( LINKS, ">$localpath.links" ) || die( "Could not open links file $localpath.links\n" );
+	my $p = HTML::LinkExtor->new( \&linkcb, $url );
+	$p->parse( $contents );
+
+	close( LINKS );
+    }
+}
+
+
+sub linkcb {
+    my($tag, %links) = @_;
+    if (($tag eq "a") && ($links{"href"})) {
+	my $link = $links{"href"};
+	#
+	# Remove fragments
+	#
+	$link =~ s/(.*)#.*/$1/;
+	
+	#
+	# Remove ../  This is important because the abs() function
+	# can leave these in and cause never ending loops.
+	#
+	$link =~ s/\.\.\///g;
+
+	print LINKS "$link\n";
+    }
+}
+
