@@ -22,7 +22,7 @@
 
   <body>	
 
-    <p>Two forms of documentation are currently available:
+    <p>Multiple sources of documentation are currently available:
       <ul>
 
 	<li>The complete <a href="http://mitgcm.org/sealion/">MITgcm User's
@@ -39,7 +39,15 @@
 		</a></li>
 	  </ul>
 	</li>
-
+	
+	<li>An <a href="http://mitgcm.org/sealion/">MITgcm API Reference
+	    Manual</a> is also available.  It provides a view of the various
+	    subroutines, functions, variables, showing how they are called and
+	    used.  Used in conjunction with our <a
+	    href="http://mitgcm.org/cmi_redir.php/code_browser"> on-line code
+	    browser</a>, the API Reference can be helpful when trying to
+	    understand parts of the MITgcm internals. <br /><br /></li>
+	
       </ul>
     </p>
 	
