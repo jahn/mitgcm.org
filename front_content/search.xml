@@ -22,12 +22,10 @@
 
   <body>
 
-<p>This page is here to help you search publicly available pages
-within the <a href="http://mitgcm.org/">MITgcm.org</a> domain.  While
-essentially all of the static content has been indexed, limited
-resources prevent the indexing of programmatically generated content
-such as the CVS web interface and portions of the GForge-enabled <a
-href="http://dev.mitgcm.org">development site</a>.  For your
+<p>This page is here to help you search publicly available pages within the <a
+href="http://mitgcm.org/">MITgcm.org</a> domain.  While essentially all of the
+static content has been indexed, limited resources prevent the indexing of
+programmatically generated content such as the CVS web interface.  For your
 convenience, searches comprising various subsections have been
 pre-defined.<br></p>
 
@@ -69,7 +67,7 @@ Restrict to area (URL pattern): <input type="text" size="42" name="restrict" val
 <br />
 <hr>
 
-<h2>Search specific portions of the MITgcm.org and dev.MITgcm.org web sites:</a></h2>
+<h2>Search specific portions of the MITgcm.org and related web sites:</a></h2>
 <p>
 <form method="post" action="/cgi-bin/htsearch">
 Search for:<input type="text" size="52" name="words" value="">
@@ -101,12 +99,12 @@ Restrict to area (URL pattern): <select name="restrict">
 
   <option value="http://mitgcm.org/sealion/">Release1_p8 Docs: 
     &nbsp; http://mitgcm.org/sealion/
-  <option value="http://dev.mitgcm.org/pipermail/mitgcm-support/">MITgcm-support mailing list: 
-    &nbsp; http://dev.mitgcm.org/pipermail/mitgcm-support/
-  <option value="http://dev.mitgcm.org/pipermail/mitgcm-cvs/">MITgcm-cvs mailing list: 
-    &nbsp; http://dev.mitgcm.org/pipermail/mitgcm-cvs/
-  <option value="http://dev.mitgcm.org/pipermail/mitgcm-devel/">MITgcm-devel mailing list:
-    &nbsp; http://dev.mitgcm.org/pipermail/mitgcm-devel/
+  <option value="http://mitgcm.org/pipermail/mitgcm-support/">MITgcm-support mailing list: 
+    &nbsp; http://mitgcm.org/pipermail/mitgcm-support/
+  <option value="http://mitgcm.org/pipermail/mitgcm-cvs/">MITgcm-cvs mailing list: 
+    &nbsp; http://mitgcm.org/pipermail/mitgcm-cvs/
+  <option value="http://mitgcm.org/pipermail/mitgcm-devel/">MITgcm-devel mailing list:
+    &nbsp; http://mitgcm.org/pipermail/mitgcm-devel/
   <option value="http://mitgcm.org/dev_docs/">In-development Documentation: 
     &nbsp; http://mitgcm.org/dev_docs/
   <option value="http://mitgcm.org/dev_docs/devel_HOWTO/">MITgcm Development HOWTO:

@@ -22,29 +22,28 @@
 
   <body>
 
-    <p>Please see the <a href="http://dev.mitgcm.org/projects/mitgcm/">MITgcm
-	development server</a> which includes:
+    <p>The following services are publically available:
       
       <ul>
-	<li>a <a href="http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/">Web
+	<li>a <a href="http://mitgcm.org/cgi-bin/viewcvs.cgi/">Web
 	    interface to the CVS repository</a>,<br /><br /></li>
 	
-	<li>the <a href="http://dev.mitgcm.org/mailman/listinfo/mitgcm-support">
+	<li>the <a href="http://mitgcm.org/mailman/listinfo/mitgcm-support">
 	    MITgcm-support</a> mailing list with a web-browsable archive, <br
 	    /><br />
 	    </li>
-	
+	<!--
 	<li>a <a href="http://dev.mitgcm.org/forum/?group_id=6">web-based
 	    forum</a> suitable for quick questions, and<br /><br /></li>
-	
+	-->
 	<li>a <a href="http://mitgcm.org/dev_docs/devel_HOWTO">HOWTO</a> to help
 	  you get started with MITgcm development and customization.</li>
       </ul>
     </p>
 
-    <p>Our <a href="http://dev.mitgcm.org/htdig/">search engine</a> currently
-      indexes most of the <a href= "http://mitgcm.org">mitgcm.org</a> and <a
-	href="http://dev.mitgcm.org">dev.mitgcm.org</a> web pages.</p>
+    <p>Our <a href="http://mitgcm.org/htdig/">search engine</a> currently
+      indexes most of the <a href= "http://mitgcm.org">mitgcm.org</a> and
+      related web pages.</p>
 
 
   </body>
