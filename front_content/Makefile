@@ -6,6 +6,7 @@
 
 all:
 	-rm -rf html
+	cvs -q up
 	./parse_emails
 	./make_summary
 	./Assemble.pl
