@@ -1,0 +1,417 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 99.2beta8 (1.43)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>subroutine RediTensor()</TITLE>
+<META NAME="description" CONTENT="subroutine RediTensor()">
+<META NAME="keywords" CONTENT="gmredi">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v99.2beta8">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="gmredi.css">
+
+<LINK REL="next" HREF="node9.html">
+<LINK REL="previous" HREF="node7.html">
+<LINK REL="up" HREF="node7.html">
+<LINK REL="next" HREF="node9.html">
+</HEAD>
+
+<BODY bgcolor="#FFFFFFFF">
+<!--Navigation Panel-->
+<A NAME="tex2html97"
+  HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html95"
+  HREF="node7.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html89"
+  HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html98"
+  HREF="node9.html">subroutine inc_tracer()</A>
+<B> Up:</B> <A NAME="tex2html96"
+  HREF="node7.html">Discretisation and code</A>
+<B> Previous:</B> <A NAME="tex2html90"
+  HREF="node7.html">Discretisation and code</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00061000000000000000">
+subroutine RediTensor()</A>
+</H2>
+
+<P>
+<PRE>
+subroutine RediTensor(Temp,Salt,Kredigm,K31,K32,K33, nIter,DumpFlag)
+                      |---in--| |-------out-------|
+! Input
+real Temp(Nx,Ny,Nz)     ! Potential temperature
+real Salt(Nx,Ny,Nz)     ! Salinity
+! Output
+real Kredigm(Nx,Ny,Nz)  ! Redi/GM eddy coefficient
+real K31(Nx,Ny,Nz)      ! Redi/GM (3,1) tensor component
+real K32(Nx,Ny,Nz)      ! Redi/GM (3,2) tensor component
+real K33(Nx,Ny,Nz)      ! Redi/GM (3,3) tensor component
+! Auxiliary input
+integer nIter           ! interation/time-step number
+logical DumpFlag        ! flag to indicate routine should ``dump''
+</PRE>
+
+<P>
+The subroutine <B>RediTensor()</B> is called from <B>model()</B> with
+input arguments <IMG
+ WIDTH="18" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"
+ SRC="img65.png"
+ ALT="$T$"> and <IMG
+ WIDTH="17" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img66.png"
+ ALT="$S$">. It returns the 3D-arrays <TT>Kredigm</TT>,
+K31, <TT>K32</TT> and <TT>K33</TT> which represent <IMG
+ WIDTH="41" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.png"
+ ALT="$\kappa _{GM}$"> (at
+<IMG
+ WIDTH="40" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img67.png"
+ ALT="$T/S$"> points) and the three components of the bottom row in the
+Redi/GM tensor; <IMG
+ WIDTH="34" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img68.png"
+ ALT="$2 S_x$">, <IMG
+ WIDTH="34" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img69.png"
+ ALT="$2 S_y$"> and <IMG
+ WIDTH="35" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img70.png"
+ ALT="$\vert S\vert^2$"> respectively, all at <IMG
+ WIDTH="25" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img71.png"
+ ALT="$W$">
+points.
+
+<P>
+The discretisations and algorithm within <B>RediTensor()</B> are as
+follows.  The routine first calculates the locally reference potential
+density <IMG
+ WIDTH="23" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img72.png"
+ ALT="$\sigma_\theta$"> from <IMG
+ WIDTH="18" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"
+ SRC="img65.png"
+ ALT="$T$"> and <IMG
+ WIDTH="17" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img66.png"
+ ALT="$S$"> and calculates the potential
+density gradients in subroutine <B>gradSigma()</B>:
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="CENTER">Array</TD>
+<TD ALIGN="CENTER">Grid-point</TD>
+<TD ALIGN="LEFT">Definition</TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TT>SigX</TT></TD>
+<TD ALIGN="CENTER">U</TD>
+<TD ALIGN="LEFT"><!-- MATH
+ $\sigma_x = \frac{1}{\Delta x} \delta_x \sigma|_{z(k)}$
+ -->
+<IMG
+ WIDTH="131" HEIGHT="39" ALIGN="MIDDLE" BORDER="0"
+ SRC="img73.png"
+ ALT="$\sigma_x = \frac{1}{\Delta x} \delta_x \sigma\vert _{z(k)}$"></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TT>SigY</TT></TD>
+<TD ALIGN="CENTER">V</TD>
+<TD ALIGN="LEFT"><!-- MATH
+ $\sigma_y = \frac{1}{\Delta y} \delta_y \sigma|_{z(k)}$
+ -->
+<IMG
+ WIDTH="129" HEIGHT="39" ALIGN="MIDDLE" BORDER="0"
+ SRC="img74.png"
+ ALT="$\sigma_y = \frac{1}{\Delta y} \delta_y \sigma\vert _{z(k)}$"></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TT>SigZ</TT></TD>
+<TD ALIGN="CENTER">W</TD>
+<TD ALIGN="LEFT"><!-- MATH
+ $\sigma_z = \frac{1}{\Delta z}
+[ \sigma|_{z(k)}(k-1/2) - \sigma|_{z(k)}(k+1/2) ]$
+ -->
+<IMG
+ WIDTH="340" HEIGHT="39" ALIGN="MIDDLE" BORDER="0"
+ SRC="img75.png"
+ ALT="$\sigma_z = \frac{1}{\Delta z}
+[ \sigma\vert _{z(k)}(k-1/2) - \sigma\vert _{z(k)}(k+1/2) ]$"></TD>
+</TR>
+<TR><TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+</TABLE></DIV>
+
+<P>
+Note that <IMG
+ WIDTH="23" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img76.png"
+ ALT="$\sigma_z$"> is the static stability because the potential
+densities are referenced to the same reference level (<IMG
+ WIDTH="25" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img71.png"
+ ALT="$W$">-level).
+
+<P>
+The next step calculates the three tensor components <TT>K13</TT>, <TT>K23</TT> and <TT>K33</TT> in subroutine <B>KtensorWface()</B>. First, the
+lateral gradients <IMG
+ WIDTH="24" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img77.png"
+ ALT="$\sigma_x$"> and <IMG
+ WIDTH="23" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img78.png"
+ ALT="$\sigma_y$"> are interpolated to the
+<IMG
+ WIDTH="25" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img71.png"
+ ALT="$W$"> points and stored in intermediate variables:
+<P></P>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ \begin{eqnarray*}
+\mbox{\tt Sx} & = & \overline{ \overline{ \sigma_x }^x }^z \\
+\mbox{\tt Sy} & = & \overline{ \overline{ \sigma_y }^y }^z
+\end{eqnarray*}
+ -->
+<IMG
+ WIDTH="99" HEIGHT="62" BORDER="0"
+ SRC="img79.png"
+ ALT="\begin{eqnarray*}
+\mbox{\tt Sx} &amp; = &amp; \overline{ \overline{ \sigma_x }^x }^z \\
+\mbox{\tt Sy} &amp; = &amp; \overline{ \overline{ \sigma_y }^y }^z
+\end{eqnarray*}">
+<BR CLEAR="ALL"></DIV><P></P>
+<BR CLEAR="ALL"><P></P>
+<BR CLEAR="ALL"><P></P>
+Next, the magnitude of <!-- MATH
+ ${\bf\nabla}_z \sigma$
+ -->
+<IMG
+ WIDTH="39" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img80.png"
+ ALT="${\bf\nabla}_z \sigma$"> is stored in an intermediate
+variable:
+<BR><P></P>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ \begin{displaymath}
+\mbox{\tt Sxy2} = \sqrt{ {\tt Sx}^2 + {\tt Sy}^2 }
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="157" HEIGHT="36" BORDER="0"
+ SRC="img81.png"
+ ALT="\begin{displaymath}
+\mbox{\tt Sxy2} = \sqrt{ {\tt Sx}^2 + {\tt Sy}^2 }
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+The stratification (<IMG
+ WIDTH="23" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img76.png"
+ ALT="$\sigma_z$">) is ``checked'' such that the slope
+vector has magnitude less than or equal to <TT>Smax</TT> and stored in
+an intermediate variable:
+<BR><P></P>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ \begin{displaymath}
+\mbox{\tt Sz} = \max ( \sigma_z , - \mbox{\tt Sxy2/Smax} )
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="222" HEIGHT="33" BORDER="0"
+ SRC="img82.png"
+ ALT="\begin{displaymath}
+\mbox{\tt Sz} = \max ( \sigma_z , - \mbox{\tt Sxy2/Smax} )
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+This guarantees stability and at the same time retains the lateral
+orientation of the slope vector. The tensor components are then calculated:
+<P></P>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ \begin{eqnarray*}
+\mbox{\tt K13} & = & -2 {\tt Sx/Sz} \\
+\mbox{\tt K23} & = & -2 {\tt Sx/Sz} \\
+\mbox{\tt K33} & = & ({\tt Sx/Sz})^2 + ({\tt Sy/Sz})^2
+\end{eqnarray*}
+ -->
+<IMG
+ WIDTH="239" HEIGHT="89" BORDER="0"
+ SRC="img83.png"
+ ALT="\begin{eqnarray*}
+\mbox{\tt K13} &amp; = &amp; -2 {\tt Sx/Sz} \\
+\mbox{\tt K23} &amp; = &amp; -...
+...x/Sz} \\
+\mbox{\tt K33} &amp; = &amp; ({\tt Sx/Sz})^2 + ({\tt Sy/Sz})^2
+\end{eqnarray*}">
+<BR CLEAR="ALL"></DIV><P></P>
+<BR CLEAR="ALL"><P></P>
+<BR CLEAR="ALL"><P></P>
+
+<P>
+Finally, <TT>Kredigm</TT> (<IMG
+ WIDTH="41" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.png"
+ ALT="$\kappa _{GM}$">) is calculated in subroutine
+<B>GMRediCoefficient()</B>. First, all the gradients are interpolated
+to the <IMG
+ WIDTH="40" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img67.png"
+ ALT="$T/S$"> points and stored in intermediate variables:
+<P></P>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ \begin{eqnarray*}
+\mbox{\tt Sx} & = & \overline{ \sigma_x }^x \\
+\mbox{\tt Sy} & = & \overline{ \sigma_y }^y \\
+\mbox{\tt Sz} & = & \overline{ \sigma_z }^z
+\end{eqnarray*}
+ -->
+<IMG
+ WIDTH="91" HEIGHT="87" BORDER="0"
+ SRC="img84.png"
+ ALT="\begin{eqnarray*}
+\mbox{\tt Sx} &amp; = &amp; \overline{ \sigma_x }^x \\
+\mbox{\tt Sy} ...
+...ne{ \sigma_y }^y \\
+\mbox{\tt Sz} &amp; = &amp; \overline{ \sigma_z }^z
+\end{eqnarray*}">
+<BR CLEAR="ALL"></DIV><P></P>
+<BR CLEAR="ALL"><P></P>
+<BR CLEAR="ALL"><P></P>
+Again, a nominal stratification is found by ``check'' the magnitude of
+the slope vector but here is converted to a Brunt-Vasala frequency:
+<P></P>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ \begin{eqnarray*}
+{\tt M2} & = & \sqrt{ {\tt Sx}^2 + {\tt Sy}^2} \\
+{\tt N2} & = & - \frac{g}{\rho_o} \max ( {\tt Sz} , -{\tt M2 / Smax}
+\end{eqnarray*}
+ -->
+<IMG
+ WIDTH="257" HEIGHT="80" BORDER="0"
+ SRC="img85.png"
+ ALT="\begin{eqnarray*}
+{\tt M2} &amp; = &amp; \sqrt{ {\tt Sx}^2 + {\tt Sy}^2} \\
+{\tt N2} &amp; = &amp; - \frac{g}{\rho_o} \max ( {\tt Sz} , -{\tt M2 / Smax}
+\end{eqnarray*}">
+<BR CLEAR="ALL"></DIV><P></P>
+<BR CLEAR="ALL"><P></P>
+<BR CLEAR="ALL"><P></P>
+The magnitude of the slope is then <!-- MATH
+ $|S| = {\tt M2}/{\tt N2}$
+ -->
+<IMG
+ WIDTH="102" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img86.png"
+ ALT="$\vert S\vert = {\tt M2}/{\tt N2}$">. The Eady
+growth rate is defined as <!-- MATH
+ $|f|/\sqrt(Ri) = |S| N$
+ -->
+<IMG
+ WIDTH="153" HEIGHT="49" ALIGN="MIDDLE" BORDER="0"
+ SRC="img87.png"
+ ALT="$\vert f\vert/\sqrt(Ri) = \vert S\vert N$"> and is calculated
+as:
+<BR><P></P>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ \begin{displaymath}
+{\tt FrRi} = \frac{\tt M2}{\tt N2} ( - \frac{g}{\rho} {\tt Sz} )
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="149" HEIGHT="48" BORDER="0"
+ SRC="img88.png"
+ ALT="\begin{displaymath}
+{\tt FrRi} = \frac{\tt M2}{\tt N2} ( - \frac{g}{\rho} {\tt Sz} )
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+The Eady growth rate is then averaged over the upper layers (about
+1100m) and <IMG
+ WIDTH="41" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.png"
+ ALT="$\kappa _{GM}$"> specified from this 2D-variable:
+<BR><P></P>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ \begin{displaymath}
+{\tt Kredigm} = 0.02 * (200d3 **2) * {\tt FrRi}
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="300" HEIGHT="33" BORDER="0"
+ SRC="img89.png"
+ ALT="\begin{displaymath}
+{\tt Kredigm} = 0.02 * (200d3 **2) * {\tt FrRi}
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html97"
+  HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html95"
+  HREF="node7.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html89"
+  HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html98"
+  HREF="node9.html">subroutine inc_tracer()</A>
+<B> Up:</B> <A NAME="tex2html96"
+  HREF="node7.html">Discretisation and code</A>
+<B> Previous:</B> <A NAME="tex2html90"
+  HREF="node7.html">Discretisation and code</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+chris
+2001-05-20
+</ADDRESS>
+</BODY>
+</HTML>

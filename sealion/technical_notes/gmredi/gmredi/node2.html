@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 99.2beta8 (1.43)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Redi scheme: Isopycnal diffusion</TITLE>
+<META NAME="description" CONTENT="Redi scheme: Isopycnal diffusion">
+<META NAME="keywords" CONTENT="gmredi">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v99.2beta8">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="gmredi.css">
+
+<LINK REL="next" HREF="node3.html">
+<LINK REL="previous" HREF="node1.html">
+<LINK REL="up" HREF="gmredi.html">
+<LINK REL="next" HREF="node3.html">
+</HEAD>
+
+<BODY bgcolor="#FFFFFFFF">
+<!--Navigation Panel-->
+<A NAME="tex2html36"
+  HREF="node3.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html34"
+  HREF="gmredi.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html28"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html37"
+  HREF="node3.html">GM parameterization</A>
+<B> Up:</B> <A NAME="tex2html35"
+  HREF="gmredi.html">gmredi</A>
+<B> Previous:</B> <A NAME="tex2html29"
+  HREF="node1.html">Overview</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00020000000000000000">
+Redi scheme: Isopycnal diffusion</A>
+</H1>
+
+<P>
+The Redi scheme diffuses tracers along isopycnals and introduces a
+term in the tendency (rhs) of such a tracer (here <IMG
+ WIDTH="15" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.png"
+ ALT="$\tau$">) of the form:
+<BR>
+<DIV ALIGN="RIGHT">
+
+<!-- MATH
+ \begin{equation}
+\bf {\nabla} \cdot \kappa_\rho \bf {K}_{Redi}  \bf {\nabla} \tau
+\end{equation}
+ -->
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="122" HEIGHT="34" BORDER="0"
+ SRC="img3.png"
+ ALT="\begin{displaymath}
+\bf {\nabla} \cdot \kappa_\rho \bf {K}_{Redi} \bf {\nabla} \tau
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(1)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+where <IMG
+ WIDTH="23" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.png"
+ ALT="$\kappa_\rho$"> is the along isopycnal diffusivity and
+<!-- MATH
+ $\bf {K}_{Redi}$
+ -->
+<IMG
+ WIDTH="54" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.png"
+ ALT="$\bf {K}_{Redi}$"> is a rank 2 tensor that projects the gradient of
+<IMG
+ WIDTH="15" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.png"
+ ALT="$\tau$"> onto the isopycnal surface. The unapproximated projection tensor is:
+<BR>
+<DIV ALIGN="RIGHT">
+
+<!-- MATH
+ \begin{equation}
+\bf {K}_{Redi} = \left(
+\begin{array}{ccc}
+1 + S_x& S_x S_y & S_x \\
+S_x S_y  & 1 + S_y & S_y \\
+S_x & S_y & |S|^2 \\
+\end{array}
+\right)
+\end{equation}
+ -->
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="281" HEIGHT="76" BORDER="0"
+ SRC="img6.png"
+ ALT="\begin{displaymath}
+\bf {K}_{Redi} = \left(
+\begin{array}{ccc}
+1 + S_x&amp; S_x S_y ...
+..._y &amp; S_y \\
+S_x &amp; S_y &amp; \vert S\vert^2 \\
+\end{array}\right)
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(2)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+Here, <!-- MATH
+ $S_x = -\partial_x \sigma / \partial_z \sigma$
+ -->
+<IMG
+ WIDTH="132" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img7.png"
+ ALT="$S_x = -\partial_x \sigma / \partial_z \sigma$"> and <!-- MATH
+ $S_y =
+-\partial_y \sigma / \partial_z \sigma$
+ -->
+<IMG
+ WIDTH="131" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img8.png"
+ ALT="$S_y =
+-\partial_y \sigma / \partial_z \sigma$"> are the components of the
+isoneutral slope.
+
+<P>
+The first point to note is that a typical slope in the ocean interior
+is small, say of the order <IMG
+ WIDTH="41" HEIGHT="20" ALIGN="BOTTOM" BORDER="0"
+ SRC="img9.png"
+ ALT="$10^{-4}$">. A maximum slope might be of
+order <IMG
+ WIDTH="41" HEIGHT="20" ALIGN="BOTTOM" BORDER="0"
+ SRC="img10.png"
+ ALT="$10^{-2}$"> and only exceeds such in unstratified regions where
+the slope is ill defined. It is therefore justifiable, and
+customary, to make the small slope approximation, <IMG
+ WIDTH="77" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img11.png"
+ ALT="$\vert S\vert &lt;&lt; 1$">. The Redi
+projection tensor then becomes:
+<BR>
+<DIV ALIGN="RIGHT">
+
+<!-- MATH
+ \begin{equation}
+\bf {K}_{Redi} = \left(
+\begin{array}{ccc}
+1 & 0 & S_x \\
+0 & 1 & S_y \\
+S_x & S_y & |S|^2 \\
+\end{array}
+\right)
+\end{equation}
+ -->
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="216" HEIGHT="76" BORDER="0"
+ SRC="img12.png"
+ ALT="\begin{displaymath}
+\bf {K}_{Redi} = \left(
+\begin{array}{ccc}
+1 &amp; 0 &amp; S_x \\
+0 &amp; 1 &amp; S_y \\
+S_x &amp; S_y &amp; \vert S\vert^2 \\
+\end{array}\right)
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(3)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html36"
+  HREF="node3.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html34"
+  HREF="gmredi.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html28"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html37"
+  HREF="node3.html">GM parameterization</A>
+<B> Up:</B> <A NAME="tex2html35"
+  HREF="gmredi.html">gmredi</A>
+<B> Previous:</B> <A NAME="tex2html29"
+  HREF="node1.html">Overview</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+chris
+2001-05-20
+</ADDRESS>
+</BODY>
+</HTML>

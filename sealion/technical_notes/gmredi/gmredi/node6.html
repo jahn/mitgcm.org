@@ -1,0 +1,321 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 99.2beta8 (1.43)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Tapering and stability</TITLE>
+<META NAME="description" CONTENT="Tapering and stability">
+<META NAME="keywords" CONTENT="gmredi">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v99.2beta8">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="gmredi.css">
+
+<LINK REL="next" HREF="node7.html">
+<LINK REL="previous" HREF="node5.html">
+<LINK REL="up" HREF="gmredi.html">
+<LINK REL="next" HREF="node7.html">
+</HEAD>
+
+<BODY bgcolor="#FFFFFFFF">
+<!--Navigation Panel-->
+<A NAME="tex2html75"
+  HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html73"
+  HREF="gmredi.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html67"
+  HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html76"
+  HREF="node7.html">Discretisation and code</A>
+<B> Up:</B> <A NAME="tex2html74"
+  HREF="gmredi.html">gmredi</A>
+<B> Previous:</B> <A NAME="tex2html68"
+  HREF="node5.html">Variable</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00050000000000000000">
+Tapering and stability</A>
+</H1>
+
+<P>
+Experience with the GFDL model showed that the GM scheme has to be
+matched to the convective parameterization. This was originally
+expressed in connection with the introduction of the KPP boundary
+layer scheme (Large et al., 97) but infact, as subsequent experience
+with the MIT model has found, is necessary for any convective
+parameterization.
+
+<P>
+Deep convection sites and the mixed layer are indicated by
+homogenized, unstable or nearly unstable stratification. The slopes
+become in such regions are infinite, very large with a sign reversal
+or simply very large. From a numerical point of view, large slopes
+lead to large variations in the tensor elements (implying large bolus
+flow) and can be numerically unstable. This was first reognized by
+Cox, 1987, who implemented ``slopes clipping'' in the isopycnal mixing
+tensor. Here, the slope magnitude is simply restricted by an upper limit:
+<BR>
+<DIV ALIGN="CENTER">
+
+<!-- MATH
+ \begin{eqnarray}
+|\nabla \sigma| & = & \sqrt{ \sigma_x^2 + \sigma_y^2 } \\
+S_{lim} & = & - \frac{|\nabla \sigma|}{ S_{max} }
+\;\;\;\;\;\;\;\; \mbox{where $S_{max}$\  is a parameter} \\
+\sigma_z^\star & = & min( \sigma_z , S_{lim} ) \\
+{[s_x,s_y]} & = & - \frac{ [\sigma_x,\sigma_y] }{\sigma_z^\star}
+\end{eqnarray}
+ -->
+<TABLE ALIGN="CENTER" CELLPADDING="0" WIDTH="100%">
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ WIDTH="43" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img48.png"
+ ALT="$\displaystyle \vert\nabla \sigma\vert$"></TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="19" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img16.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ WIDTH="82" HEIGHT="48" ALIGN="MIDDLE" BORDER="0"
+ SRC="img49.png"
+ ALT="$\displaystyle \sqrt{ \sigma_x^2 + \sigma_y^2 }$"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(14)</TD></TR>
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ WIDTH="38" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img50.png"
+ ALT="$\displaystyle S_{lim}$"></TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="19" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img16.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ WIDTH="322" HEIGHT="62" ALIGN="MIDDLE" BORDER="0"
+ SRC="img51.png"
+ ALT="$\displaystyle - \frac{\vert\nabla \sigma\vert}{ S_{max} }
+\;\;\;\;\;\;\;\; \mbox{where $S_{max}$\ is a parameter}$"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(15)</TD></TR>
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ WIDTH="24" HEIGHT="36" ALIGN="MIDDLE" BORDER="0"
+ SRC="img52.png"
+ ALT="$\displaystyle \sigma_z^\star$"></TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="19" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img16.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ WIDTH="113" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img53.png"
+ ALT="$\displaystyle min( \sigma_z , S_{lim} )$"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(16)</TD></TR>
+<TR VALIGN="MIDDLE"><TD NOWRAP ALIGN="RIGHT"><IMG
+ WIDTH="58" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img54.png"
+ ALT="$\displaystyle {[s_x,s_y]}$"></TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="19" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img16.png"
+ ALT="$\textstyle =$"></TD>
+<TD ALIGN="LEFT" NOWRAP><IMG
+ WIDTH="80" HEIGHT="62" ALIGN="MIDDLE" BORDER="0"
+ SRC="img55.png"
+ ALT="$\displaystyle - \frac{ [\sigma_x,\sigma_y] }{\sigma_z^\star}$"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(17)</TD></TR>
+</TABLE></DIV>
+<BR CLEAR="ALL"><P></P>
+Notice that this algorithm assumes stable stratification through the
+``min'' function. In the case where the fluid is well stratified (<!-- MATH
+ $\sigma_z < S_{lim}$
+ -->
+<IMG
+ WIDTH="81" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img56.png"
+ ALT="$\sigma_z &lt; S_{lim}$">) then the slopes evaluate to:
+<BR>
+<DIV ALIGN="RIGHT">
+
+<!-- MATH
+ \begin{equation}
+{[s_x,s_y]} = - \frac{ [\sigma_x,\sigma_y] }{\sigma_z}
+\end{equation}
+ -->
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="151" HEIGHT="50" BORDER="0"
+ SRC="img57.png"
+ ALT="\begin{displaymath}
+{[s_x,s_y]} = - \frac{ [\sigma_x,\sigma_y] }{\sigma_z}
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(18)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+while in the limited regions (<!-- MATH
+ $\sigma_z > S_{lim}$
+ -->
+<IMG
+ WIDTH="81" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img58.png"
+ ALT="$\sigma_z &gt; S_{lim}$">) the slopes become:
+<BR>
+<DIV ALIGN="RIGHT">
+
+<!-- MATH
+ \begin{equation}
+{[s_x,s_y]} = \frac{ [\sigma_x,\sigma_y] }{|\nabla \sigma|/S_{max}}
+\end{equation}
+ -->
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="165" HEIGHT="52" BORDER="0"
+ SRC="img59.png"
+ ALT="\begin{displaymath}
+{[s_x,s_y]} = \frac{ [\sigma_x,\sigma_y] }{\vert\nabla \sigma\vert/S_{max}}
+\end{displaymath}"></TD>
+<TD WIDTH=10 ALIGN="RIGHT">
+(19)</TD></TR>
+</TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+so that the slope magnitude is limited <!-- MATH
+ $\sqrt{s_x^2 + s_y^2} =
+S_{max}$
+ -->
+<IMG
+ WIDTH="142" HEIGHT="46" ALIGN="MIDDLE" BORDER="0"
+ SRC="img60.png"
+ ALT="$\sqrt{s_x^2 + s_y^2} =
+S_{max}$">.
+
+<P>
+Even using slope clipping, it is normally the case that the vertical
+diffusion term (with coefficient <!-- MATH
+ $\kappa_\rho{\bf K}_{33} = \kappa_\rho
+S_{max}^2$
+ -->
+<IMG
+ WIDTH="137" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img61.png"
+ ALT="$\kappa_\rho{\bf K}_{33} = \kappa_\rho
+S_{max}^2$">) is large and must be time-stepped using an implicit
+procedure (see section on discretisation and code later).
+Fig. <A HREF="#fig-mixedlayer"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="file:/usr/local/lib/latex2html/icons/crossref.png"></A> shows the mixed layer depth resulting from
+a) using the GM scheme with clipping and b) no GM scheme (horizontal
+diffusion). The classic result of dramatically reducd mixed layers is
+evident. Indeed, the deep convection sites to just one or two points
+each and are much shallower than we might prefer.
+
+<P>
+This it turns out is due to the over zealous restratification due to
+the bolus transport parameterization.
+
+<P>
+Gerdes et al., 1991 ....
+
+<P>
+Danabasoglu and McWilliams, 1995 ....
+
+<P>
+Large et al., 1997 ....
+
+<P>
+Issue: should GM and Redi be tapered? cf convective paper
+
+<P>
+Issue: is adiabtic important in these regions? changes discretization
+
+<P>
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="182"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 1:</STRONG>
+Mixed layer depth using GM parameterization with a) Cox slope
+clipping and for comparison b) using horizontal constant diffusion.</CAPTION>
+<TR><TD><IMG
+ WIDTH="18" HEIGHT="14" BORDER="0"
+ SRC="img62.png"
+ ALT="\begin{figure}
+% latex2html id marker 179
+\include{mixedlayer-cox.eps}
+\include{mixedlayer-diff.eps}
+\ref{fig-mixedlayer}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="187"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 2:</STRONG>
+Effective slope as a function of ``true'' slope using a) Cox
+slope clipping, b) GKW91 limiting, c) DM95 limiting and d) LDD97
+limiting.</CAPTION>
+<TR><TD></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="190"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 3:</STRONG>
+Effective slope magnitude at 100&nbsp;m depth evaluated using a)
+Cox slope clipping, b) GKW91 limiting, c) DM95 limiting and d) LDD97
+limiting.</CAPTION>
+<TR><TD></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html75"
+  HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html73"
+  HREF="gmredi.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html67"
+  HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html76"
+  HREF="node7.html">Discretisation and code</A>
+<B> Up:</B> <A NAME="tex2html74"
+  HREF="gmredi.html">gmredi</A>
+<B> Previous:</B> <A NAME="tex2html68"
+  HREF="node5.html">Variable</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+chris
+2001-05-20
+</ADDRESS>
+</BODY>
+</HTML>

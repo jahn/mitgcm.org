@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 99.2beta8 (1.43)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Outstanding issues?</TITLE>
+<META NAME="description" CONTENT="Outstanding issues?">
+<META NAME="keywords" CONTENT="gmredi">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Generator" CONTENT="LaTeX2HTML v99.2beta8">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="gmredi.css">
+
+<LINK REL="next" HREF="node11.html">
+<LINK REL="previous" HREF="node7.html">
+<LINK REL="up" HREF="gmredi.html">
+<LINK REL="next" HREF="node11.html">
+</HEAD>
+
+<BODY bgcolor="#FFFFFFFF">
+<!--Navigation Panel-->
+<A NAME="tex2html115"
+  HREF="node11.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/usr/local/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html113"
+  HREF="gmredi.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/usr/local/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html107"
+  HREF="node9.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/usr/local/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html116"
+  HREF="node11.html">About this document ...</A>
+<B> Up:</B> <A NAME="tex2html114"
+  HREF="gmredi.html">gmredi</A>
+<B> Previous:</B> <A NAME="tex2html108"
+  HREF="node9.html">subroutine inc_tracer()</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00070000000000000000">
+Outstanding issues?</A>
+</H1>
+
+<P>
+A second innovation discussed by Griffies concerns the nonlinearity in
+the equation of state and its implication for the evaluation of the
+isoneutral slopes. He argues that <!-- MATH
+ ${\bf\nabla} \sigma$
+ -->
+<IMG
+ WIDTH="32" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img92.png"
+ ALT="${\bf\nabla} \sigma$"> should be
+written <!-- MATH
+ ${\bf\nabla} \sigma = \rho_o ( \beta {\bf\nabla} S - \alpha
+{\bf\nabla} \theta )$
+ -->
+<IMG
+ WIDTH="189" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img93.png"
+ ALT="${\bf\nabla} \sigma = \rho_o ( \beta {\bf\nabla} S - \alpha
+{\bf\nabla} \theta )$"> so that, for example, the zonal slope becomes:
+<BR><P></P>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ \begin{displaymath}
+S_x = \frac{ \alpha \partial_x \theta - \beta \partial_x S }{ \beta
+\partial_z S - \alpha \partial_z \theta }
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="152" HEIGHT="50" BORDER="0"
+ SRC="img94.png"
+ ALT="\begin{displaymath}
+S_x = \frac{ \alpha \partial_x \theta - \beta \partial_x S }{ \beta
+\partial_z S - \alpha \partial_z \theta }
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+where <!-- MATH
+ $\alpha=\frac{1}{\rho_o} \frac{\partial \rho}{\partial \theta}$
+ -->
+<IMG
+ WIDTH="78" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img95.png"
+ ALT="$\alpha=\frac{1}{\rho_o} \frac{\partial \rho}{\partial \theta}$">
+and <!-- MATH
+ $\beta=\frac{1}{\rho_o} \frac{\partial \rho}{\partial S}$
+ -->
+<IMG
+ WIDTH="80" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img96.png"
+ ALT="$\beta=\frac{1}{\rho_o} \frac{\partial \rho}{\partial S}$"> are
+locally evaluated. He also advocates a very complicated interpolation
+scheme which he calls the ``triads'' scheme. Both of these innovations
+are designed to overcome computational modes and at the same time make
+the scheme <EM>more</EM> adiabatic.
+
+<P>
+Compared to the current implementation out-lined above, the Griffies
+innovations requires two non-linear equations to replace the equation
+of state, twice as many differences because of the explicit
+expressions with <IMG
+ WIDTH="14" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img97.png"
+ ALT="$\theta$"> and <IMG
+ WIDTH="17" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img66.png"
+ ALT="$S$">, and a much wider stencil (ie. much
+more computation) for the ``triads'' interpolation.
+
+<P>
+We have not implemented these aspects of Griffies schemes on the basis
+that the additional computational costs and code complexity, so far,
+outweigh the immediate benefits.
+
+<P>
+<BR><HR>
+<ADDRESS>
+chris
+2001-05-20
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,137 @@
+This is TeX, Version 3.14159 (Web2C 7.3.1) (format=latex 2000.3.7)  20 MAY 2001 21:29
+**gmredi.tex
+(gmredi.tex
+LaTeX2e <1998/12/01> patch level 1
+Babel <v3.6x> and hyphenation patterns for american, french, german, ngerman, i
+talian, nohyphenation, loaded.
+(/usr/share/texmf/tex/latex/base/article.cls
+Document Class: article 1999/01/07 v1.4a Standard LaTeX document class
+(/usr/share/texmf/tex/latex/base/size12.clo
+File: size12.clo 1999/01/07 v1.4a Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf/tex/latex/html/html.sty
+Package: html 1999/07/19 v1.38 hypertext commands for latex2html (nd, hws, rrm)
+
+\c@lpart=\count87
+\c@lchapter=\count88
+\c@chapter=\count89
+\c@lsection=\count90
+\c@lsubsection=\count91
+\c@lsubsubsection=\count92
+\c@lparagraph=\count93
+\c@lsubparagraph=\count94
+\c@lsubsubparagraph=\count95
+\ptrfile=\write3
+) (gmredi.aux (mixedlayer-cox.eps.aux) (mixedlayer-diff.eps.aux) (slopelimits.e
+ps.aux))
+\openout1 = `gmredi.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 60.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 60.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 60.
+ [1
+
+] [2]
+Overfull \hbox (5.38402pt too wide) in alignment at lines 133--153
+ [][][] []
+ []
+
+[3]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <17.28> on input line 196.
+ [4]
+
+LaTeX Warning: Reference `fig-mixedlayer' on page 5 undefined on input line 262
+.
+
+[5]
+\openout2 = `mixedlayer-cox.eps.aux'.
+
+
+No file mixedlayer-cox.eps.tex.
+\openout2 = `mixedlayer-diff.eps.aux'.
+
+No file mixedlayer-diff.eps.tex.
+
+LaTeX Warning: Reference `fig-mixedlayer' on page 6 undefined on input line 288
+.
+
+\openout2 = `slopelimits.eps.aux'.
+
+No file slopelimits.eps.tex.
+[6
+
+
+
+
+
+
+]
+Overfull \hbox (0.91077pt too wide) in paragraph at lines 356--356
+[]\OT1/cmtt/m/n/10.95 subroutine RediTensor(Temp,Salt,Kredigm,K31,K32,K33, nIte
+r,DumpFlag)[] 
+ []
+
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 361.
+
+(/usr/share/texmf/tex/latex/base/omlcmr.fd
+File: omlcmr.fd 1998/03/27 v2.5g Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 361.
+ [7]
+Overfull \hbox (10.51157pt too wide) in paragraph at lines 417--420
+[]\OT1/cmr/m/n/12 Finally, \OT1/cmtt/m/n/12 Kredigm \OT1/cmr/m/n/12 ($\OML/cmm/
+m/it/12 ^^T[]$\OT1/cmr/m/n/12 ) is cal-cu-lated in sub-rou-tine \OT1/cmr/bx/n/1
+2 GM-Redi-Co-ef-fi-cient()\OT1/cmr/m/n/12 .
+ []
+
+[8]
+Overfull \hbox (29.42128pt too wide) in paragraph at lines 467--469
+[]\OT1/cmr/m/n/12 The Redi/GM/Griffies scheme adds three terms to the ver-ti-ca
+l flux (\OT1/cmtt/m/n/12 fluxUpper\OT1/cmr/m/n/12 )
+ []
+
+[9] [10] (gmredi.aux (mixedlayer-cox.eps.aux) (mixedlayer-diff.eps.aux)
+(slopelimits.eps.aux))
+
+LaTeX Warning: There were undefined references.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 534 strings out of 10898
+ 5975 string characters out of 96882
+ 53074 words of memory out of 263001
+ 3509 multiletter control sequences out of 10000+0
+ 11110 words of font info for 40 fonts, out of 400000 for 1000
+ 14 hyphenation exceptions out of 1000
+ 22i,12n,20p,265b,231s stack positions out of 300i,100n,500p,50000b,4000s
+
+Output written on gmredi.dvi (10 pages, 27756 bytes).
