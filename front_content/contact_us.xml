@@ -38,6 +38,7 @@
 	  repository.<br/><br/></li>
     </ul>
 
+    <!--
     <p>A GForge-based <a href="http://dev.mitgcm.org/projects/mitgcm/">MITgcm
         development server</a> is available which includes:
       <ul>
@@ -54,7 +55,8 @@
 
       </ul>
     </p>
-
+    -->
+    
   </body>
 </html>
 
