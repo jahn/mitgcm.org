@@ -30,21 +30,35 @@
       &amp; b) and uses the finite volume method to accurately represent the
       bottom boundary position (Adcroft et al., MWR 1998).<br /><br /></p>
 
-    <p><b>October 27th 2003&nbsp;:</b><br />
+<!--
+
+To add News items, please copy the following block outside these comments and
+replace the ===DATE=== and ===MESSAGE=== place-holders with your date and your
+text:
+
+    <p><b>===DATE===&nbsp;:</b><br /></p>
+
+	<blockquote>
+	  ===MESSAGE===<br /><br />
+        </blockquote>
+
+-->
+
+    <p><b>October 27th 2003&nbsp;:</b><br /></p>
 
 	<blockquote>
 	  <b><a href="http://paoc.mit.edu/cmi/">MIT Climate Modeling Initiative
 	      (CMI)</a></b> web pages introduce the MITgcm model, its applications, and
-	  the development team.<br /><br /></p>
+	  the development team.<br /><br />
         </blockquote>
     
-    <p><b>October 21st 2003&nbsp;:</b><br />
+    <p><b>October 21st 2003&nbsp;:</b><br /></p>
 
 	<blockquote>
 	  MITgcm and ECCO-JPL team <b><a
 	    href="http://www.sgi.com/newsroom/press_releases/2003/october/linux.html">
 	    feature as showcase application</a></b> in NASA-SGI large shared
-	    memory system program.<br /><br /></p>
+	    memory system program.<br /><br />
         </blockquote>
 	
   </body>
