@@ -49,7 +49,7 @@
   $ cvs login
     ( enter the CVS password: "cvsanon" )
   $ cvs co MITgcm MITgcm_contrib
-</pre>
+    </pre>
 
     <p>Note that you will only need to perform the "cvs login" once.  And for
       convenience, you may want to add the CVSROOT variable to your shell's
@@ -107,6 +107,14 @@
       -->
     </table>
 
+    <p>It is important to note that the CVS aliases above cannot be used in
+      conjunction with the CVS <it>-d DIRNAME<\it> option.  However, the MITgcm
+      directories they create can be changed to a different name following the
+      check-out:</p>
+<pre>
+  $ cvs co MITgcm_verif_basic
+  $ mv MITgcm MITgcm_verif_basic
+</pre>
 
     <h4>Getting Specific Releases or "Checkpoints"</h4>
     
