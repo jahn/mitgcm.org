@@ -2,25 +2,98 @@
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-   <meta name="GENERATOR" content="Mozilla/4.74 [en]C-CCK-MCD   (Win98; U) [Netscape]">
+   <meta name="GENERATOR" content="Mozilla/4.75 [en] (X11; U; Linux 2.2.14-5.0 i686) [Netscape]">
    <title>manual</title>
 </head>
 <body bgcolor="#FFFFFF">
-Documentation of MITgcm takes several forms.
-<ul>&nbsp;
-<br>It can be viewed by:
+<font size=+1>Documentation of MITgcm takes several forms:</font>
+<ul>
+<li>
+<font size=+1>a <a href="manual/node3.html">manual</a></font></li>
+
+<li>
+<font size=+1>a hyper-linked <a href="../code_reference/index.html" target="mainFrame">browsable
+code</a></font></li>
+
+<li>
+<font size=+1>in-source documentation (<a href="#prologues">subroutine
+descriptions</a>)</font></li>
+</ul>
+
+<center>
+<h2>
+The manual</h2></center>
+The manual, documenting the formulation, descretization and implementation,
+can be accessed by following the links on the left. These take you to the
+main sections of the document:
+<ol>
+<li>
+<b><font size=+1><a href="manual/overview.html">Overview of MITgcm</a></font></b></li>
+
+<br>Discusses the
+<a href="manual/continuous.html">
+continuous formulation
+</a>
+of the model and illustrates some
+<a href="manual/illustrations.html">applications</a>
+<li>
+<b><font size=+1><a href="manual/discrete.html">Discretization and Algorithm</a></font></b></li>
+
+<br>describes the integration algorithm for the various formulations and
+gives the spatial discretization of the model equations
+<li>
+<b><font size=+1><a href="manual/getting.html">Getting started and using
+the MITgcm</a></font></b></li>
+
+<br>describes how to download, compile, run and modify the model
+<li>
+<b><font size=+1><a href="manual/sarch.html">Software Architecture</a></font></b></li>
+
+<br><font size=-1>describes the software used for implementing of the model
+on many different machines</font>
+<li>
+<b><font size=+1><a href="manual/autodiff.html">Automatic Differentiation</a></font></b></li>
+
+<br>describes how to generate the adjoint and tangent linear forms of the
+model
+<li>
+<b><font size=+1><a href="manual/packages.html">Physical Parameterizations
+and Packages</a></font></b></li>
+
+<br>describes the optional parameterizations and features supplied in the
+model
+<li>
+<b><font size=+1><a href="manual/diags.html">Diagnostics and other tools</a></font></b></li>
+
+<br>off-line tools used in conjuction with the model
+<li>
+<b><font size=+1><a href="manual/ecco.html">Interface with ECCO</a></font></b></li>
+
+<br>describes the relationship to the ECCO NOPP node project</ol>
+or jump to the full <a href="manual/contents.html">table of contents</a>.The
+manual is also downloadable in <a href="manual.ps.gz">PostScript</a> and
+<a href="manual.pdf">PDF</a>.
 <br>&nbsp;
+<center>
+<h2>
+<font size=+1>The hyper-linked <a href="../code_reference/index.html" target="mainFrame">browsable
+code</a></font></h2></center>
+This allows you to peruse the source code by following hyper-links for
+variables, subroutines and functions. It allows you to find instances of
+variables, find where subroutines and functions are called from and see
+the actual fortran.
+<center>
+<h2>
+<a NAME="prologues"></a>In-source documentation</h2></center>
+This takes the form of comments in the source code and has been formatted
+to render subroutine descriptions (written as prologues at the top of each
+routine). It is downloadable as:
+<ul>
 <li>
-browsing an html version of the MITgcm 'manual' online - see left top</li>
+<a href="prologues.ps.gz">PostScript</a></li>
 
 <li>
-browsing the code itself</li>
-
-<li>
-downloading and printing the prologues (the subroutine descriptions)</li>
-
-<li>
-downloading and printing out the manual - see left bottom</li>
+<a href="prologues.pdf">PDF</a></li>
 </ul>
 
 </body>
