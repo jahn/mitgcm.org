@@ -7,7 +7,7 @@ BUILDWEBDIR = $(PWD)
 
 SKELETON    = $(BUILDWEBDIR)/skeleton
 #eh3 LATEXROOT   = $(BUILDWEBDIR)/latex
-LATEXROOT   = ../../../mitgcmdoc
+LATEXROOT   = ../../../manual
 VDBROOT     = $(BUILDWEBDIR)/vdb
 BINDIR      = $(BUILDWEBDIR)/bin
 PFILESDIR   = $(BUILDWEBDIR)/program_files
@@ -54,7 +54,7 @@ Search2:
 #	cd $(TARGETDIR); $(BINDIR)/swish-e -c $(PFILESDIR)/Swish-e.conf \
 #		-S prog -i $(BINDIR)/DirTree.pl
 
-Latex: latex
+Latex: 
 	cd $(LATEXROOT); make html
 
 pdf:
@@ -71,5 +71,5 @@ TestSearch:
 	$(BINDIR)/swish-e -f $(TARGETDIR)/index.swish-e -w adcroft
 
 #eh3	cvs co -d latex manual -d -P
-latex:
-	cd $(LATEXROOT); cvs up
+#eh3 latex:
+#eh3	cd $(LATEXROOT); cvs up
