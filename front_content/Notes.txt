@@ -1,0 +1,10 @@
+
+To-do:
+
+  general:
+    - AJA wants a "who's who" page
+
+  testing page:
+    - add MPI runs for the clusters
+    - add the NAGWare compiler on cg01
+
