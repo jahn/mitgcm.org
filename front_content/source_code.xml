@@ -29,34 +29,12 @@
       contents can be obtained at:
       
       <ul>
-	<li>Release1_patch8 :
-	  <ul>
-	    
-	    <li>View through an <a
-		href="http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm/?only_with_tag=release1_p8">
-		HTML-enabled CVS code browser</a></li>
-	    
-	    <li>Download <a href="./using_cvs.html">using CVS pserver</a>:
-
-<pre>
-  $ export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
-  $ cvs login 
-    ( enter the CVS password: "cvsanon" )
-  $ cvs co -r 'release1_p8' MITgcm
-</pre>
-	      
-	    </li>
-	    
-	    <li>Download <a href="./download">as a "tar" file.</a></li>
-	    <br />
-	  </ul>
-	</li>
 	<li>CVS current :
 	  <ul>
 	    
 	    <li>View through an <a
 		href="http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/">HTML-enabled CVS
-		code browser</a></li>
+		code browser [ViewCVS Web interface]</a></li>
 	    
 	    <li>Download <a href="./using_cvs.html">using CVS pserver</a>
 
@@ -71,6 +49,28 @@
 	    
 	    <!-- <li>Download <a href="./download">as a "tar" file.</a></li> -->
 	    
+	  </ul>
+	</li>
+	<li>Release1_patch8 :
+	  <ul>
+	    
+	    <li>View through an <a
+		href="http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm/?only_with_tag=release1_p8">
+		HTML-enabled CVS code browser [ViewCVS Web interface]</a></li>
+	    
+	    <li>Download <a href="./using_cvs.html">using CVS pserver</a>:
+
+<pre>
+  $ export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
+  $ cvs login 
+    ( enter the CVS password: "cvsanon" )
+  $ cvs co -r 'release1_p8' MITgcm
+</pre>
+	      
+	    </li>
+	    
+	    <li>Download <a href="./download">as a "tar" file.</a></li>
+	    <br />
 	  </ul>
 	</li>
       </ul>
