@@ -67,5 +67,9 @@ cp callTree.html                   buildweb/skeleton/code_reference
 echo "o Making buildweb sub-directory entries for vdb/"
 mv vdb buildweb/vdb
 
+#eh3  Create a "byname" directory containing soft-links that tie the symbol
+#eh3  names to the short-URL occurance tables:
+#eh3  makeByname.pl < 
+
 # Tar up buildweb part
 ( cd  buildweb ; rm vdb/tmp1; rm vdb/tmp2; tar -czvf ../web.tgz . >& /dev/null )
