@@ -42,41 +42,39 @@
 
     <div class="c1"><br /><span class="c3"><b>News</b></span></div>
 
-<!--
+      <!--
+      
+      To add News items, please copy the following block outside these comments
+      and replace the ===DATE=== and ===MESSAGE=== place-holders with your date
+      and your text:
 
-To add News items, please copy the following block outside these comments and
-replace the ===DATE=== and ===MESSAGE=== place-holders with your date and your
-text:
-
-    <p><b>===DATE===&nbsp;:</b><br /></p>
-
-	<blockquote>
-	  ===MESSAGE===<br /><br />
+      <p><b>===DATE===&nbsp;:</b><br /></p>
+        <blockquote>
+          ===MESSAGE===<br /><br />
         </blockquote>
 
--->
-
-    <p><b>Aprilt 13th, 2004&nbsp;:</b><br /></p>
-      <blockquote>
-      A new movie by Dimitris Menemenlis and Chris Henze shows ice dynamics
-      over the North Pole. The viscous-plastic behavior of ice sheets
-      subject to wind forcing and ocean currents can be clearly
-      seen in the translucent ice-sheet. The movie can be downloaded 
-      from <a href=movies/ice_03.mpg> here</a> (this one is 91MB!).
-      A set of web pages with summary information regarding MITgcm simulations
-      being carried out in the ECCO high resolution global ocean state 
-      estimation initiative can be found <a href=http://ecco.jpl.nasa.gov/cube_sphere>
-      here</a>.
+      -->
       
+    <p><b>April 13, 2004&nbsp;:</b><br /></p>
+      <blockquote>
+	A new movie by Dimitris Menemenlis and Chris Henze shows ice dynamics
+	over the North Pole. The viscous-plastic behavior of ice sheets subject
+	to wind forcing and ocean currents can be clearly seen in the
+	translucent ice-sheet. The movie can be downloaded from <a
+	href="movies/ice_03.mpg"> here</a> (this one is 91MB!).  A set of web
+	pages with summary information regarding MITgcm simulations being
+	carried out in the ECCO high resolution global ocean state estimation
+	initiative can be found <a href="http://ecco.jpl.nasa.gov/cube_sphere">
+	here</a>.
       </blockquote>
 
-    <p><b>March 26, 2004. 01:38AM&nbsp;:</b><br /></p>
-
-	<blockquote>
-	  Congratulations to Alistair and Sonya on the birth this
-          morning of a 7lb 3oz, 19.5 inches long baby girl, Ariane Jade.
-          <br /><br />
-        </blockquote>
+    <p><b>March 26, 2004 at 01:38 EST&nbsp;:</b><br /></p>
+    
+      <blockquote>
+	Congratulations to Alistair and Sonya on the birth this
+	morning of a 7lb 3oz, 19.5 inches long baby girl, Ariane Jade.
+	<br /><br />
+      </blockquote>
 
     <p><b>January 22, 2004&nbsp;:</b><br /></p>
 
