@@ -1,351 +1,358 @@
-<HTML>
-<HEAD></HEAD>
-<BODY bgcolor="#FFFFFFFF">
-<h1>Browse Hypertext Code Online</h1>
-Browse MITgcm source code in hyperlinked form. 
-<br>
-Select links from the calling tree below or select from the side bar menu to access
-alphabetic lists of model subroutines and functions, runtime parameters, compile time parameters
-and model source files. 
-<br>The botton link at the side (all symbols) displays lists of all symbols
-used in MITgcm. This list is quite long and can take some time to display.
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.74 [en]C-CCK-MCD   (Win98; U) [Netscape]">
+   <title>callTree</title>
+</head>
+<body bgcolor="#FFFFFF">
 
-<h3>MITgcm Release 1 Main Call Tree</h3>
-<PRE>
- 
-  Invocation from WRAPPER level...
-   :
-   :
-   |
-   |-<A HREF=vdb/names/6P.htm>THE_MODEL_MAIN</A> :: Primary driver for the MITgcm algorithm
-     |              :: Called from WRAPPER level numerical
-     |              :: code innvocation routine. On entry
-     |              :: to THE_MODEL_MAIN separate thread and
-     |              :: separate processes will have been established.
-     |              :: Each thread and process will have a unique ID
-     |              :: but as yet it will not be associated with a
-     |              :: specific region in decomposed discrete space.
-     |
-     |-<A HREF=vdb/names/3F.htm>INITIALISE_FIXED</A> :: Set fixed model arrays such as topography, 
-     | |                :: grid, solver matrices etc..
-     | |              
-     | |-<A HREF=vdb/names/3V.htm>INI_PARMS</A> :: Routine to set kernel model parameters.
-     | |           :: By default kernel parameters are read from file 
-     | |           :: "data" in directory in which code executes.
-     | |
-     | |-<A HREF=vdb/names/5D.htm>MON_INIT</A> :: Initialises monitor pacakge ( see pkg/monitor )
-     | |
-     | |-<A HREF=vdb/names/3Q.htm>INI_GRID</A> :: Control grid array (vert. and hori.) initialisation.
-     | | |        :: Grid arrays are held and described in GRID.h.
-     | | |
-     | | |-<A HREF=vdb/names/42.htm>INI_VERTICAL_GRID</A>        :: Initialise vertical grid arrays.
-     | | |
-     | | |-<A HREF=vdb/names/3H.htm>INI_CARTESIAN_GRID</A>       :: Cartesian horiz. grid initialisation
-     | | |                          :: (calculate grid from kernel parameters).
-     | | |
-     | | |-<A HREF=vdb/names/3Y.htm>INI_SPHERICAL_POLAR_GRID</A> :: Spherical polar horiz. grid 
-     | | |                          :: initialisation (calculate grid from 
-     | | |                          :: kernel parameters).
-     | | |
-     | | |-<A HREF=vdb/names/3L.htm>INI_CURVILINEAR_GRID</A>     :: General orthogonal, structured horiz.
-     | |                            :: grid initialisations. ( input from raw
-     | |                            :: grid files, LONC.bin, DXF.bin etc... )
-     | |
-     | |-<A HREF=vdb/names/3M.htm>INI_DEPTHS</A>    :: Read (from "bathyFile") or set bathymetry/orgography.
-     | |
-     | |-<A HREF=vdb/names/3T.htm>INI_MASKS_ETC</A> :: Derive horizontal and vertical cell fractions and
-     | |               :: land masking for solid-fluid boundaries.
-     | |
-     | |-<A HREF=vdb/names/3R.htm>INI_LINEAR_PHISURF</A> :: Set ref. surface Bo_surf
-     | |
-     | |-<A HREF=vdb/names/3K.htm>INI_CORI</A>          :: Set coriolis term. zero, f-plane, beta-plane,
-     | |                   :: sphere optins are coded.
-     | |
-     | |-<A HREF=vdb/names/1OL.htm>PACKAGES_BOOT</A>      :: Start up the optional package environment.
-     | |                    :: Runtime selection of active packages.
-     | |
-     | |-<A HREF=vdb/names/5Y.htm>PACKAGES_READPARMS</A>    :: Call active package internal parameter load.
-     | | |
-     | | |-<A HREF=vdb/names/2T.htm>GMREDI_READPARMS</A>    :: GM Package. see pkg/gmredi
-     | | |-<A HREF=vdb/names/4S.htm>KPP_READPARMS</A>       :: KPP Package. see pkg/kpp
-     | | |-<A HREF=vdb/names/6F.htm>SHAP_FILT_READPARMS</A> :: Shapiro filter package. see pkg/shap_filt
-     | | |-<A HREF=vdb/names/5Q.htm>OBCS_READPARMS</A>      :: Open bndy package. see pkg/obcs
-     | | |-<A HREF=vdb/names/1B.htm>COST_READPARMS</A>      :: Cost function package. see pkg/cost
-     | | |-<A HREF=vdb/names/1E.htm>CTRL_INIT</A>           :: Control vector support package. see pkg/ctrl
-     | | |-<A HREF=vdb/names/5V.htm>OPTIM_READPARMS</A>     :: Optimisation support package. see pkg/ctrl 
-     | | |-<A HREF=vdb/names/2W.htm>GRDCHK_READPARMS</A>    :: Gradient check package. see pkg/grdchk
-     | | |-<A HREF=vdb/names/1U.htm>ECCO_READPARMS</A>      :: ECCO Support Package. see pkg/ecco
-     | |
-     | |-<A HREF=vdb/names/1OM.htm>PACKAGES_CHECK</A>        :: Control checking package configuration.
-     | | |
-     | | |-<A HREF=vdb/names/4P.htm>KPP_CHECK</A>           :: KPP Package. pkg/kpp
-     | | |-<A HREF=vdb/names/5N.htm>OBCS_CHECK</A>          :: Open bndy Pacakge. pkg/obcs
-     | | |-<A HREF=vdb/names/2Q.htm>GMREDI_CHECK</A>        :: GM Package. pkg/gmredi
-     | |
-     | |-<A HREF=vdb/names/1ON.htm>PACKAGES_INIT_FIXED</A>   :: Fixed initialisation of packages
-     | | |-<A HREF=vdb/names/5O.htm>OBCS_INIT_FIXED</A>     :: Open bndy Package. see pkg/obcs
-     | | |-<A HREF=vdb/names/2C.htm>FLT_INIT</A>            :: Floats Package. see pkg/flt
-     | |
-     | |-<A HREF=vdb/names/7O.htm>ZONAL_FILT_INIT</A>       :: FFT filter Package. see pkg/zonal_filt
-     | |
-     | |-<A HREF=vdb/names/3I.htm>INI_CG2D</A>              :: 2d con. grad solver initialisation.
-     | |
-     | |-<A HREF=vdb/names/3J.htm>INI_CG3D</A>              :: 3d con. grad solver initialisation.
-     | |
-     | |-<A HREF=vdb/names/14.htm>CONFIG_SUMMARY</A>        :: Provide synopsis of kernel setup.
-     |                         :: Includes annotated table of kernel 
-     |                         :: parameter settings.
-     |
-     |-<A HREF=vdb/names/1I.htm>CTRL_UNPACK</A> :: Control vector support package. see pkg/ctrl
-     |
-     |-<A HREF=vdb/names/3.htm>ADTHE_MAIN_LOOP</A> :: Derivative evaluating form of main time stepping loop
-     !                 :: Auotmatically gerenrated by TAMC/TAF.
-     |
-     |-<A HREF=vdb/names/1H.htm>CTRL_PACK</A>   :: Control vector support package. see pkg/ctrl
-     |
-     |-<A HREF=vdb/names/2V.htm>GRDCHK_MAIN</A> :: Gradient check package. see pkg/grdchk
-     |
-     |-<A HREF=vdb/names/6O.htm>THE_MAIN_LOOP</A> :: Main timestepping loop routine.
-     | |
-     | |-<A HREF=vdb/names/3G.htm>INITIALISE_VARIA</A> :: Set the initial conditions for time evolving 
-     | | |                :: variables
-     | | |
-     | | |-<A HREF=vdb/names/3R.htm>INI_LINEAR_PHISURF</A> :: Set ref. surface Bo_surf
-     | | |
-     | | |-<A HREF=vdb/names/3K.htm>INI_CORI</A>     :: Set coriolis term. zero, f-plane, beta-plane,
-     | | |              :: sphere optins are coded.
-     | | |
-     | | |-<A HREF=vdb/names/3I.htm>INI_CG2D</A>     :: 2d con. grad solver initialisation.
-     | | |-<A HREF=vdb/names/3J.htm>INI_CG3D</A>     :: 3d con. grad solver initialisation.
-     | | |-<A HREF=vdb/names/3U.htm>INI_MIXING</A>   :: Initialise diapycnal diffusivity.
-     | | |-<A HREF=vdb/names/3N.htm>INI_DYNVARS</A>  :: Initialise to zero all DYNVARS.h arrays (dynamical
-     | | |              :: fields).
-     | | |
-     | | |-<A HREF=vdb/names/3O.htm>INI_FIELDS</A>   :: Control initialising model fields to non-zero
-     | | | |-<A HREF=vdb/names/41.htm>INI_VEL</A>    :: Initialize 3D flow field.
-     | | | |-<A HREF=vdb/names/3Z.htm>INI_THETA</A>  :: Set model initial temperature field.
-     | | | |-<A HREF=vdb/names/3X.htm>INI_SALT</A>   :: Set model initial salinity field.
-     | | | |-<A HREF=vdb/names/3W.htm>INI_PSURF</A>  :: Set model initial free-surface height/pressure.
-     | | |
-     | | |-<A HREF=vdb/names/40.htm>INI_TR1</A>      :: Set initial tracer 1 distribution.
-     | | |
-     | | |-<A HREF=vdb/names/6M.htm>THE_CORRECTION_STEP</A> :: Step forward to next time step.
-     | | | |                   :: Here applied to move restart conditions
-     | | | |                   :: (saved in mid timestep) to correct level in 
-     | | | |                   :: time (only used for pre-c35).
-     | | | |
-     | | | |-<A HREF=vdb/names/Q.htm>CALC_GRAD_PHI_SURF</A> :: Return DDx and DDy of surface pressure
-     | | | |-<A HREF=vdb/names/18.htm>CORRECTION_STEP</A>    :: Pressure correction to momentum
-     | | | |-<A HREF=vdb/names/1J.htm>CYCLE_TRACER</A>       :: Move tracers forward in time.
-     | | | |-<A HREF=vdb/names/5K.htm>OBCS_APPLY_UV</A>      :: Open bndy package. see pkg/obcs
-     | | | |-<A HREF=vdb/names/6E.htm>SHAP_FILT_APPLY</A>    :: Shapiro filter package. see pkg/shap_filt
-     | | | |-<A HREF=vdb/names/7N.htm>ZONAL_FILT_APPLY</A>   :: FFT filter package. see pkg/zonal_filt
-     | | | |-<A HREF=vdb/names/16.htm>CONVECTIVE_ADJUSTMENT</A> :: Control static instability mixing.
-     | | | | |-<A HREF=vdb/names/2A.htm>FIND_RHO</A>  :: Find adjacent densities.
-     | | | | |-<A HREF=vdb/names/15.htm>CONVECT</A>   :: Mix static instability.
-     | | | | |-<A HREF=vdb/names/6R.htm>TIMEAVE_CUMULATE</A> :: Update convection statistics.
-     | | | | 
-     | | | |-<A HREF=vdb/names/O.htm>CALC_EXACT_ETA</A>        :: Change SSH to flow divergence.     
-     | | | 
-     | | |-<A HREF=vdb/names/17.htm>CONVECTIVE_ADJUSTMENT_INI</A> :: Control static instability mixing
-     | | | |                         :: Extra time history interactions.
-     | | | |                       
-     | | | |-<A HREF=vdb/names/2A.htm>FIND_RHO</A>  :: Find adjacent densities.
-     | | | |-<A HREF=vdb/names/15.htm>CONVECT</A>   :: Mix static instability.
-     | | | |-<A HREF=vdb/names/6R.htm>TIMEAVE_CUMULATE</A> :: Update convection statistics.
-     | | |
-     | | |-<A HREF=vdb/names/5X.htm>PACKAGES_INIT_VARIABLES</A> :: Does initialisation of time evolving 
-     | | | |                       :: package data.
-     | | | |
-     | | | |-<A HREF=vdb/names/2S.htm>GMREDI_INIT</A>          :: GM package. ( see pkg/gmredi )
-     | | | |-<A HREF=vdb/names/4R.htm>KPP_INIT</A>             :: KPP package. ( see pkg/kpp )
-     | | | |-<A HREF=vdb/names/1P1.htm>KPP_OPEN_DIAGS</A>       :: Open diagnostic output files.
-     | | | |-<A HREF=vdb/names/5P.htm>OBCS_INIT_VARIABLES</A>  :: Open bndy. package. ( see pkg/obcs )
-     | | | |-<A HREF=vdb/names/6.htm>AIM_INIT</A>             :: Interm. atmos package. ( see pkg/aim )
-     | | | |-<A HREF=vdb/names/1G.htm>CTRL_MAP_INI</A>         :: Control vector package.( see pkg/ctrl )
-     | | | |-<A HREF=vdb/names/1A.htm>COST_INIT</A>            :: Cost function package. ( see pkg/cost )
-     | | | |-<A HREF=vdb/names/1T.htm>ECCO_INIT</A>            :: ECCO support package. ( see pkg/ecco )
-     | | | |-<A HREF=vdb/names/3P.htm>INI_FORCING</A>          :: Set model initial forcing fields.
-     | | |   |                    :: Either set in-line or from file as shown.
-     | | |   |-<A HREF=vdb/names/1LC.htm>READ_FLD_XY_RS</A>(zonalWindFile)  :: Load forcing file
-     | | |   |-<A HREF=vdb/names/1LC.htm>READ_FLD_XY_RS</A>(meridWindFile)  :: Load forcing file
-     | | |   |-<A HREF=vdb/names/1LC.htm>READ_FLD_XY_RS</A>(surfQFile)      :: Load forcing file
-     | | |   |-<A HREF=vdb/names/1LC.htm>READ_FLD_XY_RS</A>(EmPmRfile)      :: Load forcing file
-     | | |   |-<A HREF=vdb/names/1LC.htm>READ_FLD_XY_RS</A>(thetaClimFile)  :: Load forcing file
-     | | |   |-<A HREF=vdb/names/1LC.htm>READ_FLD_XY_RS</A>(saltClimFile)   :: Load forcing file
-     | | |   |-<A HREF=vdb/names/1LC.htm>READ_FLD_XY_RS</A>(surfQswFile)    :: Load forcing file
-     | | |
-     | | |-<A HREF=vdb/names/Y.htm>CALC_SURF_DR</A>   :: Calculate the new surface level thickness.
-     | | |-<A HREF=vdb/names/73.htm>UPDATE_SURF_DR</A> :: Update the surface-level thickness fraction.
-     | | |-<A HREF=vdb/names/72.htm>UPDATE_CG2D</A>    :: Update 2d conjugate grad. for Free-Surf.
-     | | |-<A HREF=vdb/names/6J.htm>STATE_SUMMARY</A>    :: Summarize model prognostic variables.
-     | | |-<A HREF=vdb/names/6T.htm>TIMEAVE_STATVARS</A> :: Time averaging package ( see pkg/timeave ).
-     | |
-     | |-<A HREF=vdb/names/7K.htm>WRITE_STATE</A>      :: Controlling routine for IO to dump model state.
-     | | |-<A HREF=vdb/names/7J.htm>WRITE_REC_XYZ_RL</A> :: Single file I/O
-     | | |-<A HREF=vdb/names/7I.htm>WRITE_FLD_XYZ_RL</A> :: Multi-file I/O
-     | | 
-     | |-<A HREF=vdb/names/5B.htm>MONITOR</A>          :: Monitor state ( see pkg/monitor )
-     | |-<A HREF=vdb/names/1F.htm>CTRL_MAP_FORCING</A> :: Control vector support package. ( see pkg/ctrl )
- ====|>| 
- ====|>| ****************************
- ====|>| BEGIN MAIN TIMESTEPPING LOOP
- ====|>| ****************************
- ====|>| 
- /\  | |-<A HREF=vdb/names/2E.htm>FORWARD_STEP</A>     :: Step forward a time-step ( AT LAST !!! )
- /\  | | |
- /\  | | |-<A HREF=vdb/names/1R.htm>DUMMY_IN_STEPPING</A> :: autodiff package ( pkg/autoduff ).
- /\  | | |-<A HREF=vdb/names/O.htm>CALC_EXACT_ETA</A> :: Change SSH to flow divergence.
- /\  | | |-<A HREF=vdb/names/Y.htm>CALC_SURF_DR</A>   :: Calculate the new surface level thickness.
- /\  | | |-<A HREF=vdb/names/23.htm>EXF_GETFORCING</A> :: External forcing package. ( pkg/exf )
- /\  | | |-<A HREF=vdb/names/24.htm>EXTERNAL_FIELDS_LOAD</A> :: Control loading time dep. external data.
- /\  | | | |                    :: Simple interpolcation between end-points 
- /\  | | | |                    :: for forcing datasets.
- /\  | | | |                  
- /\  | | | |-<A HREF=vdb/names/.htm>EXCH_XY_RX</A> :: Sync forcing. in overlap regions.
- /\  | | |
- /\  | | |-<A HREF=vdb/names/6L.htm>THERMODYNAMICS</A> :: theta, salt + tracer equations driver.
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/43.htm>INTEGRATE_FOR_W</A> :: Integrate for vertical velocity.
- /\  | | | |-<A HREF=vdb/names/5L.htm>OBCS_APPLY_W</A>    :: Open bndy. package ( see pkg/obcs ).
- /\  | | | |-<A HREF=vdb/names/2A.htm>FIND_RHO</A>        :: Calculates [rho(S,T,z)-Rhonil] of a slice
- /\  | | | |-<A HREF=vdb/names/2U.htm>GRAD_SIGMA</A>      :: Calculate isoneutral gradients
- /\  | | | |-<A HREF=vdb/names/W.htm>CALC_IVDC</A>       :: Set Implicit Vertical Diffusivity for Convection
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/5M.htm>OBCS_CALC</A>             :: Open bndy. package ( see pkg/obcs ).
- /\  | | | |-<A HREF=vdb/names/26.htm>EXTERNAL_FORCING_SURF</A> :: Accumulates appropriately dimensioned 
- /\  | | | |                       :: forcing terms.
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/2O.htm>GMREDI_CALC_TENSOR</A>   :: GM package ( see pkg/gmredi ).
- /\  | | | |-<A HREF=vdb/names/2P.htm>GMREDI_CALC_TENSOR_DUMMY</A> :: GM package ( see pkg/gmredi ). 
- /\  | | | |-<A HREF=vdb/names/4L.htm>KPP_CALC</A>             :: KPP package ( see pkg/kpp ).
- /\  | | | |-<A HREF=vdb/names/4N.htm>KPP_CALC_DUMMY</A>       :: KPP package ( see pkg/kpp ).
- /\  | | | |-<A HREF=vdb/names/5.htm>AIM_DO_ATMOS_PHYSICS</A> :: Intermed. atmos package ( see pkg/aim ).
- /\  | | | |-<A HREF=vdb/names/2I.htm>GAD_ADVECTION</A>        :: Generalised advection driver (multi-dim
- /\  | | | |                         advection case) (see pkg/gad).
- /\  | | | |-<A HREF=vdb/names/L.htm>CALC_COMMON_FACTORS</A>  :: Calculate common data (such as volume flux)
- /\  | | | |-<A HREF=vdb/names/M.htm>CALC_DIFFUSIVITY</A>     :: Calculate net vertical diffusivity
- /\  | | | | |
- /\  | | | | |-<A HREF=vdb/names/2N.htm>GMREDI_CALC_DIFF</A>   :: GM package ( see pkg/gmredi ).
- /\  | | | | |-<A HREF=vdb/names/4M.htm>KPP_CALC_DIFF</A>      :: KPP package ( see pkg/kpp ).
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/T.htm>CALC_GT</A>              :: Calculate the temperature tendency terms
- /\  | | | | |
- /\  | | | | |-<A HREF=vdb/names/2J.htm>GAD_CALC_RHS</A>       :: Generalised advection package 
- /\  | | | | |                    :: ( see pkg/gad )
- /\  | | | | |-<A HREF=vdb/names/27.htm>EXTERNAL_FORCING_T</A> :: Problem specific forcing for temperature.
- /\  | | | | |-<A HREF=vdb/names/2.htm>ADAMS_BASHFORTH2</A>   :: Extrapolate tendencies forward in time.
- /\  | | | | |-<A HREF=vdb/names/2F.htm>FREESURF_RESCALE_G</A> :: Re-scale Gt for free-surface height.
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/6X.htm>TIMESTEP_TRACER</A>      :: Step tracer field forward in time
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/S.htm>CALC_GS</A>              :: Calculate the salinity tendency terms
- /\  | | | | |
- /\  | | | | |-<A HREF=vdb/names/2J.htm>GAD_CALC_RHS</A>       :: Generalised advection package 
- /\  | | | | |                    :: ( see pkg/gad )
- /\  | | | | |-<A HREF=vdb/names/25.htm>EXTERNAL_FORCING_S</A> :: Problem specific forcing for salt.
- /\  | | | | |-<A HREF=vdb/names/2.htm>ADAMS_BASHFORTH2</A>   :: Extrapolate tendencies forward in time.
- /\  | | | | |-<A HREF=vdb/names/2F.htm>FREESURF_RESCALE_G</A> :: Re-scale Gs for free-surface height.
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/6X.htm>TIMESTEP_TRACER</A>       :: Step tracer field forward in time
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/U.htm>CALC_GTR1</A>             :: Calculate other tracer(s) tendency terms
- /\  | | | | |
- /\  | | | | |-<A HREF=vdb/names/2J.htm>GAD_CALC_RHS</A>        :: Generalised advection package 
- /\  | | | | |                     :: ( see pkg/gad )
- /\  | | | | |-<A HREF=vdb/names/28.htm>EXTERNAL_FORCING_TR</A> :: Problem specific forcing for tracer.
- /\  | | | | |-<A HREF=vdb/names/2.htm>ADAMS_BASHFORTH2</A>    :: Extrapolate tendencies forward in time.
- /\  | | | | |-<A HREF=vdb/names/2F.htm>FREESURF_RESCALE_G</A>  :: Re-scale Gs for free-surface height.
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/6X.htm>TIMESTEP_TRACER</A>      :: Step tracer field forward in time
- /\  | | | |-<A HREF=vdb/names/5I.htm>OBCS_APPLY_TS</A>        :: Open bndy. package (see pkg/obcs ).
- /\  | | | |-<A HREF=vdb/names/2H.htm>FREEZE</A>               :: Limit range of temperature.
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/3E.htm>IMPLDIFF</A>             :: Solve vertical implicit diffusion equation.
- /\  | | | |-<A HREF=vdb/names/5I.htm>OBCS_APPLY_TS</A>        :: Open bndy. package (see pkg/obcs ). 
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/4.htm>AIM_AIM2DYN_EXCHANGES</A> :: Inetermed. atmos (see pkg/aim).
- /\  | | | |-<A HREF=vdb/names/.htm>EXCH_XYZ_RX</A>          :: Update overlaps
- /\  | | |
- /\  | | |-<A HREF=vdb/names/1S.htm>DYNAMICS</A>       :: Momentum equations driver.
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/Q.htm>CALC_GRAD_PHI_SURF</A> :: Calculate the gradient of the surface 
- /\  | | | |                       Potential anomaly.
- /\  | | | |-<A HREF=vdb/names/Z.htm>CALC_VISCOSITY</A>     :: Calculate net vertical viscosity
- /\  | | | | |-<A HREF=vdb/names/4O.htm>KPP_CALC_VISC</A>    :: KPP package ( see pkg/kpp ).
- /\  | | | |                                                      
- /\  | | | |-<A HREF=vdb/names/X.htm>CALC_PHI_HYD</A>       :: Integrate the hydrostatic relation.
- /\  | | | |-<A HREF=vdb/names/59.htm>MOM_FLUXFORM</A>       :: Flux form mom eqn. package ( see
- /\  | | | |                       pkg/mom_fluxform ).
- /\  | | | |-<A HREF=vdb/names/5A.htm>MOM_VECINV</A>         :: Vector invariant form mom eqn. package ( see
- /\  | | | |                       pkg/mom_vecinv   ).
- /\  | | | |-<A HREF=vdb/names/6W.htm>TIMESTEP</A>           :: Step momentum fields forward in time
- /\  | | | |-<A HREF=vdb/names/5K.htm>OBCS_APPLY_UV</A>      :: Open bndy. package (see pkg/obcs ).
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/3E.htm>IMPLDIFF</A>           :: Solve vertical implicit diffusion equation.
- /\  | | | |-<A HREF=vdb/names/5K.htm>OBCS_APPLY_UV</A>      :: Open bndy. package (see pkg/obcs ).
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/6S.htm>TIMEAVE_CUMUL_1T</A>   :: Time averaging package ( see pkg/timeave ).
- /\  | | | |-<A HREF=vdb/names/6R.htm>TIMEAVE_CUMULATE</A>   :: Time averaging package ( see pkg/timeave ).
- /\  | | | |-<A HREF=vdb/names/1O.htm>DEBUG_STATS_RL</A>     :: Quick debug package ( see pkg/debug ).
- /\  | | |
- /\  | | |-<A HREF=vdb/names/V.htm>CALC_GW</A>        :: vert. momentum tendency terms ( NH, QH only ).
- /\  | | |
- /\  | | |-<A HREF=vdb/names/73.htm>UPDATE_SURF_DR</A> :: Update the surface-level thickness fraction.
- /\  | | |
- /\  | | |-<A HREF=vdb/names/72.htm>UPDATE_CG2D</A>    :: Update 2d conjugate grad. for Free-Surf.
- /\  | | |
- /\  | | |-<A HREF=vdb/names/6I.htm>SOLVE_FOR_PRESSURE</A>           :: Find surface pressure.
- /\  | | | |-<A HREF=vdb/names/N.htm>CALC_DIV_GHAT</A>     :: Form the RHS of the surface pressure eqn.
- /\  | | | |-<A HREF=vdb/names/10.htm>CG2D</A>              :: Two-dim pre-con. conjugate-gradient.
- /\  | | | |-<A HREF=vdb/names/12.htm>CG3D</A>              :: Three-dim pre-con. conjugate-gradient solver.
- /\  | | |
- /\  | | |-<A HREF=vdb/names/6M.htm>THE_CORRECTION_STEP</A>          :: Step forward to next time step.
- /\  | | | |
- /\  | | | |-<A HREF=vdb/names/Q.htm>CALC_GRAD_PHI_SURF</A> :: Return DDx and DDy of surface pressure
- /\  | | | |-<A HREF=vdb/names/18.htm>CORRECTION_STEP</A>    :: Pressure correction to momentum
- /\  | | | |-<A HREF=vdb/names/1J.htm>CYCLE_TRACER</A>       :: Move tracers forward in time.
- /\  | | | |-<A HREF=vdb/names/5K.htm>OBCS_APPLY_UV</A>      :: Open bndy package. see pkg/obcs
- /\  | | | |-<A HREF=vdb/names/6E.htm>SHAP_FILT_APPLY</A>    :: Shapiro filter package. see pkg/shap_filt
- /\  | | | |-<A HREF=vdb/names/7N.htm>ZONAL_FILT_APPLY</A>   :: FFT filter package. see pkg/zonal_filt
- /\  | | | |-<A HREF=vdb/names/16.htm>CONVECTIVE_ADJUSTMENT</A> :: Control static instability mixing.
- /\  | | | | |-<A HREF=vdb/names/2A.htm>FIND_RHO</A>  :: Find adjacent densities.
- /\  | | | | |-<A HREF=vdb/names/15.htm>CONVECT</A>   :: Mix static instability.
- /\  | | | | |-<A HREF=vdb/names/6R.htm>TIMEAVE_CUMULATE</A> :: Update convection statistics.
- /\  | | | | 
- /\  | | | |-<A HREF=vdb/names/O.htm>CALC_EXACT_ETA</A>        :: Change SSH to flow divergence.     
- /\  | | |
- /\  | | |-<A HREF=vdb/names/1P.htm>DO_FIELDS_BLOCKING_EXCHANGES</A> :: Sync up overlap regions.
- /\  | | | |-<A HREF=vdb/names/.htm>EXCH_XYZ_RX</A>    :: Update overlaps
- /\  | | |
- /\  | | |-<A HREF=vdb/names/2D.htm>FLT_MAIN</A>         :: Float package ( pkg/flt ).
- /\  | | |
- /\  | | |-<A HREF=vdb/names/5B.htm>MONITOR</A>          :: Monitor package ( pkg/monitor ).
- /\  | | |
- /\  | | |-<A HREF=vdb/names/1Q.htm>DO_THE_MODEL_IO</A>  :: Standard diagnostic I/O.
- /\  | | | |-<A HREF=vdb/names/7K.htm>WRITE_STATE</A>    :: Core state I/O
- /\  | | | |-<A HREF=vdb/names/6U.htm>TIMEAVE_STATV_WRITE</A> :: Time averages. see pkg/timeave
- /\  | | | |-<A HREF=vdb/names/8.htm>AIM_WRITE_DIAGS</A>     :: Intermed. atmos diags. see pkg/aim
- /\  | | | |-<A HREF=vdb/names/2R.htm>GMREDI_DIAGS</A>        :: GM diags. see pkg/gmredi
- /\  | | | |-<A HREF=vdb/names/4Q.htm>KPP_DO_DIAGS</A>        :: KPP diags. see pkg/kpp
- /\  | | |
- /\  | | |-<A HREF=vdb/names/7G.htm>WRITE_CHECKPOINT</A> :: Do I/O for restart files.
- /\  | |
- /\  | |-<A HREF=vdb/names/1C.htm>COST_TILE</A>        :: Cost function package. ( see pkg/cost )
- <===|=|
- <===|=| **************************
- <===|=| END MAIN TIMESTEPPING LOOP
- <===|=| **************************
- <===|=|
-     | |-<A HREF=vdb/names/19.htm>COST_FINAL</A>       :: Cost function package. ( see pkg/cost )
-     |
-     |-<A HREF=vdb/names/7G.htm>WRITE_CHECKPOINT</A> :: Final state storage, for restart.
-     |
-     |-<A HREF=vdb/names/6V.htm>TIMER_PRINTALL</A> :: Computational timing summary
-     |
-     |-<A HREF=vdb/names/13.htm>COMM_STATS</A>     :: Summarise inter-proc and inter-thread communication
-                      :: events.
-  
-</PRE>
-</BODY>
-</HTML>
+<h1>
+Browse Hypertext Code Online</h1>
+Browse MITgcm source code in hyperlinked form.
+<p>Select links from the calling tree below or select from the side bar
+menu to access alphabetic lists of model subroutines and functions, runtime
+parameters, compile time parameters and model source files.
+<p>The 'all symbols' link at the bottom on the side displays lists of all
+symbols used in MITgcm. This list is quite long and can take some time
+to display.
+<h3>
+MITgcm Release 1 Main Call Tree</h3>
+
+<pre>&nbsp;
+&nbsp; Invocation from WRAPPER level...
+&nbsp;&nbsp; :
+&nbsp;&nbsp; :
+&nbsp;&nbsp; |
+&nbsp;&nbsp; |-<a href="vdb/names/6P.htm">THE_MODEL_MAIN</a> :: Primary driver for the MITgcm algorithm
+&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Called from WRAPPER level numerical
+&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: code innvocation routine. On entry
+&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: to THE_MODEL_MAIN separate thread and
+&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: separate processes will have been established.
+&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Each thread and process will have a unique ID
+&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: but as yet it will not be associated with a
+&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: specific region in decomposed discrete space.
+&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp; |-<a href="vdb/names/3F.htm">INITIALISE_FIXED</a> :: Set fixed model arrays such as topography,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: grid, solver matrices etc..
+&nbsp;&nbsp;&nbsp;&nbsp; | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/3V.htm">INI_PARMS</a> :: Routine to set kernel model parameters.
+&nbsp;&nbsp;&nbsp;&nbsp; | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: By default kernel parameters are read from file&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: "data" in directory in which code executes.
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/5D.htm">MON_INIT</a> :: Initialises monitor pacakge ( see pkg/monitor )
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/3Q.htm">INI_GRID</a> :: Control grid array (vert. and hori.) initialisation.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Grid arrays are held and described in GRID.h.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/42.htm">INI_VERTICAL_GRID</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Initialise vertical grid arrays.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/3H.htm">INI_CARTESIAN_GRID</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Cartesian horiz. grid initialisation
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: (calculate grid from kernel parameters).
+&nbsp;&nbsp;&nbsp;&nbsp; | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/3Y.htm">INI_SPHERICAL_POLAR_GRID</a> :: Spherical polar horiz. grid&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: initialisation (calculate grid from&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: kernel parameters).
+&nbsp;&nbsp;&nbsp;&nbsp; | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/3L.htm">INI_CURVILINEAR_GRID</a>&nbsp;&nbsp;&nbsp;&nbsp; :: General orthogonal, structured horiz.
+&nbsp;&nbsp;&nbsp;&nbsp; | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: grid initialisations. ( input from raw
+&nbsp;&nbsp;&nbsp;&nbsp; | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: grid files, LONC.bin, DXF.bin etc... )
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/3M.htm">INI_DEPTHS</a>&nbsp;&nbsp;&nbsp; :: Read (from "bathyFile") or set bathymetry/orgography.
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/3T.htm">INI_MASKS_ETC</a> :: Derive horizontal and vertical cell fractions and
+&nbsp;&nbsp;&nbsp;&nbsp; | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: land masking for solid-fluid boundaries.
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/3R.htm">INI_LINEAR_PHISURF</a> :: Set ref. surface Bo_surf
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/3K.htm">INI_CORI</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Set coriolis term. zero, f-plane, beta-plane,
+&nbsp;&nbsp;&nbsp;&nbsp; | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: sphere optins are coded.
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/1OL.htm">PACKAGES_BOOT</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Start up the optional package environment.
+&nbsp;&nbsp;&nbsp;&nbsp; | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Runtime selection of active packages.
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/5Y.htm">PACKAGES_READPARMS</a>&nbsp;&nbsp;&nbsp; :: Call active package internal parameter load.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/2T.htm">GMREDI_READPARMS</a>&nbsp;&nbsp;&nbsp; :: GM Package. see pkg/gmredi
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/4S.htm">KPP_READPARMS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: KPP Package. see pkg/kpp
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/6F.htm">SHAP_FILT_READPARMS</a> :: Shapiro filter package. see pkg/shap_filt
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/5Q.htm">OBCS_READPARMS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Open bndy package. see pkg/obcs
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/1B.htm">COST_READPARMS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Cost function package. see pkg/cost
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/1E.htm">CTRL_INIT</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Control vector support package. see pkg/ctrl
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/5V.htm">OPTIM_READPARMS</a>&nbsp;&nbsp;&nbsp;&nbsp; :: Optimisation support package. see pkg/ctrl&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/2W.htm">GRDCHK_READPARMS</a>&nbsp;&nbsp;&nbsp; :: Gradient check package. see pkg/grdchk
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/1U.htm">ECCO_READPARMS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: ECCO Support Package. see pkg/ecco
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/1OM.htm">PACKAGES_CHECK</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Control checking package configuration.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/4P.htm">KPP_CHECK</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: KPP Package. pkg/kpp
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/5N.htm">OBCS_CHECK</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Open bndy Pacakge. pkg/obcs
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/2Q.htm">GMREDI_CHECK</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: GM Package. pkg/gmredi
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/1ON.htm">PACKAGES_INIT_FIXED</a>&nbsp;&nbsp; :: Fixed initialisation of packages
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/5O.htm">OBCS_INIT_FIXED</a>&nbsp;&nbsp;&nbsp;&nbsp; :: Open bndy Package. see pkg/obcs
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/2C.htm">FLT_INIT</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Floats Package. see pkg/flt
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/7O.htm">ZONAL_FILT_INIT</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: FFT filter Package. see pkg/zonal_filt
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/3I.htm">INI_CG2D</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: 2d con. grad solver initialisation.
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/3J.htm">INI_CG3D</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: 3d con. grad solver initialisation.
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/14.htm">CONFIG_SUMMARY</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Provide synopsis of kernel setup.
+&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Includes annotated table of kernel&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: parameter settings.
+&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp; |-<a href="vdb/names/1I.htm">CTRL_UNPACK</a> :: Control vector support package. see pkg/ctrl
+&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp; |-<a href="vdb/names/3.htm">ADTHE_MAIN_LOOP</a> :: Derivative evaluating form of main time stepping loop
+&nbsp;&nbsp;&nbsp;&nbsp; !&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Auotmatically gerenrated by TAMC/TAF.
+&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp; |-<a href="vdb/names/1H.htm">CTRL_PACK</a>&nbsp;&nbsp; :: Control vector support package. see pkg/ctrl
+&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp; |-<a href="vdb/names/2V.htm">GRDCHK_MAIN</a> :: Gradient check package. see pkg/grdchk
+&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp; |-<a href="vdb/names/6O.htm">THE_MAIN_LOOP</a> :: Main timestepping loop routine.
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/3G.htm">INITIALISE_VARIA</a> :: Set the initial conditions for time evolving&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: variables
+&nbsp;&nbsp;&nbsp;&nbsp; | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/3R.htm">INI_LINEAR_PHISURF</a> :: Set ref. surface Bo_surf
+&nbsp;&nbsp;&nbsp;&nbsp; | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/3K.htm">INI_CORI</a>&nbsp;&nbsp;&nbsp;&nbsp; :: Set coriolis term. zero, f-plane, beta-plane,
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: sphere optins are coded.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/3I.htm">INI_CG2D</a>&nbsp;&nbsp;&nbsp;&nbsp; :: 2d con. grad solver initialisation.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/3J.htm">INI_CG3D</a>&nbsp;&nbsp;&nbsp;&nbsp; :: 3d con. grad solver initialisation.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/3U.htm">INI_MIXING</a>&nbsp;&nbsp; :: Initialise diapycnal diffusivity.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/3N.htm">INI_DYNVARS</a>&nbsp; :: Initialise to zero all DYNVARS.h arrays (dynamical
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: fields).
+&nbsp;&nbsp;&nbsp;&nbsp; | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/3O.htm">INI_FIELDS</a>&nbsp;&nbsp; :: Control initialising model fields to non-zero
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/41.htm">INI_VEL</a>&nbsp;&nbsp;&nbsp; :: Initialize 3D flow field.
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/3Z.htm">INI_THETA</a>&nbsp; :: Set model initial temperature field.
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/3X.htm">INI_SALT</a>&nbsp;&nbsp; :: Set model initial salinity field.
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/3W.htm">INI_PSURF</a>&nbsp; :: Set model initial free-surface height/pressure.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/40.htm">INI_TR1</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Set initial tracer 1 distribution.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/6M.htm">THE_CORRECTION_STEP</a> :: Step forward to next time step.
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Here applied to move restart conditions
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: (saved in mid timestep) to correct level in&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: time (only used for pre-c35).
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/Q.htm">CALC_GRAD_PHI_SURF</a> :: Return DDx and DDy of surface pressure
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/18.htm">CORRECTION_STEP</a>&nbsp;&nbsp;&nbsp; :: Pressure correction to momentum
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/1J.htm">CYCLE_TRACER</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Move tracers forward in time.
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/5K.htm">OBCS_APPLY_UV</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Open bndy package. see pkg/obcs
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/6E.htm">SHAP_FILT_APPLY</a>&nbsp;&nbsp;&nbsp; :: Shapiro filter package. see pkg/shap_filt
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/7N.htm">ZONAL_FILT_APPLY</a>&nbsp;&nbsp; :: FFT filter package. see pkg/zonal_filt
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/16.htm">CONVECTIVE_ADJUSTMENT</a> :: Control static instability mixing.
+&nbsp;&nbsp;&nbsp;&nbsp; | | | | |-<a href="vdb/names/2A.htm">FIND_RHO</a>&nbsp; :: Find adjacent densities.
+&nbsp;&nbsp;&nbsp;&nbsp; | | | | |-<a href="vdb/names/15.htm">CONVECT</a>&nbsp;&nbsp; :: Mix static instability.
+&nbsp;&nbsp;&nbsp;&nbsp; | | | | |-<a href="vdb/names/6R.htm">TIMEAVE_CUMULATE</a> :: Update convection statistics.
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/O.htm">CALC_EXACT_ETA</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Change SSH to flow divergence.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/17.htm">CONVECTIVE_ADJUSTMENT_INI</a> :: Control static instability mixing
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Extra time history interactions.
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/2A.htm">FIND_RHO</a>&nbsp; :: Find adjacent densities.
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/15.htm">CONVECT</a>&nbsp;&nbsp; :: Mix static instability.
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/6R.htm">TIMEAVE_CUMULATE</a> :: Update convection statistics.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/5X.htm">PACKAGES_INIT_VARIABLES</a> :: Does initialisation of time evolving&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: package data.
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/2S.htm">GMREDI_INIT</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: GM package. ( see pkg/gmredi )
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/4R.htm">KPP_INIT</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: KPP package. ( see pkg/kpp )
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/1P1.htm">KPP_OPEN_DIAGS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Open diagnostic output files.
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/5P.htm">OBCS_INIT_VARIABLES</a>&nbsp; :: Open bndy. package. ( see pkg/obcs )
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/6.htm">AIM_INIT</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Interm. atmos package. ( see pkg/aim )
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/1G.htm">CTRL_MAP_INI</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Control vector package.( see pkg/ctrl )
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/1A.htm">COST_INIT</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Cost function package. ( see pkg/cost )
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/1T.htm">ECCO_INIT</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: ECCO support package. ( see pkg/ecco )
+&nbsp;&nbsp;&nbsp;&nbsp; | | | |-<a href="vdb/names/3P.htm">INI_FORCING</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Set model initial forcing fields.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Either set in-line or from file as shown.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp; |-<a href="vdb/names/1LC.htm">READ_FLD_XY_RS</a>(zonalWindFile)&nbsp; :: Load forcing file
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp; |-<a href="vdb/names/1LC.htm">READ_FLD_XY_RS</a>(meridWindFile)&nbsp; :: Load forcing file
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp; |-<a href="vdb/names/1LC.htm">READ_FLD_XY_RS</a>(surfQFile)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Load forcing file
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp; |-<a href="vdb/names/1LC.htm">READ_FLD_XY_RS</a>(EmPmRfile)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Load forcing file
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp; |-<a href="vdb/names/1LC.htm">READ_FLD_XY_RS</a>(thetaClimFile)&nbsp; :: Load forcing file
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp; |-<a href="vdb/names/1LC.htm">READ_FLD_XY_RS</a>(saltClimFile)&nbsp;&nbsp; :: Load forcing file
+&nbsp;&nbsp;&nbsp;&nbsp; | | |&nbsp;&nbsp; |-<a href="vdb/names/1LC.htm">READ_FLD_XY_RS</a>(surfQswFile)&nbsp;&nbsp;&nbsp; :: Load forcing file
+&nbsp;&nbsp;&nbsp;&nbsp; | | |
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/Y.htm">CALC_SURF_DR</a>&nbsp;&nbsp; :: Calculate the new surface level thickness.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/73.htm">UPDATE_SURF_DR</a> :: Update the surface-level thickness fraction.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/72.htm">UPDATE_CG2D</a>&nbsp;&nbsp;&nbsp; :: Update 2d conjugate grad. for Free-Surf.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/6J.htm">STATE_SUMMARY</a>&nbsp;&nbsp;&nbsp; :: Summarize model prognostic variables.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/6T.htm">TIMEAVE_STATVARS</a> :: Time averaging package ( see pkg/timeave ).
+&nbsp;&nbsp;&nbsp;&nbsp; | |
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/7K.htm">WRITE_STATE</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Controlling routine for IO to dump model state.
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/7J.htm">WRITE_REC_XYZ_RL</a> :: Single file I/O
+&nbsp;&nbsp;&nbsp;&nbsp; | | |-<a href="vdb/names/7I.htm">WRITE_FLD_XYZ_RL</a> :: Multi-file I/O
+&nbsp;&nbsp;&nbsp;&nbsp; | |&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/5B.htm">MONITOR</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Monitor state ( see pkg/monitor )
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/1F.htm">CTRL_MAP_FORCING</a> :: Control vector support package. ( see pkg/ctrl )
+&nbsp;====|>|&nbsp;
+&nbsp;====|>| ****************************
+&nbsp;====|>| BEGIN MAIN TIMESTEPPING LOOP
+&nbsp;====|>| ****************************
+&nbsp;====|>|&nbsp;
+&nbsp;/\&nbsp; | |-<a href="vdb/names/2E.htm">FORWARD_STEP</a>&nbsp;&nbsp;&nbsp;&nbsp; :: Step forward a time-step ( AT LAST !!! )
+&nbsp;/\&nbsp; | | |
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/1R.htm">DUMMY_IN_STEPPING</a> :: autodiff package ( pkg/autoduff ).
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/O.htm">CALC_EXACT_ETA</a> :: Change SSH to flow divergence.
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/Y.htm">CALC_SURF_DR</a>&nbsp;&nbsp; :: Calculate the new surface level thickness.
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/23.htm">EXF_GETFORCING</a> :: External forcing package. ( pkg/exf )
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/24.htm">EXTERNAL_FIELDS_LOAD</a> :: Control loading time dep. external data.
+&nbsp;/\&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Simple interpolcation between end-points&nbsp;
+&nbsp;/\&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: for forcing datasets.
+&nbsp;/\&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/.htm">EXCH_XY_RX</a> :: Sync forcing. in overlap regions.
+&nbsp;/\&nbsp; | | |
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/6L.htm">THERMODYNAMICS</a> :: theta, salt + tracer equations driver.
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/43.htm">INTEGRATE_FOR_W</a> :: Integrate for vertical velocity.
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/5L.htm">OBCS_APPLY_W</a>&nbsp;&nbsp;&nbsp; :: Open bndy. package ( see pkg/obcs ).
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/2A.htm">FIND_RHO</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Calculates [rho(S,T,z)-Rhonil] of a slice
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/2U.htm">GRAD_SIGMA</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Calculate isoneutral gradients
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/W.htm">CALC_IVDC</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Set Implicit Vertical Diffusivity for Convection
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/5M.htm">OBCS_CALC</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Open bndy. package ( see pkg/obcs ).
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/26.htm">EXTERNAL_FORCING_SURF</a> :: Accumulates appropriately dimensioned&nbsp;
+&nbsp;/\&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: forcing terms.
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/2O.htm">GMREDI_CALC_TENSOR</a>&nbsp;&nbsp; :: GM package ( see pkg/gmredi ).
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/2P.htm">GMREDI_CALC_TENSOR_DUMMY</a> :: GM package ( see pkg/gmredi ).&nbsp;
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/4L.htm">KPP_CALC</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: KPP package ( see pkg/kpp ).
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/4N.htm">KPP_CALC_DUMMY</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: KPP package ( see pkg/kpp ).
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/5.htm">AIM_DO_ATMOS_PHYSICS</a> :: Intermed. atmos package ( see pkg/aim ).
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/2I.htm">GAD_ADVECTION</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Generalised advection driver (multi-dim
+&nbsp;/\&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; advection case) (see pkg/gad).
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/L.htm">CALC_COMMON_FACTORS</a>&nbsp; :: Calculate common data (such as volume flux)
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/M.htm">CALC_DIFFUSIVITY</a>&nbsp;&nbsp;&nbsp;&nbsp; :: Calculate net vertical diffusivity
+&nbsp;/\&nbsp; | | | | |
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/2N.htm">GMREDI_CALC_DIFF</a>&nbsp;&nbsp; :: GM package ( see pkg/gmredi ).
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/4M.htm">KPP_CALC_DIFF</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: KPP package ( see pkg/kpp ).
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/T.htm">CALC_GT</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Calculate the temperature tendency terms
+&nbsp;/\&nbsp; | | | | |
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/2J.htm">GAD_CALC_RHS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Generalised advection package&nbsp;
+&nbsp;/\&nbsp; | | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: ( see pkg/gad )
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/27.htm">EXTERNAL_FORCING_T</a> :: Problem specific forcing for temperature.
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/2.htm">ADAMS_BASHFORTH2</a>&nbsp;&nbsp; :: Extrapolate tendencies forward in time.
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/2F.htm">FREESURF_RESCALE_G</a> :: Re-scale Gt for free-surface height.
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/6X.htm">TIMESTEP_TRACER</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Step tracer field forward in time
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/S.htm">CALC_GS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Calculate the salinity tendency terms
+&nbsp;/\&nbsp; | | | | |
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/2J.htm">GAD_CALC_RHS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Generalised advection package&nbsp;
+&nbsp;/\&nbsp; | | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: ( see pkg/gad )
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/25.htm">EXTERNAL_FORCING_S</a> :: Problem specific forcing for salt.
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/2.htm">ADAMS_BASHFORTH2</a>&nbsp;&nbsp; :: Extrapolate tendencies forward in time.
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/2F.htm">FREESURF_RESCALE_G</a> :: Re-scale Gs for free-surface height.
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/6X.htm">TIMESTEP_TRACER</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Step tracer field forward in time
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/U.htm">CALC_GTR1</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Calculate other tracer(s) tendency terms
+&nbsp;/\&nbsp; | | | | |
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/2J.htm">GAD_CALC_RHS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Generalised advection package&nbsp;
+&nbsp;/\&nbsp; | | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: ( see pkg/gad )
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/28.htm">EXTERNAL_FORCING_TR</a> :: Problem specific forcing for tracer.
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/2.htm">ADAMS_BASHFORTH2</a>&nbsp;&nbsp;&nbsp; :: Extrapolate tendencies forward in time.
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/2F.htm">FREESURF_RESCALE_G</a>&nbsp; :: Re-scale Gs for free-surface height.
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/6X.htm">TIMESTEP_TRACER</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Step tracer field forward in time
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/5I.htm">OBCS_APPLY_TS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Open bndy. package (see pkg/obcs ).
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/2H.htm">FREEZE</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Limit range of temperature.
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/3E.htm">IMPLDIFF</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Solve vertical implicit diffusion equation.
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/5I.htm">OBCS_APPLY_TS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Open bndy. package (see pkg/obcs ).&nbsp;
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/4.htm">AIM_AIM2DYN_EXCHANGES</a> :: Inetermed. atmos (see pkg/aim).
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/.htm">EXCH_XYZ_RX</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Update overlaps
+&nbsp;/\&nbsp; | | |
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/1S.htm">DYNAMICS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Momentum equations driver.
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/Q.htm">CALC_GRAD_PHI_SURF</a> :: Calculate the gradient of the surface&nbsp;
+&nbsp;/\&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Potential anomaly.
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/Z.htm">CALC_VISCOSITY</a>&nbsp;&nbsp;&nbsp;&nbsp; :: Calculate net vertical viscosity
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/4O.htm">KPP_CALC_VISC</a>&nbsp;&nbsp;&nbsp; :: KPP package ( see pkg/kpp ).
+&nbsp;/\&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/X.htm">CALC_PHI_HYD</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Integrate the hydrostatic relation.
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/59.htm">MOM_FLUXFORM</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Flux form mom eqn. package ( see
+&nbsp;/\&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pkg/mom_fluxform ).
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/5A.htm">MOM_VECINV</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Vector invariant form mom eqn. package ( see
+&nbsp;/\&nbsp; | | | |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pkg/mom_vecinv&nbsp;&nbsp; ).
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/6W.htm">TIMESTEP</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Step momentum fields forward in time
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/5K.htm">OBCS_APPLY_UV</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Open bndy. package (see pkg/obcs ).
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/3E.htm">IMPLDIFF</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Solve vertical implicit diffusion equation.
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/5K.htm">OBCS_APPLY_UV</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Open bndy. package (see pkg/obcs ).
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/6S.htm">TIMEAVE_CUMUL_1T</a>&nbsp;&nbsp; :: Time averaging package ( see pkg/timeave ).
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/6R.htm">TIMEAVE_CUMULATE</a>&nbsp;&nbsp; :: Time averaging package ( see pkg/timeave ).
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/1O.htm">DEBUG_STATS_RL</a>&nbsp;&nbsp;&nbsp;&nbsp; :: Quick debug package ( see pkg/debug ).
+&nbsp;/\&nbsp; | | |
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/V.htm">CALC_GW</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: vert. momentum tendency terms ( NH, QH only ).
+&nbsp;/\&nbsp; | | |
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/73.htm">UPDATE_SURF_DR</a> :: Update the surface-level thickness fraction.
+&nbsp;/\&nbsp; | | |
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/72.htm">UPDATE_CG2D</a>&nbsp;&nbsp;&nbsp; :: Update 2d conjugate grad. for Free-Surf.
+&nbsp;/\&nbsp; | | |
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/6I.htm">SOLVE_FOR_PRESSURE</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Find surface pressure.
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/N.htm">CALC_DIV_GHAT</a>&nbsp;&nbsp;&nbsp;&nbsp; :: Form the RHS of the surface pressure eqn.
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/10.htm">CG2D</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Two-dim pre-con. conjugate-gradient.
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/12.htm">CG3D</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Three-dim pre-con. conjugate-gradient solver.
+&nbsp;/\&nbsp; | | |
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/6M.htm">THE_CORRECTION_STEP</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Step forward to next time step.
+&nbsp;/\&nbsp; | | | |
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/Q.htm">CALC_GRAD_PHI_SURF</a> :: Return DDx and DDy of surface pressure
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/18.htm">CORRECTION_STEP</a>&nbsp;&nbsp;&nbsp; :: Pressure correction to momentum
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/1J.htm">CYCLE_TRACER</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Move tracers forward in time.
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/5K.htm">OBCS_APPLY_UV</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Open bndy package. see pkg/obcs
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/6E.htm">SHAP_FILT_APPLY</a>&nbsp;&nbsp;&nbsp; :: Shapiro filter package. see pkg/shap_filt
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/7N.htm">ZONAL_FILT_APPLY</a>&nbsp;&nbsp; :: FFT filter package. see pkg/zonal_filt
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/16.htm">CONVECTIVE_ADJUSTMENT</a> :: Control static instability mixing.
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/2A.htm">FIND_RHO</a>&nbsp; :: Find adjacent densities.
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/15.htm">CONVECT</a>&nbsp;&nbsp; :: Mix static instability.
+&nbsp;/\&nbsp; | | | | |-<a href="vdb/names/6R.htm">TIMEAVE_CUMULATE</a> :: Update convection statistics.
+&nbsp;/\&nbsp; | | | |&nbsp;
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/O.htm">CALC_EXACT_ETA</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Change SSH to flow divergence.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;/\&nbsp; | | |
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/1P.htm">DO_FIELDS_BLOCKING_EXCHANGES</a> :: Sync up overlap regions.
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/.htm">EXCH_XYZ_RX</a>&nbsp;&nbsp;&nbsp; :: Update overlaps
+&nbsp;/\&nbsp; | | |
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/2D.htm">FLT_MAIN</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Float package ( pkg/flt ).
+&nbsp;/\&nbsp; | | |
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/5B.htm">MONITOR</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Monitor package ( pkg/monitor ).
+&nbsp;/\&nbsp; | | |
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/1Q.htm">DO_THE_MODEL_IO</a>&nbsp; :: Standard diagnostic I/O.
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/7K.htm">WRITE_STATE</a>&nbsp;&nbsp;&nbsp; :: Core state I/O
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/6U.htm">TIMEAVE_STATV_WRITE</a> :: Time averages. see pkg/timeave
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/8.htm">AIM_WRITE_DIAGS</a>&nbsp;&nbsp;&nbsp;&nbsp; :: Intermed. atmos diags. see pkg/aim
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/2R.htm">GMREDI_DIAGS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: GM diags. see pkg/gmredi
+&nbsp;/\&nbsp; | | | |-<a href="vdb/names/4Q.htm">KPP_DO_DIAGS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: KPP diags. see pkg/kpp
+&nbsp;/\&nbsp; | | |
+&nbsp;/\&nbsp; | | |-<a href="vdb/names/7G.htm">WRITE_CHECKPOINT</a> :: Do I/O for restart files.
+&nbsp;/\&nbsp; | |
+&nbsp;/\&nbsp; | |-<a href="vdb/names/1C.htm">COST_TILE</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Cost function package. ( see pkg/cost )
+&nbsp;&lt;===|=|
+&nbsp;&lt;===|=| **************************
+&nbsp;&lt;===|=| END MAIN TIMESTEPPING LOOP
+&nbsp;&lt;===|=| **************************
+&nbsp;&lt;===|=|
+&nbsp;&nbsp;&nbsp;&nbsp; | |-<a href="vdb/names/19.htm">COST_FINAL</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: Cost function package. ( see pkg/cost )
+&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp; |-<a href="vdb/names/7G.htm">WRITE_CHECKPOINT</a> :: Final state storage, for restart.
+&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp; |-<a href="vdb/names/6V.htm">TIMER_PRINTALL</a> :: Computational timing summary
+&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp; |-<a href="vdb/names/13.htm">COMM_STATS</a>&nbsp;&nbsp;&nbsp;&nbsp; :: Summarise inter-proc and inter-thread communication
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: events.
+</pre>
+
+</body>
+</html>
