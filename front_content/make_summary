@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.21 2004/08/03 03:13:08 edhill Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.22 2004/09/01 18:57:34 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -220,6 +220,9 @@ cat > $LATEST << EOF
       <tr bgcolor="#bbddff"> <td> AMD Opteron cluster </td> <td>"dolphin"</td>
         <td>SuSE SLES v8.1</td> </tr>
 
+      <tr bgcolor="#bbffdd"> <td> IBM/Apple dual G5 </td> <td>"two"</td>
+        <td>Mac OSX 10.3 (gcc 3.4) </td> </tr>
+
       <!--
 
       <tr bgcolor="#bbffdd"> <td> Intel P4 </td> <td>"hemmingway"</td>
@@ -252,7 +255,7 @@ color="#bbffdd"
 ncolor="#bbddff"
 res_url="http://mitgcm.org/testing/"
 
-MACHINES="faulks shelley myrinet eaps halem columbia"
+MACHINES="faulks shelley myrinet eaps halem columbia two"
 MACHINES="$MACHINES hopper lomax turing orion bf bs slough sea"
 MACHINES="$MACHINES eddy adams dolphin hemmingway altix350"
 
