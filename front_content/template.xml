@@ -12,6 +12,7 @@
     <title>MITgcm: <!--ADDTITLE--></title>
 <style type="text/css">
  span.c2 {font-size: 110%}
+ span.c3 {font-size: 140%}
  div.c1 {text-align: center}
 </style>
   </head>
@@ -27,8 +28,6 @@
             alt="Montage of Applications Original concept by CNH Put into practice by AJA"
              height="189" width="628" /><br />
              
-
-            <h1>MITgcm</h1>
           </div>
         </td>
       </tr>
@@ -37,15 +36,22 @@
         <!-- Menu Table -->
 
         <td width="150">
-          <table bgcolor="#bbffff" align="center" border="0" cellpadding="3"
+          <table bgcolor="#bbffbb" align="center" border="0" cellpadding="3"
           width="100%" summary="">
             <tr>
               <td><!-- Menu -->
-              <span class="c2">
+		<span class="c3">
+		  <center><b><a href="http://mitgcm.org/">
+			<img src="MITgcm_logo.png"
+			  alt="MITgcm logo" border="0" width="150" height="50">
+			</a></b></center>
+		</span>
+		<span class="c2">
 
               <!--ADDMENU-->
 
-              </span> </td>
+		</span>
+	      </td>
             </tr>
           </table>
         </td>

@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <base href="http:/mitgcm.org" />
+
+    <!-- Hinting for menu generation -->
+    <meta name="add_name_0" content="Source Code" />
+    <meta name="add_name_1" content="Using CVS" />
+    <meta name="add_name_2" content="" />
+    <meta name="add_title" content="Using CVS" />
+    <!-- Hinting for menu generation -->
+
+    <title>MITgcm: <!--ADDTITLE--></title>
+<style type="text/css">
+ span.c2 {font-size: 110%}
+ div.c1 {text-align: center}
+</style>
+  </head>
+
+  <body>
+    
+    <center>
+      <h3>Obtaining the MITgcm Source using CVS</h3>
+    </center>
+
+    <h4>Using CVS "pserver" for Anonymous Access</h4>
+
+    <p>The most convenient way to get local copies of the MITgcm source code is
+      to use the CVS "pserver" mechanism.  This method only allows you to "check
+      out" (or obtain a local copy) of the source.  It does not provide a
+      mechanism for "committing" or "checking in" changes (please see below).
+      Using CVS pserver from the command line requires just a three
+      commands:</p>
+    
+<blockquote>
+Using a Bourne, "bash", or "sh-compatible" shell:
+<pre>
+$  export CVSROOT=':pserver:cvsanon@mitgcm.org:/usr/local/gcmpack'
+$  cvs login 
+( enter the CVS password: "cvsanon" )
+$  cvs co MITgcm MITgcm_contrib
+</pre><br />
+
+Using a "C", "csh", or "tcsh" shell:
+<pre>
+$  setenv CVSROOT ':pserver:cvsanon@mitgcm.org:/usr/local/gcmpack'
+$  cvs login
+( enter the CVS password: "cvsanon" )
+$  cvs co MITgcm MITgcm_contrib
+</pre>
+</blockquote>
+
+    <p>Note that you will only need to perform the "cvs login" once.  And for
+      convenience, you may want to add the CVSROOT variable to your shell's
+      environment (that is, define it within your "~/.bashrc" or "~/.chsrc"
+      files).</p>
+
+
+    <h4>Getting Parts of the Source "Tree"</h4>
+
+    <p>The above commands demonstrate how to check out all of the MITgcm code
+      and the "contributed" (that is, unsupported by often useful) information
+      within the "MITgcm_contrib" directory.  In many cases, this is overkill
+      and can result in long download times.  To reduce the volume of
+      information downloaded and thereby speedup the download times, one can
+      select one of the following pre-defined "aliases" that will provide a
+      sub-set of the entire MITgcm source "tree":</p>
+
+    <table align="center" border="0" cellpadding="10" width="90%" summary="CVS
+      aliases">
+      <tr bgcolor="#00cccc">
+	<td width="25%">Alias Name</td>
+	<td>Information (directories) Contained</td>
+      </tr>
+      <tr bgcolor="#bbffdd">
+	<td width="25%">MITgcm_code</td>
+	<td>Only the source code -- none of the verification examples.</td>
+      </tr>
+      <tr bgcolor="#bbddff">
+ 	<td width="25%">MITgcm_verif_basic</td>
+	<td>Source code plus three of the verification examples
+	  ("adjustment.128x64x1", "internal_wave", and
+	  "solid-body.cs-32x32x1").</td>
+     </tr>
+      <tr bgcolor="#bbffdd">
+	<td width="25%">MITgcm_verif_atmos</td>
+	<td>Source code plus all of the atmospheric examples.</td>
+      </tr>
+      <tr bgcolor="#bbddff">
+ 	<td width="25%">MITgcm_verif_ocean</td>
+	<td>Source code plus all of the oceanic examples.</td>
+     </tr>
+      <tr bgcolor="#bbffdd">
+	<td width="25%">MITgcm_verif_all</td>
+	<td>Source code plus all of the verification examples.</td>
+      </tr>
+      <!--
+      <tr bgcolor="#bbddff">
+ 	<td width="25%"></td>
+	<td></td>
+     </tr>
+      <tr bgcolor="#bbffdd">
+	<td width="25%"></td>
+	<td></td>
+      </tr>
+      -->
+    </table>
+
+
+    <h4>Getting Specific Releases or "Checkpoints"</h4>
+    
+    <p>As shown within the <a
+      href="http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm/doc/tag-index"> CVS
+      Code Browser</a>, the MITgcm code is continuously undergoing updates.  At
+      points during the development (typically, after work has been done and the
+      source code has passed the <a href="testing/latest.html">verification
+      tests</a>), a release or checkpoint "tag" is created.  These tags are a
+      convenient mechanism for referring to different times or points within the
+      development.  One can check out these versions using the "-r TAG_NAME" CVS
+      option such as: </p>
+
+<blockquote>
+<pre>
+$  cvs co -r release1_p5 MITgcm
+$  cvs co -r checkpoint52a_post MITgcm
+</pre>
+</blockquote>
+
+    <p>By default (that is, when no tag is specified), CVS will retrieve the
+      latest version of all files.</p>
+
+
+    <h4>Show changes that YOU have made</h4>
+
+    <p>If you are running into difficulties it is very useful to see the changes
+      that you yourself have made since obtaining the code.  From within
+      your working directory:</p>
+
+<blockquote>
+<pre>cvs diff</pre>
+</blockquote>
+
+    <p>will show the differences between your version and the version that you
+      checked out. It acts recursively on all directories below your current
+      directory. You can limit the operation to just one file or directory by
+      specifying those as arguments:</p>
+
+<blockquote>
+<pre>cvs diff <i>file</i></pre>
+</blockquote>
+
+    <h4>Show changes to the repository that you don't have</h4>
+
+    <p>The source code evolves continuously and you should try to stay up to
+      date.  To see what needs to be updated:</p>
+
+<blockquote>
+<pre>cvs -n update</pre>
+</blockquote>
+
+    <p>behaves just as "cvs update" but doesn't actually change anything. This
+      is a useful way of summarizing the state of your code. The meaning of the
+      output is summarized in the next topic.</p>
+
+    <h4>Getting updates from the repository</h4>
+
+    <p>You can download and merge updates from the repository to bring you
+      working code up to date:</p>
+
+<blockquote>
+<pre>cvs update -d -P</pre>
+</blockquote>
+
+      <p>will work recursively on all files in the current directory and below.
+	To update just a specific file or directory:</p>
+
+<blockquote>
+<pre>cvs update <i>file</i></pre>
+</blockquote>
+
+    <p>You can also update to a specific version, just as you could check out
+      a specific version.</p>
+
+<blockquote>
+<pre>cvs update -d -P -r release1_p5</pre>
+</blockquote>
+
+    <p>If you checked out a specific version and want to update to the very
+      latest use the -A option will remove associated with a specific version as
+      follows:</p>
+
+<blockquote>
+<pre>cvs update -d -P -A</pre>
+</blockquote>
+
+    <p>"cvs update" produces output to the terminal with the following
+      meanings:</p>
+    
+    <table align="center" border="0" cellpadding="10" width="90%" summary="CVS
+      update codes">
+      <tr bgcolor="#00cccc">
+	<td width="20%">Return Code</td>
+	<td>Description</td>
+      </tr>
+      <tr bgcolor="#bbffdd">
+	<td width="20%">U <i>file</i></td>
+	<td>indicates that <i>file</i> was brought up to date with the
+	  repository or that it exists in the repository but not in your work
+	  space</td>
+      </tr>
+      <tr bgcolor="#bbddff">
+	<td width="20%">P <i>file</td>
+	<td>does exactly as above but uses the "patch" method</td>
+      </tr>
+      <tr bgcolor="#bbffdd">
+	<td width="20%">M <i>file</i></td>
+	<td>means the <i>file</i> was modified in your work space. Any
+	  additional changes from the repository were merged in
+	  successfully</td>
+      </tr>
+     </tr>
+      <tr bgcolor="#bbddff">
+	<td width="20%">C <i>file</i></td>
+	<td>means a merge is necessary because both the your copy and the
+	  repository have changed <b>but</b> there is a conflict between the
+	  changes</td>
+      </tr>
+      <tr bgcolor="#bbffdd">
+	<td width="20%">? <i>file</i></td>
+	<td>means the file exists in your work space but not on the
+	  repository</td>
+      </tr>
+    </table>
+
+    <p>When conflicts arise, the sections of code are both kept and surrounded
+      by &lt;&lt;&lt;&lt;&lt;, ===== and >>>>> indicators. You need to examine
+      these lines of the files and resolve the conflict.</p>
+
+    <h4>Wow! CVS is so good, where can I learn more?</h4>
+
+    <p>The <a href="http://www.loria.fr/~molli/cvs/doc/cvs_toc.html">basic
+      manual</a> is a good reference. There is also an <a
+      href="http://web.mit.edu/afs/athena.mit.edu/project/gnu/doc/html/cvs_toc.html">online
+      tutorial</a> as well as an <a
+      href="http://www.loria.fr/~molli/cvs/cvstrain/cvstrain.html">training
+      manual</a>. For those who prefer the good old fashioned book there's <a
+      href="http://cvsbook.red-bean.com/">"Open Source Development With
+      CVS"</a>.</p>
+
+  </body>
+</html>
+

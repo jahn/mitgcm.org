@@ -27,20 +27,20 @@
       last official release was called "Release1_patch8" and the current
       development is stabilizing in anticipation of a "Release2_beta"
       announcement.  Both the last stable release and the current CVS
-      development version can be obtained at:</p>
+      contents can be obtained at:</p>
    
     <ul>
       <li>Release1_patch8 :
 	<ul>
 
 	  <li>View through an <a
-	  href="http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/">HTML-enabled CVS
-	  code browser</a></li>
+	      href="http://dev.mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm/?only_with_tag=release1_p8">
+	      HTML-enabled CVS code browser</a></li>
 
 	  <li>Download <a href="./cvs.html">using CVS pserver</a></li>
 
-	  <li>Download <a href="./">as a "tar" file.</a></li>
-
+	  <li>Download <a href="./download">as a "tar" file.</a></li>
+	  <br />
 	</ul>
       </li>
       <li>CVS current :

@@ -30,10 +30,16 @@
 	contact information.</li>
       -->
 
-      <li>At MIT: <a href="http://www-paoc.mit.edu/">PAOC</a> (Program in
-            Atmospheres, Oceans and Climate), <a href=
-            "http://web.mit.edu/cgcs/www/cmi.html">CMI</a> (Climate Modeling
-            Initiative)</li>
+      <li>At MIT:
+	<ul>
+	  <li><a href="http://paoc.mit.edu/cmi">CMI</a> (Climate
+            Modeling Initiative)</li>
+
+	  <li><a href="http://paoc.mit.edu/">PAOC</a> (Program in
+            Atmospheres, Oceans and Climate),</li>
+	</ul>
+	<br />
+      </li>
 
       <li>Directories of: 
 	<ul>
@@ -42,6 +48,7 @@
 	  <li> <a href="http://stommel.tamu.edu/~baum/climate_modeling.html">
 	      Climate Modeling Groups</a>.</li>
 	</ul>
+	<br />
       </li>
 
       <li>Other sources of information:
@@ -60,7 +67,8 @@
 	  <li>LDEO <a href="http://www.ldeo.columbia.edu/datarep/index.html">
 	      Climate Data Repository</a>.</li>
  	</ul>
-      </li>
+ 	<br />
+     </li>
     </ul>
     
 

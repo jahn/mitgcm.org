@@ -32,17 +32,21 @@
 
     <p><b>October 27th 2003&nbsp;:</b><br />
 
-	<b><a href="http://paoc.mit.edu/cmi/">MIT Climate Modeling Initiative
-	  (CMI)</a></b> web pages introduce the MITgcm model, its applications, and
+	<blockquote>
+	  <b><a href="http://paoc.mit.edu/cmi/">MIT Climate Modeling Initiative
+	      (CMI)</a></b> web pages introduce the MITgcm model, its applications, and
 	  the development team.<br /><br /></p>
-
+        </blockquote>
+    
     <p><b>October 27th 2003&nbsp;:</b><br />
 
-	MITgcm and ECCO-JPL team <b><a
+	<blockquote>
+	  MITgcm and ECCO-JPL team <b><a
 	    href="http://www.sgi.com/newsroom/press_releases/2003/october/linux.html">
 	    feature as showcase application</a></b> in NASA-SGI large shared
-	memory system program.<br /><br /></p>
-		
+	    memory system program.<br /><br /></p>
+        </blockquote>
+	
   </body>
 </html>
 

@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <base href="http:/mitgcm.org" />
+
+    <!-- Hinting for menu generation -->
+    <meta name="add_name_0" content="Source Code" />
+    <meta name="add_name_1" content="CVS Policy" />
+    <meta name="add_name_2" content="" />
+    <meta name="add_title" content="CVS Policy" />
+    <!-- Hinting for menu generation -->
+
+    <title>MITgcm: <!--ADDTITLE--></title>
+<style type="text/css">
+ span.c2 {font-size: 110%}
+ div.c1 {text-align: center}
+</style>
+  </head>
+
+  <body>
+
+    <center>
+      <h3>MITgcm CVS policy</h3>
+    </center>
+
+    <h4>Introduction</h4>
+
+    This note describes policies that apply to the MITGCM CVS repository.
+
+    <h4>Why have a policy?</h4>
+
+    <p>CVS itself is a liberal free-for-all product that can be used in a
+      variety of ways. It is designed to provide a system for storing arbitrary
+      files in a way that allows the change history of the individual files to
+      be tracked.  If CVS is used without any other policy the result can be a
+      collection of files each of which has complex, multiply branched set of
+      inter-related versions. This sort of CVS repository can be come like a
+      library where books are simply stored in a huge heap. Although nothing is
+      actually lost, the task of finding a coherent collection of material soon
+      becomes impossible.</p>
+
+    <p>The policies we employ address tree areas
+      <ol>
+	
+	<li>Maintaining an orderly and easily identifiable, coherent set of
+	  evolving "products".</li>
+	
+	<li>Allowing concurrent, on-going development of product
+	  components.</li>
+	
+	<li>Making the integration of achieved developments easy, rapid,
+	  organized and clear.</li>
+      </ol>
+    </p>
+
+    <h4>Development trees and checkpoint trees</h4>
+
+    <p>A directory within the MITGCM repository resides under either the development
+      branch or the checkpoint branch. Files within each branch follow different
+      policies.</p>
+
+    <h4>Development tree policies</h4>
+
+    <p>Development trees are intended to be flexible areas where arbitrary files
+      can be stored with multiple versions, many branches supporting multiple
+      ongoing streams of development. Development trees have no policies in
+      place to control complexity. Development trees might be associated with a
+      particular person, a certain project or a particular special piece of
+      work. These trees are intended to be useful areas for storing current work
+      and for archiving partially finished work so that it doesn't get mislaid
+      and so that some record of the development history can be easily
+      maintained. The only policy that applies to development trees is that this
+      style of tree is not intended to be used for providing a "checkpoint"
+      distribution. Tagged configurations of tools built from this style of tree
+      can be distributed, but because these trees do not have any policies
+      regarding testing of functionality, platform coverage or documentation
+      these trees are not allowed to form the basis of "checkpoint"
+      distributions or formal "releases". Other policies can be defined by
+      individuals users of these trees but there are no further global
+      policies. The MITGCM repository development_tree/ sub-directory is
+      reserved for holding development trees. Development trees also serve as
+      experimental areas for exploring new code management policies.</p>
+
+    <h4>Checkpoint tree policies</h4>
+
+    <p>Checkpoint trees are intended to provide structured storage areas for
+      holding code that is intended for open distribution and is to be readily
+      downloaded.  There are policies governing the operation of these trees
+      which are designed to ensure that distributed codes are early identified
+      and meet certain levels of quality.
+      <ol>
+	<li><b>Check-out:</b> Just do it! Two mechanisms are available. cvsanon for
+	  read only access and regular cvs co .... for read/write access.</li>
+
+	<li><b>Check-in</b>: The code check in procedure for a "checkpoint" tree
+	  is as follows
+	  
+	  <ol>
+	    <li>Check out the latest main branch revision.</li>
+	    
+	    <li>Merge your changes into that revision.</li>
+	    
+	    <li>Build and validate new code.</li>
+	    
+	    <li>Check that there have been no further changes to the
+	      repository. Repeat from 2.1 if repository has changed.</li>
+	    
+	    <li>Get clearance from other developers to check in your
+		changes.</li>
+	    
+	    <li>Check in your changed main branch.</li>
+	    
+	    <li>Build and validate the new changes.</li>
+	    
+	    <li>Tag code as "checkpointNN". Add records to docs/tag-index.</li>
+	
+	    <li>Build and validate test cases (see testing).</li>
+	    
+	    <li>Create and install checkpointNN.tar.gz</li>
+	  </ol>
+      
+	  <li><b>Testing</b>: Things in a checkpoint tree require a test case
+	    that can be used to validate the component.</li>
+	  
+	  <li><b>Checkpoint tagging</b>: No code should be left in limbo
+	    (un-tagged) for extended periods. On the other hand it's unnecessary
+	    to create a checkpoint tag for every little change. Checkpoint tags
+	    should be made after a particularly significant code modification or
+	    otherwise on a regular basis, say bi-weekly. Very often we set a
+	    list of goals to be reached by the next checkpoint which sometimes
+	    takes more than two weeks to achieve. Obviously, in this case a
+	    bi-weekly checkpoint would not be useful.</li>
+
+	  <li><b>Release tagging</b>: Releases are only based on checkpoint tree
+	    code. Maintenance fixes to releases are also maintained within the
+	    checkpoint tree. Files within a release must have accompanying
+	    documentation. The form of this documentation depends on the file
+	    type.</li>
+
+	  <li><b>Branches</b>: Branches are a useful tool for making changes
+	    prior to checkpoints without breaking other working versions but it
+	    must be understood that branches are short-lived and that releases
+	    and checkpoints not be made from a branch. Branches are especially
+	    useful for adding totally <br>new features. bug-fixes to checkpoints
+	    are introduced by moving checkpoint levels forward. The only
+	    historical code maintenance that s employed is for fixes and patches
+	    to formal releases - not checkpoints.</li>
+      </ol>
+
+      <h4>Someone checked-in broken code so not my code doesn't work?</h4>
+
+      <p>You have several options:
+	<ol>
+	  <li>Politely email everyone at support@mitgcm.org asking what has
+	    happened and that it be fixed?</li>
+
+	  <li>Figure out why the new code is broken, fix it, check it in and
+	    proudly send a message to support@mitgcm.org to show how
+	    constructive you are.</li>
+
+	  <li>Complain that the quality of work is too low and then do nothing
+	    to fix the code.</li>
+	</ol>
+      </p>
+      
+      <p>We advise you to only use the third option if you are confident that
+	your own contributions to the code are bug-free, well written,
+	documented and fool proof.&nbsp; :)</p>
+
+      <h4>These policies are causing me a big problem, what can I do?</h4>
+      
+      <p>The policies are not enforced by any mechanism other than mutual
+	agreement!  If you think the policies are not appropriate then let us
+	know and we can discuss changing them. However, if you simply ignore the
+	policies regarding the checkpoint_release trees then your code may be
+	removed and/or your access revoked.</p>
+
+<!--
+      <h4>What about bitkeeper</h4>
+      
+      <p>We are looking at bitkeeper (www.bitkeeper.com). It looks cool, but
+	policies are still important. Any experience, suggestions let us
+	know. Watch this space!</p>
+-->
+      <h4>Questions</h4>
+
+      <p>If you have any questions or suggestions please contact the MITgcm
+	developers at <a href="mailto:MITgcm-support@mitgcm.org">
+	  MITgcm-support@mitgcm.org</a></p>
+      
+  </body>
+</html>
+

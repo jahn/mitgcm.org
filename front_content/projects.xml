@@ -26,17 +26,25 @@
     <ul>
       <li><a href="http://www.ecco-group.org">Main project site for ECCO</a>:
 	"<b><u>E</u></b>stimating the <b><u>C</u></b>irculation and
-	<b><u>C</u></b>limate of the <b><u>O</u></b>cean"; also see <a
-	href="http://ecco.mit.edu/">ECCO @ MIT</a>, <a
-	href="http://ecco.ucsd.edu/">ECCO @ UCSD</a>, <a
-	href="http://ecco.jpl.nasa.gov/odap">ECCO @ JPL</a>.</li>
+	<b><u>C</u></b>limate of the <b><u>O</u></b>cean"; also see: 
+	<ul>
+	  <li><a href="http://ecco.mit.edu/">ECCO @ MIT</a>,</li>
+	  <li><a href="http://ecco.ucsd.edu/">ECCO @ UCSD</a>,</li>
+	  <li><a href="http://ecco.jpl.nasa.gov/odap">ECCO @ JPL</a>.</li>
+	</ul>
+	<br />
+      </li>
 
       <li>Gridding the sphere using <a
-	  href="http://mitgcm.lcs.mit.edu/cubedsphere">expanded cubic
-	  grids</a>.</li>
+	  href="http://mitgcm.lcs.mit.edu/cubedsphere"> expanded cubic
+	  grids</a>.
+	<br /><br />
+      </li>
 
       <li>Biogeochemical Tracers in a High Resolution Simulation of the <a
-      href="http://mitgcm.org/projects/atlantic0.166/">North Atlantic</a>.</li>
+	  href="http://mitgcm.org/projects/atlantic0.166/">North Atlantic</a>.
+	  <br />
+      </li>
     </ul>
 
   </body>
