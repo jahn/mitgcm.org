@@ -108,7 +108,7 @@
     </table>
 
     <p>It is important to note that the CVS aliases above cannot be used in
-      conjunction with the CVS <it>-d DIRNAME<\it> option.  However, the MITgcm
+      conjunction with the CVS <i>-d DIRNAME</i> option.  However, the MITgcm
       directories they create can be changed to a different name following the
       check-out:</p>
 <pre>
