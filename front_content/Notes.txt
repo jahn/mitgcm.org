@@ -8,3 +8,6 @@ To-do:
     - add MPI runs for the clusters
     - add the NAGWare compiler on cg01
 
+  testing summaries:
+    - make the summary pages in the same format as the "latest" page
+      but with all reposrts listed
