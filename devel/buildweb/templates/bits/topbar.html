@@ -58,9 +58,17 @@
    ><IMG NAME="templatetop8004" VALIGN="BOTTOM" SRC="_ROOT_images/nsitemap.gif" BORDER="0" ALT="Site Map"></A></TD>
 <TD WIDTH=100%>&nbsp;</TD>
 <TD bgcolor=black nowrap border=0 align="left">
-  <form action="/cgi-bin/sealion-search.cgi" method="POST" name="SearchFrm" valign=top>
+  <form action="/cgi-local/htsearch" method="POST" name="SearchFrm" valign=top>
    <font size="-1">
-    <input type="text" name="keywords" size=16>
+    <!-- EH3 : modify the search method -->
+    <input type="hidden" name="exclude" value="">
+    <input type="hidden" name="method" value="and">
+    <input type="hidden" name="format" value="builtin-long">
+    <input type="hidden" name="sort" value="score">
+    <input type="hidden" name="config" value="htdig">
+    <input type="hidden" name="restrict" value="http://mitgcm.org/dev_docs/">
+
+    <input type="text" name="words" size=16>
     <input type="image" name="srchbut" src=_ROOT_images/search.gif alt="Search" align=middle border=0 height=20>
    </font>
    </TD>
