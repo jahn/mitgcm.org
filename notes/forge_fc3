@@ -91,7 +91,7 @@ setsebool -P httpd_disable_trans=1
 #
 #  basic setup & permissions
 ssh forge
-yum install php-mysql
+yum install php-mysql php-gd php-mbstring
 scp belle:/etc/httpd/ecco_wikki_htpasswd /etc/httpd/
 #
 #  the mediawiki content is all in mysql databases, and this is
