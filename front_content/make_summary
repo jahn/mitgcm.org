@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.18 2004/07/08 21:32:07 edhill Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.19 2004/08/02 02:29:22 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -208,7 +208,7 @@ cat > $LATEST << EOF
         <td><a href="http://www.scd.ucar.edu/computers/bluesky/">NCAR Bluesky
         </a></td> </tr>
       <tr bgcolor="#bbddff"> <td> AMD Opteron </td> <td>"adams"</td>
-        <td>RHEL v3 (AMD64)</td> </tr>
+        <td>Fedora Core 2 (AMD64)</td> </tr>
 
       <tr bgcolor="#bbffdd"> <td> Sun UltraSparc </td> <td>"slough"</td>
         <td>Solaris 8</td> </tr>
@@ -252,10 +252,23 @@ color="#bbffdd"
 ncolor="#bbddff"
 res_url="http://mitgcm.org/testing/"
 
-MACHINES="faulks shelley myrinet eaps halem hopper lomax turing orion bf bs slough sea"
-MACHINES="$MACHINES  eddy adams dolphin hemmingway altix350"
+MACHINES="faulks shelley myrinet eaps halem"
+MACHINES="$MACHINES hopper lomax turing orion bf bs slough sea"
+MACHINES="$MACHINES eddy adams dolphin hemmingway altix350"
 
 ( cd $INDIR ; ls -1 -t ) > ./dir_all
+
+MALL=`cat ./dir_all | sed -e 's|_| |g' | awk '{print $2}' | sort | uniq`
+for madd in $MALL ; do
+    present=0
+    for m in $MACHINES ; do
+        echo $madd | grep $m > /dev/null 2>&1
+        RETVAL=$?
+        test $RETVAL = 0  &&  present=1
+        continue
+    done
+    test $present = 0  &&  MACHINES="$MACHINES $madd"
+done
 
 for mname in $MACHINES ; do
 
