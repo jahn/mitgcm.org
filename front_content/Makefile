@@ -6,7 +6,8 @@
 
 all:
 	-rm -rf html
-	cvs -q up
+	export CVSROOT=:ext:@auden.lcs.mit.edu:/u/u3/gcmpack \
+  export CVS_RSH=ssh && cvs -q up
 	./parse_emails
 	./make_summary
 	./Assemble.pl
