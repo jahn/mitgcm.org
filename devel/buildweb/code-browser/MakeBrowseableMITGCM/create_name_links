@@ -1,0 +1,21 @@
+#!/bin/bash
+
+rm -rf byname
+mkdir byname
+
+#  Create soft-links for all of the files based on their names
+for i in code/*
+  do
+  t1=`grep '^<TITLE' $i | sed -e 's/<TITLE>.\///g' | sed -e 's/<\/TITLE>//g'`
+  t2=`echo $t1 | sed -e 's/\//-/g'`
+  ( cd byname ; ln -s "../"$i $t2".html" )
+done
+
+
+#  Create soft-links for all the symbols based on their names
+for i in names/*
+  do
+  t1=`grep '^<TITLE' $i | cut -d '"' -f 2`
+  ( cd byname ; ln -s "../"$i $t1".html" )
+done
+
