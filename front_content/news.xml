@@ -49,7 +49,7 @@ text:
 	  The new continuous testing page at <a href="http://mitgcm.org/testing.html">http://mitgcm.org/testing.html</a>
           provides information on the status of the latest development code. The page
           shows summary pass/fail ratios for the MITgcm regression tests on various platforms.
-          Details on the platforms being and tested and detailed information on the status of individual 
+          Details on the platforms being tested and detailed information on the status of individual 
           regression tests can be viewed from links on the test page.
           <br /><br />
         </blockquote>
