@@ -23,7 +23,7 @@ InstallSkeleton:
 	cp -rp $(VDBROOT) $(TARGETDIR)/code_reference/
 
 Bonniefy: $(TARGETDIR)
-	$(BINDIR)/bonniefy.pl --targetdir=$(TARGETDIR)
+	$(BINDIR)/bonniefy.pl --targetdir=$(TARGETDIR) --homedir=$(HOMEDIR)
 
 Search:
 	cd $(TARGETDIR); $(BINDIR)/swish-e -c $(PFILESDIR)/Swish-e.conf
