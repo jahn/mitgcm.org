@@ -8,7 +8,9 @@ for i in code/*
   do
   t1=`grep '^<TITLE' $i | sed -e 's/<TITLE>.\///g' | sed -e 's/<\/TITLE>//g'`
   t2=`echo $t1 | sed -e 's/\//-/g'`
-  ( cd byname ; ln -s "../"$i $t2".html" )
+  if [ ! -e "./byname/"$t2".html" ]; then
+      ( cd byname ; ln -s "../"$i $t2".html" )
+  fi
 done
 
 
@@ -16,6 +18,8 @@ done
 for i in names/*
   do
   t1=`grep '^<TITLE' $i | cut -d '"' -f 2`
-  ( cd byname ; ln -s "../"$i $t1".html" )
+  if [ ! -e "./byname/"$t1".html" ]; then
+      ( cd byname ; ln -s "../"$i $t1".html" )
+  fi
 done
 

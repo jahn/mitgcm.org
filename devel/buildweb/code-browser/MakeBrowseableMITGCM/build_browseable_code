@@ -1,0 +1,94 @@
+#!/bin/bash
+#
+#  Ed Hill
+#
+#  This is a replacement for "./makebrowseablecodepages.sh"
+#
+#  $Header$
+
+SOURCEDIR=../../../../../MITgcm
+SUBDIRS="./eesupp ./lsopt ./model ./optim ./pkg"
+SDIRLINK=work
+CDIR=`pwd`
+
+echo
+echo "Creating soft-link to the source tree"
+if [ -L $SDIRLINK ]; then
+    echo "Using source tree at the existing link: " $SDIRLINK
+else
+    if [ -d $SOURCEDIR ]; then
+	echo "Using source tree at: " $SOURCEDIR
+	ln -s $SOURCEDIR $SDIRLINK
+    else
+	echo "ERROR: can't find source tree"
+	exit 1
+    fi
+fi
+
+echo
+echo "Building the code parser"
+make -C ../F90Mapper
+
+echo
+echo "Building the definition parser"
+make -C ../DefinitionParser
+
+echo
+echo "Finding all source (\"*.[F,h]\") files "
+cp callTree.F callTree.header $SDIRLINK
+cd $SDIRLINK
+SRCFILES="./callTree.F"
+for dir in $SUBDIRS
+  do
+  echo "  searching in "$dir
+  add="`/usr/bin/find "$dir" -name '*.[F,h]'`"
+  SRCFILES=$SRCFILES" "$add
+done
+
+echo
+echo "Running the definition parser"
+cat $SRCFILES | ${CDIR}/../DefinitionParser/a.out > thedefs
+RETVAL=$?
+if [ $RETVAL != 0 ]; then
+    echo "ERROR: DefinitionParser failed"
+    exit 1
+fi
+
+echo
+echo "Running the code parser"
+${CDIR}/../F90Mapper/f90mapper -d thedefs $SRCFILES > mapper.log
+RETVAL=$?
+if [ $RETVAL != 0 ]; then
+    echo "ERROR: F90Mapper failed -- please see "$SDIRLINK"/mapper.log"
+    exit 1
+fi
+
+echo
+echo "Generating hyperlinked call tree"
+grep 'New variable' mapper.log | awk '{print $3, $6}' > varkey
+awk -f ${CDIR}/parseCallTree.awk callTree.F > callTree.html
+
+echo
+echo "Making buildweb sub-directory entries for skeletons/code_reference/"
+rm -rf buildweb
+tmp="buildweb/skeleton/code_reference"
+mkdir -p $tmp
+cp code_reference-rtparm_exp.htm   $tmp"/parameters.html"
+cp code_reference-sf_exp.htm       $tmp"/sourcefiles.html"
+cp code_reference-subfunc_exp.htm  $tmp"/subroutine.html"
+cp code_reference-vi_exp.htm       $tmp"/variabledictionary.html"
+cp callTree.html                   $tmp
+
+echo
+echo "Making buildweb sub-directory entries for vdb/"
+mv vdb buildweb/vdb
+
+echo
+echo "Making buildweb sub-directory entries for vdb/byname"
+( cd buildweb/vdb ;  ${CDIR}/create_name_links )
+
+echo
+echo "Creating the tarball"
+( cd  buildweb ; rm vdb/tmp[1,2]; tar -czf ../web.tar.gz . &> /dev/null )
+
+
