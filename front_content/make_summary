@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: $
+# $Header: /u/u3/gcmpack/mitgcm.org/front_content/make_summary,v 1.1 2003/12/06 20:06:58 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -163,21 +163,24 @@ cat > $LATEST << EOF
 
   </head>
   <body>
-    <p>The following are the most recent MITgcm testing runs for the 
-      time period <b>$PERIOD</b>.<br /><br />
-      The machine naming scheme is:<br /></p>
-    <table align="center" border="0">
-      <tr bgcolor="#00cccc"> <td><b>Machine</b></td> <td><b>"Nickname"</b></td>
+    <p>To enhance and maintain portability, the MITgcm model is tested 
+      (compiled and run) in an automated fashion on a varirety of 
+      different machines.  The following is a summary of the MITgcm 
+      testing/verification suite for the time period: <b>$PERIOD</b>.</p>
+
+    <p>The machine naming scheme is:<br /></p>
+    <table align="center" cellpadding="0" border="0">
+      <tr bgcolor="#00cccc"> <td><b>Machine Type</b></td> <td><b>"Nickname"</b></td>
         <td><b>Notes</b></td> </tr>
 
-      <tr bgcolor="#bbffdd"> <td>faulks.lcs.mit.edu</td> <td>"faulks"</td> 
-        <td>Red Hat 7.3 on an Intel P4 (the "original" testing machine)</td> </tr>
-      <tr bgcolor="#bbddff"> <td>shelley.lcs.mit.edu</td> <td>"shelley"</td>
-        <td>Red Hat 9 on an Intel P4</td> </tr>
+      <tr bgcolor="#bbffdd"> <td>Intel P4</td> <td>"faulks"</td> 
+        <td>Red Hat 7.3 (the "original" testing machine)</td> </tr>
+      <tr bgcolor="#bbddff"> <td>Intel P4</td> <td>"shelley"</td>
+        <td>Red Hat 9</td> </tr>
 
-      <tr bgcolor="#bbffdd"> <td>cg01.lcs.mit.edu cluster</td> <td>"myrinet"</td>
-        <td><a href="http://mitgcm.org/projects/MITGCM_CLUSTER/">MITgcm cluster facility
-        </a></td> </tr>
+      <tr bgcolor="#bbffdd"> <td> Intel P3/P4 Beowulf </td> <td>"myrinet"</td>
+        <td><a href="http://mitgcm.org/projects/MITGCM_CLUSTER/">MITgcm cluster 
+        facility </a></td> </tr>
       <tr bgcolor="#bbddff"> <td>Alpha cluster</td> <td>"halem"</td>
         <td><a href="http://webserv.gsfc.nasa.gov/SCB/NCCS/systems/high-end-computing.html">
         NASA NCCS Halem</a></td> </tr>
@@ -206,7 +209,11 @@ cat > $LATEST << EOF
       -->
 
     </table>
-    <br />
+
+    <p><br />
+      The complete output for the testing/verification runs can be found in
+      <a href="http://mitgcm.org/testing/summary/">the summary pages</a>. 
+      The latest reports are:</p>
     <table align="center" cellpadding="0" cellspacing="0" border="0" width="95%">
 <tr bgcolor="#00cccc">
   <td height="0"> <b>"Nickname"</b> </td>
@@ -303,7 +310,7 @@ rm -f ./dir_all ./mlist
 
 CURR_PER=`date +%Y`"_"`date +%m`
 if test "x$PERIOD" = "x$CURR_PER" ; then
-    cp $LATEST ./results.xml
+    cp $LATEST ./testing.xml
     (
 	cd $OUTDIR
 	rm -f latest.html

@@ -5,7 +5,7 @@
 
 #  Assemble the web pages from XML files.
 
-$topdir = "./";
+$topdir = ".";
 $file_list = $topdir . "/order.txt";
 open(ORDER,$file_list) or die "ERROR: can't open \"$file_list\"\n";
 $_ = join(" ", <ORDER>);

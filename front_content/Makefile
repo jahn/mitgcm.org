@@ -1,6 +1,8 @@
 
 all:
 	-rm -rf html
+	./parse_emails
+	./make_summary
 	./Assemble.pl
 
 install:
