@@ -36,15 +36,15 @@
 		href="http://mitgcm.org/cgi-bin/viewcvs.cgi/">HTML-enabled CVS
 		code browser [ViewCVS Web interface]</a></li>
 	    
-	    <li><b>WARNING: cvs pserver has been temporarily
+	    <!-- <b>WARNING: cvs pserver has been temporarily
 		disabled and will be returned ASAP.  In the mean time, please
 		download one of the <a
 		href="http://mitgcm.org/download/daily_snapshot/">daily
 		snap-shots</a> if an up-to-date version of MITgcm is required.
 		These snap-shots include CVS information so they are useful for
-		comparisons.</b><br />
+	      comparisons.</b><br />-->
 
-		Download <a href="./using_cvs.html">using CVS pserver</a>
+	    <li>Download <a href="./using_cvs.html">using CVS pserver</a>
 
 <pre>
   $ export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
@@ -54,9 +54,13 @@
 </pre>
 	      
 	    </li>
-	    
+
 	    <li>Download the most recent checkpoint 
                 <a href="./download">as a "tar" file.</a><br /><br /></li>
+	    
+	    <li>Download one of the <a
+		href="http://mitgcm.org/download/daily_snapshot/">daily
+		snap-shots</a>.</li>
 	    
 	  </ul>
 	</li>
