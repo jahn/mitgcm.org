@@ -1,0 +1,109 @@
+         GCMPACK CVS policies
+         ====================
+
+o Introduction
+
+  This note describes policies that apply to the GCMPACK CVS repository
+ 
+o Why have a policy?
+
+  CVS itself is a liberal free-for-all product that can be used in a variety
+  of ways. It is designed to provide a system for storing arbitrary files 
+  in a way that allows the change history of the individual files to be 
+  tracked. If CVS is used without any other policy the result can be a 
+  collection of files each of which has complex, multiply branched set of 
+  interelated versions. This sort of CVS repository can be come like a 
+  library where books are simply stored in a huge heap. Although nothing is   actually lost, the task of finding a coherent collection of material soon 
+  becomes impossible.
+
+  The policies we employ address two areas 
+    1. Maintaining an orderly and easily identifiable, coherent set of 
+       evolving "products".
+    2. Allowing concurrent, on-going development of products.
+  
+o Development trees and checkpoint trees
+  
+  A directory within the GCMPACK repository resides under either the
+  development branch or the checkpoint branch. Files within each branch
+  follow different policies.
+  
+o Development tree policies
+
+  Development trees are intended to be flexible areas where arbitrary files
+  can be stored with multiple versions, many branches supporting multiple 
+  ongoing streams of development. Development trees have no policies in 
+  place to control complexity. Development trees might be associated with 
+  a particular person, a certain project or a particular special piece of 
+  work. These trees are intended to be useful areas for storing current 
+  work and for archiving partially finished work so that it doesn't get 
+  mislaid and s that some record of the development history can be easily 
+  maintained. The only policy that applies to development trees is that 
+  this style of tree is not intended to be used for providing a 
+  "checkpoint" distribution. Tagged configurations of tools built from this
+  style of tree can be distributed, but because these trees do not have any
+  polcies regarding testing of functionality, platform coverage or 
+  documentation these trees are not allowed to form the basis of 
+  "checkpoint" distrbutions or formal model releases. Other policies can 
+  be defined by individuals users of these trees but there are no further 
+  global policies. The GCMPACK repository development/ subdirectory is 
+  reserved for holding development trees. Development trees also serve as 
+  experimental areas for exploring new code management policies.
+
+o Checkpoint tree policies
+
+  Checkpoint trees are intended to provide structured storage areas for 
+  holding code that is intended for open distribution and is to be readily 
+  downloaded. There are policies governing the operation of these trees 
+  which are designed to ensure that distributed codes are clearly 
+  identified and meet certain levels of quality.
+
+  1. Check-out
+
+     Just do it! Two mechanisms are available. cvsanon for read only access
+     and regular cvs co .... for read/write access.
+
+  2. Check-in.
+
+     The code check in procedure for a "checkpoint" tree is as follows
+     2.1  Check out the latest main branch revision.
+     2.2  Merge your changes into that revision.
+     2.3  Build and validate new code. 
+     2.4  Check that there have been no further changes to the
+          repository. Repeat from 2.1 if repository has changed.
+     2.5  Get clearance from other developers to check in your changes.
+     2.6  Check in your changed main branch.
+     2.8  Build and validate the new changes.
+     2.9  Tag code as "checkpointNN". Add records to docs/tag-index.
+     2.10 Build and validate test cases (see testing).
+     2.11 Create and install checkpointNN.tar.gz
+
+  3. Testing
+
+  4. Checkpoint tagging
+
+  5. Release tagging
+
+  6. Branches
+
+     Branches are to be used for bug-fixes and code patches to releases 
+     only. All other changes e.g. totally new features, bug-fixes to 
+     checkpoints are introduced by moving checkpoint levels forward. The 
+     only historical code maintenance that is employed is for fixes and 
+     patches to formal releases - not checkpoints.
+
+o These policies are causing me a big problem, what can I do?
+
+  The policies are not enforced by any mechanism other than mutual 
+  agreement! If you think the policies are not appropriate then let us know 
+  and we can discuss changing them. However, if you simply ignore the 
+  policies regarding the checkpoint_release trees then your code may be 
+  removed and/or your access revoked.
+
+o What about bitkeeper
+
+  We are looking at bitkeeper (www.bitkeeper.com). It looks cool, but 
+  policies are still important. Any experience, suggestions let us know. 
+  Watch this space!
+
+Questions, comments e-mail: gcmpack.code.czars@mitgcm.org
+
