@@ -60,8 +60,10 @@ Latex:
 pdf:
 	cd $(LATEXROOT); make ps pdf ps.gz
 
+#eh3 VDB:
+#eh3	cd code-browser; source README
 VDB:
-	cd code-browser; source README
+	cd code-browser; make dev
 
 Clean:
 	cd templates; make clean
