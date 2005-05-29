@@ -19,8 +19,35 @@
  div.c1 {text-align: center}
 </style>
   </head>
-
+  
   <body>
+    
+    <p>Search the <a href="http://mitgcm.org/">mitgcm.org</a> domain using
+      Google (please <b>add</b> your search terms to the input box):</p>
+    
+    <center>
+      <form action="http://google.com/search" method=get>
+        <p>
+          <input name=q size=40 value="site:mitgcm.org  ">
+            <input type=submit value="Google Search" name="submit">
+        </p>
+      </form>
+    </center>
+
+    <p>Search <b>only</b> the email archives for <a
+          href="http://mitgcm.org/">mitgcm.org</a> using Google (please
+        <b>add</b> your search terms to the input box):</p>
+
+    <center>
+      <form action="http://google.com/search" method=get>
+        <p>
+          <input name=q size=40 value="site:mitgcm.org +pipermail  ">
+            <input type=submit value="Google Search" name="submit">
+        </p>
+      </form>
+    </center>
+
+<!--
 
 <p>This page is here to help you search publicly available pages within the <a
 href="http://mitgcm.org/">MITgcm.org</a> domain.  While essentially all of the
@@ -33,7 +60,7 @@ pre-defined.<br></p>
 
 <h2>Search the entire MITgcm.org domain:</h2>
 <p>
-<form method="post" action="/cgi-bin/htsearch">
+	<form method="post" action="/cgi-bin/htsearch">
 Search for:<input type="text" size="52" name="words" value="">
 <input type="submit" value="Search">
 <br /><br />
@@ -113,19 +140,14 @@ Restrict to area (URL pattern): <select name="restrict">
     &nbsp; http://mitgcm.org/projects/MITGCM_CLUSTER
   <option value="http://mitgcm.org/dev_docs/code_reference/">MITgcm Code Browser:
     &nbsp; http://mitgcm.org/dev_docs/code_reference/
-  <!--
-    <option value="">
-  -->
 
 </select>
-<!--
-<input type="text" size="42" name="restrict" 
-  value="http://mitgcm.org/sealion/">
--->
 <input type="hidden" name="exclude" value="">
 <br /><br />
 </font>
 </form>
+
+-->
 
   </body>
 </html>
