@@ -21,7 +21,15 @@
   </head>
   
   <body>
+
+    <p>The older htdig-based search tool has been replaced with the following
+      links to Google (tm) since it appears to do a much better job.  If you
+      have any questings regarding this change or are having problems finding
+      specific information, then please don't hesitate to <a
+	href="./contact_us.html">contact the MITgcm developers</a>.</p>
     
+    <br /><hr align="center" size="1" width="75%" /><br />
+	
     <p>Search the <a href="http://mitgcm.org/">mitgcm.org</a> domain using
       Google (please <b>add</b> your search terms to the input box):</p>
     
@@ -46,108 +54,6 @@
         </p>
       </form>
     </center>
-
-<!--
-
-<p>This page is here to help you search publicly available pages within the <a
-href="http://mitgcm.org/">MITgcm.org</a> domain.  While essentially all of the
-static content has been indexed, limited resources prevent the indexing of
-programmatically generated content such as the CVS web interface.  For your
-convenience, searches comprising various subsections have been
-pre-defined.<br></p>
-
-<hr size="4">
-
-<h2>Search the entire MITgcm.org domain:</h2>
-<p>
-	<form method="post" action="/cgi-bin/htsearch">
-Search for:<input type="text" size="52" name="words" value="">
-<input type="submit" value="Search">
-<br /><br />
-<font size="-1">
-Match type: <select name="method">
-  <option value="and">All
-  <option value="or">Any
-  <option value="boolean">Boolean
-
-</select>
-&nbsp; &nbsp; &nbsp; Ouptut format: <select name="format">
-  <option value="builtin-long">Long
-  <option value="builtin-short">Short
-</select>
-&nbsp; &nbsp; &nbsp; Sort by: <select name="sort">
-  <option value="score">Score
-  <option value="time">Time
-  <option value="title">Title
-  <option value="revscore">Reverse Score
-  <option value="revtime">Reverse Time
-  <option value="revtitle">Reverse Title
-
-</select>
-<input type="hidden" name="config" value="htdig">
-<br /><br />
-Restrict to area (URL pattern): <input type="text" size="42" name="restrict" value="">
-<input type="hidden" name="exclude" value="">
-</font>
-</form>
-
-<br />
-<hr>
-
-<h2>Search specific portions of the MITgcm.org and related web sites:</a></h2>
-<p>
-<form method="post" action="/cgi-bin/htsearch">
-Search for:<input type="text" size="52" name="words" value="">
-
-<input type="submit" value="Search">
-<br /><br />
-<font size="-1">
-Match type: <select name="method">
-  <option value="and">All
-  <option value="or">Any
-  <option value="boolean">Boolean
-</select>
-&nbsp; &nbsp; &nbsp; Output format: <select name="format">
-  <option value="builtin-long">Long
-  <option value="builtin-short">Short
-
-</select>
-&nbsp; &nbsp; &nbsp; Sort by: <select name="sort">
-  <option value="score">Score
-  <option value="time">Time
-  <option value="title">Title
-  <option value="revscore">Reverse Score
-  <option value="revtime">Reverse Time
-  <option value="revtitle">Reverse Title
-</select>
-<input type="hidden" name="config" value="htdig">
-<br /><br />
-Restrict to area (URL pattern): <select name="restrict">
-
-  <option value="http://mitgcm.org/sealion/">Release1_p8 Docs: 
-    &nbsp; http://mitgcm.org/sealion/
-  <option value="http://mitgcm.org/pipermail/mitgcm-support/">MITgcm-support mailing list: 
-    &nbsp; http://mitgcm.org/pipermail/mitgcm-support/
-  <option value="http://mitgcm.org/pipermail/mitgcm-cvs/">MITgcm-cvs mailing list: 
-    &nbsp; http://mitgcm.org/pipermail/mitgcm-cvs/
-  <option value="http://mitgcm.org/pipermail/mitgcm-devel/">MITgcm-devel mailing list:
-    &nbsp; http://mitgcm.org/pipermail/mitgcm-devel/
-  <option value="http://mitgcm.org/dev_docs/">In-development Documentation: 
-    &nbsp; http://mitgcm.org/dev_docs/
-  <option value="http://mitgcm.org/dev_docs/devel_HOWTO/">MITgcm Development HOWTO:
-    &nbsp; http://mitgcm.org/dev_docs/devel_HOWTO/
-  <option value="http://mitgcm.org/projects/MITGCM_CLUSTER">Local MITgcm-CLUSTER Notes:
-    &nbsp; http://mitgcm.org/projects/MITGCM_CLUSTER
-  <option value="http://mitgcm.org/dev_docs/code_reference/">MITgcm Code Browser:
-    &nbsp; http://mitgcm.org/dev_docs/code_reference/
-
-</select>
-<input type="hidden" name="exclude" value="">
-<br /><br />
-</font>
-</form>
-
--->
 
   </body>
 </html>
