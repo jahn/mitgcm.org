@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.22 2004/09/01 18:57:34 edhill Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.23 2004/09/24 02:43:37 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -176,9 +176,9 @@ cat > $LATEST << EOF
         <td><b>Notes</b></td> </tr>
 
       <tr bgcolor="#bbffdd"> <td>Intel P4</td> <td>"faulks"</td> 
-        <td>Fedora Core 1 [formerly Red Hat 7.3]</td> </tr>
+        <td>Fedora Core 3 </td> </tr>
       <tr bgcolor="#bbddff"> <td>Intel P4</td> <td>"hemmingway"</td>
-        <td>Fedora Core 1 (gcc 3.3.2)</td> </tr>
+        <td>Fedora Core 3</td> </tr>
 
       <tr bgcolor="#bbffdd"> <td> Intel P3/P4 Beowulf </td> <td>"myrinet"</td>
         <td><a href="http://mitgcm.org/projects/MITGCM_CLUSTER/">MITgcm cluster 
@@ -187,16 +187,20 @@ cat > $LATEST << EOF
         <td><a href="http://nccstag.gsfc.nasa.gov/halem/quickstart_halem.html">
         NASA NCCS Halem</a></td> </tr>
 
+      <!--
       <tr bgcolor="#bbffdd"> <td> SGI Origin 2000 </td> <td>"hopper"</td>
         <td><a href="http://www.nas.nasa.gov/User/Systemsdocs/O2K/o2k.html">
         NAS SGI Origin 2000 </a></td> </tr>
-      <tr bgcolor="#bbddff"> <td> SGI Origin 3000 </td> <td>"lomax"/"turing"</td>
+      <tr bgcolor="#bbddff"> <td> SGI Origin 3000</td><td>"lomax"/"turing"</td>
         <td><a href="http://www.nas.nasa.gov/User/Systemsdocs/O3K/o3k.html">
         NAS SGI Origin 3000 </a></td> </tr>
+      -->
 
-      <!-- <tr bgcolor="#bbffdd"> <td> SGI Altix </td> <td>"orion"</td>
+      <!--
+      <tr bgcolor="#bbffdd"> <td> SGI Altix </td> <td>"orion"</td>
         <td><a href="http://sc.jpl.nasa.gov/">JPL Supercomputing and 
-        Visualization Facility</a></td> </tr> -->
+        Visualization Facility</a></td> </tr>
+      -->
       <tr bgcolor="#bbffdd"> <td> SGI Altix 350 </td> <td>"altix350"</td>
         <td><a href="http://acesgrid.org/geocluster/">MIT ACESgrid 
         GeoCluster</a></td> </tr>
@@ -208,7 +212,7 @@ cat > $LATEST << EOF
         <td><a href="http://www.scd.ucar.edu/computers/bluesky/">NCAR Bluesky
         </a></td> </tr>
       <tr bgcolor="#bbddff"> <td> AMD Opteron </td> <td>"adams"</td>
-        <td>Fedora Core 2 (AMD64)</td> </tr>
+        <td>Fedora Core 4 (AMD64)</td> </tr>
 
       <tr bgcolor="#bbffdd"> <td> Sun UltraSparc </td> <td>"slough"</td>
         <td>Solaris 8</td> </tr>
@@ -216,12 +220,15 @@ cat > $LATEST << EOF
         <td>Red Hat v7.2</td> </tr>
 
       <tr bgcolor="#bbffdd"> <td> AMD Athlon XP 2500+</td> <td>"eddy"</td>
-        <td>Fedora Core 2 (Red Hat gcc 3.3.3)</td> </tr>
+        <td>Fedora Core 4</td> </tr>
       <tr bgcolor="#bbddff"> <td> AMD Opteron cluster </td> <td>"dolphin"</td>
         <td>SuSE SLES v8.1</td> </tr>
 
       <tr bgcolor="#bbffdd"> <td> IBM/Apple dual G5 </td> <td>"two"</td>
         <td>Mac OSX 10.3 (gcc 3.4) </td> </tr>
+
+      <tr bgcolor="#bbddff"> <td> <a href="http://acesgrid.org">ACESgrid Dell 
+        Xeon<\a> </td> <td>"itrda"</td><td>Fedora Core 2</td> </tr>
 
       <!--
 
