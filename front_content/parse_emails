@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.2 2003/12/07 06:52:17 edhill Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.3 2005/04/04 01:36:04 edhill Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -154,7 +154,7 @@ echo -n "gzipping all the \"output.txt\" files ..."
 echo "  done"
 
 echo -n "setting permissions to world-readable ..."
-chmod -R a+rx $OUTDIR
+chmod -R a+rx $OUTDIR > /dev/null 2>&1
 echo "  done"
 
 
