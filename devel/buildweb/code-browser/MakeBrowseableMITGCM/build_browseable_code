@@ -4,10 +4,10 @@
 #
 #  This is a replacement for "./makebrowseablecodepages.sh"
 #
-#  $Header$
+#  $Header: /u/gcmpack/mitgcm.org/devel/buildweb/code-browser/MakeBrowseableMITGCM/build_browseable_code,v 1.1 2003/08/07 18:27:51 edhill Exp $
 
 SOURCEDIR=../../../../../MITgcm
-SUBDIRS="./eesupp ./lsopt ./model ./optim ./pkg"
+SUBDIRS="./eesupp ./lsopt ./model ./optim ./pkg ./verification"
 SDIRLINK=work
 CDIR=`pwd`
 
