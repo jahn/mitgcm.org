@@ -1,8 +1,8 @@
 #TOC Entry            REPLACE               PATTERN
 #The following are used to preformat the table of contents
-Installation          _INSTALL_             ^<TITLE>3. Getting started and using the MITgcm
- Download             _DOWNLOAD_            ^<TITLE>3.* Obtaining the code
- Compilation          _COMPILATION_         ^<TITLE>3.* Building the code
+Installation          _INSTALL_             CMIREDIR:getting_started_with_mitgcm:
+ Download             _DOWNLOAD_            CMIREDIR:obtainingCode:
+ Compilation          _COMPILATION_         CMIREDIR:buildingCode:
  Running the model    _RUNNING_             ^<TITLE>3.* Running the model
  Customization        _CUSTOMIZATION_       ^<TITLE>3.* Doing it yourself: customizing the code
 Tutorials             _TUTORIALS_           ^<TITLE>3.* Tutorials
