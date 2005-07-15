@@ -22,7 +22,7 @@ Documentation         _DOCUMENTATION_       ^<TITLE>1. Overview of MITgcm
  Software Architectur _SOFTWARE_            ^<TITLE>4. Software Architecture
  Automatic Differenti _AUTOMATIC_           ^<TITLE>5. Automatic Differentiation
  Optional Packages    _OPTIONAL_            ^<TITLE>6. Physical
- Diagnostics          _DIAGNOSTICS_         ^<TITLE>7. Diagnostics and tools
+ Diagnostics          _DIAGNOSTICS_         CMIREDIR:processing_tools:
  Interface to ECCO    _INTERFACE_           ^<TITLE>8. Interface with ECCO
 #The following are used to preformat the front_page
 Atmosphere            _ATMOSPHERE_          CMIREDIR:atmospheric_example:
