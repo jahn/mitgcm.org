@@ -3,16 +3,16 @@
 Installation          _INSTALL_             CMIREDIR:getting_started_with_mitgcm:
  Download             _DOWNLOAD_            CMIREDIR:obtainingCode:
  Compilation          _COMPILATION_         CMIREDIR:buildingCode:
- Running the model    _RUNNING_             ^<TITLE>3.* Running the model
- Customization        _CUSTOMIZATION_       ^<TITLE>3.* Doing it yourself: customizing the code
+ Running the model    _RUNNING_             CMIREDIR:runModel:
+ Customization        _CUSTOMIZATION_       CMIREDIR:customizing_mitgcm:
 Tutorials             _TUTORIALS_           ^<TITLE>3.* Tutorials
- Barotropic Gyre      _BAROTROPIC_          ^<TITLE>3.* Barotropic Ocean Gyre In Cartesian Coordinates
- Baroclinic Gyre      _BAROCLINIC_          ^<TITLE>3.* Four Layer Baroclinic Ocean Gyre In Spherical Coordinates
- Global Ocean         _GLOBAL_              ^<TITLE>3.* Global Ocean Simulation at 4
- Held Suarez Atmosphe _HELD_                ^<TITLE>3.* Held-Suarez Atmospheric Simulation at 2.8
- Open Ocean Convectio _OPEN_                ^<TITLE>3.* Surface Driven Convection
- Shelf Convection     _SHELF_               ^<TITLE>3.* Gravity Plume
- Tracer injection     _TRACERINJ_           ^<TITLE>3.* Centennial Time Scale
+ Barotropic Gyre      _BAROTROPIC_          CMIREDIR:eg-baro:
+ Baroclinic Gyre      _BAROCLINIC_          CMIREDIR:eg-fourlayer:
+ Global Ocean         _GLOBAL_              CMIREDIR:eg-global:
+ Held Suarez Atmosphe _HELD_                CMIREDIR:eg-hs:
+ Open Ocean Convectio _OPEN_                CMIREDIR:eg-bconv:
+ Shelf Convection     _SHELF_               CMIREDIR:eg-gravityplume:
+ Tracer injection     _TRACERINJ_           CMIREDIR:eg-simple-tracer:
 # Parallel Global Ocea _PARALLEL_            ^<TITLE>5. Tutorial II - Parallelism
  Tracer Sensitivity   _TRACER_              ^<TITLE>5.* Sensitivity of Air-Sea Exchange to Tracer Injection Site
 Documentation         _DOCUMENTATION_       ^<TITLE>1. Overview of MITgcm
