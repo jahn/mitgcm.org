@@ -23,13 +23,13 @@ cp -fpr callTree.F $SRCDIR
 cp -fpr callTree.header $SRCDIR
 cd $SRCDIR
 
-set fl = `/usr/bin/find . -name '*.F'`
-set hl = `/usr/bin/find . -name '*.h'`
+set fl = `/usr/bin/find pkg eesupp model verification -name '*.F'`
+set hl = `/usr/bin/find pkg eesupp model verification -name '*.h'`
 
 # Extract definition information
-### echo "o Extracting definition information"
-### ( cd ${CURDIR}/../DefinitionParser; make )
-### cat $fl $hl | ${CURDIR}/../DefinitionParser/a.out > thedefs
+echo "o Extracting definition information"
+( cd ${CURDIR}/../DefinitionParser; make )
+cat $fl $hl | ${CURDIR}/../DefinitionParser/a.out > thedefs
 
 # Generate hyperlinked code and browser files.
 echo "o Generating hyperlinked code (this takes a few minutes)"
