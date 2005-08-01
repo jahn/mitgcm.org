@@ -11,7 +11,7 @@
 <TD BGCOLOR=black>
 <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=100% BGCOLOR=black>
 <TR>
-<TD nowrap COLSPAN="3" ><IMG SRC="_ROOT_images/MITgcm_dev_snap_sm.png" BORDER="0" ALIGN="left" VALIGN="BOTTOM"></TD>
+<TD nowrap COLSPAN="3" ><IMG SRC="_ROOT_images/MITgcm_small_name.png" BORDER="0" ALIGN="left" VALIGN="BOTTOM"></TD>
 <TD WIDTH=100%>&nbsp;</TD>
 <TD bgcolor=black nowrap border=0 align="left"><FONT SIZE=-1><FORM NAME="MITgcmR1quickLinksPullDown" BORDER=0>
    <SELECT BORDER=0 name="ql" onChange="if (MITgcmR1quickLinksPullDown.ql.options[MITgcmR1quickLinksPullDown.ql.selectedIndex].value != '' )
@@ -58,9 +58,15 @@
    ><IMG NAME="templatetop8004" VALIGN="BOTTOM" SRC="_ROOT_images/nsitemap.gif" BORDER="0" ALT="Site Map"></A></TD>
 <TD WIDTH=100%>&nbsp;</TD>
 <TD bgcolor=black nowrap border=0 align="left">
+  <form action="http://google.com/search" method=get>
+    <font size="-1">
+      <input name=q size=40 value="site:mitgcm.org  ">
+      <input type=submit value="Google Search" name="submit">
+    </font>
+  </form>
+  <!-- EH3 : the following is the old/broken the search method
   <form action="/cgi-local/htsearch" method="POST" name="SearchFrm" valign=top>
    <font size="-1">
-    <!-- EH3 : modify the search method -->
     <input type="hidden" name="exclude" value="">
     <input type="hidden" name="method" value="and">
     <input type="hidden" name="format" value="builtin-long">
@@ -70,8 +76,9 @@
     <input type="text" name="words" size=16>
     <input type="image" name="srchbut" src=_ROOT_images/search.gif alt="Search" align=middle border=0 height=20>
    </font>
-   </TD>
   </form>
+   -->
+   </TD>
 </TR></TABLE></TD>
 <TD BGCOLOR=black width=65>&nbsp;</TD>
 </TR>

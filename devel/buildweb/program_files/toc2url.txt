@@ -8,6 +8,6 @@ Browse Code           _BROWSE_               ../code_reference/callTree.html
 Document Root         _ROOT_                 ../
 Web Server            _SERVER_               http://mitgcm.org
 Home                  _HOME_                 /
-Contact               _CONTACT_              mailto:MITgcm-support@dev.mitgcm.org
+Contact               _CONTACT_              mailto:MITgcm-support@mitgcm.org
 Sitemap               _SITEMAP_              ../sitemap/
 Search                _SEARCH_               http://mitgcm.org/cgi-bin/sealion-search.cgi

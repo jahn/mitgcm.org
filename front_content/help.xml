@@ -32,10 +32,6 @@
 	    MITgcm-support</a> mailing list with a web-browsable archive, <br
 	    /><br />
 	    </li>
-	<!--
-	<li>a <a href="http://dev.mitgcm.org/forum/?group_id=6">web-based
-	    forum</a> suitable for quick questions, and<br /><br /></li>
-	-->
 	<li>a <a href="http://mitgcm.org/dev_docs/devel_HOWTO">HOWTO</a> to help
 	  you get started with MITgcm development and customization.</li>
       </ul>
