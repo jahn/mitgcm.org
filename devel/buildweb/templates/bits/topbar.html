@@ -60,8 +60,11 @@
 <TD bgcolor=black nowrap border=0 align="left">
   <form action="http://google.com/search" method=get>
     <font size="-1">
-      <input name=q size=40 value="site:mitgcm.org  ">
-      <input type=submit value="Google Search" name="submit">
+      <input name=q size=20 value="">
+      <input type=hidden name=domains value="mitgcm.org">
+      <input type=hidden name=sitesearch value="mitgcm.org">
+      <!-- <input type=submit value="Search" name="submit"> -->
+      <input type=image name="srchbut" src=../images/search.gif alt="Search" align=middle border=0 height=20>
     </font>
   </form>
   <!-- EH3 : the following is the old/broken the search method
