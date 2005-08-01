@@ -4,6 +4,7 @@ news.xml
 source_code.xml
   using_cvs.xml
   cvs_policy.xml
+  recent_code_changes.xml
 testing.xml
 docs.xml
 projects.xml
