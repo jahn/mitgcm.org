@@ -47,10 +47,17 @@
 	    <li>Download <a href="./using_cvs.html">using CVS pserver</a>
 
 <pre>
-  $ export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
-  $ cvs login 
-    ( enter the CVS password: "cvsanon" )
-  $ cvs co MITgcm
+  bash or sh shell:
+    $ export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
+    $ cvs login 
+      ( enter the CVS password: "cvsanon" )
+    $ cvs co MITgcm
+
+  tcsh or csh shell:
+    $ setenv CVSROOT ':pserver:cvsanon@mitgcm.org:/u/gcmpack'
+    $ cvs login 
+      ( enter the CVS password: "cvsanon" )
+    $ cvs co MITgcm
 </pre>
 	      
 	    </li>
