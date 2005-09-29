@@ -55,7 +55,7 @@
       MITgcm_contrib directory that can be checked out using:
 
 <pre>
-  $ cvs co MITgcm
+  $ cvs co MITgcm_contrib
 </pre>
 
       In general, we do not recommend checking out all of MITgcm_contrib since
