@@ -39,7 +39,7 @@
   $ export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
   $ cvs login 
     ( enter the CVS password: "cvsanon" )
-  $ cvs co MITgcm MITgcm_contrib
+  $ cvs co MITgcm
 </pre>
 
     <p>Using a "C", "csh", or "tcsh" shell the commands are:</p>
@@ -48,8 +48,21 @@
   $ setenv CVSROOT ':pserver:cvsanon@mitgcm.org:/u/gcmpack'
   $ cvs login
     ( enter the CVS password: "cvsanon" )
-  $ cvs co MITgcm MITgcm_contrib
-    </pre>
+  $ cvs co MITgcm
+</pre>
+
+    <p>A large amount of additional (optional!) content can be obtained from the
+      MITgcm_contrib directory that can be checked out using:
+
+<pre>
+  $ cvs co MITgcm
+</pre>
+
+      In general, we do not recommend checking out all of MITgcm_contrib since
+      it takes a long time to download (particularly from remote locations) and
+      much of it is specific to certain setups (eg. high-res setups,
+      in-development material that is not yet part of the "main" code,
+      etc.).</p>
 
     <p>Note that you will only need to perform the "cvs login" once.  And for
       convenience, you may want to add the CVSROOT variable to your shell's
@@ -60,9 +73,9 @@
     <h4>Getting Parts of the Source "Tree"</h4>
 
     <p>The above commands demonstrate how to check out all of the MITgcm code
-      and the "contributed" (that is, unsupported by often useful) information
-      within the "MITgcm_contrib" directory.  In many cases, this is overkill
-      and can result in long download times.  To reduce the volume of
+      and the "contributed" (that is, unsupported by occasionally useful)
+      information within the "MITgcm_contrib" directory.  In many cases, this is
+      overkill and can result in long download times.  To reduce the volume of
       information downloaded and thereby speedup the download times, one can
       select one of the following pre-defined "aliases" that will provide a
       sub-set of the entire MITgcm source "tree":</p>
