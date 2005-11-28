@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.3 2005/04/04 01:36:04 edhill Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.4 2005/06/22 13:39:42 edhill Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -128,12 +128,11 @@ for file in $all_files ; do
 	    ad=$(( $ad + 1 ))
 	done
 	mv $TEMPDIR"/"$tdir $OUTDIR"/"$tdir"_"$ad
+	chmod -R a+rx $OUTDIR"/"$tdir"_"$ad > /dev/null 2>&1
+	gzip $OUTDIR"/"$tdir"_"$ad"/output.txt"
     else
 	mv $TEMPDIR"/"$tdir $OUTDIR
-    fi
-
-    #  If it exists, gzip the "output.txt" file.
-    if test -r $OUTDIR"/"$tdir"/output.txt" ; then
+	chmod -R a+rx $OUTDIR"/"$tdir > /dev/null 2>&1
 	gzip $OUTDIR"/"$tdir"/output.txt"
     fi
 
@@ -143,18 +142,18 @@ for file in $all_files ; do
 done
 echo "  done"
 
-echo -n "gzipping all the \"output.txt\" files ..."
-(
-    cd $OUTDIR
-    outp=`find . -name output.txt`
-    if test "x$outp" != x ; then
-	gzip $outp
-    fi
-)
-echo "  done"
+# echo -n "gzipping all the \"output.txt\" files ..."
+# (
+#     cd $OUTDIR
+#     outp=`find . -name output.txt`
+#     if test "x$outp" != x ; then
+# 	gzip $outp
+#     fi
+# )
+# echo "  done"
 
-echo -n "setting permissions to world-readable ..."
-chmod -R a+rx $OUTDIR > /dev/null 2>&1
-echo "  done"
+# echo -n "setting permissions to world-readable ..."
+# chmod -R a+rx $OUTDIR > /dev/null 2>&1
+# echo "  done"
 
 
