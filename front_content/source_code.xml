@@ -30,9 +30,9 @@
       
 	  <ul>
 	    
-	    <li>View through an <a
-		href="http://mitgcm.org/cgi-bin/viewcvs.cgi/">HTML-enabled CVS
-		code browser [ViewCVS Web interface]</a></li>
+	    <li>View through the <a
+		href="http://mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm">CVS
+		code browser</a></li>
 	    
 	    <!-- <b>WARNING: cvs pserver has been temporarily
 		disabled and will be returned ASAP.  In the mean time, please
