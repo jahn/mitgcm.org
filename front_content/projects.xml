@@ -23,16 +23,14 @@
   <body>
 
     <ul>
-      <li><a href="http://www.ecco-group.org">Main project site for ECCO</a>:
+      <li><a href="http://www.ecco-group.org">ECCO</a>:
 	"<b><u>E</u></b>stimating the <b><u>C</u></b>irculation and
-	<b><u>C</u></b>limate of the <b><u>O</u></b>cean"; also see: 
-	<ul>
-	  <li><a href="http://ecco.mit.edu/">ECCO @ MIT</a>,</li>
-	  <li><a href="http://ecco.ucsd.edu/">ECCO @ UCSD</a>,</li>
-	  <li><a href="http://ecco.jpl.nasa.gov/odap">ECCO @ JPL</a>.</li>
-	</ul>
+	<b><u>C</u></b>limate of the <b><u>O</u></b>cean" 
 	<br />
       </li>
+
+      <li><a href="http://ecco2.org">ECCO2: High-Resolution 
+        Global-Ocean and Sea-Ice Data Synthesis</a><br /></li>
 
       <li>Gridding the sphere using <a
 	  href="http://mitgcm.org/cubedsphere/"> expanded cubic
