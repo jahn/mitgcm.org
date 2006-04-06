@@ -34,12 +34,14 @@
       Google (please <b>add</b> your search terms to the input box):</p>
     
     <center>
-      <form action="http://google.com/search" method=get>
+      <form action="http://www.google.com/u/MITgcm" method=get>
         <p>
-          <input name=q size=40 value="site:mitgcm.org  ">
-            <input type=submit value="Google Search" name="submit">
+	  <input type=hidden name=domains value="mitgcm.org">
+          <input name=q size=40 value="">
+          <input type=submit value="Google Search" name="submit">
         </p>
       </form>
+      <br /><br />
     </center>
 
     <p>Search <b>only</b> the email archives for <a
@@ -47,10 +49,12 @@
         <b>add</b> your search terms to the input box):</p>
 
     <center>
-      <form action="http://google.com/search" method=get>
+      <form action="http://www.google.com/u/MITgcm" method=get>
         <p>
-          <input name=q size=40 value="site:mitgcm.org +pipermail  ">
-            <input type=submit value="Google Search" name="submit">
+	  <input type=hidden name=domains value="mitgcm.org">
+	  <input type=hidden name=hq value="inurl:mitgcm.org/pipermail">
+          <input name=q size=40 value="">
+          <input type=submit value="Google Search" name="submit">
         </p>
       </form>
     </center>
