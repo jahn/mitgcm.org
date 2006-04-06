@@ -28,8 +28,6 @@
       announcement.  Both the last stable release and the current CVS
       contents can be obtained at:
       
-      <ul>
-	<li>CVS current :
 	  <ul>
 	    
 	    <li>View through an <a
@@ -70,37 +68,7 @@
 		snap-shots</a>.<br /><br /></li>
 	    
 	  </ul>
-	</li>
 
-	<!--  you have to be desperate to run this old version
-
-	<li>Release1_patch8 (older, so please consider using more recent 
-            checkpoints if possible) :
-	  <ul>
-	    
-	    <li>View through an <a
-		href="http://mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm/?only_with_tag=release1_p8">
-		HTML-enabled CVS code browser [ViewCVS Web interface]</a></li>
-	    
-	    <li>Download <a href="./using_cvs.html">using CVS pserver</a>:
-
-<pre>
-  $ export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
-  $ cvs login 
-    ( enter the CVS password: "cvsanon" )
-  $ cvs co -r 'release1_p8' MITgcm
-</pre>
-	      
-	    </li>
-	    
-	    <li>Download <a href="./download/old_r1">as a "tar" file.</a></li>
-	    <br />
-	  </ul>
-	</li>
-
-	-->
-
-      </ul>
     </p>
 
 
