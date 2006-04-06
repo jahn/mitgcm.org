@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.26 2005/07/28 16:03:56 edhill Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.27 2005/11/28 13:10:36 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -219,8 +219,8 @@ cat > $LATEST << EOF
       <tr bgcolor="#bbddff"> <td> Intel P4 Mosix Cluster </td> <td>"sea"</td>
         <td>Red Hat v7.2</td> </tr>
 
-      <tr bgcolor="#bbffdd"> <td> AMD Athlon XP 2500+</td> <td>"eddy"</td>
-        <td>Fedora Core 4</td> </tr>
+      <tr bgcolor="#bbffdd"> <td> Intel P4</td> <td>"eddy"</td>
+        <td>Fedora Core 5</td> </tr>
       <tr bgcolor="#bbddff"> <td> AMD Opteron cluster </td> <td>"dolphin"</td>
         <td>SuSE SLES v8.1</td> </tr>
 
