@@ -55,6 +55,14 @@ foreach $file (@flist) {
     foreach $fm (@flist) {
 	$ind = "";
 	$name = $name0{$fm};
+
+	if ($name eq "Documentation") {
+	    $tmp = "<a href=\"http://mitgcm.org/pelican/\">"
+		. "Documentation</a><br />\n";
+	    $menu = join "", $menu, $tmp;
+	    next;
+	}
+
 	if (length($name1{$fm}) > 0) {
 	    $ind = "&nbsp;&nbsp;&nbsp;";
 	    $name = $name1{$fm};
