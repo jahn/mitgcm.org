@@ -5,7 +5,7 @@ Installation          _INSTALL_             CMIREDIR:getting_started_with_mitgcm
  Compilation          _COMPILATION_         CMIREDIR:buildingCode:
  Running the model    _RUNNING_             CMIREDIR:runModel:
  Customization        _CUSTOMIZATION_       CMIREDIR:customizing_mitgcm:
-Tutorials             _TUTORIALS_           ^<TITLE>3.* Tutorials
+Tutorials             _TUTORIALS_           CMIREDIR:eg-baro:
  Barotropic Gyre      _BAROTROPIC_          CMIREDIR:eg-baro:
  Baroclinic Gyre      _BAROCLINIC_          CMIREDIR:eg-fourlayer:
  Global Ocean         _GLOBAL_              CMIREDIR:eg-global:
