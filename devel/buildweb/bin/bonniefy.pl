@@ -110,7 +110,7 @@ for ($i=1;$i <= $#toc2patternlist; $i=$i+2){
   $notfound = 1;
   $j=0; 
 
-  while (($j < $#htmlfiles) && ($notfound)) {
+  while (($j <= $#htmlfiles) && ($notfound)) {
     open(THISHTML,$htmlfiles[$j]) || die("can't open $htmlfiles[$j]");
 
     while (<THISHTML>)  {
