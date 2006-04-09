@@ -160,7 +160,7 @@ for ($thispaocfile=0; $thispaocfile<$#paocfiles; $thispaocfile++) {
 ### added by AJA: create a flag to indicate whether file has been associated
 #                 with a template (1 = no and 0 = yes)
       $thisfile=0;
-      while ($thisfile < $#htmlfiles) {
+      while ($thisfile <= $#htmlfiles) {
        $htmlfileassociated[$thisfile]=1;
        $thisfile++;
       } # loop through file
@@ -195,7 +195,7 @@ for ($thistemplate=0; $thistemplate <= $#templatefiles; $thistemplate++) {
 
       $pattern = $template2patternlist[$thispattern+1];
       $thisfile=0; 
-      while ($thisfile < $#htmlfiles) {
+      while ($thisfile <= $#htmlfiles) {
         open(THISHTML,$htmlfiles[$thisfile]) || die("can't open $htmlfiles[$thisfile]");
         while (<THISHTML>)  {
           if (/$pattern/ && $htmlfileassociated[$thisfile]){
