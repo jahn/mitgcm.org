@@ -49,13 +49,13 @@
     $ export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
     $ cvs login 
       ( enter the CVS password: "cvsanon" )
-    $ cvs co MITgcm
+    $ cvs co -P MITgcm
 
   tcsh or csh shell:
     $ setenv CVSROOT ':pserver:cvsanon@mitgcm.org:/u/gcmpack'
     $ cvs login 
       ( enter the CVS password: "cvsanon" )
-    $ cvs co MITgcm
+    $ cvs co -P MITgcm
 </pre>
 	      
 	    </li>
