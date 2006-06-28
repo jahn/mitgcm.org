@@ -20,20 +20,24 @@ Templates:
 	cd templates; make
 
 InstallSkeleton:
-	rm -rf $(TARGETDIR)
-	cp -rp $(SKELETON) $(TARGETDIR)
+	mkdir -p $(TARGETDIR)
+	cp -rp $(SKELETON)/* $(TARGETDIR)
 	chmod -R u+w $(TARGETDIR)
 
 InstallLatex:
+	mkdir -p $(TARGETDIR)/online_documents
 	cp -rp $(LATEXROOT)/manual/* $(TARGETDIR)/online_documents/
 
 InstallPDF:
+	mkdir -p $(TARGETDIR)/online_documents
 	cp -p $(LATEXROOT)/manual.p* $(TARGETDIR)/online_documents/
 
 InstallOLF:
+	mkdir -p $(TARGETDIR)/on-line-figs
 	cp -rp $(LATEXROOT)/on-line-figs/* $(TARGETDIR)/on-line-figs/
 
 InstallVDB:
+	mkdir -p $(TARGETDIR)/code_reference
 	cp -rp $(VDBROOT) $(TARGETDIR)/code_reference/
 
 Bonniefy: $(TARGETDIR)
@@ -46,6 +50,7 @@ Index: $(TARGETDIR)/home_page/frontpage.html
 
 SiteMap:
 	echo $(SHELL)
+	mkdir -p $(TARGETDIR)/sitemap
 	cd $(TARGETDIR)/sitemap; $(BUILDWEBDIR)/bin/makesitemap ../online_documents > index.html
 
 Search:
