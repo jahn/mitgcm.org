@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.5 2005/11/28 13:34:31 edhill Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.6 2006/10/06 19:49:59 edhill Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -28,7 +28,7 @@ usage()
 INDIR="/u/edhill/Mail/MITgcm-test"
 OUTDIR=
 TEMPDIR=./ptmp
-MUNPACK=/usr/local/bin/munpack
+MUNPACK=/u/edhill/local/bin/munpack
 
 #  Parse options
 ac_prev=
