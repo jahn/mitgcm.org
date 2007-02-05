@@ -53,6 +53,23 @@
       </blockquote>
       -->
 
+      <p><b>Feb 04, 2007&nbsp;:</b></p>
+      <blockquote>
+       News is back by popular request. New advection schemes are currently
+       being tested. Some preliminary results from the new schemes can be seen 
+       <A href=news/advection_testing_jan07/advection_testing.html>
+       here.
+       </A>
+       The plots show a tracer being transported and stretched in the
+       MITgcm advect_xz verification test. Both new schemes (OS7MP
+       and Prather second-order scheme with limiting) have very low implied 
+       diffusivity.
+       We are currently evaluating the
+       schemes to assess their implied diffusivity, with a bottle of 
+       Jean-Michel's favorite Belgian
+       beer going to the the least diffusive scheme - watch this space!
+      </blockquote>
+
       <p><b>March 9, 2005&nbsp;:</b></p>
       <blockquote>
        A short article entitled 
