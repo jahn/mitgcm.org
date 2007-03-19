@@ -53,6 +53,23 @@
       </blockquote>
       -->
 
+      <p><b>March 19, 2007&nbsp;:</b></p>
+      <blockquote>
+      Breaking News:  The MITgcm is now able to generate Sea-Ice Donuts
+      In a push to move forward MITgcm on the path of fundamental science and climate
+      understanding, David Ferreira and Jean-Michel Campin
+      simulated a Sea-ice Donut using a coupled AquaPlanet configuration (see
+      movie <A href=movies/Sea_Ice_Donut_x1.mpg>here</A>). 
+      This experiment was initialized with  the T and S fields from
+      a previous Aquaplanet run which has polar sea-ice caps. These
+      caps are associated with salt-compensated temperature inversions in the upper
+      ocean. The new run is initialized without sea-ice and within a month, large
+      sea-ice caps grow over the poles, rejecting salt. This triggers convection which
+      in turns brings relatively warm water to the surface and melts the ice close
+      to the poles. Here we have a <A href=movies/Sea_Ice_Donut_x1.mpg>donut</A>. 
+      Look out for that chapter on aqua-planets in the next IPCC report!
+      </blockquote>
+
       <p><b>Feb 04, 2007&nbsp;:</b></p>
       <blockquote>
        News is back by popular request. New advection schemes are currently
