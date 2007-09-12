@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.28 2006/04/06 13:24:29 edhill Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.29 2006/04/28 14:41:00 edhill Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -325,27 +325,30 @@ for mname in $MACHINES ; do
 	t_pass="--"
 	t_tot="--"
 	if test -r $dir/summary.txt ; then
-	    grep '^[YN] [YN] [YN] [YN] ' $dir/summary.txt > ./all_tests 2>/dev/null
+#	    grep '^[YN] [YN] [YN] [YN] ' $dir/summary.txt > ./all_tests 2>/dev/null
+	    grep '^[YN] [YN] [YN] [YN]' $dir/summary.txt > ./all_tests 2>/dev/null
 	    t_tot=`cat ./all_tests | wc -l | sed -e 's| ||g'`
-	    grep '^Y Y Y Y ' ./all_tests > ./all_ran 2>/dev/null
-	    grep advect_ ./all_ran 2>/dev/null > ./all_ran_advect
-	    t_advect=`cat ./all_ran_advect | wc -l | sed -e 's| ||g'`
-	    digits=`cat ./all_ran_advect | awk '{print $9}'`
-	    t_advect_pass=0
-	    for k in $digits ; do
-		test "x$k" = x--   &&  k=0
-		test $k -ge 9  &&  t_advect_pass=$(( $t_advect_pass + 1 ))
-	    done
-	    grep -v advect ./all_ran 2>/dev/null > ./all_ran_noadvect
-	    digits=`cat ./all_ran_noadvect | awk '{print $5}'`
-	    t_sum=0
-	    for k in $digits ; do
-		test "x$k" = x--   &&  k=0
-		test $k -ge 9  &&  t_sum=$(( $t_sum + 1 ))
-	    done
-	    t_pass=$(( $t_sum + $t_advect_pass ))
+#	    grep '^Y Y Y Y ' ./all_tests > ./all_ran 2>/dev/null
+#	    grep advect_ ./all_ran 2>/dev/null > ./all_ran_advect
+#	    t_advect=`cat ./all_ran_advect | wc -l | sed -e 's| ||g'`
+#	    digits=`cat ./all_ran_advect | awk '{print $9}'`
+#	    t_advect_pass=0
+#	    for k in $digits ; do
+#		test "x$k" = x--   &&  k=0
+#		test $k -ge 9  &&  t_advect_pass=$(( $t_advect_pass + 1 ))
+#	    done
+#	    grep -v advect ./all_ran 2>/dev/null > ./all_ran_noadvect
+#	    digits=`cat ./all_ran_noadvect | awk '{print $5}'`
+#	    t_sum=0
+#	    for k in $digits ; do
+#		test "x$k" = x--   &&  k=0
+#		test $k -ge 9  &&  t_sum=$(( $t_sum + 1 ))
+#	    done
+#	    t_pass=$(( $t_sum + $t_advect_pass ))
+	    t_pass=`grep 'pass ' ./all_tests | wc -l | sed -e 's| ||g'`
 	fi
-	rm -f ./all_tests ./all_ran ./all_ran_advect ./all_ran_noadvect
+#	rm -f ./all_tests ./all_ran ./all_ran_advect ./all_ran_noadvect
+	rm -f ./all_tests
 	# echo "${dir##*/} : $t_pass out of $t_tot"
 
 	tokens=`echo $i | sed -e 's|_| |g'`
