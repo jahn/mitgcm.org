@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.29 2006/04/28 14:41:00 edhill Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.30 2007/09/12 22:06:05 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -18,89 +18,6 @@ usage()
     echo 
     exit 1
 }
-
-old_summary()
-{
-    #  Create the old-style summary file for $PERIOD
-    echo -n "Creating the summary file for the period \"$PERIOD\" ...  "
-    cat > $OUTFILE << EOF
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title>MITgcm testing summary</title>
-    <meta name="author" content="Ed Hill" />
-    <base href="http://mitgcm.org/testing/summary/" />
-  </head>
-  <body>
-    <table cellpadding="0" cellspacing="0" border="0" width="100%">
-
-EOF
-
-    # all_files=`find $INDIR -name summary.txt`
-    all_files=`( cd $INDIR ; find . -name summary.txt )`
-
-    for f in $all_files ; do
-	
-	file=$INDIR"/"${f/.\//}
-	grep "^fresults" $file > /dev/null 2>&1
-	RETVAL=$?
-	if test "x$RETVAL" != x0 ; then
-	    continue
-	fi
-	
-	url=`echo $file | sed -e 's|/u/edhill/www|http://mitgcm.org/~edhill|'`
-	url=`echo $url | sed -e 's|summary.txt||'`
-	MACH=
-	fresults=
-	color="#eeeeee"
-	
-	source $file
-	echo $fresults | grep FAIL > /dev/null 2>&1
-	if test "x$?" = x0 ; then
-	    color="#ff99ff"
-	fi
-	echo $fresults | grep pass > /dev/null 2>&1
-	if test "x$?" = x0 ; then
-	    color="#99ffff"
-	fi
-	
-	gm_state=`echo $file | sed -e 's/summary.txt/genmake_state/g'`
-	if test -r $gm_state ; then
-	    grep '^OPTFILE=' $gm_state > ./tmp_state
-	    source ./tmp_state
-	else
-	    optfile="unknown"
-	fi
-	optfile=`echo $OPTFILE | awk -F '/' '{print $NF}'`
-	
-	echo "<tr bgcolor=\"$color\">" >> $OUTFILE
-	echo "<td height=\"0\">$MACH</td>" >> $OUTFILE
-	echo "<td><a href=\"$url\">$DATE</a></td>" >> $OUTFILE
-	for i in $fresults ; do
-	    if test "x$i" = xN ; then
-		echo -n "<td bgcolor=\"#ff6666\">$i</td>" >> $OUTFILE
-	    else
-		echo -n "<td>$i</td>" >> $OUTFILE
-	    fi
-	done
-	echo "<td>$optfile</td>" >> $OUTFILE
-	echo "</tr>" >> $OUTFILE
-	
-    done
-    
-    cat >> $OUTFILE << EOF
-
-    </table>
-  </body>
-</html>
-EOF
-
-    chmod a+r $OUTFILE
-    echo "done"
-}
-
 
 # defaults
 PERIOD=`date +%Y`"_"`date +%m`
@@ -262,9 +179,9 @@ color="#bbffdd"
 ncolor="#bbddff"
 res_url="http://mitgcm.org/testing/"
 
-MACHINES="faulks shelley myrinet eaps halem columbia two"
-MACHINES="$MACHINES hopper lomax turing orion bf bs slough sea"
-MACHINES="$MACHINES eddy adams dolphin hemmingway altix350 edvir"
+MACHINES="faulks aces eddy bay meander"
+MACHINES="$MACHINES edvir rays1 model columbia"
+MACHINES="$MACHINES xd1 batsi starp"
 
 ( cd $INDIR ; ls -1 -t ) > ./dir_all
 
@@ -325,29 +242,10 @@ for mname in $MACHINES ; do
 	t_pass="--"
 	t_tot="--"
 	if test -r $dir/summary.txt ; then
-#	    grep '^[YN] [YN] [YN] [YN] ' $dir/summary.txt > ./all_tests 2>/dev/null
 	    grep '^[YN] [YN] [YN] [YN]' $dir/summary.txt > ./all_tests 2>/dev/null
 	    t_tot=`cat ./all_tests | wc -l | sed -e 's| ||g'`
-#	    grep '^Y Y Y Y ' ./all_tests > ./all_ran 2>/dev/null
-#	    grep advect_ ./all_ran 2>/dev/null > ./all_ran_advect
-#	    t_advect=`cat ./all_ran_advect | wc -l | sed -e 's| ||g'`
-#	    digits=`cat ./all_ran_advect | awk '{print $9}'`
-#	    t_advect_pass=0
-#	    for k in $digits ; do
-#		test "x$k" = x--   &&  k=0
-#		test $k -ge 9  &&  t_advect_pass=$(( $t_advect_pass + 1 ))
-#	    done
-#	    grep -v advect ./all_ran 2>/dev/null > ./all_ran_noadvect
-#	    digits=`cat ./all_ran_noadvect | awk '{print $5}'`
-#	    t_sum=0
-#	    for k in $digits ; do
-#		test "x$k" = x--   &&  k=0
-#		test $k -ge 9  &&  t_sum=$(( $t_sum + 1 ))
-#	    done
-#	    t_pass=$(( $t_sum + $t_advect_pass ))
 	    t_pass=`grep 'pass ' ./all_tests | wc -l | sed -e 's| ||g'`
 	fi
-#	rm -f ./all_tests ./all_ran ./all_ran_advect ./all_ran_noadvect
 	rm -f ./all_tests
 	# echo "${dir##*/} : $t_pass out of $t_tot"
 
