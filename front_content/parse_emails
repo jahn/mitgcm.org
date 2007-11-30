@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.7 2006/10/12 01:51:09 edhill Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.8 2007/11/29 23:55:56 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -131,11 +131,11 @@ for file in $all_files ; do
 	done
 	mv $TEMPDIR"/"$tdir $OUTDIR"/"$tdir"_"$ad > /dev/null 2>&1
 	chmod -R a+rx $OUTDIR"/"$tdir"_"$ad > /dev/null 2>&1
-	gzip $OUTDIR"/"$tdir"_"$ad"/output.txt"
+#	gzip $OUTDIR"/"$tdir"_"$ad"/output.txt"
     else
 	mv $TEMPDIR"/"$tdir $OUTDIR > /dev/null 2>&1
 	chmod -R a+rx $OUTDIR"/"$tdir > /dev/null 2>&1
-	gzip $OUTDIR"/"$tdir"/output.txt"
+#	gzip $OUTDIR"/"$tdir"/output.txt"
     fi
 
     #  remove the original file
