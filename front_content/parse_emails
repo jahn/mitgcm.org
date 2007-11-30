@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.8 2007/11/29 23:55:56 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.9 2007/11/30 00:45:55 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -13,12 +13,14 @@ usage()
     echo "Usage:  $0 [OPTIONS]"
     echo 
     echo "where possible OPTIONS are:"
-    echo "  (-help|-h)           print usage"
-    echo "  (-ind |-i )DIR       get mpack-created emails from DIR"
+    echo "  (-h|-help)           print usage"
+    echo "  (-s|-silent)         silent mode"
+    echo "  (-v|-verbose)        verbose mode"
+    echo "  (-i |-ind )DIR       get mpack-created emails from DIR"
     echo "                         [def=\"$INDIR\"]"
-    echo "  (-outd |-o )DIR      write the data to DIR"
+    echo "  (-o |-outd )DIR      write the data to DIR"
     echo "                         [def=\"$OUTDIR\"]"
-    echo "  (-tempd |-t )DIR     use temporary directory DIR"
+    echo "  (-t |-tempd )DIR     use temporary directory DIR"
     echo "                         [def=\"$TEMPDIR\"]"
     echo 
     exit 1
@@ -29,6 +31,7 @@ INDIR="/u/edhill/Mail/MITgcm-test"
 OUTDIR=
 TEMPDIR=./ptmp
 MUNPACK=/u/edhill/local/bin/munpack
+PRT=1
 
 #  Parse options
 ac_prev=
@@ -47,6 +50,10 @@ for ac_option ; do
 	
 	-help | --help | -h | --h)
 	    usage ;;
+	-s | --s | -silent | --silent)
+            PRT=0 ;;
+	-v | --v | -verbose | --verbose)
+            PRT=2 ;;
 	
         -ind | --ind | -i | --i)
             ac_prev=INDIR ;;
@@ -87,12 +94,18 @@ if test ! -e $OUTDIR ; then
     chmod 775 $OUTDIR
 fi
 
-echo "Using OUTDIR=\"$OUTDIR\""
-echo "Using INDIR=\"$INDIR\""
-
 all_files=`ls -1 $INDIR`
+nb_files=`echo $all_files | grep -c '^msg\.'`
 
-echo -n "Unpacking the emails ..."
+if test $PRT = 1 ; then
+  echo "Using OUTDIR=\"$OUTDIR\""
+  echo "Using INDIR=\"$INDIR\""
+  echo -n "Unpacking the emails ..."
+elif test $nb_files != 0 ; then
+  echo "Unpacking $nb_files emails from '$INDIR' to '$OUTDIR'"
+  if test $PRT = 2 ; then echo -n " dir:" ; fi
+fi
+
 for file in $all_files ; do
 
     #  create local copy
@@ -124,25 +137,25 @@ for file in $all_files ; do
     rm -f $TEMPDIR"/out"
 
     #  copy to $OUTDIR and rename if necessary
+    sdir=$tdir
     if test -e $OUTDIR"/"$tdir ; then
 	ad=0
 	while test -e $OUTDIR"/"$tdir"_"$ad ; do
 	    ad=$(( $ad + 1 ))
 	done
-	mv $TEMPDIR"/"$tdir $OUTDIR"/"$tdir"_"$ad > /dev/null 2>&1
-	chmod -R a+rx $OUTDIR"/"$tdir"_"$ad > /dev/null 2>&1
-#	gzip $OUTDIR"/"$tdir"_"$ad"/output.txt"
-    else
-	mv $TEMPDIR"/"$tdir $OUTDIR > /dev/null 2>&1
-	chmod -R a+rx $OUTDIR"/"$tdir > /dev/null 2>&1
-#	gzip $OUTDIR"/"$tdir"/output.txt"
+        sdir=$tdir"_"$ad
     fi
+    if test $PRT = 2 ; then echo -n " '$sdir'" ; fi
+    mv $TEMPDIR"/"$tdir $OUTDIR"/"$sdir > /dev/null 2>&1
+    chmod -R a+rx $OUTDIR"/"$sdir > /dev/null 2>&1
+#   gzip $OUTDIR"/"$sdir"/output.txt"
 
     #  remove the original file
     rm -f $INDIR"/"$file
 
 done
-echo "  done"
+if test $PRT = 1 ; then echo "  done" ; fi
+if test $PRT = 2 -a $nb_files != 0 ; then echo "" ; fi
 
 # echo -n "gzipping all the \"output.txt\" files ..."
 # (
