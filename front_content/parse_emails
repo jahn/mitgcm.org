@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.9 2007/11/30 00:45:55 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.10 2007/11/30 17:14:43 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -95,7 +95,7 @@ if test ! -e $OUTDIR ; then
 fi
 
 all_files=`ls -1 $INDIR`
-nb_files=`echo $all_files | grep -c '^msg\.'`
+nb_files=`echo "$all_files" | grep -c '^msg\.'`
 
 if test $PRT = 1 ; then
   echo "Using OUTDIR=\"$OUTDIR\""
