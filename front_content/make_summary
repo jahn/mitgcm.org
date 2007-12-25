@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.31 2007/09/17 16:01:33 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.32 2007/12/25 17:38:26 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -93,16 +93,18 @@ cat > $LATEST << EOF
         <td><b>Notes</b></td> </tr>
 
       <tr bgcolor="#bbffdd"> <td>Intel P4</td> <td>"faulks"</td> 
-        <td>Fedora Core 3 </td> </tr>
-      <tr bgcolor="#bbddff"> <td>Intel P4</td> <td>"hemmingway"</td>
-        <td>Fedora Core 3</td> </tr>
+        <td>Fedora Core 6 </td> </tr>
+      <tr bgcolor="#bbddff"> <td> Intel P4</td> <td>"eddy"</td>
+        <td>Fedora Core 5</td> </tr>
 
+      <!--
       <tr bgcolor="#bbffdd"> <td> Intel P3/P4 Beowulf </td> <td>"myrinet"</td>
         <td><a href="http://mitgcm.org/projects/MITGCM_CLUSTER/">MITgcm cluster 
         facility </a></td> </tr>
       <tr bgcolor="#bbddff"> <td>Alpha cluster</td> <td>"halem"</td>
         <td><a href="http://nccstag.gsfc.nasa.gov/halem/quickstart_halem.html">
         NASA NCCS Halem</a></td> </tr>
+      -->
 
       <!--
       <tr bgcolor="#bbffdd"> <td> SGI Origin 2000 </td> <td>"hopper"</td>
@@ -131,13 +133,14 @@ cat > $LATEST << EOF
       <tr bgcolor="#bbddff"> <td> AMD Opteron </td> <td>"adams"</td>
         <td>Fedora Core 4 (AMD64)</td> </tr>
 
+      <!--
       <tr bgcolor="#bbffdd"> <td> Sun UltraSparc </td> <td>"slough"</td>
         <td>Solaris 8</td> </tr>
-      <tr bgcolor="#bbddff"> <td> Intel P4 Mosix Cluster </td> <td>"sea"</td>
-        <td>Red Hat v7.2</td> </tr>
+      -->
 
-      <tr bgcolor="#bbffdd"> <td> Intel P4</td> <td>"eddy"</td>
-        <td>Fedora Core 5</td> </tr>
+      <tr bgcolor="#bbffdd"> <td> Intel P4 Mosix Cluster </td> <td>"sea"</td>
+        <td>Fedora Core 6 </td> </tr>
+
       <tr bgcolor="#bbddff"> <td> AMD Opteron cluster </td> <td>"dolphin"</td>
         <td>SuSE SLES v8.1</td> </tr>
 
@@ -148,9 +151,6 @@ cat > $LATEST << EOF
         Xeon</a> </td> <td>"aces"</td><td>Fedora Core 2</td> </tr>
 
       <!--
-
-      <tr bgcolor="#bbffdd"> <td> Intel P4 </td> <td>"hemmingway"</td>
-        <td>Fedora Core release 1 (gcc 3.3.2) </td> </tr>
 
       <tr bgcolor="#bbddff"> <td>  </td> <td>""</td>
         <td></td> </tr>
