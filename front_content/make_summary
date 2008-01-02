@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.33 2007/12/25 19:06:26 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.34 2007/12/25 22:01:48 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -25,16 +25,16 @@ PERIOD=`date +%Y`"_"`date +%m`
 #  Parse options
 ac_prev=
 for ac_option ; do
-        
+
     # If the previous option needs an argument, assign it.
     if test -n "$ac_prev"; then
         eval "$ac_prev=\$ac_option"
         ac_prev=
         continue
     fi
-    
+
     ac_optarg=`expr "x$ac_option" : 'x[^=]*=\(.*\)'`
-    
+
     case $ac_option in
 	
 	-help | --help | -h | --h)
@@ -44,19 +44,22 @@ for ac_option ; do
             ac_prev=PERIOD ;;
         --date=* | -date=*)
             PERIOD=$ac_optarg ;;
-        
+
         *)
 	    echo "Error: don't understand argument \"$ac_option\""
 	    usage
             ;;
-        
+
      esac
-     
+
 done
 
+#INDIR="/net/orwell/export/export-9/mitgcm-testing/results/$PERIOD"
 INDIR="/u/u0/httpd/html/testing/results/$PERIOD"
 OUTDIR="/u/u0/httpd/html/testing/summary"
+
 OUTFILE=$OUTDIR"/summary_"$PERIOD".html"
+res_url="http://mitgcm.org/testing/"
 
 #  Create the "latest" links
 echo "Creating the \"latest\" file for each machine: "
@@ -82,9 +85,9 @@ cat > $LATEST << EOF
 
   </head>
   <body>
-    <p>The MITgcm model is tested 
-      (compiled and run) in an automated fashion on a varirety of 
-      different machines.  The following is a summary of the MITgcm 
+    <p>The MITgcm model is tested
+      (compiled and run) in an automated fashion on a varirety of
+      different machines.  The following is a summary of the MITgcm
       verification suite for the time period: <b>$PERIOD</b>.</p>
 
     <p>The machine naming scheme is:<br /></p>
@@ -92,14 +95,21 @@ cat > $LATEST << EOF
       <tr bgcolor="#00cccc"> <td><b>Machine Type</b></td> <td><b>Nickname</b></td>
         <td><b>Notes</b></td> </tr>
 
-      <tr bgcolor="#bbffdd"> <td>Intel P4</td> <td>"faulks"</td> 
+      <tr bgcolor="#bbddff"> <td>Intel P4</td> <td>"faulks"</td>
         <td>Fedora Core 6 </td> </tr>
-      <tr bgcolor="#bbddff"> <td> Intel P4</td> <td>"eddy"</td>
+      <tr bgcolor="#bbffdd"> <td> Intel P4</td> <td>"eddy"</td>
         <td>Fedora Core 5</td> </tr>
+      <tr bgcolor="#bbddff"> <td> Intel P4 </td> <td>"bay"</td>
+        <td>Fedora Core 5 </td> </tr>
+      <tr bgcolor="#bbffdd"> <td> Intel P4 </td> <td>"meander"</td>
+        <td>Fedora Core 7 </td> </tr>
+
+      <tr bgcolor="#bbddff"> <td> <a href="http://acesgrid.org">ACESgrid Dell
+        Xeon</a> </td> <td>"aces"</td><td>Fedora Core 2</td> </tr>
 
       <!--
       <tr bgcolor="#bbffdd"> <td> Intel P3/P4 Beowulf </td> <td>"myrinet"</td>
-        <td><a href="http://mitgcm.org/projects/MITGCM_CLUSTER/">MITgcm cluster 
+        <td><a href="http://mitgcm.org/projects/MITGCM_CLUSTER/">MITgcm cluster
         facility </a></td> </tr>
       <tr bgcolor="#bbddff"> <td>Alpha cluster</td> <td>"halem"</td>
         <td><a href="http://nccstag.gsfc.nasa.gov/halem/quickstart_halem.html">
@@ -115,43 +125,54 @@ cat > $LATEST << EOF
         NAS SGI Origin 3000 </a></td> </tr>
       -->
 
+      <tr bgcolor="#bbffdd"> <td> SGI Altix Cluster </td> <td>"columbia"</td>
+        <td><a href="http://www.nas.nasa.gov/Resources/Systems/columbia.html">
+        NAS Columbia </a></td> </tr>
+
       <!--
-      <tr bgcolor="#bbffdd"> <td> SGI Altix </td> <td>"orion"</td>
-        <td><a href="http://sc.jpl.nasa.gov/">JPL Supercomputing and 
-        Visualization Facility</a></td> </tr>
-      -->
       <tr bgcolor="#bbffdd"> <td> SGI Altix 350 </td> <td>"altix350"</td>
-        <td><a href="http://acesgrid.org/geocluster/">MIT ACESgrid 
+        <td><a href="http://acesgrid.org/geocluster/">MIT ACESgrid
         GeoCluster</a></td> </tr>
       <tr bgcolor="#bbddff"> <td> IBM POWER3 SP </td> <td>"bf"</td>
         <td><a href="http://www.scd.ucar.edu/computers/blackforest/">NCAR Blackforest
         </a></td> </tr>
-
-      <tr bgcolor="#bbffdd"> <td> IBM POWER4 SP </td> <td>"bs"</td>
-        <td><a href="http://www.scd.ucar.edu/computers/bluesky/">NCAR Bluesky
-        </a></td> </tr>
-      <tr bgcolor="#bbddff"> <td> AMD Opteron </td> <td>"adams"</td>
-        <td>Fedora Core 4 (AMD64)</td> </tr>
-
-      <!--
-      <tr bgcolor="#bbffdd"> <td> Sun UltraSparc </td> <td>"slough"</td>
-        <td>Solaris 8</td> </tr>
-      -->
-
-      <tr bgcolor="#bbffdd"> <td> Intel P4 Mosix Cluster </td> <td>"sea"</td>
-        <td>Fedora Core 6 </td> </tr>
-
-      <tr bgcolor="#bbddff"> <td> AMD Opteron cluster </td> <td>"dolphin"</td>
-        <td>SuSE SLES v8.1</td> </tr>
-
       <tr bgcolor="#bbffdd"> <td> IBM/Apple dual G5 </td> <td>"two"</td>
         <td>Mac OSX 10.3 (gcc 3.4) </td> </tr>
+      -->
+      <tr bgcolor="#bbddff"> <td> IBM POWER4 SP </td> <td>"edvir"</td>
+        <td> AIX 5.2 </td> </tr>
+      <tr bgcolor="#bbffdd"> <td> IBM POWER5+ SP </td> <td>"blueice"</td>
+        <td><a href="http://www.scd.ucar.edu/computers/blueice/">NCAR Blueice
+        </a></td> </tr>
 
-      <tr bgcolor="#bbddff"> <td> <a href="http://acesgrid.org">ACESgrid Dell 
-        Xeon</a> </td> <td>"aces"</td><td>Fedora Core 2</td> </tr>
+      <tr bgcolor="#bbddff"> <td> AMD Opteron </td> <td>"batsi"</td>
+        <td>Fedora Core 4 (AMD64)</td> </tr>
+      <tr bgcolor="#bbffdd"> <td> AMD Opteron </td> <td>"starp"</td>
+        <td>SuSE SLES 10 (AMD64)</td> </tr>
+
+      <tr bgcolor="#bbddff"> <td> Sun UltraSparc IV </td> <td>"rays1"</td>
+        <td>Solaris 9</td> </tr>
+      <tr bgcolor="#bbffdd"> <td> Sun UltraSparc IV </td> <td>"model"</td>
+        <td>Solaris 9</td> </tr>
+      <tr bgcolor="#bbddff"> <td> Cray XD1 (AMD Opteron) </td> <td>"xd1"</td>
+        <td>Cray HPC enhanced Linux 2.6.5 </td> </tr>
+      <tr bgcolor="#bbffdd"> <td> PowerPC970MP cluster </td> <td>"bigred"</td>
+        <td>SuSE SLES 9 (PPC) </td> </tr>
+
+      <tr bgcolor="#bbddff"> <td><a
+        href="http://www.testdrive.hp.com/current.shtml"> HP test-drive </a>
+        (Pentium III) </td> <td>"td152"</td> <td> FreeBSD 6.2 </td> </tr>
+      <tr bgcolor="#bbffdd"> <td><a
+        href="http://www.testdrive.hp.com/current.shtml"> HP test-drive </a>
+        (Itanium II) </td> <td>"td187"</td> <td>SuSE SLES 10 </td> </tr>
+      <tr bgcolor="#bbddff"> <td><a
+        href="http://www.testdrive.hp.com/current.shtml"> HP test-drive </a>
+        (PA-RISC 8700) </td> <td>"td192"</td> <td> HP-UX 11i 11.11 </td> </tr>
+      <tr bgcolor="#bbffdd"> <td><a
+        href="http://www.testdrive.hp.com/current.shtml"> HP test-drive </a>
+        (Itanium II) </td> <td>"td194"</td> <td> HP-UX 11i v3 </td> </tr>
 
       <!--
-
       <tr bgcolor="#bbddff"> <td>  </td> <td>""</td>
         <td></td> </tr>
       -->
@@ -161,7 +182,7 @@ cat > $LATEST << EOF
     <p><br />
       The complete output for the verification runs can be found in
       <a href="http://mitgcm.org/testing/summary/">the summary pages</a>
-      and the <a href="http://mitgcm.org/testing/results/">testing archives</a>. 
+      and the <a href="http://mitgcm.org/testing/results/">testing archives</a>.
       The latest reports are:</p>
     <table align="center" cellpadding="0" cellspacing="0" border="0" width="95%">
 <tr bgcolor="#00cccc">
@@ -177,7 +198,6 @@ EOF
 
 color="#bbffdd"
 ncolor="#bbddff"
-res_url="http://mitgcm.org/testing/"
 
 MACHINES="faulks aces eddy bay meander"
 MACHINES="$MACHINES edvir rays1 model columbia"
@@ -196,6 +216,7 @@ for madd in $MALL ; do
     done
     test $present = 0  &&  MACHINES="$MACHINES $madd"
 done
+#MACHINES="faulks"
 
 for mname in $MACHINES ; do
 
