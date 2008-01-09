@@ -7,7 +7,7 @@
 all:
 	-rm -rf html
 	export CVSROOT='/u/gcmpack' && cvs -q up
-	./parse_emails
+#	./parse_emails
 	./make_summary
 	./Assemble.pl
 
