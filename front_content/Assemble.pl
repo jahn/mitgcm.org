@@ -57,7 +57,7 @@ foreach $file (@flist) {
 	$name = $name0{$fm};
 
 	if ($name eq "Documentation") {
-	    $tmp = "<a href=\"http://mitgcm.org/pelican/\">"
+	    $tmp = "<a href=\"http://eddy.csail.mit.edu/r2/latest/\">"
 		. "Documentation</a><br />\n";
 	    $menu = join "", $menu, $tmp;
 	    next;
