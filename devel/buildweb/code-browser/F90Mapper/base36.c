@@ -1,3 +1,4 @@
+#include <string.h>
 char *base36(n)
      /* Returns a character string representing an integer in base 36 */
 int n;

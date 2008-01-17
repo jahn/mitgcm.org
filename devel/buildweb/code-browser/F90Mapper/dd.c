@@ -1,5 +1,6 @@
-/* $Id: dd.c,v 1.1.1.1 2002/09/20 19:47:31 adcroft Exp $ */
+/* $Id: dd.c,v 1.2 2003/07/23 17:54:35 edhill Exp $ */
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "GLOBALS.h"
 #include "DD.h"

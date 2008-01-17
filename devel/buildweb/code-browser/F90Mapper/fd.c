@@ -1,9 +1,10 @@
-/* $Id: $ */
+/* $Id: fd.c,v 1.1.1.1 2002/09/20 19:47:31 adcroft Exp $ */
 
 /*
  File-directory table routines
 */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>

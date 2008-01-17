@@ -1,4 +1,4 @@
-/* $Id: main.c,v 1.2 2003/07/23 17:54:35 edhill Exp $ */
+/* $Id: main.c,v 1.3 2004/02/17 15:37:34 edhill Exp $ */
 
 /*
  Driver routine for generating hypertext instrumented code
@@ -25,6 +25,7 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
