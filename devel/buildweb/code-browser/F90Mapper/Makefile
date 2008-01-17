@@ -1,4 +1,4 @@
-#  $Id: Makefile,v 1.2 1997/03/23 05:52:43 cnh Exp cnh $
+#  $Id: Makefile,v 1.1.1.1 2002/09/20 19:47:31 adcroft Exp $
 #  Makefile for building f90mapper.
 #  f90mapper creates an HTML map of a set of F90 source
 #  files. Tool reads source code and variable dictionary 
@@ -29,7 +29,7 @@ $(target): lex.$(VD).o $(VD).tab.o \
                  lex.$(FS).o $(FS).tab.o \
                  main.o $(DD).o $(DB).o  makeOutputDirectories.o  \
                  base36.o fd.o html_write.o  \
-                 -ll -lglib
+                 -ll
 .c.o:
 	$(CC) -c -g $<
 
