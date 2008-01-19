@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.34 2007/12/25 22:01:48 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.35 2008/01/02 19:40:47 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -19,8 +19,9 @@ usage()
     exit 1
 }
 
+CURR_PER=`date +%Y`"_"`date +%m`
 # defaults
-PERIOD=`date +%Y`"_"`date +%m`
+PERIOD=$CURR_PER
 
 #  Parse options
 ac_prev=
@@ -58,14 +59,13 @@ done
 INDIR="/u/u0/httpd/html/testing/results/$PERIOD"
 OUTDIR="/u/u0/httpd/html/testing/summary"
 
-OUTFILE=$OUTDIR"/summary_"$PERIOD".html"
+OUTFILE=$OUTDIR"/output_"$PERIOD".html"
 res_url="http://mitgcm.org/testing/"
 
-#  Create the "latest" links
+#  Create the links in $OUTFILE :
 echo "Creating the \"latest\" file for each machine: "
-LATEST=$OUTDIR"/latest_"$PERIOD".html"
 the_date=`date`
-cat > $LATEST << EOF
+cat > $OUTFILE << EOF
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -307,7 +307,7 @@ for mname in $MACHINES ; do
 	    optf=`echo $tline | cut -d " " -f 3`
 	    DAY=`echo $tline | cut -d " " -f 2`
 	    URL="results/$PERIOD/$ldir"
-	    cat <<EOF >>$LATEST
+	    cat <<EOF >>$OUTFILE
 <tr bgcolor="$color">
   <td height="0"> $mname </td>
   <td> $optf </td>
@@ -322,7 +322,7 @@ EOF
 
 done
 
-cat >> $LATEST << EOF
+cat >> $OUTFILE << EOF
 <tr bgcolor="#00cccc">
   <td height="0" colspan="6" align="center" >This table generated on: $the_date</td>
 </tr>
@@ -341,7 +341,12 @@ EOF
 
 rm -f ./dir_all ./mlist
 
-CURR_PER=`date +%Y`"_"`date +%m`
+#- put the file in place
+chgrp gcmpack $OUTFILE
+chmod 664 $OUTFILE
+LATEST=$OUTDIR"/latest_"$PERIOD".html"
+mv -f $OUTFILE $LATEST
+
 if test "x$PERIOD" = "x$CURR_PER" ; then
     cp $LATEST ./testing.xml
     (
