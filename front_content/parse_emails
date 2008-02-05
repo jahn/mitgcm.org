@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.10 2007/11/30 17:14:43 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.11 2007/12/01 18:55:13 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -22,15 +22,18 @@ usage()
     echo "                         [def=\"$OUTDIR\"]"
     echo "  (-t |-tempd )DIR     use temporary directory DIR"
     echo "                         [def=\"$TEMPDIR\"]"
+    echo "  (-a |-addr )ADDR     send e-mail to ADDR if Error"
+    echo "                         [def='"$ADDRERR"']"
     echo 
     exit 1
 }
 
 # defaults
-INDIR="/u/edhill/Mail/MITgcm-test"
-OUTDIR=
+INDIR="/u/u2/jmc/Mail/MITgcm-test"
+OUTDIR="/u/u0/httpd/html/testing/results/"`date +%Y`"_"`date +%m`
 TEMPDIR=./ptmp
 MUNPACK=/u/edhill/local/bin/munpack
+ADDRERR=
 PRT=1
 
 #  Parse options
@@ -69,6 +72,10 @@ for ac_option ; do
             ac_prev=TEMPDIR ;;
         --tempd=* | -tempd=* | --t=* | -t=*)
             TEMPDIR=$ac_optarg ;;
+        -a | --aa | -addr | --addr)
+            ac_prev=ADDRERR ;;
+        -a=* | --aa=* | -addr=* | --addr=*)
+            ADDRERR=$ac_optarg ;;
         
         *)
 	    # copy the file list to FL_#
@@ -80,9 +87,6 @@ for ac_option ; do
      
 done
 
-if test "x$OUTDIR" = x ; then
-    OUTDIR="/u/u0/httpd/html/testing/results/"`date +%Y`"_"`date +%m`
-fi
 if test ! -e $OUTDIR ; then
     mkdir $OUTDIR
     RETVAL=$?
@@ -103,6 +107,9 @@ if test $PRT = 1 ; then
   echo -n "Unpacking the emails ..."
 elif test $nb_files != 0 ; then
   echo "Unpacking $nb_files emails from '$INDIR' to '$OUTDIR'"
+  if test "x$ADDRERR" != x ; then
+     echo " (send msg to '$ADDRERR' if Error)"
+  fi
   if test $PRT = 2 ; then echo -n " dir:" ; fi
 fi
 
@@ -117,21 +124,46 @@ for file in $all_files ; do
     grep "Content-Type: message/partial" $INDIR"/"$file > /dev/null 2>&1
     RETVAL=$?
     if test "x$RETVAL" = x0 ; then
-        continue
+      if test "x$ADDRERR" != x ; then
+        echo "parsing email error" > tmp.$$
+        echo 'grep "Content-Type: message/partial" returns error:' $RETVAL >> tmp.$$
+        ls -l $INDIR"/"$file >> tmp.$$
+        mail -s 'parse_emails err_1' $ADDRERR < tmp.$$
+        rm -f tmp.$$
+      fi
+      mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
+      continue
     fi
 
     #  munpack
     mun=`( cd $TEMPDIR ; $MUNPACK $file | cut -d ' ' -f 1 | head -1 )`
     RETVAL=$?
     if test "x$RETVAL" != x0 ; then
-	continue
+      if test "x$ADDRERR" != x ; then
+        echo "parsing email error" > tmp.$$
+        echo "$MUNPACK $file returns error: $RETVAL" >> tmp.$$
+        ls -l $INDIR"/"$file >> tmp.$$
+        mail -s 'parse_emails err_2' $ADDRERR < tmp.$$
+        rm -f tmp.$$
+      fi
+      mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
+      continue
     fi
 
     #  un-tar
     ( cd $TEMPDIR ; tar -xzvf $mun > out )
     RETVAL=$?
     if test "x$RETVAL" != x0 ; then
-	continue
+      if test "x$ADDRERR" != x ; then
+        echo "parsing email error" > tmp.$$
+        echo "tar -xzvf $mun returns error:" $RETVAL >> tmp.$$
+        ls -l $INDIR"/"$file >> tmp.$$
+        ls -l $mun >> tmp.$$
+        mail -s 'parse_emails err_3' $ADDRERR < tmp.$$
+        rm -f tmp.$$
+      fi
+      mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
+      continue
     fi
     tdir=`cat $TEMPDIR"/out" | head -1 | sed -e 's|^./||g' | cut -d '/' -f 1`
     rm -f $TEMPDIR"/out"
@@ -156,19 +188,4 @@ for file in $all_files ; do
 done
 if test $PRT = 1 ; then echo "  done" ; fi
 if test $PRT = 2 -a $nb_files != 0 ; then echo "" ; fi
-
-# echo -n "gzipping all the \"output.txt\" files ..."
-# (
-#     cd $OUTDIR
-#     outp=`find . -name output.txt`
-#     if test "x$outp" != x ; then
-# 	gzip $outp
-#     fi
-# )
-# echo "  done"
-
-# echo -n "setting permissions to world-readable ..."
-# chmod -R a+rx $OUTDIR > /dev/null 2>&1
-# echo "  done"
-
 
