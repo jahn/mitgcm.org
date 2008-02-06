@@ -93,9 +93,19 @@
       <tr bgcolor="#bbddff">
  	<td width="25%">MITgcm_verif_basic</td>
 	<td>Source code plus a small set of the verification examples
-	  ("global_ocean.90x40x15", "aim.5l_cs", "hs94.128x64x5", 
-	  "front_relax", and "plume_on_slope").</td>
-     </tr>
+	  ("aim.5l_cs", "hs94.128x64x5", "ideal_2D_oce", "lab_sea",
+	   "tutorial_baroclinic_gyre", "tutorial_global_oce_latlon"
+           and "tutorial_plume_on_slope").</td>
+      </tr>
+      <tr bgcolor="#bbffdd">
+	<td width="25%">MITgcm_tutorials</td>
+	<td>Source code plus all of the tutorials examples.</td>
+      </tr>
+      <tr bgcolor="#bbddff">
+	<td width="25%">MITgcm_verif_all</td>
+	<td>Source code plus all of the verification examples.</td>
+      </tr>
+      <!--
       <tr bgcolor="#bbffdd">
 	<td width="25%">MITgcm_verif_atmos</td>
 	<td>Source code plus all of the atmospheric examples.</td>
@@ -104,11 +114,6 @@
  	<td width="25%">MITgcm_verif_ocean</td>
 	<td>Source code plus all of the oceanic examples.</td>
      </tr>
-      <tr bgcolor="#bbffdd">
-	<td width="25%">MITgcm_verif_all</td>
-	<td>Source code plus all of the verification examples.</td>
-      </tr>
-      <!--
       <tr bgcolor="#bbddff">
  	<td width="25%"></td>
 	<td></td>
