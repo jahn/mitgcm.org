@@ -1,4 +1,4 @@
-#  $ Header: $
+#  $Header:  $
 #
 #  Makefile for the "front-end" of the mitgcm.org domain.
 #
@@ -6,7 +6,6 @@
 
 all:
 	-rm -rf html
-	export CVSROOT='/u/gcmpack' && cvs -q up
 #	./parse_emails
 	./make_summary
 	./Assemble.pl
