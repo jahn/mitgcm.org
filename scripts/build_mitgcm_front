@@ -1,0 +1,17 @@
+#! /usr/bin/env bash
+
+# $Header:  $
+
+export CVSROOT='/u/gcmpack' 
+cd /u/u2/jmc/testing/scripts && cvs -q update -P -d
+
+cat <<EOF
+==========================================================
+Building the mitgcm.org front pages:
+==========================================================
+
+EOF
+cd /u/u2/jmc/testing/front_content 
+cvs -q update -P -d
+make install
+

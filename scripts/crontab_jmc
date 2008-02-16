@@ -1,0 +1,10 @@
+# $Header:  $
+
+#-from: jmc@forge.csail.mit.edu 
+#  current output of: crontab -l
+
+#51 23 * * *  cd /u/u2/jmc/testing/front_content && cvs -q update -P -d
+10,40 * * * * /u/u2/jmc/testing/scripts/process_emails
+50 * * * * /u/u2/jmc/testing/scripts/build_mitgcm_front
+10 6 * * * /u/u2/jmc/testing/scripts/daily_snapshot
+

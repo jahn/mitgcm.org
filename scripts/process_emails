@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+
+# $Header: $
+
+#cat <<EOF
+#==========================================================
+#Parsing MITgcm testing emails :
+#==========================================================
+#
+#EOF
+cd /u/u2/jmc/testing/front_content && ./parse_emails -v -a jmc@ocean.mit.edu
+

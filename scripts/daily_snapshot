@@ -1,0 +1,24 @@
+#! /usr/bin/env bash
+
+# $Header:  $
+
+umask 0002
+
+echo 'Changing directory to /u/httpd/html/download/daily_snapshot'
+cd /u/httpd/html/download/daily_snapshot
+test -e MITgcm  &&  rm -rf MITgcm
+
+echo 'Checking out MITgcm...'
+export CVSROOT=/u/gcmpack  &&  cvs co -P MITgcm > /dev/null 2>&1
+#chgrp gcmpack MITgcm
+#chmod 775 MITgcm
+
+echo 'Creating the tar file...'
+rm -rf MITgcm_ss_*
+tname='MITgcm_ss_'`date +%Y%m%d`'.tar.gz'
+tar -czf $tname ./MITgcm
+#chmod 664 $tname
+ls -l $tname
+
+echo 'Done!'
+
