@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.12 2008/02/05 22:58:54 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.13 2008/02/17 03:20:24 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -22,6 +22,8 @@ usage()
     echo "                         [def=\"$OUTDIR\"]"
     echo "  (-t |-tempd )DIR     use temporary directory DIR"
     echo "                         [def=\"$TEMPDIR\"]"
+    echo "  (-u |-unpack )EXE    use executable EXE to unpack e-mails"
+    echo "                         [def=\"$MUNPACK\"]"
     echo "  (-a |-addr )ADDR     send e-mail to ADDR if Error"
     echo "                         [def='"$ADDRERR"']"
     echo 
@@ -32,7 +34,7 @@ usage()
 INDIR="/u/u2/jmc/Mail/MITgcm-test"
 OUTDIR="/u/u0/httpd/html/testing/results/"`date +%Y`"_"`date +%m`
 TEMPDIR=./ptmp
-MUNPACK=/u/u2/jmc/testing/tools_mpack/munpack
+MUNPACK=munpack
 ADDRERR=
 PRT=1
 
@@ -72,11 +74,17 @@ for ac_option ; do
             ac_prev=TEMPDIR ;;
         --tempd=* | -tempd=* | --t=* | -t=*)
             TEMPDIR=$ac_optarg ;;
-        -a | --aa | -addr | --addr)
-            ac_prev=ADDRERR ;;
-        -a=* | --aa=* | -addr=* | --addr=*)
-            ADDRERR=$ac_optarg ;;
+
+        -u | --u | -unpack | --unpack)
+            ac_prev=MUNPACK ;;
+        -u=* | --u=* | -unpack=* | --unpack=*)
+            MUNPACK=$ac_optarg ;;
         
+        -a | --a | -addr | --addr)
+            ac_prev=ADDRERR ;;
+        -a=* | --a=* | -addr=* | --addr=*)
+            ADDRERR=$ac_optarg ;;
+
         *)
 	    # copy the file list to FL_#
 	    echo "Error: don't understand argument \"$ac_option\""
@@ -87,12 +95,16 @@ for ac_option ; do
      
 done
 
+if test ! -x $MUNPACK ; then
+	echo "ERROR: \"$MUNPACK\" is not executable"
+	exit 2
+fi
 if test ! -e $OUTDIR ; then
     mkdir $OUTDIR
     RETVAL=$?
     if test "x$RETVAL" = x ; then
 	echo "ERROR: directory \"$OUTDIR\" doesn't exist and can't be created"
-	exit 1
+	exit 3
     fi
     chgrp gcmpack $OUTDIR
     chmod 775 $OUTDIR
