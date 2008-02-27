@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/process_emails,v 1.1 2008/02/16 18:40:03 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/process_emails,v 1.2 2008/02/26 21:36:23 jmc Exp $
 
 #cat <<EOF
 #==========================================================
@@ -12,16 +12,16 @@
 MPACKDIR=/u/u2/jmc/testing/tools_mpack
 exe=munpack
 unpck=$MPACKDIR/$exe
+tmpFil=/tmp/TTT.process_emails.$$
 
 #-- update tools/mpack-1.6 dir and build munpack :
 cd $MPACKDIR
-cvs -q update -P -d
+bld=`cvs -q update -P -d | tee $tmpFil | sed '/^?/d' | wc -l`
+#echo "bld ='$bld'"
+cat $tmpFil ; /bin/rm -f $tmpFil
 
-bldunp=1
-if test -x $exe ; then bldunp=0
-  if test $exe -ot CVS/Entries ; then bldunp=1 ; fi
-fi
-if test $bldunp = 1 ; then ./configure && make ; fi
+if test ! -x $exe ; then bld=1 ; fi
+if test "x$bld" != x0 ; then ./configure && make ; fi
 
 #-- parse emails :
 cd /u/u2/jmc/testing/front_content && ./parse_emails -u $unpck -v -a jmc@ocean.mit.edu
