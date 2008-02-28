@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.13 2008/02/17 03:20:24 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.14 2008/02/26 21:34:00 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -102,7 +102,7 @@ fi
 if test ! -e $OUTDIR ; then
     mkdir $OUTDIR
     RETVAL=$?
-    if test "x$RETVAL" = x ; then
+    if test "x$RETVAL" != x0 ; then
 	echo "ERROR: directory \"$OUTDIR\" doesn't exist and can't be created"
 	exit 3
     fi
@@ -130,7 +130,23 @@ for file in $all_files ; do
     #  create local copy
     test -e $TEMPDIR  &&  rm -rf $TEMPDIR
     mkdir $TEMPDIR
-    cp $INDIR"/"$file $TEMPDIR
+    RETVAL=$?
+    if test "x$RETVAL" = x0 ; then
+      cp $INDIR"/"$file $TEMPDIR
+      RETVAL=$?
+    fi
+    if test "x$RETVAL" != x0 ; then
+      if test "x$ADDRERR" != x ; then
+        echo "parsing email error" > tmp.$$
+        echo " processing file: '$INDIR/$file'" >> tmp.$$
+        echo -n "'mkdir $TEMPDIR' or 'cp $INDIR/$file $TEMPDIR'" >> tmp.$$
+        echo " returns error $RETVAL" >> tmp.$$
+        mail -s 'parse_emails err_0' $ADDRERR < tmp.$$
+        rm -f tmp.$$
+      fi
+      mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
+      continue
+    fi
 
     #  ignore multi-part messages
     grep "Content-Type: message/partial" $INDIR"/"$file > /dev/null 2>&1
@@ -191,6 +207,19 @@ for file in $all_files ; do
     fi
     if test $PRT = 2 ; then echo -n " '$sdir'" ; fi
     mv $TEMPDIR"/"$tdir $OUTDIR"/"$sdir > /dev/null 2>&1
+    RETVAL=$?
+    if test "x$RETVAL" != x0 ; then
+      if test "x$ADDRERR" != x ; then
+        echo "parsing email error" > tmp.$$
+        echo "mv $TEMPDIR/$tdir $OUTDIR/$sdir returns error:" $RETVAL >> tmp.$$
+        echo -n "in dir: $TEMPDIR : " ; ls -l $TEMPDIR  >> tmp.$$
+        echo -n "in dir: $OUTDIR : " ; ls -l $OUTDIR  >> tmp.$$
+        mail -s 'parse_emails err_4' $ADDRERR < tmp.$$
+        rm -f tmp.$$
+      fi
+      mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
+      continue
+    fi
     chmod -R a+rx $OUTDIR"/"$sdir > /dev/null 2>&1
 #   gzip $OUTDIR"/"$sdir"/output.txt"
 
