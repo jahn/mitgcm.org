@@ -1,6 +1,35 @@
 #! /usr/bin/env bash
 
-# $Header:  $
+# $Header: /u/gcmpack/mitgcm.org/scripts/daily_snapshot,v 1.1 2008/02/16 18:40:03 jmc Exp $
+
+# download or update several dir. which are used for:
+# - front_page building
+# - processing testing emails (-> testing page, part of front_page building)
+# - making a daily tar file of source code
+
+export CVSROOT=/u/gcmpack
+
+#- update scripts with explicit path:
+echo -n 'Update dir:'
+cd /u/u2/jmc/testing/scripts && pwd && cvs -q update -P -d
+
+
+#-- update tools/mpack-1.6 dir :
+tmpFil=/tmp/TTT.daily_snapshot.$$
+exe=munpack
+cd /u/u2/jmc/testing/tools_mpack
+echo -n 'Update dir:' ; pwd
+chg=`cvs -q update -P -d | tee $tmpFil | sed '/^?/d' | wc -l`
+#echo "chg ='$chg'"
+cat $tmpFil ; rm -f $tmpFil
+if test "x$chg" != x0 ; then 
+  if test -f $exe ; then echo " removing: $exe force re-build." ; fi 
+  rm -f $exe 
+fi
+
+#- update front-page building dir:
+echo -n 'Update dir:'
+cd /u/u2/jmc/testing/front_content && pwd && cvs -q update -P -d
 
 umask 0002
 
@@ -9,7 +38,7 @@ cd /u/httpd/html/download/daily_snapshot
 test -e MITgcm  &&  rm -rf MITgcm
 
 echo 'Checking out MITgcm...'
-export CVSROOT=/u/gcmpack  &&  cvs co -P MITgcm > /dev/null 2>&1
+cvs co -P MITgcm > /dev/null 2>&1
 #chgrp gcmpack MITgcm
 #chmod 775 MITgcm
 
