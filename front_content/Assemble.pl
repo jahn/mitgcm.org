@@ -56,12 +56,12 @@ foreach $file (@flist) {
 	$ind = "";
 	$name = $name0{$fm};
 
-	if ($name eq "Documentation") {
-	    $tmp = "<a href=\"http://eddy.csail.mit.edu/r2/latest/\">"
-		. "Documentation</a><br />\n";
-	    $menu = join "", $menu, $tmp;
-	    next;
-	}
+#	if ($name eq "Documentation") {
+#	    $tmp = "<a href=\"http://eddy.csail.mit.edu/r2/latest/\">"
+#		. "Documentation</a><br />\n";
+#	    $menu = join "", $menu, $tmp;
+#	    next;
+#	}
 
 	if (length($name1{$fm}) > 0) {
 	    $ind = "&nbsp;&nbsp;&nbsp;";

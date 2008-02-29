@@ -22,32 +22,35 @@
 
   <body>	
 
-    <p>Multiple sources of documentation are currently available:
+    <p>Several documents are currently available:
       <ul>
 
-	<li>The complete <a href="http://eddy.csail.mit.edu/r2/latest/">MITgcm User's
-	    Manual</a><br /><br /></li>
+	<li>The <a href="http://mitgcm.org/r2_manual/latest/">
+            Latest </a> online documentation <br /><br /></li>
 
-	<li>An MITgcm "Developer's HOWTO" is available in multiple formats:
+	<li>The stable online 
+	   <a href="http://mitgcm.org/sealion/"> Documentation
+	    </a> (Release-1 version)<br /><br /></li>
+
+	<li> Our 
+            <a 
+href="http://mitgcm.org/r2_manual/latest/code_reference/callTree.html" >on-line
+            code browser</a> provides a view of the various
+	    subroutines, functions and variables, 
+            showing how they are called and used.<br /><br /></li>
+	
+	<li>An MITgcm "Developer's HOWTO" manual is available in multiple formats:
 	  <ul>
 	    <li><a href="./devel_HOWTO/devel_HOWTO_onepage/"> Single-page
-		HTML</a></li>
-	    <li><a href="./devel_HOWTO/devel_HOWTO_multipage/"> Multi-page
-		HTML</a></li>
-	    <li><a href="./devel_HOWTO/devel_HOWTO.pdf"> PDF file </a></li>
-	    <li><a href="./devel_HOWTO/devel_HOWTO.pdf"> PostScript file
+		</a> or 
+	    <a href="./devel_HOWTO/devel_HOWTO_multipage/"> Multi-page
+		</a> (html) </li>
+	    <li><a href="./devel_HOWTO/devel_HOWTO.pdf"> PDF file </a> or
+	    <a href="./devel_HOWTO/devel_HOWTO.pdf"> PostScript file
 		</a></li>
 	  </ul>
 	  <br />
 	</li>
-	
-	<li>An <a href="http://mitgcm.org/sealion/">MITgcm API Reference
-	    Manual</a> is also available.  It provides a view of the various
-	    subroutines, functions, variables, showing how they are called and
-	    used.  Used in conjunction with our <a
-	    href="http://mitgcm.org/cmi_redir.php/code_browser"> on-line code
-	    browser</a>, the API Reference can be helpful when trying to
-	    understand parts of the MITgcm internals. <br /><br /></li>
 	
       </ul>
     </p>
