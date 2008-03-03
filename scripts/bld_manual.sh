@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header:  $
+# $Header: /u/gcmpack/mitgcm.org/scripts/bld_manual.sh,v 1.1 2008/03/03 01:47:26 jmc Exp $
 
 #BLDDIR='/u/u0/httpd/html/build_manual'
 #cd $BLDDIR
@@ -48,18 +48,21 @@ echo -n " : done " ; date
 echo -n '-- Finish building manual at : ' ; date
 if test -e scratch/dev_docs ; then
     newbld="dev_docs_"`date +%Y%m%d`"_"`date +%H%M`
+    echo " mv scratch/dev_docs $OUTDIR/$newbld"
     mv scratch/dev_docs $OUTDIR/$newbld
 fi
 #exit
 
 (
   cd $OUTDIR
+  echo -n "-- Install latest in dir: "`pwd`
   test -e latest  &&  rm -f latest
-  ln -s `ls -t | head -1` latest
-# n=$(( `ls -d dev_docs* | wc -l` - 7 ))
+  echo -n " ln -s `ls -td dev_docs* | head -1` latest"
+  ln -s `ls -td dev_docs* | head -1` latest
   n=$(( `ls dev_docs*/index.html | wc -l` - 7 ))
   if test $n -gt 0 ; then
-#   ls -td dev_docs* | tail -"$n" | xargs rm -rf
+    echo -n ' remove dir: ' 
+    ls -t dev_docs*/index.html | sed 's/\/index.html//' | tail -"$n"
     ls -t dev_docs*/index.html | sed 's/\/index.html//' | tail -"$n" | xargs rm -rf
   fi
 )
