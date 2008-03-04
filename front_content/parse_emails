@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.14 2008/02/26 21:34:00 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.15 2008/02/28 20:03:45 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -120,7 +120,7 @@ if test $PRT = 1 ; then
 elif test $nb_files != 0 ; then
   echo "Unpacking $nb_files emails from '$INDIR' to '$OUTDIR'"
   if test "x$ADDRERR" != x ; then
-     echo " (send msg to '$ADDRERR' if Error)"
+     echo " "`date`" (send msg to '$ADDRERR' if Error)"
   fi
   if test $PRT = 2 ; then echo -n " dir:" ; fi
 fi
