@@ -11,6 +11,9 @@ LATEXROOT   = ../../../manual
 VDBROOT     = $(BUILDWEBDIR)/vdb
 BINDIR      = $(BUILDWEBDIR)/bin
 PFILESDIR   = $(BUILDWEBDIR)/program_files
+#jmc: try relative path to speed-up copies
+SKELETON    = ./skeleton
+VDBROOT     = ./vdb
 
 all: Templates InstallSkeleton InstallLatex InstallPDF InstallOLF InstallVDB SiteMap Search2 Bonniefy Index
 All: pdf Latex VDB all
@@ -51,7 +54,7 @@ Index: $(TARGETDIR)/home_page/frontpage.html
 SiteMap:
 	echo $(SHELL)
 	mkdir -p $(TARGETDIR)/sitemap
-	cd $(TARGETDIR)/sitemap; $(BUILDWEBDIR)/bin/makesitemap ../online_documents > index.html
+	cd $(TARGETDIR)/sitemap; $(BINDIR)/makesitemap ../online_documents > index.html
 
 Search:
 #	cd $(TARGETDIR); $(BINDIR)/swish-e -c $(PFILESDIR)/Swish-e.conf
