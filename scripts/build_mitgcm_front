@@ -1,15 +1,32 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/build_mitgcm_front,v 1.1 2008/02/16 18:40:03 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/build_mitgcm_front,v 1.2 2008/02/29 01:51:27 jmc Exp $
 
+#-- create a daily log file (if not already there)
+cd /u/u2/jmc/testing/logs
+logpfx="bld_front_" ; sfx=`date +%m%d`
+logfile="../logs/${logpfx}$sfx"
+if test -e $logfile ; then :
+else
+#-- clean-up old log files:
+  n=$(( `ls ${logpfx}* | wc -l` - 10 ))
+  if test $n -gt 0 ; then
+  echo -n ' remove files: ' 
+    ls -lt ${logpfx}* | tail -"$n"
+    ls -t  ${logpfx}* | tail -"$n" | xargs rm -f
+  fi
+  echo ' create new log file:' $logfile
+  touch $logfile
+fi
 
-cat <<EOF
+echo '' >> $logfile
+date >> $logfile
+cat >> $logfile <<EOF
 ==========================================================
 Building the mitgcm.org front pages:
 ==========================================================
-
 EOF
 #export CVSROOT='/u/gcmpack' 
 #cd /u/u2/jmc/testing/front_content && cvs -q update -P -d
-cd /u/u2/jmc/testing/front_content && make install
+cd /u/u2/jmc/testing/front_content && make install >> $logfile
 

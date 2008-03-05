@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/daily_snapshot,v 1.1 2008/02/16 18:40:03 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/daily_snapshot,v 1.2 2008/02/29 01:51:27 jmc Exp $
 
 # download or update several dir. which are used for:
 # - front_page building
@@ -12,7 +12,6 @@ export CVSROOT=/u/gcmpack
 #- update scripts with explicit path:
 echo -n 'Update dir:'
 cd /u/u2/jmc/testing/scripts && pwd && cvs -q update -P -d
-
 
 #-- update tools/mpack-1.6 dir :
 tmpFil=/tmp/TTT.daily_snapshot.$$
@@ -30,6 +29,16 @@ fi
 #- update front-page building dir:
 echo -n 'Update dir:'
 cd /u/u2/jmc/testing/front_content && pwd && cvs -q update -P -d
+
+#-- clean-up old log files:
+cd /u/u2/jmc/testing/logs
+n=$(( `ls bld_manual.* | wc -l` - 10 ))
+if test $n -gt 0 ; then
+  echo -n ' remove files: ' 
+    ls -lt bld_manual.* | tail -"$n"
+    ls -t  bld_manual.* | tail -"$n" | xargs rm -f
+fi
+
 
 umask 0002
 

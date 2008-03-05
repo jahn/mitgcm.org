@@ -1,4 +1,4 @@
-# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.1 2008/02/16 18:40:03 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.2 2008/03/03 20:32:00 jmc Exp $
 
 #-from: jmc@forge.csail.mit.edu 
 #  current output of: crontab -l
@@ -14,4 +14,4 @@
 15  0 * * 0,2,4,6  /u/u2/jmc/testing/faulks/test_csail_fc5
 
 #05 10,13,16,19 * * * cd /u/u0/httpd/html/build_manual && /u/u2/jmc/testing/scripts/bld_manual.sh > sh.log 2>&1
-05 15 * * *    cd /u/u0/httpd/html/build_manual && /u/u2/jmc/testing/scripts/bld_manual.sh > sh.log 2>&1
+05 15 * * *    cd /u/u0/httpd/html/build_manual && /u/u2/jmc/testing/scripts/bld_manual.sh > bld_manual.log 2>&1 ; cp -p bld_manual.log /u/u2/jmc/testing/logs/bld_manual.$$

@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/process_emails,v 1.3 2008/02/27 01:42:56 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/process_emails,v 1.4 2008/02/29 01:51:27 jmc Exp $
 
 #cat <<EOF
 #==========================================================
@@ -17,6 +17,24 @@ if test ! -x $unpck ; then
  ./configure && make
 fi
 
+#-- create a daily log file (if not already there)
+cd /u/u2/jmc/testing/logs
+logpfx="prc_emails_" ; sfx=`date +%m%d`
+logfile="../logs/${logpfx}$sfx"
+if test -e $logfile ; then :
+else
+#-- clean-up old log files:
+  echo -n '-- in dir: ' ; pwd
+  n=$(( `ls ${logpfx}* | wc -l` - 10 ))
+  if test $n -gt 0 ; then
+  echo -n ' remove files: ' 
+    ls -lt ${logpfx}* | tail -"$n"
+    ls -t  ${logpfx}* | tail -"$n" | xargs rm -f
+  fi
+  echo ' create new log file:' $logfile
+  touch $logfile
+fi
+
 #-- parse emails :
-cd /u/u2/jmc/testing/front_content && ./parse_emails -u $unpck -v -a jmc@ocean.mit.edu
+cd /u/u2/jmc/testing/front_content && ./parse_emails -u $unpck -v -a jmc@ocean.mit.edu >> $logfile 2>&1
 
