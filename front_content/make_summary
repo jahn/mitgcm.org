@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.35 2008/01/02 19:40:47 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.36 2008/01/19 16:18:54 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -152,8 +152,12 @@ cat > $OUTFILE << EOF
 
       <tr bgcolor="#bbddff"> <td> Sun UltraSparc IV </td> <td>"rays1"</td>
         <td>Solaris 9</td> </tr>
+      <!--
       <tr bgcolor="#bbffdd"> <td> Sun UltraSparc IV </td> <td>"model"</td>
         <td>Solaris 9</td> </tr>
+      -->
+      <tr bgcolor="#bbffdd"> <td> NEC SX-8 </td> <td>"sx8"</td>
+        <td>Super-UX </td> </tr>
       <tr bgcolor="#bbddff"> <td> Cray XD1 (AMD Opteron) </td> <td>"xd1"</td>
         <td>Cray HPC enhanced Linux 2.6.5 </td> </tr>
       <tr bgcolor="#bbffdd"> <td> PowerPC970MP cluster </td> <td>"bigred"</td>
@@ -200,8 +204,8 @@ color="#bbffdd"
 ncolor="#bbddff"
 
 MACHINES="faulks aces eddy bay meander"
-MACHINES="$MACHINES edvir rays1 model columbia"
-MACHINES="$MACHINES xd1 batsi starp"
+MACHINES="$MACHINES columbia edvir rays1 sx8 xd1"
+MACHINES="$MACHINES batsi starp"
 
 ( cd $INDIR ; ls -1 -t */summary.txt | sed 's/\/summary.txt//' ) > ./dir_all
 
