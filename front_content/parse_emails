@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.15 2008/02/28 20:03:45 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.16 2008/03/04 17:21:40 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -118,11 +118,12 @@ if test $PRT = 1 ; then
   echo "Using INDIR=\"$INDIR\""
   echo -n "Unpacking the emails ..."
 elif test $nb_files != 0 ; then
-  echo "Unpacking $nb_files emails from '$INDIR' to '$OUTDIR'"
+  echo -n "Unpacking $nb_files emails ("`date`
   if test "x$ADDRERR" != x ; then
-     echo " "`date`" (send msg to '$ADDRERR' if Error)"
+     echo -n ", err-msg: '$ADDRERR'"
   fi
-  if test $PRT = 2 ; then echo -n " dir:" ; fi
+  echo ")"
+  echo " from '$INDIR' to '$OUTDIR'"
 fi
 
 for file in $all_files ; do
@@ -205,7 +206,7 @@ for file in $all_files ; do
 	done
         sdir=$tdir"_"$ad
     fi
-    if test $PRT = 2 ; then echo -n " '$sdir'" ; fi
+    if test $PRT = 2 ; then echo " '$sdir'" ; fi
     mv $TEMPDIR"/"$tdir $OUTDIR"/"$sdir > /dev/null 2>&1
     RETVAL=$?
     if test "x$RETVAL" != x0 ; then
@@ -228,5 +229,4 @@ for file in $all_files ; do
 
 done
 if test $PRT = 1 ; then echo "  done" ; fi
-if test $PRT = 2 -a $nb_files != 0 ; then echo "" ; fi
 
