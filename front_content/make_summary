@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.36 2008/01/19 16:18:54 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.37 2008/03/17 21:35:15 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -272,7 +272,7 @@ for mname in $MACHINES ; do
 	if test -r $dir/summary.txt ; then
 	    grep '^[YN] [YN] [YN] [YN]' $dir/summary.txt > ./all_tests 2>/dev/null
 	    t_tot=`cat ./all_tests | wc -l | sed -e 's| ||g'`
-	    t_pass=`grep 'pass ' ./all_tests | wc -l | sed -e 's| ||g'`
+	    t_pass=`grep '^Y Y Y Y' ./all_tests | grep 'pass ' | wc -l | sed -e 's| ||g'`
 	fi
 	rm -f ./all_tests
 	# echo "${dir##*/} : $t_pass out of $t_tot"
