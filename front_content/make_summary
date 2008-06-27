@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.37 2008/03/17 21:35:15 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.38 2008/04/20 19:55:18 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -150,7 +150,7 @@ cat > $OUTFILE << EOF
       <tr bgcolor="#bbffdd"> <td> AMD Opteron </td> <td>"starp"</td>
         <td>SuSE SLES 10 (AMD64)</td> </tr>
 
-      <tr bgcolor="#bbddff"> <td> Sun UltraSparc IV </td> <td>"rays1"</td>
+      <tr bgcolor="#bbddff"> <td> Sun UltraSparc IV </td> <td>"rays"</td>
         <td>Solaris 9</td> </tr>
       <!--
       <tr bgcolor="#bbffdd"> <td> Sun UltraSparc IV </td> <td>"model"</td>
@@ -204,7 +204,7 @@ color="#bbffdd"
 ncolor="#bbddff"
 
 MACHINES="faulks aces eddy bay meander"
-MACHINES="$MACHINES columbia edvir rays1 sx8 xd1"
+MACHINES="$MACHINES columbia edvir rays sx8 xd1"
 MACHINES="$MACHINES batsi starp"
 
 ( cd $INDIR ; ls -1 -t */summary.txt | sed 's/\/summary.txt//' ) > ./dir_all
