@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.38 2008/04/20 19:55:18 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.39 2008/06/27 16:01:03 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -171,7 +171,7 @@ cat > $OUTFILE << EOF
         (Itanium II) </td> <td>"td187"</td> <td>SuSE SLES 10 </td> </tr>
       <tr bgcolor="#bbddff"> <td><a
         href="http://www.testdrive.hp.com/current.shtml"> HP test-drive </a>
-        (PA-RISC 8700) </td> <td>"td192"</td> <td> HP-UX 11i 11.11 </td> </tr>
+        (PA-RISC 8900) </td> <td>"td191"</td> <td> HP-UX 11i 11.11 </td> </tr>
       <tr bgcolor="#bbffdd"> <td><a
         href="http://www.testdrive.hp.com/current.shtml"> HP test-drive </a>
         (Itanium II) </td> <td>"td194"</td> <td> HP-UX 11i v3 </td> </tr>
