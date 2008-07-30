@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.39 2008/06/27 16:01:03 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.40 2008/07/11 16:54:25 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -103,6 +103,10 @@ cat > $OUTFILE << EOF
         <td>Fedora Core 5 </td> </tr>
       <tr bgcolor="#bbffdd"> <td> Intel P4 </td> <td>"meander"</td>
         <td>Fedora Core 7 </td> </tr>
+      <tr bgcolor="#bbddff"> <td> Intel P4 </td> <td>"lagoon"</td>
+        <td>Fedora Core 8 </td> </tr>
+      <tr bgcolor="#bbffdd"> <td> Intel P4 </td> <td>"hugo"</td>
+        <td>Fedora Core 9 </td> </tr>
 
       <tr bgcolor="#bbddff"> <td> <a href="http://acesgrid.org">ACESgrid Dell
         Xeon</a> </td> <td>"aces"</td><td>Fedora Core 2</td> </tr>
@@ -203,7 +207,7 @@ EOF
 color="#bbffdd"
 ncolor="#bbddff"
 
-MACHINES="faulks aces eddy bay meander"
+MACHINES="faulks aces eddy bay meander lagoon hugo"
 MACHINES="$MACHINES columbia edvir rays sx8 xd1"
 MACHINES="$MACHINES batsi starp"
 
