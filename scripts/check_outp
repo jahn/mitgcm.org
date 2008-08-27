@@ -1,0 +1,376 @@
+#! /usr/bin/env bash
+
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.44 2008/08/07 23:23:17 jmc Exp $
+#
+#  The purpose of this script is to compare
+#  the latest output with the previous one (from the same platform with
+#    same optfile)
+
+
+usage()
+{
+    echo
+    echo "Usage:  $0 [OPTIONS]"
+    echo 
+    echo "where possible OPTIONS are:"
+    echo "  (-h|-help)            print usage"
+    echo "  (-v|-verbose)         verbose mode"
+    echo "  (-l |-list )MACHINES  check platforms from this list"
+    echo "                         [def=\"$MACHINES\"]"
+    echo "  (-d |-day  )FIRSTDAY  select output from day=\"YYYYMMDD\""
+    echo "                         [def=\"$FIRSTDAY\"]"
+    echo "  (-u |-upto )LASTDAY   until last day=\"YYYYMMDD\" (=selected period)"
+    echo "                         [def=\"FIRSTDAY\"]"
+    echo "  (-o |-outp )OUTPFIL   output file (-1 removed when exit)"
+    echo "                         [def=\"$OUTPFIL\"]"
+    echo "  (-n |-nldf )NBLDIFF   max number of diff lines to echo"
+    echo "                         [def=\"$NBLDIFF\"]"
+    echo "  (-a |-addr )ADDRESS   send summary to mail ADDRESS list"
+    echo "                         [def=\"$ADDRESS\"]"
+    echo 
+    exit 1
+}
+
+#CURR_PER=`date +%Y`"_"`date +%m`
+CURR_DAY=`date +%Y%m%d`
+# defaults
+MACHINES='_All_'
+FIRSTDAY=$CURR_DAY
+LASTDAY="30000000"
+OUTPFIL=`basename $0`'.log'
+NBLDIFF=5
+ADDRESS='none'
+dBug=f
+sTime=`date`
+
+#  Parse options
+ac_prev=
+for ac_option ; do
+
+    # If the previous option needs an argument, assign it.
+    if test -n "$ac_prev"; then
+        eval "$ac_prev=\$ac_option"
+        ac_prev=
+        continue
+    fi
+
+    ac_optarg=`expr "x$ac_option" : 'x[^=]*=\(.*\)'`
+
+    case $ac_option in
+	
+	-help | --help | -h | --h)
+	    usage ;;
+	-verbose | --verbose | -v | --v)
+	    dBug=t ;;
+	
+        -list  | --list  | -l | --l)
+            ac_prev=MACHINES ;;
+        -list=* | --list=*)
+            MACHINES=$ac_optarg ;;
+
+        -day  | --day  | -d | --d)
+            ac_prev=FIRSTDAY ;;
+        -day=* | --day=*)
+            FIRSTDAY=$ac_optarg ;;
+
+        -upto | --upto | -u | --u)
+            ac_prev=LASTDAY ;;
+        -upto=* | --upto=*)
+            LASTDAY=$ac_optarg ;;
+
+        -outp | --outp | -o | --o)
+            ac_prev=OUTPFIL ;;
+        -outp=* | --outp=*)
+            OUTPFIL=$ac_optarg ;;
+
+        -nldf | --nldf | -n | --n)
+            ac_prev=NBLDIFF ;;
+        -nldf=* | --nldf=*)
+            NBLDIFF=$ac_optarg ;;
+
+        -addr | --addr | -a | --a)
+            ac_prev=ADDRESS ;;
+        -addr=* | --addr=*)
+            ADDRESS=$ac_optarg ;;
+
+        *)
+	    echo "Error: don't understand argument \"$ac_option\""
+	    usage
+            ;;
+
+     esac
+
+done
+if test $LASTDAY = "30000000" ; then LASTDAY=$FIRSTDAY ; fi
+CMDLINE=$0
+for xx in "$@" ; do nw=`echo $xx | wc -w`
+  if test $nw = '1' ; then CMDLINE="$CMDLINE $xx"
+                      else CMDLINE="$CMDLINE '$xx'" ; fi
+done
+
+PERIOD=`echo $FIRSTDAY | sed 's/[0-9][0-9]$//'`
+PP=`expr $PERIOD - 1`
+PM=`echo $PP | sed 's/^[0-9][0-9][0-9][0-9]//'`
+PY=`echo $PP | sed 's/[0-9][0-9]$//'`
+if test $PM == '00' ; then PM='12' ; PY=`expr $PY - 1` ; fi
+PREV_P="${PY}_${PM}";
+PERIOD=`echo $PERIOD | sed 's/^[0-9][0-9][0-9][0-9]/&_/'`
+
+#INDIR="/net/orwell/export/export-9/mitgcm-testing/results/$PERIOD"
+INDIR="/u/u0/httpd/html/testing/results/$PERIOD"
+#INDIR="/export/export-7/u/u2/jmc/mitgcm/test_web/results/$PERIOD"
+
+if test $OUTPFIL = '-1' ; then
+  OUTPFIL='TTT.'$$
+elif test -e $OUTPFIL ; then
+  mv -f $OUTPFIL $OUTPFIL'_bak'
+fi
+echo "CMDLINE='$CMDLINE'" > $OUTPFIL
+echo "PERIOD='$PERIOD' , PREV_P='$PREV_P'" >> $OUTPFIL
+echo "INDIR='$INDIR'" >> $OUTPFIL
+echo "Checking latest output from $FIRSTDAY until $LASTDAY" >> $OUTPFIL
+
+if test $dBug = 't' ; then 
+  echo "PERIOD='$PERIOD' , PREV_P='$PREV_P'"
+  echo "FIRSTDAY='$FIRSTDAY' , LASTDAY='$LASTDAY'"
+fi
+if test -d $INDIR ; then
+  dirP=`echo $INDIR | sed "s/$PERIOD/$PREV_P/"`
+  if test -d $dirP ; then
+    listNum='1 2'
+  else
+    echo "$dirP is not a directory"
+    listNum='1'
+  fi
+else
+  echo "$INDIR is not a directory"
+  exit
+fi
+
+#- a short summary of this checking :
+OUTPSUM=`echo $FIRSTDAY | sed 's/^20../_/'`
+OUTPSUM=`basename $0`"$OUTPSUM.txt"
+if test -e $OUTPSUM ; then mv -f $OUTPSUM $OUTPSUM'_bak' ; fi
+echo ' '$CMDLINE > $OUTPSUM
+
+if test $FIRSTDAY = $LASTDAY ; then
+  echo -n "Checking latest output from $FIRSTDAY" | tee -a $OUTPSUM
+else
+  echo -n "Checking latest output from $FIRSTDAY until $LASTDAY" | tee -a $OUTPSUM
+fi
+echo " versus latest prior to this period" | tee -a $OUTPSUM
+echo "    Machine   Tot. Nb.   no    Nb with  Nb diff" >> $OUTPSUM
+echo "     name     checked   comp    Diff    lines"  >> $OUTPSUM
+
+( cd $INDIR ; ls -1 -t */summary.txt | sed 's/\/summary.txt//' ) > ./dir_all
+
+if test "x$MACHINES" = "x_All_" ; then
+  MACHINES="faulks aces eddy bay meander lagoon hugo"
+  MACHINES="$MACHINES columbia edvir rays sx8 xd1"
+  MACHINES="$MACHINES beagle batsi starp"
+
+  MALL=`cat ./dir_all | sed -e 's|_| |g' | awk '{print $2}' | sort | uniq`
+  for madd in $MALL ; do
+    present=0
+    for m in $MACHINES ; do
+        echo $madd | grep $m > /dev/null 2>&1
+        RETVAL=$?
+        test $RETVAL = 0  &&  present=1
+        continue
+    done
+    test $present = 0  &&  MACHINES="$MACHINES $madd"
+  done
+fi
+
+for mname in $MACHINES ; do
+
+    if test $dBug = 't' ; then echo "  $mname" ; fi
+    echo " name='$mname'" >> $OUTPFIL
+    ctot=0 ; cmis=0 ; cdif=0
+
+    # put results from selected period in "slist", 
+    #     results from previous period in "plist"
+    rm -f ./plist ./slist ; touch ./plist ./slist
+
+    for n in $listNum ; do
+      num1=`wc -l ./slist | awk '{print $1}'`
+      num0=`wc -l ./plist | awk '{print $1}'`
+      if test $n == 2 ; then
+	num2=`expr $num1 \* $n`
+	if [ $num0 -lt $num2 ] ; then
+	  dir_list=`( cd $INDIR ; ls -1 -t ../$PREV_P/*${mname}*/summary.txt | sed 's/\/summary.txt//' )`
+          #echo "dir_list='$dir_list'"
+	fi
+      else
+	num2=$n
+	dir_list=`grep $mname ./dir_all`
+      fi
+      if [ $num0 -lt $num2 ] ; then
+	for i in $dir_list ; do
+
+	    dir=$INDIR"/"$i
+	    OPTFILE=
+	    if test -r $dir/summary.txt ; then
+		comm=`grep 'OPTFILE=' $dir/summary.txt`
+		eval $comm
+		OPTFILE=${OPTFILE##*/}
+	    fi
+	    if test "x$OPTFILE" = x -a -r "$dir/genmake_state" ; then
+		comm=`grep 'OPTFILE=' $dir/genmake_state 2>/dev/null`
+		eval $comm
+		OPTFILE=${OPTFILE##*/}
+	    fi
+	    if test "x$OPTFILE" = x ; then
+		comm=`grep '^# OPTFILE=' $dir/*/Makefile* 2>/dev/null | head -1`
+		comm=${comm##*#}
+		eval $comm
+		OPTFILE=${OPTFILE##*/}
+	    fi
+	    if test "x$OPTFILE" = x ; then
+		OPTFILE="not_explicitly_specified"
+	    fi
+
+	    ADJOINT=
+	    RESTART=0
+	    NOI3E=0
+	    if test -r $dir/summary.txt ; then
+		comm=`grep 'ADJOINT=true' $dir/summary.txt 2>/dev/null`
+		eval $comm
+		RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
+		NOI3E=`grep -c "^run: .*testreport .* '-noieee' " $dir/summary.txt`
+	    fi
+	    if test "x$RESTART" = x0 ; then
+		kind="forward"
+		test "x$ADJOINT" = xtrue  &&  kind="adjoint"
+	    else
+		kind="restart"
+	    fi
+	    if test "x$NOI3E" = x1 ; then
+		OPTFILE="${OPTFILE}.noieee"
+	    fi
+  	    day=`echo $i   | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
+  	    ttt=`echo $day | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
+  	    day=`echo $ttt | sed -e 's|_| |g' |awk '{print $NF}'`
+
+            if [ $day -lt $FIRSTDAY ] ; then
+		echo "$OPTFILE$kind $day $OPTFILE $kind $i" >> ./plist
+            elif [ $day -le $LASTDAY ] ; then
+		echo "$OPTFILE$kind $day $OPTFILE $kind $i" >> ./slist
+	    else
+		if test $dBug = 't' ; then
+		   echo "discard day='$day' from: $i" | tee -a $OUTPFIL
+		fi
+	    fi
+
+	done
+	if test $dBug = 't' ; then
+	  if test $n == 1 ; then
+	    echo "---- current list (n=$n) :" | tee -a $OUTPFIL
+		cat ./slist | tee -a $OUTPFIL
+	  fi
+	  echo   ".... previous list (n=$n):" | tee -a $OUTPFIL
+		cat ./plist | tee -a $OUTPFIL
+	fi
+
+      fi
+    done
+    if test $dBug = 't' ; then echo "----" | tee -a $OUTPFIL ; fi
+
+    #  Do we have any data?  If so, create the latest pointer.
+    num=`wc -l ./slist | awk '{print $1}'`
+    if test $num -gt 0 ; then
+
+	keys=`cat ./slist | cut -d " " -f 1 | sort | uniq`
+
+	for key in $keys ; do
+          ctot=`expr $ctot + 1`
+	  sline=`grep "^$key " ./slist | head -1`
+ 	  sdir=`echo $sline | cut -d " " -f 5`
+          kind=`echo $sline | cut -d " " -f 4`
+          optf=`echo $sline | cut -d " " -f 3`
+          num=`grep -c "^$key" ./plist`
+	  #- discard unsafe test:
+	  dd=`echo $optf | grep -c 'gfortran.*mth'`
+	  if [ $dd -ge 1 ] ; then num=-1 ; fi
+          if test $num -gt 0 ; then
+	    pline=`grep "^$key " ./plist | head -1`
+	    if test $dBug = 't' ; then 
+		echo "s='$sline'" | tee -a $OUTPFIL
+		echo "p='$pline'" | tee -a $OUTPFIL
+	    fi
+ 	    pdir=`echo $pline | cut -d " " -f 5`
+	    outs="$INDIR/$sdir/summary.txt"
+ 	    sed -n "5,$ p" $outs | sed '/^[YN] [YN] [YN] [YN]/ s/ \. //g' \
+                                 | grep -v '^[A-S][a-t]* time:  ' > tmpfs
+	    outp="$INDIR/$pdir/summary.txt"
+ 	    sed -n "5,$ p" $outp | sed '/^[YN] [YN] [YN] [YN]/ s/ \. //g' \
+                                 | grep -v '^[A-S][a-t]* time:  ' > tmpfp
+	    echo -n "=== diff $sdir $pdir :" | tee -a $OUTPFIL
+	    diff tmpfs tmpfp > tmpdf
+	    yy=$?
+	    if test $yy != '0' ; then
+                echo " $kind , of='$optf'" | tee -a $OUTPFIL
+		#grep '^run: ' $outp
+		#grep '^run: ' $outs
+		#-- score for each test:
+		grep '^[YN] [YN] [YN] [YN]' tmpfs > tmploc 2>/dev/null
+		t_tot=`cat tmploc | wc -l | sed -e 's| ||g'`
+		t_pass=`grep '^Y Y Y Y' tmploc | grep 'pass ' | wc -l | sed -e 's| ||g'`
+		score_s=`printf '%2i' $t_pass`":$t_tot"
+		grep '^[YN] [YN] [YN] [YN]' tmpfp > tmploc 2>/dev/null
+		t_tot=`cat tmploc | wc -l | sed -e 's| ||g'`
+		t_pass=`grep '^Y Y Y Y' tmploc | grep 'pass ' | wc -l | sed -e 's| ||g'`
+		score_p=`printf '%2i' $t_pass`":$t_tot"
+		rm -f tmploc
+		#-- count Nb of different lines
+		ndf=`wc -l tmpdf | awk '{print $1}'`
+		ndf=`expr $ndf / 2`
+		nn=`grep -c '^---' tmpdf`
+		ndf=`expr $ndf - $nn`
+                if [ $ndf -le $NBLDIFF ] ; then
+		  cat tmpdf
+		else
+		  echo " $ndf lines differ ( $score_s , $score_p )"
+		fi
+		echo "< "`head -1 $outs`" ( $score_s )" >> $OUTPFIL
+		echo "> "`head -1 $outp`" ( $score_p )" >> $OUTPFIL
+		cat tmpdf >> $OUTPFIL
+                if [ $cdif -eq 0 ] ; then 
+		  clin=`printf '%3i (%5s,%5s)' $ndf $score_s $score_p`
+		else 
+		  clin="$clin,"`printf '%3i (%5s,%5s)' $ndf $score_s $score_p`
+		fi
+                cdif=`expr $cdif + 1`
+		echo '----------------------------------------' | tee -a $OUTPFIL
+	    else
+		echo "" | tee -a $OUTPFIL
+	    fi
+	    rm -f tmpfs tmpfp tmpdf
+	  elif test $num = '0' ; then
+            echo "no previous test for:" $key | tee -a $OUTPFIL
+            cmis=`expr $cmis + 1`
+	  else
+            cmis=`expr $cmis + 1`
+          fi
+	done
+        if [ $cmis -gt 0 ] ; then tmis='(-'$cmis')' ; else tmis='(--)' ; fi
+        printf '%11s :  %3i      %4s   %3i  ' $mname $ctot $tmis $cdif >> $OUTPSUM
+        if [ $cdif -gt 0 ] ; then 
+          echo "   $clin" >> $OUTPSUM 
+       else echo "" >> $OUTPSUM ; fi
+    fi
+
+done
+
+echo "Start time:  $sTime" | tee -a $OUTPFIL
+echo "End  time:   "`date` | tee -a $OUTPFIL | tee -a $OUTPSUM
+
+rm -f ./dir_all ./slist ./plist
+if test $OUTPFIL = "TTT.$$" ; then rm -f $OUTPFIL ; fi
+if test "x$ADDRESS" != 'xnone' ; then
+  echo ".. send $OUTPSUM to $ADDRESS"
+  mail -s $OUTPSUM $ADDRESS < $OUTPSUM
+fi
+echo ".. cat $OUTPSUM"
+cat $OUTPSUM
+
