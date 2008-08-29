@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.43 2008/08/07 15:40:02 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.44 2008/08/07 23:23:17 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -282,7 +282,7 @@ for mname in $MACHINES ; do
 	    comm=`grep 'ADJOINT=true' $dir/summary.txt 2>/dev/null`
 	    eval $comm
 	    RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
-	    NOI3E=`grep -c "^run: .*testreport .* '-noieee' " $dir/summary.txt`
+	    NOI3E=`grep -c "^run: .*testreport .* '*-noieee'* " $dir/summary.txt`
 	fi
 	if test "x$RESTART" = x0 ; then
 	    kind="forward"
