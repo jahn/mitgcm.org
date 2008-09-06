@@ -1,0 +1,28 @@
+#! /usr/bin/env bash
+
+# $Header: /u/gcmpack/mitgcm.org/scripts/daily_snapshot,v 1.3 2008/03/05 00:56:11 jmc Exp $
+
+# download the source code and make a tar file
+
+export CVSROOT=/u/gcmpack
+
+umask 0002
+
+echo 'Changing dir. to /u/httpd/html/download/daily_snapshot'
+cd /u/httpd/html/download/daily_snapshot
+test -e MITgcm  &&  rm -rf MITgcm
+
+echo 'Checking out MITgcm...'
+cvs co -P MITgcm > /dev/null 2>&1
+#chgrp gcmpack MITgcm
+#chmod 775 MITgcm
+
+echo 'Creating the tar file...'
+rm -rf MITgcm_ss_*
+tname='MITgcm_ss_'`date +%Y%m%d`'.tar.gz'
+tar -czf $tname ./MITgcm
+#chmod 664 $tname
+ls -l $tname
+
+echo 'Done!'
+

@@ -1,8 +1,8 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/daily_snapshot,v 1.2 2008/02/29 01:51:27 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/daily_snapshot,v 1.3 2008/03/05 00:56:11 jmc Exp $
 
-# download or update several dir. which are used for:
+# update several dir. which are used for:
 # - front_page building
 # - processing testing emails (-> testing page, part of front_page building)
 # - making a daily tar file of source code
@@ -38,25 +38,16 @@ if test $n -gt 0 ; then
     ls -lt bld_manual.* | tail -"$n"
     ls -t  bld_manual.* | tail -"$n" | xargs rm -f
 fi
+p=`ls check_outp_*.txt_bak | wc -l`
+n=$(( `ls check_outp_*.txt | wc -l` - 15 ))
+if test $p -gt 0 -o $n -gt 0 ; then echo -n ' remove files: ' ; fi
+if test $p -gt 0 ; then
+  ls    check_outp_*.txt_bak
+  rm -f check_outp_*.txt_bak
+fi
+if test $n -gt 0 ; then
+    ls -lt check_outp_*.txt | tail -"$n"
+    ls -t  check_outp_*.txt | tail -"$n" | xargs rm -f
+fi
 
-
-umask 0002
-
-echo 'Changing directory to /u/httpd/html/download/daily_snapshot'
-cd /u/httpd/html/download/daily_snapshot
-test -e MITgcm  &&  rm -rf MITgcm
-
-echo 'Checking out MITgcm...'
-cvs co -P MITgcm > /dev/null 2>&1
-#chgrp gcmpack MITgcm
-#chmod 775 MITgcm
-
-echo 'Creating the tar file...'
-rm -rf MITgcm_ss_*
-tname='MITgcm_ss_'`date +%Y%m%d`'.tar.gz'
-tar -czf $tname ./MITgcm
-#chmod 664 $tname
-ls -l $tname
-
-echo 'Done!'
 
