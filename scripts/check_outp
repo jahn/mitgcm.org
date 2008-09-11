@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.2 2008/08/29 18:12:15 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.3 2008/09/09 18:09:37 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -301,9 +301,11 @@ for mname in $MACHINES ; do
  	    pdir=`echo $pline | cut -d " " -f 5`
 	    outs="$INDIR/$sdir/summary.txt"
  	    sed -n "5,$ p" $outs | sed '/^[YN] [YN] [YN] [YN]/ s/ \. //g' \
+				 | sed 's/ OPTFILE=.*\// OPTFILE=/g' \
                                  | grep -v '^[A-S][a-t]* time:  ' > tmpfs
 	    outp="$INDIR/$pdir/summary.txt"
  	    sed -n "5,$ p" $outp | sed '/^[YN] [YN] [YN] [YN]/ s/ \. //g' \
+				 | sed 's/ OPTFILE=.*\// OPTFILE=/g' \
                                  | grep -v '^[A-S][a-t]* time:  ' > tmpfp
 	    echo -n "=== diff $sdir $pdir :" | tee -a $OUTPFIL
 	    diff tmpfs tmpfp > tmpdf
