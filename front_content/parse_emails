@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.16 2008/03/04 17:21:40 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.17 2008/03/19 00:55:28 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -87,6 +87,7 @@ for ac_option ; do
 
         *)
 	    # copy the file list to FL_#
+	    date
 	    echo "Error: don't understand argument \"$ac_option\""
 	    usage
             ;;
@@ -96,6 +97,7 @@ for ac_option ; do
 done
 
 if test ! -x $MUNPACK ; then
+	date
 	echo "ERROR: \"$MUNPACK\" is not executable"
 	exit 2
 fi
@@ -103,6 +105,7 @@ if test ! -e $OUTDIR ; then
     mkdir $OUTDIR
     RETVAL=$?
     if test "x$RETVAL" != x0 ; then
+	date
 	echo "ERROR: directory \"$OUTDIR\" doesn't exist and can't be created"
 	exit 3
     fi
