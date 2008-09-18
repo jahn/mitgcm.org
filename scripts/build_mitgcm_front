@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/build_mitgcm_front,v 1.2 2008/02/29 01:51:27 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/build_mitgcm_front,v 1.3 2008/03/05 00:56:11 jmc Exp $
 
 #-- create a daily log file (if not already there)
 cd /u/u2/jmc/testing/logs
@@ -28,5 +28,8 @@ Building the mitgcm.org front pages:
 EOF
 #export CVSROOT='/u/gcmpack' 
 #cd /u/u2/jmc/testing/front_content && cvs -q update -P -d
-cd /u/u2/jmc/testing/front_content && make install >> $logfile
-
+cd /u/u2/jmc/testing/front_content && make install >> $logfile 2>&1
+retval=$?
+if test "x$retval" != x0 ; then
+  echo "'make install' return with ERROR $retval"
+fi
