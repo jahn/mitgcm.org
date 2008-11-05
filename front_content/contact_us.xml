@@ -28,8 +28,9 @@
     <ul>
       <li><b><a href="http://mitgcm.org/mailman/listinfo/mitgcm-support">
 	  MITgcm-support@mitgcm.org</a></b> is our "catch-all" list.  Please
-	  send any and all questions about the model and documentation to this
-	  address.<br/><br/></li>
+	  <b><a href="http://mitgcm.org/mailman/listinfo/mitgcm-support">
+	  subscribe</a></b> to send any and all questions about the model 
+	  and documentation to this address.<br/><br/></li>
 
       <li><b><a href="http://mitgcm.org/mailman/listinfo/mitgcm-cvs">
 	  MITgcm-cvs@mitgcm.org</a></b> is a "tracking" list meant mostly as a
