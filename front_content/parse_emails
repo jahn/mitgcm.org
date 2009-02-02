@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.17 2008/03/19 00:55:28 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.18 2008/09/18 20:13:36 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -11,7 +11,7 @@ usage()
 {
     echo
     echo "Usage:  $0 [OPTIONS]"
-    echo 
+    echo
     echo "where possible OPTIONS are:"
     echo "  (-h|-help)           print usage"
     echo "  (-s|-silent)         silent mode"
@@ -19,20 +19,22 @@ usage()
     echo "  (-i |-ind )DIR       get mpack-created emails from DIR"
     echo "                         [def=\"$INDIR\"]"
     echo "  (-o |-outd )DIR      write the data to DIR"
-    echo "                         [def=\"$OUTDIR\"]"
+    echo "                         [def=\"$BASEDIR/$monthDir\"]"
     echo "  (-t |-tempd )DIR     use temporary directory DIR"
     echo "                         [def=\"$TEMPDIR\"]"
     echo "  (-u |-unpack )EXE    use executable EXE to unpack e-mails"
     echo "                         [def=\"$MUNPACK\"]"
     echo "  (-a |-addr )ADDR     send e-mail to ADDR if Error"
     echo "                         [def='"$ADDRERR"']"
-    echo 
+    echo
     exit 1
 }
 
 # defaults
 INDIR="/u/u2/jmc/Mail/MITgcm-test"
-OUTDIR="/u/u0/httpd/html/testing/results/"`date +%Y`"_"`date +%m`
+BASEDIR="/u/u0/httpd/html/testing/results"
+monthDir=`date +%Y`"_"`date +%m`
+OUTDIR=
 TEMPDIR=./ptmp
 MUNPACK=munpack
 ADDRERR=
@@ -50,7 +52,7 @@ for ac_option ; do
     fi
 
     ac_optarg=`expr "x$ac_option" : 'x[^=]*=\(.*\)'`
-    
+
     case $ac_option in
 	
 	-help | --help | -h | --h)
@@ -64,12 +66,12 @@ for ac_option ; do
             ac_prev=INDIR ;;
         --ind=* | -ind=* | --i=* | -i=*)
             INDIR=$ac_optarg ;;
-        
+
         -outd | --outd | -o | --o)
             ac_prev=OUTDIR ;;
         --outd=* | -outd=* | --o=* | -o=*)
             OUTDIR=$ac_optarg ;;
-        
+
         -tempd | --tempd | -t | --t)
             ac_prev=TEMPDIR ;;
         --tempd=* | -tempd=* | --t=* | -t=*)
@@ -79,7 +81,7 @@ for ac_option ; do
             ac_prev=MUNPACK ;;
         -u=* | --u=* | -unpack=* | --unpack=*)
             MUNPACK=$ac_optarg ;;
-        
+
         -a | --a | -addr | --addr)
             ac_prev=ADDRERR ;;
         -a=* | --a=* | -addr=* | --addr=*)
@@ -91,15 +93,20 @@ for ac_option ; do
 	    echo "Error: don't understand argument \"$ac_option\""
 	    usage
             ;;
-        
+
      esac
-     
+
 done
 
 if test ! -x $MUNPACK ; then
 	date
 	echo "ERROR: \"$MUNPACK\" is not executable"
 	exit 2
+fi
+if test "x$OUTDIR" = x ; then
+  OUTDIR="$BASEDIR/$monthDir"
+else
+  monthDir=0
 fi
 if test ! -e $OUTDIR ; then
     mkdir $OUTDIR
@@ -200,32 +207,64 @@ for file in $all_files ; do
     tdir=`cat $TEMPDIR"/out" | head -1 | sed -e 's|^./||g' | cut -d '/' -f 1`
     rm -f $TEMPDIR"/out"
 
-    #  copy to $OUTDIR and rename if necessary
+    #  select which Monthly Output Dir:
+    locDir=$OUTDIR
+    if test "x$monthDir" != x0 ; then
+      dd=`echo $tdir | sed 's/_/ /g' | awk '{ for(i=1;i<=NF;i++) print $i }'\
+               | grep '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]' | tail -1`
+      mn=`echo $dd | sed 's/..$//' | sed 's/..$/_&/'`
+      if test "x$mn" != "x$monthDir" ; then
+       if test "x$mn" = x ; then
+        if test $PRT = 2 ; then echo " cannot get month from '$tdir'" ; fi
+       else
+       #  could comment out this line:
+       #if test $PRT = 2 ; then echo " chg month: '$mn' for '$tdir'" ; fi
+        locDir="$BASEDIR/$mn"
+        if test ! -d $locDir ; then
+          if test $PRT = 2 ; then echo "NO DIR: '$locDir' => '$tdir' POSTPONED" ; fi
+          if test "x$ADDRERR" != x ; then
+            echo "parsing email error" > tmp.$$
+            echo "no dir '$locDir' for outp. '$tdir'" > tmp.$$
+            ls -l $INDIR"/"$file >> tmp.$$
+            mail -s 'parse_emails err_4' $ADDRERR < tmp.$$
+            rm -f tmp.$$
+          fi
+          continue
+        fi
+       fi
+      fi
+    fi
+
+    #  copy to $locDir and rename if necessary
     sdir=$tdir
-    if test -e $OUTDIR"/"$tdir ; then
+    if test -e $locDir"/"$tdir ; then
 	ad=0
-	while test -e $OUTDIR"/"$tdir"_"$ad ; do
+	while test -e $locDir"/"$tdir"_"$ad ; do
 	    ad=$(( $ad + 1 ))
 	done
         sdir=$tdir"_"$ad
     fi
-    if test $PRT = 2 ; then echo " '$sdir'" ; fi
-    mv $TEMPDIR"/"$tdir $OUTDIR"/"$sdir > /dev/null 2>&1
+    if test $PRT = 2 ; then
+      if test "x$locDir" = "x$OUTDIR"
+      then echo " '$sdir'"
+      else echo " '$sdir' => '$locDir'"
+      fi
+    fi
+    mv $TEMPDIR"/"$tdir $locDir"/"$sdir > /dev/null 2>&1
     RETVAL=$?
     if test "x$RETVAL" != x0 ; then
       if test "x$ADDRERR" != x ; then
         echo "parsing email error" > tmp.$$
-        echo "mv $TEMPDIR/$tdir $OUTDIR/$sdir returns error:" $RETVAL >> tmp.$$
+        echo "mv $TEMPDIR/$tdir $locDir/$sdir returns error:" $RETVAL >> tmp.$$
         echo -n "in dir: $TEMPDIR : " ; ls -l $TEMPDIR  >> tmp.$$
-        echo -n "in dir: $OUTDIR : " ; ls -l $OUTDIR  >> tmp.$$
-        mail -s 'parse_emails err_4' $ADDRERR < tmp.$$
+        echo -n "in dir: $OUTDIR : " ; ls -l $locDir  >> tmp.$$
+        mail -s 'parse_emails err_5' $ADDRERR < tmp.$$
         rm -f tmp.$$
       fi
       mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
       continue
     fi
-    chmod -R a+rx $OUTDIR"/"$sdir > /dev/null 2>&1
-#   gzip $OUTDIR"/"$sdir"/output.txt"
+    chmod -R a+rx $locDir"/"$sdir > /dev/null 2>&1
 
     #  remove the original file
     rm -f $INDIR"/"$file
