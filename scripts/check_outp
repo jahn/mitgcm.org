@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.5 2009/02/02 19:29:46 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.6 2009/04/06 18:12:34 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -302,7 +302,7 @@ for mname in $MACHINES ; do
           num=`grep -c "^$key" ./plist`
 	  #- discard unsafe test:
 	  dd=`echo $optf | grep -c 'gfortran.*mth'`
-	  #if [ $dd -ge 1 ] ; then num=-1 ; fi
+	  if test $dd = 1 -a $mname = lagoon ; then num=-1 ; fi
           if test $num -gt 0 ; then
 	    pline=`grep "^$key " ./plist | head -1`
 	    if test $dBug = 't' ; then 
