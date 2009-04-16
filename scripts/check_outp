@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.6 2009/04/06 18:12:34 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.7 2009/04/09 18:34:18 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -244,11 +244,13 @@ for mname in $MACHINES ; do
 	    ADJOINT=
 	    RESTART=0
 	    NOI3E=0
+	    MTH=0
 	    if test -r $dir/summary.txt ; then
 		comm=`grep 'ADJOINT=true' $dir/summary.txt 2>/dev/null`
 		eval $comm
 		RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
-		NOI3E=`grep -c "^run: .*testreport .* '*-noieee'* " $dir/summary.txt`
+		NOI3E=`grep -c "^run: .*testreport.* '*-noieee'* " $dir/summary.txt`
+		MTH=`grep -c "^run: .*testreport.* -mth " $dir/summary.txt`
 	    fi
 	    if test "x$RESTART" = x0 ; then
 		kind="forward"
@@ -258,6 +260,10 @@ for mname in $MACHINES ; do
 	    fi
 	    if test "x$NOI3E" = x1 ; then
 		OPTFILE="${OPTFILE}.noieee"
+	    fi
+	    if test "x$MTH" = x1 ; then
+		yy=`echo $OPTFILE | grep -c 'mth$'`
+		if test $yy = 0 ; then OPTFILE="${OPTFILE}+mth" ; fi
 	    fi
   	    day=`echo $i   | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
   	    ttt=`echo $day | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`

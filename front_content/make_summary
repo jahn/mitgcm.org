@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.47 2009/01/07 15:49:17 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.48 2009/02/16 18:07:20 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -278,11 +278,13 @@ for mname in $MACHINES ; do
 	ADJOINT=
 	RESTART=0
 	NOI3E=0
+	MTH=0
 	if test -r $dir/summary.txt ; then
 	    comm=`grep 'ADJOINT=true' $dir/summary.txt 2>/dev/null`
 	    eval $comm
 	    RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
-	    NOI3E=`grep -c "^run: .*testreport .* '*-noieee'* " $dir/summary.txt`
+	    NOI3E=`grep -c "^run: .*testreport.* '*-noieee'* " $dir/summary.txt`
+	    MTH=`grep -c "^run: .*testreport.* -mth " $dir/summary.txt`
 	fi
 	if test "x$RESTART" = x0 ; then
 	    kind="forward"
@@ -292,6 +294,10 @@ for mname in $MACHINES ; do
 	fi
 	if test "x$NOI3E" = x1 ; then
 	    OPTFILE="${OPTFILE}.noieee"
+	fi
+	if test "x$MTH" = x1 ; then
+	    yy=`echo $OPTFILE | grep -c 'mth$'`
+	    if test $yy = 0 ; then OPTFILE="${OPTFILE}+mth" ; fi
 	fi
 
 	t_pass="--"
