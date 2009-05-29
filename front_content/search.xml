@@ -50,7 +50,7 @@
         <b>add</b> your search terms to the input box):</p>
 
     <center>
-      <form action="http://www.google.com/" method=get>
+      <form action="http://www.google.com/search" method=get>
         <p>
 	  <input type=hidden name=sitesearch value="forge.csail.mit.edu/pipermail">
           <input name=q size=40 value="">
