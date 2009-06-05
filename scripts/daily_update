@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/daily_snapshot,v 1.3 2008/03/05 00:56:11 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/daily_update,v 1.1 2008/09/06 19:48:45 jmc Exp $
 
 # update several dir. which are used for:
 # - front_page building
@@ -12,6 +12,10 @@ export CVSROOT=/u/gcmpack
 #- update scripts with explicit path:
 echo -n 'Update dir:'
 cd /u/u2/jmc/testing/scripts && pwd && cvs -q update -P -d
+
+#- update csail testing scripts:
+echo -n 'Update dir:'
+cd /u/u2/jmc/testing/csail && pwd && cvs -q update -P -d
 
 #-- update tools/mpack-1.6 dir :
 tmpFil=/tmp/TTT.daily_snapshot.$$
