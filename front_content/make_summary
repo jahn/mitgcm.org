@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.48 2009/02/16 18:07:20 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.49 2009/04/16 14:44:16 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -99,15 +99,15 @@ cat > $OUTFILE << EOF
       <tr bgcolor="#bbddff">
         <td>Intel P4</td> <td>"faulks"</td> <td>Fedora Core 6 </td> </tr>
       <tr bgcolor="#bbffdd">
-        <td> Intel P4</td> <td>"eddy"</td> <td>Fedora Core 5</td> </tr>
-      <tr bgcolor="#bbddff">
         <td> Intel P4 </td> <td>"bay"</td> <td>Fedora Core 5 </td> </tr>
-      <tr bgcolor="#bbffdd">
-        <td> Intel P4 </td> <td>"meander"</td> <td>Fedora Core 7 </td> </tr>
       <tr bgcolor="#bbddff">
-        <td> Intel P4 </td> <td>"lagoon"</td> <td>Fedora Core 8 </td> </tr>
+        <td> Intel P4 </td> <td>"meander"</td> <td>Fedora Core 7 </td> </tr>
       <tr bgcolor="#bbffdd">
-        <td> Intel P4 </td> <td>"hugo"</td> <td>Fedora Core 9 </td> </tr>
+        <td> Intel P4 </td> <td>"lagoon"</td> <td>Fedora 8 </td> </tr>
+      <tr bgcolor="#bbddff">
+        <td> Intel Xeon (Woodcrest) </td> <td>"dickens"</td> <td>Fedora 10 (x86_64)</td> </tr>
+      <tr bgcolor="#bbffdd">
+        <td> Intel Core 2 duo </td> <td>"danton"</td> <td>Fedora 8 (x86_64)</td> </tr>
 
       <tr bgcolor="#bbddff">
         <td> <a href="http://acesgrid.org">ACESgrid Dell Xeon</a> </td>
@@ -162,7 +162,7 @@ cat > $OUTFILE << EOF
 
       <tr bgcolor="#bbddff">
         <td><a href="http://www.darwinproject.mit.edu/wiki/">Intel Xeon (Woodcrest) cluster</a>
-        </td> <td>"beagle"</td><td>Rocks 4.3 (x86_64)</td> </tr>
+        </td> <td>"beagle"</td><td>Rocks 5.2 (x86_64)</td> </tr>
 
       <tr bgcolor="#bbffdd">
         <td> AMD Opteron </td> <td>"batsi"</td> <td>Fedora Core 4 (AMD64)</td> </tr>
@@ -225,7 +225,7 @@ EOF
 color="#bbffdd"
 ncolor="#bbddff"
 
-MACHINES="faulks aces eddy bay meander lagoon hugo"
+MACHINES="faulks aces bay meander lagoon dickens danton"
 MACHINES="$MACHINES columbia edvir rays solssrv solasrv sx8 xd1"
 MACHINES="$MACHINES beagle batsi starp"
 
