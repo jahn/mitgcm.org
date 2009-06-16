@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.9 2009/05/02 14:37:05 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.10 2009/05/21 15:42:46 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -327,6 +327,25 @@ for mname in $MACHINES ; do
  	    sed -n "5,$ p" $outp | sed '/^[YN] [YN] [YN] [YN]/ s/ \. //g' \
 				 | sed 's/ OPTFILE=.*\// OPTFILE=/g' \
                                  | grep -v '^[A-S][a-t]* time:  ' > tmpfp
+	    #-- re-order list of exp (according to local "sort" order)
+	    listD=`grep '^[YN] [YN] [YN] [YN]' tmpfs \
+                 | sed 's/^[YN] .*pass //' | sed 's/^[YN] .*FAIL //' \
+                 | sed 's/^[YN] .*N\/O  //' | sort`
+	    for xx in $listD
+	    do
+		sed "/ $xx\$/d" tmpfs > tmpfn
+		sed -n "/ $xx\$/p" tmpfs >> tmpfn
+		mv tmpfn tmpfs
+	    done
+	    listD=`grep '^[YN] [YN] [YN] [YN]' tmpfp \
+                 | sed 's/^[YN] .*pass //' | sed 's/^[YN] .*FAIL //' \
+                 | sed 's/^[YN] .*N\/O  //' | sort`
+	    for xx in $listD
+	    do
+		sed "/ $xx\$/d" tmpfp > tmpfn
+		sed -n "/ $xx\$/p" tmpfp >> tmpfn
+		mv tmpfn tmpfp
+	    done
 	    echo -n "=== diff $sdir $pdir :" | tee -a $OUTPFIL
 	    diff tmpfs tmpfp > tmpdf
 	    yy=$?
