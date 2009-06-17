@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.10 2009/05/21 15:42:46 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.11 2009/06/16 20:27:39 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -43,6 +43,8 @@ NBLDIFF=5
 ADDRESS='none'
 dBug=f
 sTime=`date`
+#- to get case insensitive "ls" (and order of tested experiments)
+export LC_ALL="en_US.UTF-8"
 
 #  Parse options
 ac_prev=

@@ -1,4 +1,4 @@
-# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.6 2009/03/24 20:47:21 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.7 2009/03/26 14:30:49 jmc Exp $
 
 #-from: jmc@forge.csail.mit.edu 
 #  current output of: crontab -l
@@ -16,9 +16,11 @@
 05 15 * * *    cd /u/u0/httpd/html/build_manual && /u/u2/jmc/testing/scripts/bld_manual.sh > bld_manual.log 2>&1 ; cp -p bld_manual.log /u/u2/jmc/testing/logs/bld_manual.$$
 #30 10 * * * /u/u2/jmc/testing/temp/try
 
-#-from: jmc@hugo.csail.mit.edu 
+#-from: jmc@faulks.csail.mit.edu 
 #  current output of: crontab -l
 
-05 01 * * 1,3,6  /u/u2/jmc/testing/csail/test_hugo
+#50 23 * * *  cd /u/u2/jmc/testing/csail && cvs -q update -P -d
+05 00 * * *  /u/u2/jmc/testing/csail/test_faulks
 55 09 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
 55 08 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
+#35 14 * * * /u/u2/jmc/testing/temp/try
