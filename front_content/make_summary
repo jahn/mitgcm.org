@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.49 2009/04/16 14:44:16 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.50 2009/06/15 23:44:46 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -99,11 +99,11 @@ cat > $OUTFILE << EOF
       <tr bgcolor="#bbddff">
         <td>Intel P4</td> <td>"faulks"</td> <td>Fedora Core 6 </td> </tr>
       <tr bgcolor="#bbffdd">
-        <td> Intel P4 </td> <td>"bay"</td> <td>Fedora Core 5 </td> </tr>
-      <tr bgcolor="#bbddff">
         <td> Intel P4 </td> <td>"meander"</td> <td>Fedora Core 7 </td> </tr>
-      <tr bgcolor="#bbffdd">
+      <tr bgcolor="#bbddff">
         <td> Intel P4 </td> <td>"lagoon"</td> <td>Fedora 8 </td> </tr>
+      <tr bgcolor="#bbffdd">
+        <td> Opteron Barcelona </td> <td>"harbor"</td> <td>Ubuntu 8.04 LTS (x86_64)</td> </tr>
       <tr bgcolor="#bbddff">
         <td> Intel Xeon (Woodcrest) </td> <td>"dickens"</td> <td>Fedora 10 (x86_64)</td> </tr>
       <tr bgcolor="#bbffdd">
@@ -112,6 +112,10 @@ cat > $OUTFILE << EOF
       <tr bgcolor="#bbddff">
         <td> <a href="http://acesgrid.org">ACESgrid Dell Xeon</a> </td>
         <td>"aces"</td><td>Fedora Core 2</td> </tr>
+
+      <tr bgcolor="#bbffdd">
+        <td><a href="http://www.darwinproject.mit.edu/wiki/">Intel Xeon (Woodcrest) cluster</a>
+        </td> <td>"beagle"</td><td>Rocks 5.2 (x86_64)</td> </tr>
 
       <!--
       <tr bgcolor="#bbffdd">
@@ -122,9 +126,6 @@ cat > $OUTFILE << EOF
         <td>Alpha cluster</td> <td>"halem"</td>
         <td><a href="http://nccstag.gsfc.nasa.gov/halem/quickstart_halem.html">
         NASA NCCS Halem</a></td> </tr>
-      -->
-
-      <!--
       <tr bgcolor="#bbffdd">
         <td> SGI Origin 2000 </td> <td>"hopper"</td>
         <td><a href="http://www.nas.nasa.gov/User/Systemsdocs/O2K/o2k.html">
@@ -135,55 +136,37 @@ cat > $OUTFILE << EOF
         NAS SGI Origin 3000 </a></td> </tr>
       -->
 
-      <tr bgcolor="#bbffdd">
+      <tr bgcolor="#bbddff">
         <td> SGI Altix Cluster </td> <td>"columbia"</td>
         <td><a href="http://www.nas.nasa.gov/Resources/Systems/columbia.html">
         NAS Columbia </a></td> </tr>
 
-      <!--
       <tr bgcolor="#bbffdd">
-        <td> SGI Altix 350 </td> <td>"altix350"</td>
-        <td><a href="http://acesgrid.org/geocluster/">MIT ACESgrid
-        GeoCluster</a></td> </tr>
-      <tr bgcolor="#bbddff">
-        <td> IBM POWER3 SP </td> <td>"bf"</td>
-        <td><a href="http://www.scd.ucar.edu/computers/blackforest/">NCAR Blackforest
-        </a></td> </tr>
-      <tr bgcolor="#bbffdd">
-        <td> IBM/Apple dual G5 </td> <td>"two"</td>
-        <td>Mac OSX 10.3 (gcc 3.4) </td> </tr>
-      -->
-      <tr bgcolor="#bbddff">
         <td> IBM POWER4 SP </td> <td>"edvir"</td> <td> AIX 5.2 </td> </tr>
-      <tr bgcolor="#bbffdd">
+      <tr bgcolor="#bbddff">
         <td> IBM POWER5+ SP </td> <td>"blueice"</td>
         <td><a href="http://www.scd.ucar.edu/computers/blueice/">NCAR Blueice
         </a></td> </tr>
 
-      <tr bgcolor="#bbddff">
-        <td><a href="http://www.darwinproject.mit.edu/wiki/">Intel Xeon (Woodcrest) cluster</a>
-        </td> <td>"beagle"</td><td>Rocks 5.2 (x86_64)</td> </tr>
-
       <tr bgcolor="#bbffdd">
-        <td> AMD Opteron </td> <td>"batsi"</td> <td>Fedora Core 4 (AMD64)</td> </tr>
-      <tr bgcolor="#bbddff">
         <td> AMD Opteron </td> <td>"starp"</td> <td>SuSE SLES 10 (AMD64)</td> </tr>
 
-      <tr bgcolor="#bbffdd">
+      <tr bgcolor="#bbddff">
         <td> Sun UltraSparc IV </td> <td>"solssrv"</td> <td>Solaris 10</td> </tr>
       <!--
       <tr bgcolor="#bbffdd">
         <td> Sun UltraSparc IV </td> <td>"model"</td> <td>Solaris 9</td> </tr>
       -->
-      <tr bgcolor="#bbddff">
-        <td> NEC SX-8 </td> <td>"sx8"</td> <td>Super-UX </td> </tr>
       <tr bgcolor="#bbffdd">
+        <td> NEC SX-8 </td> <td>"sx8"</td> <td>Super-UX </td> </tr>
+      <tr bgcolor="#bbddff">
         <td> Cray XD1 (AMD Opteron) </td> <td>"xd1"</td>
         <td>Cray HPC enhanced Linux 2.6.5 </td> </tr>
-      <tr bgcolor="#bbddff">
+      <tr bgcolor="#bbffdd">
         <td> PowerPC970MP cluster </td> <td>"bigred"</td>
         <td>SuSE SLES 9 (PPC) </td> </tr>
 
+      <!--
       <tr bgcolor="#bbffdd">
         <td><a href="http://www.testdrive.hp.com/current.shtml"> HP test-drive </a>
         (Pentium III) </td> <td>"td152"</td> <td> FreeBSD 6.2 </td> </tr>
@@ -197,6 +180,7 @@ cat > $OUTFILE << EOF
         <td><a href="http://www.testdrive.hp.com/current.shtml"> HP test-drive </a>
         (Itanium II) </td> <td>"td194"</td> <td> HP-UX 11i v3 </td> </tr>
       <tr bgcolor="#bbffdd">
+      -->
 
       <!--
       <tr bgcolor="#bbddff"> <td>  </td> <td>""</td>
@@ -225,9 +209,9 @@ EOF
 color="#bbffdd"
 ncolor="#bbddff"
 
-MACHINES="faulks aces bay meander lagoon dickens danton"
-MACHINES="$MACHINES columbia edvir rays solssrv solasrv sx8 xd1"
-MACHINES="$MACHINES beagle batsi starp"
+MACHINES="faulks meander lagoon harbor dickens danton aces"
+MACHINES="$MACHINES beagle columbia edvir rays solssrv solasrv sx8 xd1"
+MACHINES="$MACHINES bigred starp"
 
 ( cd $INDIR ; ls -1 -t */summary.txt | sed 's/\/summary.txt//' ) > ./dir_all
 
