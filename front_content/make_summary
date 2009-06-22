@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.50 2009/06/15 23:44:46 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.51 2009/06/20 15:57:32 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -152,17 +152,19 @@ cat > $OUTFILE << EOF
         <td> AMD Opteron </td> <td>"starp"</td> <td>SuSE SLES 10 (AMD64)</td> </tr>
 
       <tr bgcolor="#bbddff">
-        <td> Sun UltraSparc IV </td> <td>"solssrv"</td> <td>Solaris 10</td> </tr>
-      <!--
+        <td> AMD Opteron </td> <td>"solasrv"</td> <td>Solaris 10</td> </tr>
       <tr bgcolor="#bbffdd">
+        <td> Sun UltraSparc IV </td> <td>"rays"</td> <td>Solaris 10</td> </tr>
+      <!--
+        <td> Sun UltraSparc IV </td> <td>"solssrv"</td> <td>Solaris 10</td> </tr>
         <td> Sun UltraSparc IV </td> <td>"model"</td> <td>Solaris 9</td> </tr>
       -->
-      <tr bgcolor="#bbffdd">
-        <td> NEC SX-8 </td> <td>"sx8"</td> <td>Super-UX </td> </tr>
       <tr bgcolor="#bbddff">
+        <td> NEC SX-8 </td> <td>"sx8"</td> <td>Super-UX </td> </tr>
+      <tr bgcolor="#bbffdd">
         <td> Cray XD1 (AMD Opteron) </td> <td>"xd1"</td>
         <td>Cray HPC enhanced Linux 2.6.5 </td> </tr>
-      <tr bgcolor="#bbffdd">
+      <tr bgcolor="#bbddff">
         <td> PowerPC970MP cluster </td> <td>"bigred"</td>
         <td>SuSE SLES 9 (PPC) </td> </tr>
 
