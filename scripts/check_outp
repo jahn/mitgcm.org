@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.12 2009/06/17 21:01:44 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.13 2009/06/28 16:59:59 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -178,9 +178,9 @@ echo "     name     checked   comp    Diff    lines"  >> $OUTPSUM
 ( cd $INDIR ; ls -1 -t */summary.txt | sed 's/\/summary.txt//' ) > ./dir_all
 
 if test "x$MACHINES" = "x_All_" ; then
-  MACHINES="faulks aces eddy bay meander lagoon hugo"
-  MACHINES="$MACHINES columbia edvir rays solasrv sx8 xd1"
-  MACHINES="$MACHINES beagle batsi starp"
+  MACHINES="faulks meander lagoon harbor dickens danton aces"
+  MACHINES="$MACHINES beagle columbia edvir rays solasrv sx8 xd1"
+  MACHINES="$MACHINES bigred starp"
 
   MALL=`cat ./dir_all | sed -e 's|_| |g' | awk '{print $2}' | sort | uniq`
   for madd in $MALL ; do
@@ -251,7 +251,7 @@ for mname in $MACHINES ; do
 		comm=`grep 'ADJOINT=true' $dir/summary.txt 2>/dev/null`
 		eval $comm
 		RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
-		NOI3E=`grep -c "^run: .*testreport.* '*-noieee'* " $dir/summary.txt`
+		NOI3E=`grep -c "^run: .*testreport.* '*-noieee'*" $dir/summary.txt`
 		MTH=`grep -c "^run: .*testreport.* -mth " $dir/summary.txt`
 	    fi
 	    if test "x$RESTART" = x0 ; then
