@@ -32,6 +32,95 @@ usage()
     exit 1
 }
 
+#  create list of results dir for one platform:
+make_resdir_list()
+{
+      if test $monthDir == 1 ; then
+	dir_list=`grep $mname ./dir_all`
+      else
+	dir_list=`( cd $INDIR ; ls -1 -t ../$PREV_P/*${mname}*/summary.txt 2> /dev/null | sed 's/\/summary.txt//' )`
+	#echo "dir_list='$dir_list'"
+      fi
+	for i in $dir_list ; do
+
+	    dir=$INDIR"/"$i
+	    OPTFILE=
+	    if test -r $dir/summary.txt ; then
+		comm=`grep 'OPTFILE=' $dir/summary.txt`
+		eval $comm
+		OPTFILE=${OPTFILE##*/}
+	    fi
+	    if test "x$OPTFILE" = x -a -r "$dir/genmake_state" ; then
+		comm=`grep 'OPTFILE=' $dir/genmake_state 2>/dev/null`
+		eval $comm
+		OPTFILE=${OPTFILE##*/}
+	    fi
+	    if test "x$OPTFILE" = x ; then
+		comm=`grep '^# OPTFILE=' $dir/*/Makefile* 2>/dev/null | head -1`
+		comm=${comm##*#}
+		eval $comm
+		OPTFILE=${OPTFILE##*/}
+	    fi
+	    if test "x$OPTFILE" = x ; then
+		OPTFILE="not_explicitly_specified"
+	    fi
+
+	    ADJOINT=
+	    RESTART=0
+	    NOI3E=0
+	    MTH=0
+	    if test -r $dir/summary.txt ; then
+		comm=`grep 'ADJOINT=true' $dir/summary.txt 2>/dev/null`
+		eval $comm
+		RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
+		NOI3E=`grep -c "^run: .*testreport.* '*-noieee'*" $dir/summary.txt`
+		MTH=`grep -c "^run: .*testreport.* -mth" $dir/summary.txt`
+	    fi
+	    if test "x$RESTART" = x0 ; then
+		kind="forward"
+		test "x$ADJOINT" = xtrue  &&  kind="adjoint"
+	    else
+		kind="restart"
+	    fi
+	    if test "x$MTH" = x1 ; then
+		yy=`echo $OPTFILE | grep -c '+mth$'`
+		if test $yy = 0 ; then OPTFILE="${OPTFILE}+mth" ; fi
+	    fi
+	    if test "x$NOI3E" = x1 ; then
+		OPTFILE="${OPTFILE}.noieee"
+	    fi
+  	    day=`echo $i   | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
+  	    ttt=`echo $day | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
+  	    day=`echo $ttt | sed -e 's|_| |g' |awk '{print $NF}'`
+
+            if [ $day -lt $FIRSTDAY ] ; then
+		echo "$OPTFILE$kind $day $OPTFILE $kind $i" >> ./plist
+            elif [ $day -le $LASTDAY ] ; then
+		echo "$OPTFILE$kind $day $OPTFILE $kind $i" >> ./slist
+	    else
+		if test $dBug = 't' ; then
+		   echo "discard day='$day' from: $i" | tee -a $OUTPFIL
+		fi
+	    fi
+
+	done
+	if test $dBug = 't' ; then
+	  if test $monthDir == 1 ; then
+	    echo "---- current list (n=$monthDir) :" | tee -a $OUTPFIL
+		cat ./slist | tee -a $OUTPFIL
+	  fi
+          num1=`wc -l ./slist | awk '{print $1}'`
+	  if test $num1 -gt 0 ; then
+	  echo   ".... previous list (n=$monthDir):" | tee -a $OUTPFIL
+		cat ./plist | tee -a $OUTPFIL | head -20
+	  fi
+          echo "----" | tee -a $OUTPFIL
+	fi
+}
+
+#--------------------------------------------------------------------------
+# here starts the sequential part of the script:
+
 #CURR_PER=`date +%Y`"_"`date +%m`
 CURR_DAY=`date +%Y%m%d`
 # defaults
@@ -205,95 +294,9 @@ for mname in $MACHINES ; do
     #     results from previous period in "plist"
     rm -f ./plist ./slist ; touch ./plist ./slist
 
-    for n in $listNum ; do
-      num1=`wc -l ./slist | awk '{print $1}'`
-      num0=`wc -l ./plist | awk '{print $1}'`
-      if test $n == 2 ; then
-	num2=`expr $num1 \* $n`
-	if [ $num0 -lt $num2 ] ; then
-	  dir_list=`( cd $INDIR ; ls -1 -t ../$PREV_P/*${mname}*/summary.txt 2> /dev/null | sed 's/\/summary.txt//' )`
-          #echo "dir_list='$dir_list'"
-	fi
-      else
-	num2=$n
-	dir_list=`grep $mname ./dir_all`
-      fi
-      if [ $num0 -lt $num2 ] ; then
-	for i in $dir_list ; do
-
-	    dir=$INDIR"/"$i
-	    OPTFILE=
-	    if test -r $dir/summary.txt ; then
-		comm=`grep 'OPTFILE=' $dir/summary.txt`
-		eval $comm
-		OPTFILE=${OPTFILE##*/}
-	    fi
-	    if test "x$OPTFILE" = x -a -r "$dir/genmake_state" ; then
-		comm=`grep 'OPTFILE=' $dir/genmake_state 2>/dev/null`
-		eval $comm
-		OPTFILE=${OPTFILE##*/}
-	    fi
-	    if test "x$OPTFILE" = x ; then
-		comm=`grep '^# OPTFILE=' $dir/*/Makefile* 2>/dev/null | head -1`
-		comm=${comm##*#}
-		eval $comm
-		OPTFILE=${OPTFILE##*/}
-	    fi
-	    if test "x$OPTFILE" = x ; then
-		OPTFILE="not_explicitly_specified"
-	    fi
-
-	    ADJOINT=
-	    RESTART=0
-	    NOI3E=0
-	    MTH=0
-	    if test -r $dir/summary.txt ; then
-		comm=`grep 'ADJOINT=true' $dir/summary.txt 2>/dev/null`
-		eval $comm
-		RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
-		NOI3E=`grep -c "^run: .*testreport.* '*-noieee'*" $dir/summary.txt`
-		MTH=`grep -c "^run: .*testreport.* -mth" $dir/summary.txt`
-	    fi
-	    if test "x$RESTART" = x0 ; then
-		kind="forward"
-		test "x$ADJOINT" = xtrue  &&  kind="adjoint"
-	    else
-		kind="restart"
-	    fi
-	    if test "x$MTH" = x1 ; then
-		yy=`echo $OPTFILE | grep -c '+mth$'`
-		if test $yy = 0 ; then OPTFILE="${OPTFILE}+mth" ; fi
-	    fi
-	    if test "x$NOI3E" = x1 ; then
-		OPTFILE="${OPTFILE}.noieee"
-	    fi
-  	    day=`echo $i   | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
-  	    ttt=`echo $day | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
-  	    day=`echo $ttt | sed -e 's|_| |g' |awk '{print $NF}'`
-
-            if [ $day -lt $FIRSTDAY ] ; then
-		echo "$OPTFILE$kind $day $OPTFILE $kind $i" >> ./plist
-            elif [ $day -le $LASTDAY ] ; then
-		echo "$OPTFILE$kind $day $OPTFILE $kind $i" >> ./slist
-	    else
-		if test $dBug = 't' ; then
-		   echo "discard day='$day' from: $i" | tee -a $OUTPFIL
-		fi
-	    fi
-
-	done
-	if test $dBug = 't' ; then
-	  if test $n == 1 ; then
-	    echo "---- current list (n=$n) :" | tee -a $OUTPFIL
-		cat ./slist | tee -a $OUTPFIL
-	  fi
-	  echo   ".... previous list (n=$n):" | tee -a $OUTPFIL
-		cat ./plist | tee -a $OUTPFIL | head -20
-	fi
-
-      fi
-    done
-    if test $dBug = 't' ; then echo "----" | tee -a $OUTPFIL ; fi
+    #- create list of results (slist & plist) from current month directory
+    monthDir=1
+    make_resdir_list
 
     #  Do we have any data?  If so, create the latest pointer.
     num=`wc -l ./slist | awk '{print $1}'`
@@ -308,6 +311,12 @@ for mname in $MACHINES ; do
           kind=`echo $sline | cut -d " " -f 4`
           optf=`echo $sline | cut -d " " -f 3`
           num=`grep -c "^$key" ./plist`
+          if test $num = 0 -a $monthDir = 1 ; then
+          #- add results from previous month directory to "plist".
+            monthDir=2
+            make_resdir_list
+            num=`grep -c "^$key" ./plist`
+          fi
 	  #- discard unsafe test:
 	  dd=`echo $optf | grep -c 'gfortran.*mth'`
 	  #if test $mname = 'lagoon' -a $dd = 1 ; then num=-1 ; fi
