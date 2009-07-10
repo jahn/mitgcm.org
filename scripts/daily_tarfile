@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/daily_snapshot,v 1.3 2008/03/05 00:56:11 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/daily_tarfile,v 1.1 2008/09/06 19:48:45 jmc Exp $
 
 # download the source code and make a tar file
 
@@ -10,6 +10,11 @@ umask 0002
 
 echo 'Changing dir. to /u/httpd/html/download/daily_snapshot'
 cd /u/httpd/html/download/daily_snapshot
+outp=$?
+if test $outp != 0 ; then
+   echo " Error in cd : $outp"
+   exit
+fi
 test -e MITgcm  &&  rm -rf MITgcm
 
 echo 'Checking out MITgcm...'
@@ -25,4 +30,57 @@ tar -czf $tname ./MITgcm
 ls -l $tname
 
 echo 'Done!'
+
+#-- test for new checkpoint
+cd ..
+version_file="daily_snapshot/MITgcm/doc/tag-index"
+backupDir="other_checkpoints" 
+if test -f $version_file ; then
+    thischkpt=`grep '^checkpoint' $version_file | head -1`
+    short=`echo $thischkpt | sed 's/checkpoint/c/'`
+    chkptar="MITgcm_$short"
+    if test -f $chkptar.tar.gz ; then
+      echo "tar file ($chkptar) exist for current tag: $thischkpt"
+    else
+      echo -n "Checking out $thischkpt ..."
+      rm -f checkout.out checkout.err
+      cvs co -P -d $chkptar -r $thischkpt MITgcm 1> checkout.out 2> checkout.err
+      outp=$?
+      if test $outp != 0 ; then
+         echo " Error in cvs checkout: $outp"
+         cat checkout.err
+         exit
+      fi
+      echo -n " ; making tar file ... "
+      rm -f checkout.out checkout.err
+      tar -cf $chkptar.tar $chkptar
+      outp=$?
+      if test $outp != 0 ; then
+         echo " Error in tar command: $outp"
+         exit
+      else
+         echo " Done"
+         rm -r -f $chkptar
+      fi
+      gzip $chkptar.tar
+      ls -l $chkptar.tar*
+      #-- move previous tar file to backupDir
+      listTar=`ls MITgcm_c*.tar.gz`
+      if test -d $backupDir ; then
+        for xx in $listTar ; do
+          if test $xx != $chkptar.tar.gz ; then
+            if test -f other_checkpoints/$xx ; then
+              echo "error: $backupDir/$xx already exist" 
+            else
+              echo " mv $xx $backupDir"
+              mv $xx $backupDir
+            fi
+          fi
+        done
+      else
+         echo " no dir: $backupDir"
+         exit
+      fi
+    fi
+fi
 
