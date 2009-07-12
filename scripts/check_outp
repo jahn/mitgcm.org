@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.14 2009/07/05 17:23:44 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.16 2009/07/09 19:12:56 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -308,7 +308,7 @@ for mname in $MACHINES ; do
           ctot=`expr $ctot + 1`
 	  sline=`grep "^$key " ./slist | head -1`
  	  sdir=`echo $sline | cut -d " " -f 5`
-          kind=`echo $sline | cut -d " " -f 4`
+          type=`echo $sline | cut -d " " -f 4`
           optf=`echo $sline | cut -d " " -f 3`
           num=`grep -c "^$key" ./plist`
           if test $num = 0 -a $monthDir = 1 ; then
@@ -318,7 +318,7 @@ for mname in $MACHINES ; do
             num=`grep -c "^$key" ./plist`
           fi
 	  #- discard unsafe test:
-	  dd=`echo $optf | grep -c 'gfortran.*mth'`
+	  dd=`echo $optf | grep -c 'gfortran.*+mth'`
 	  #if test $mname = 'lagoon' -a $dd = 1 ; then num=-1 ; fi
 	  #if test $mname = 'harbor' -a $dd = 1 ; then num=-1 ; fi
 	  #if test $mname = 'aces' -a $optf = 'linux_ia32_open64' ; then num=-1 ; fi
@@ -361,7 +361,7 @@ for mname in $MACHINES ; do
 	    diff tmpfs tmpfp > tmpdf
 	    yy=$?
 	    if test $yy != '0' ; then
-                echo " $kind , of='$optf'" | tee -a $OUTPFIL
+                echo " $type , of='$optf'" | tee -a $OUTPFIL
 		#grep '^run: ' $outp
 		#grep '^run: ' $outs
 		#-- score for each test:
