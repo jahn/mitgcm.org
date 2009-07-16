@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.16 2009/07/09 19:12:56 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.17 2009/07/12 16:29:42 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -318,12 +318,20 @@ for mname in $MACHINES ; do
             num=`grep -c "^$key" ./plist`
           fi
 	  #- discard unsafe test:
-	  dd=`echo $optf | grep -c 'gfortran.*+mth'`
+	  dd=`echo $optf | grep -c 'gfortran+mth'`
 	  #if test $mname = 'lagoon' -a $dd = 1 ; then num=-1 ; fi
 	  #if test $mname = 'harbor' -a $dd = 1 ; then num=-1 ; fi
 	  #if test $mname = 'aces' -a $optf = 'linux_ia32_open64' ; then num=-1 ; fi
 	  #if test $mname = 'aces' -a $optf = 'linux_ia32_g95' ; then num=-1 ; fi
-          if test $num -gt 0 ; then
+	  dd=`echo $optf | grep -c 'bigred.*+mth'`
+	  #if test $mname = 'bigred' -a $dd = 1 ; then num=-1 ; fi
+	  if test $num -lt 0 ; then
+	    echo "  discard $sdir : $type , of='$optf'" | tee -a $OUTPFIL
+            cmis=`expr $cmis + 1`
+          elif test $num = '0' ; then
+            echo "no previous test for:" $key | tee -a $OUTPFIL
+            cmis=`expr $cmis + 1`
+	  else
 	    pline=`grep "^$key " ./plist | head -1`
 	    if test $dBug = 't' ; then 
 		echo "s='$sline'" | tee -a $OUTPFIL
@@ -395,14 +403,9 @@ for mname in $MACHINES ; do
                 cdif=`expr $cdif + 1`
 		echo '----------------------------------------' | tee -a $OUTPFIL
 	    else
-		echo "" | tee -a $OUTPFIL
+		echo " $type , of='$optf'" | tee -a $OUTPFIL
 	    fi
 	    rm -f tmpfs tmpfp tmpdf
-	  elif test $num = '0' ; then
-            echo "no previous test for:" $key | tee -a $OUTPFIL
-            cmis=`expr $cmis + 1`
-	  else
-            cmis=`expr $cmis + 1`
           fi
 	done
         if [ $cmis -gt 0 ] ; then tmis='(-'$cmis')' ; else tmis='(--)' ; fi
