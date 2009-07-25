@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.54 2009/06/30 03:28:07 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.55 2009/07/07 18:39:03 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -103,11 +103,15 @@ cat > $OUTFILE << EOF
       <tr bgcolor="#bbddff">
         <td> Intel P4 </td> <td>"lagoon"</td> <td>Fedora 8 </td> </tr>
       <tr bgcolor="#bbffdd">
+        <td> Intel Celeron (P4) </td> <td>"mdvia32"</td> <td>Mandriva 2009.1 </td> </tr>
+      <tr bgcolor="#bbddff">
+        <td> Intel Celeron (P4) </td> <td>"jauntyia32"</td> <td>Ubuntu 9.04 </td> </tr>
+      <tr bgcolor="#bbffdd">
         <td> Opteron Barcelona </td> <td>"harbor"</td> <td>Ubuntu 8.04 LTS (x86_64)</td> </tr>
       <tr bgcolor="#bbddff">
         <td> Intel Xeon (Woodcrest) </td> <td>"dickens"</td> <td>Fedora 10 (x86_64)</td> </tr>
       <tr bgcolor="#bbffdd">
-        <td> Intel Core 2 duo </td> <td>"danton"</td> <td>Fedora 8 (x86_64)</td> </tr>
+        <td> Intel Core 2 duo </td> <td>"danton"</td> <td>Fedora 11 (x86_64)</td> </tr>
 
       <tr bgcolor="#bbddff">
         <td> <a href="http://acesgrid.org">ACESgrid Dell Xeon</a> </td>
