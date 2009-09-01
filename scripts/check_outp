@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.17 2009/07/12 16:29:42 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.18 2009/07/16 18:17:25 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -347,18 +347,14 @@ for mname in $MACHINES ; do
 				 | sed 's/ OPTFILE=.*\// OPTFILE=/g' \
                                  | grep -v '^[A-S][a-t]* time:  ' > tmpfp
 	    #-- re-order list of exp (according to local "sort" order)
-	    listD=`grep '^[YN] [YN] [YN] [YN]' tmpfs \
-                 | sed 's/^[YN] .*pass //' | sed 's/^[YN] .*FAIL //' \
-                 | sed 's/^[YN] .*N\/O  //' | sort`
+	    listD=`grep '^[YN] [YN] [YN] [YN]' tmpfs | awk '{print $NF}' | sort`
 	    for xx in $listD
 	    do
 		sed "/ $xx\$/d" tmpfs > tmpfn
 		sed -n "/ $xx\$/p" tmpfs >> tmpfn
 		mv tmpfn tmpfs
 	    done
-	    listD=`grep '^[YN] [YN] [YN] [YN]' tmpfp \
-                 | sed 's/^[YN] .*pass //' | sed 's/^[YN] .*FAIL //' \
-                 | sed 's/^[YN] .*N\/O  //' | sort`
+	    listD=`grep '^[YN] [YN] [YN] [YN]' tmpfp | awk '{print $NF}' | sort`
 	    for xx in $listD
 	    do
 		sed "/ $xx\$/d" tmpfp > tmpfn
