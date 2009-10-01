@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.18 2008/09/18 20:13:36 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.19 2009/02/02 19:16:45 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -115,6 +115,8 @@ if test ! -e $OUTDIR ; then
 	date
 	echo "ERROR: directory \"$OUTDIR\" doesn't exist and can't be created"
 	exit 3
+    else
+	echo "Successfully created new dir: \"$OUTDIR\""
     fi
     chgrp gcmpack $OUTDIR
     chmod 775 $OUTDIR
