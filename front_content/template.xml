@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
   <!-- <base href="http:/mitgcm.org/" /> -->
   <!-- <meta name="" content="" /> -->
-  <link REL="icon" HREF="TitleImage.ico" TYPE="image/png">
+  <link REL="icon" HREF="/images/TitleImage.ico" TYPE="image/png">
   <title>MITgcm: <!--ADDTITLE--></title>
   <style type="text/css">
   /*<![CDATA[*/
@@ -31,7 +31,7 @@
       <tr align="center" valign="top">
         <td colspan="2" align="center">
           <div class="c1">
-            <a href="http://mitgcm.org/"> <img src="TitleImage.gif"
+            <a href="http://mitgcm.org/"> <img src="/images/TitleImage.gif"
             alt="Montage of Applications Original concept by CNH Put into practice by AJA"
             border="0" height="189" width="628" /></a><br />
              
@@ -49,7 +49,7 @@
               <td><!-- Menu -->
 		<span class="c3">
 		  <center><b><a href="http://mitgcm.org/">
-			<img src="MITgcm_new.gif"
+			<img src="/images/MITgcm_new.gif"
 			  alt="MITgcm logo" border="0" width="150" height="55">
 			</a></b></center>
 		</span>
@@ -63,7 +63,7 @@
 	    <tr align="center" bgcolor="#FFFFFF">
 	      <td align="center">
 		<a href="http://www.ecco-group.org/">
-		 <img src="ecco_sm3.gif" alt="ECCO Logo" border="0" width="154" height="105" />
+		 <img src="/images/ecco_sm3.gif" alt="ECCO Logo" border="0" width="154" height="105" />
 		</a>
 	      </td>
 	    </tr>
@@ -79,14 +79,14 @@
 	    <tr align="center" bgcolor="#7577B5">
 	      <td align="center">
 		<a href="http://paoc.mit.edu/cmi/">
-		 <img src="cmilogoinv.gif" alt="CMI logo" border="0" width="86" height="85" />
+		 <img src="/images/cmilogoinv.gif" alt="CMI logo" border="0" width="86" height="85" />
 		</a>
 	      </td>
 	    </tr>
             <tr align="center" width="66" >
               <td align="center" bgcolor="#FFFFFF" >
                 <a href="http://www.mit.edu/">
-                 <img src="mit-redgrey3.gif" alt="MIT logo" border="0" width="62" height="36" />
+                 <img src="/images/mit-redgrey3.gif" alt="MIT logo" border="0" width="62" height="36" />
                 </a>
               </td>
             </tr>
