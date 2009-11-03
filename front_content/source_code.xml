@@ -30,9 +30,10 @@
       
 	  <ul>
 	    
-	    <li>View through the <a
-		href="http://mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm">CVS
-		code browser</a></li>
+	    <li>View through the
+		<!-- <a href="http://mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm">CVS code browser</a> -->
+		<a href="http://mitgcm.org/viewvc/MITgcm/MITgcm">CVS code browser</a>
+	    </li>
 	    
 	    <!-- <b>WARNING: cvs pserver has been temporarily
 		disabled and will be returned ASAP.  In the mean time, please
@@ -61,11 +62,10 @@
 	    </li>
 
 	    <li>Download the most recent checkpoint 
-                <a href="./download">as a "tar" file.</a></li>
+                <a href="/download/">as a "tar" file.</a></li>
 	    
-	    <li>Download one of the <a
-		href="http://mitgcm.org/download/daily_snapshot/">daily
-		snap-shots</a>.<br /><br /></li>
+	    <li>Download one of the 
+		<a href="/download/daily_snapshot/">daily snap-shots</a>.<br /><br /></li>
 	    
 	  </ul>
 

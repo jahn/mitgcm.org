@@ -25,16 +25,15 @@
     <p>Several documents are currently available:
       <ul>
 
-	<li>The <a href="http://mitgcm.org/r2_manual/latest/">
+	<li>The <a href="r2_manual/latest/">
             Latest </a> online documentation <br /><br /></li>
 
 	<li>The stable online 
-	   <a href="http://mitgcm.org/sealion/"> Documentation
+	   <a href="sealion/"> Documentation
 	    </a> (Release-1 version)<br /><br /></li>
 
 	<li> Our 
-            <a 
-href="http://mitgcm.org/r2_manual/latest/code_reference/callTree.html" >on-line
+            <a href="r2_manual/latest/code_reference/callTree.html" >on-line
             code browser</a> provides a view of the various
 	    subroutines, functions and variables, 
             showing how they are called and used.<br /><br /></li>
@@ -46,7 +45,7 @@ href="http://mitgcm.org/r2_manual/latest/code_reference/callTree.html" >on-line
 	    <a href="./devel_HOWTO/devel_HOWTO_multipage/"> Multi-page
 		</a> (html) </li>
 	    <li><a href="./devel_HOWTO/devel_HOWTO.pdf"> PDF file </a> or
-	    <a href="./devel_HOWTO/devel_HOWTO.pdf"> PostScript file
+	    <a href="./devel_HOWTO/devel_HOWTO.ps"> PostScript file
 		</a></li>
 	  </ul>
 	  <br />

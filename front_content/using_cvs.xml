@@ -136,11 +136,12 @@
 
     <h4>Getting Specific Releases or "Checkpoints"</h4>
     
-    <p>As shown within the <a
-      href="http://mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm/doc/tag-index"> CVS
-      Code Browser</a>, the MITgcm code is continuously undergoing updates.  At
+    <p>As shown within the 
+      <!-- <a href="http://mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm/doc/tag-index">CVS Code Browser</a> -->
+      <a href="http://mitgcm.org/viewvc/MITgcm/MITgcm/doc/tag-index">CVS Code Browser</a>
+      , the MITgcm code is continuously undergoing updates.  At
       points during the development (typically, after work has been done and the
-      source code has passed the <a href="testing/latest.html">verification
+      source code has passed the <a href="./testing.html">verification
       tests</a>), a release or checkpoint "tag" is created.  These tags are a
       convenient mechanism for referring to different times or points within the
       development.  One can check out these versions using the "-r TAG_NAME" CVS

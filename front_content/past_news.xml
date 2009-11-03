@@ -9,9 +9,9 @@
 
     <!-- Hinting for menu generation -->
     <meta name="add_name_0" content="News" />
-    <meta name="add_name_1" content="Past News Items" />
+    <meta name="add_name_1" content="Past News" />
     <meta name="add_name_2" content="" />
-    <meta name="add_title" content="Past News Items" />
+    <meta name="add_title" content="Past News" />
     <!-- Hinting for menu generation -->
 
 <style type="text/css">
@@ -22,11 +22,137 @@
 
   <body>
 
-    <div class="c1"><br /><span class="c3"><b>Past News Items</b></span></div>
+    <div class="c1"><br /><span class="c3"><b>Past News</b></span></div>
                 
+      <p><b>January 15, 2008&nbsp;:</b></p>
+      <blockquote>
+      Breaking News: Hidden up-to-date Documentation escaped from hide-out:
+      <br>
+      <A href="http://mitgcm.org/public/r2_manual/latest/">Latest Online Documentation</A>
+      <br>
+      <img src="docfest2008.jpeg" alt="DocFestJan2008" border="0" width="86" height="86" />
+      </blockquote>
+
+      <p><b>March 19, 2007&nbsp;:</b></p>
+      <blockquote>
+      Breaking News:  The MITgcm is now able to generate Sea-Ice Donuts.
+      In a push to move forward MITgcm on the path of fundamental science and climate
+      understanding, David Ferreira and Jean-Michel Campin
+      simulated a Sea-ice Donut using a coupled AquaPlanet configuration (see
+      movie <A href="/movies/Sea_Ice_Donut_x1.mpg">here</A>). 
+      This experiment was initialized with  the T and S fields from
+      a previous Aquaplanet run which has polar sea-ice caps. These
+      caps are associated with salt-compensated temperature inversions in the upper
+      ocean. The new run is initialized without sea-ice and within a month, large
+      sea-ice caps grow over the poles, rejecting salt. This triggers convection which
+      in turns brings relatively warm water to the surface and melts the ice close
+      to the poles. Here we have a <A href="/movies/Sea_Ice_Donut_x1.mpg">donut</A>. 
+      Look out for that chapter on aqua-planets in the next IPCC report!
+      </blockquote>
+
+      <p><b>Feb 04, 2007&nbsp;:</b></p>
+      <blockquote>
+       News is back by popular request. New advection schemes are currently
+       being tested. Some preliminary results from the new schemes can be seen 
+       <A href="/projects/advection_test_jan07/advection_testing.html">
+       here.
+       </A>
+       The plots show a tracer being transported and stretched in the
+       MITgcm advect_xz verification test. Both new schemes (OS7MP
+       and Prather second-order scheme with limiting) have very low implied 
+       diffusivity.
+       We are currently evaluating the
+       schemes to assess their implied diffusivity, with a bottle of 
+       Jean-Michel's favorite Belgian
+       beer going to the the least diffusive scheme - watch this space!
+      </blockquote>
+
+      <p><b>March 9, 2005&nbsp;:</b></p>
+      <blockquote>
+       A short article entitled 
+       "NASA Supercomputer Improves Prospects for Ocean Climate Research"
+       in the current EOS (volume 86, number 9, March 1 2005)
+       gives a succinct overview of some of the advanced high-resolution
+       state-estimation work being undertaken with MITgcm by members 
+       of the ECCO consortium. The article describes 
+       ground-breaking computational
+       technologies that have enabled this work and outlines the future goals of
+       this next generation planetary scale assimilation initiative. A pdf containing 
+       the article can be found 
+       <a href="/pdfs/EOSecco.pdf">
+       here.
+       </a>
+      </blockquote>
+      
+      <p><b>Sep 24, 2004&nbsp;:</b></p>
+      <blockquote>
+	MITgcm is now able to write and (to a lesser extent) read NetCDF files.
+	The framework (the "MNC" package) has been tested by numerous developers
+	on literally dozens of machines and, for the past month, has been a
+	working part of our standard verification suite.  We encourage MITgcm
+	users (especially new users) to try out the MNC package since the model
+	output is now much easier to read and understand.  For further NetCDF
+	information please see:
+	<ul>
+	  <li><a href="http://mitgcm.org/cmi_redir.php/package_mnc">
+	      Manual entry for the MNC package.</a></li>
+	  <li>Directions <a 
+	      href="http://mitgcm.org/pipermail/mitgcm-support/2004-September/002589.html">
+	      from our email archives</a> and <a 
+	      href="http://mitgcm.org/mwiki/index.php/MNC_Package">from our 
+	      wiki</a> for installing NetCDF.</li>
+	  <li>The <a
+	      href="http://www.unidata.ucar.edu/content/software/netcdf/">
+	      main NetCDF web site</a>.</li>
+	</ul>
+       </blockquote>
+      
+      <p><b>May 20, 2004 at 05:01 EDT&nbsp;:</b></p>
+      <blockquote>
+	Congratulations to Ed and Boo on the birth this
+	morning of a 7lb 1oz, baby girl, 
+	<a href="http://eddy.csail.mit.edu/gallery/Alex-Arrives">Alexandra Sophia</a>.
+      </blockquote>
+      
+      <p><b>April 13, 2004&nbsp;:</b></p>
+      <blockquote>
+	A new movie by Dimitris Menemenlis and Chris Henze shows ice dynamics
+	over the North Pole. The viscous-plastic behavior of ice sheets subject
+	to wind forcing and ocean currents can be clearly seen in the
+	translucent ice-sheet. The movie can be downloaded from <a
+	href="/movies/ice_03.mpg"> here</a> (this one is 91MB!).  A set of web
+	pages with summary information regarding MITgcm simulations being
+	carried out in the ECCO high resolution global ocean state estimation
+	initiative can be found <a href="http://ecco2.org/">
+	  here</a>.
+      </blockquote>
+
+      <p><b>March 26, 2004 at 01:38 EST&nbsp;:</b></p>
+      <blockquote>
+	Congratulations to Alistair and Sonya on the birth this
+	morning of a 7lb 3oz, 19.5 inches long baby girl, Ariane Jade.
+      </blockquote>
+
+      <p><b>January 22, 2004&nbsp;:</b></p>
+      <blockquote>
+	A spectacular movie by Chris Henze of NASA AMES beautifully captures an 
+	eddy permitting expanded cube sphere MITgcm simulation being carried out, 
+	as part of the <a href="http://www.ecco-group.org">ECCO</a> project, by 
+	Dimitris Menemenlis and others at JPL with help from core MITgcm team members 
+	and staff from NASA AMES. The animation 
+	shows the speed of ocean currents at 15m depth from the simulation, it can be 
+	downloaded <a href="/movies/cube_6.mpg">here</a> (its 47MB 
+	but worth waiting for!). A second animation with different perspectives and 
+	rotation can be downloaded <a href="/movies/cube_7.mpg">here</a>.
+	As described <a href="/pdfs/agu_2004/menemenlis_et_al.pdf">here</a> Dimitris 
+	Menemenlis will be presenting aspects of this calculation at AGU in Portland.
+	A list of some other AGU 2004 presentation abstracts related to MITgcm can be
+	found <a href="/pdfs/agu_2004/">here</a>.
+      </blockquote>
+            
       <p><b>December 9th 2003&nbsp;:</b></p>
       <blockquote>
-	The <a href="http://mitgcm.org/testing.html"> new continuous testing
+	The <a href="http://mitgcm.org/public/testing.html"> new continuous testing
 	  page at </a> provides information on the status of the latest
 	development code. The page shows summary pass-fail ratios for the
 	MITgcm regression tests on various platforms.  Details on the
@@ -51,4 +177,3 @@
       
   </body>
 </html>
-
