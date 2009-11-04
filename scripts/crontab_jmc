@@ -1,26 +1,30 @@
-# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.8 2009/06/17 21:01:44 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.9 2009/06/19 15:43:15 jmc Exp $
 
 #-from: jmc@forge.csail.mit.edu 
 #  current output of: crontab -l
 
-#51 23 * * *  cd /u/u2/jmc/testing/front_content && cvs -q update -P -d
 10,40 * * * * /u/u2/jmc/testing/scripts/process_emails
 50  * * * * /u/u2/jmc/testing/scripts/build_mitgcm_front
-15  4 * * * /u/u2/jmc/testing/scripts/daily_tarfile
+25 00 * * * /u/u2/jmc/testing/scripts/daily_tarfile
 30 23 * * * /u/u2/jmc/testing/scripts/daily_update
+55 09 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
+55 08 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
+#06,21,36,51 * * * * /u/u2/jmc/testing/temp/try
 
 #-from: jmc@dickens.csail.mit.edu 
 #  current output of: crontab -l
 
-15 00 * * 0,2,4,5  /u/u2/jmc/testing/csail/test_dickens
+15 00 * * *        /u/u2/jmc/testing/csail/test_dickens
 05 15 * * *    cd /u/u0/httpd/html/build_manual && /u/u2/jmc/testing/scripts/bld_manual.sh > bld_manual.log 2>&1 ; cp -p bld_manual.log /u/u2/jmc/testing/logs/bld_manual.$$
-#30 10 * * * /u/u2/jmc/testing/temp/try
+#55 09 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
+#55 08 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
+#01,16,31,46 * * * * /u/u2/jmc/testing/temp/try
+#45 10 * * *  /u/u2/jmc/testing/temp/test_dickens
 
 #-from: jmc@faulks.csail.mit.edu 
 #  current output of: crontab -l
 
 #50 23 * * *  cd /u/u2/jmc/testing/csail && cvs -q update -P -d
 05 00 * * *  /u/u2/jmc/testing/csail/test_faulks
-55 09 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
-55 08 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
-#35 14 * * * /u/u2/jmc/testing/temp/try
+#01,16,31,46 * * * * /u/u2/jmc/testing/temp/try
+
