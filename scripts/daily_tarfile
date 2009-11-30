@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/daily_tarfile,v 1.1 2008/09/06 19:48:45 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/daily_tarfile,v 1.2 2009/07/10 00:27:16 jmc Exp $
 
 # download the source code and make a tar file
 
@@ -36,7 +36,7 @@ cd ..
 version_file="daily_snapshot/MITgcm/doc/tag-index"
 backupDir="other_checkpoints" 
 if test -f $version_file ; then
-    thischkpt=`grep '^checkpoint' $version_file | head -1`
+    thischkpt=`awk '/^checkpoint/{print $1; exit}' $version_file`
     short=`echo $thischkpt | sed 's/checkpoint/c/'`
     chkptar="MITgcm_$short"
     if test -f $chkptar.tar.gz ; then
