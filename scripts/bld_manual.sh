@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/bld_manual.sh,v 1.2 2008/03/03 20:32:00 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/bld_manual.sh,v 1.3 2008/03/05 00:56:11 jmc Exp $
 
 #BLDDIR='/u/u0/httpd/html/build_manual'
 #cd $BLDDIR
@@ -14,7 +14,7 @@ echo -n "-- Start '"`basename $0`"' at : " ; date
 export CVSROOT=/u/gcmpack
 #OUTDIR='/u/u0/httpd/html/r2_manual'
 #- note: "mv" to relative path below is much faster than using full path above
-OUTDIR='../r2_manual'
+OUTDIR='../public/r2_manual'
 ADDRERR='jmc@ocean.mit.edu'
 
 echo
