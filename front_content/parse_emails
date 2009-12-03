@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.19 2009/02/02 19:16:45 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.20 2009/10/01 15:52:13 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -140,7 +140,7 @@ fi
 
 for file in $all_files ; do
 
-    #  create local copy
+    #-- create local copy
     test -e $TEMPDIR  &&  rm -rf $TEMPDIR
     mkdir $TEMPDIR
     RETVAL=$?
@@ -161,7 +161,7 @@ for file in $all_files ; do
       continue
     fi
 
-    #  ignore multi-part messages
+    #-- ignore multi-part messages
     grep "Content-Type: message/partial" $INDIR"/"$file > /dev/null 2>&1
     RETVAL=$?
     if test "x$RETVAL" = x0 ; then
@@ -176,7 +176,7 @@ for file in $all_files ; do
       continue
     fi
 
-    #  munpack
+    #-- munpack
     mun=`( cd $TEMPDIR ; $MUNPACK $file | cut -d ' ' -f 1 | head -1 )`
     RETVAL=$?
     if test "x$RETVAL" != x0 ; then
@@ -191,8 +191,11 @@ for file in $all_files ; do
       continue
     fi
 
-    #  un-tar
-    ( cd $TEMPDIR ; tar -xzvf $mun > out )
+    #-- un-tar
+    #( cd $TEMPDIR ; tar -xzvf $mun > out )
+    #   to remove small files "._mydir" that some MAC OS are adding
+    #   (for each file or dir) to a tar-file, use option "--exclude=":
+    ( cd $TEMPDIR ; tar -xzvf $mun --exclude="._*" > out )
     RETVAL=$?
     if test "x$RETVAL" != x0 ; then
       if test "x$ADDRERR" != x ; then
@@ -200,16 +203,29 @@ for file in $all_files ; do
         echo "tar -xzvf $mun returns error:" $RETVAL >> tmp.$$
         ls -l $INDIR"/"$file >> tmp.$$
         ls -l $mun >> tmp.$$
-        mail -s 'parse_emails err_3' $ADDRERR < tmp.$$
+        mail -s 'parse_emails err_3a' $ADDRERR < tmp.$$
         rm -f tmp.$$
       fi
       mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
       continue
     fi
     tdir=`cat $TEMPDIR"/out" | head -1 | sed -e 's|^./||g' | cut -d '/' -f 1`
-    rm -f $TEMPDIR"/out"
+   #tdir=`( cd $TEMPDIR ; /bin/ls -l | grep '^d' | head -1 | awk '{print $NF}' )`
+    if test -d $TEMPDIR/$tdir ; then
+      rm -f $TEMPDIR"/out"
+    else
+      if test "x$ADDRERR" != x ; then
+        echo "parsing email error" > tmp.$$
+        echo " fail to get a dir output name 'tdir=$tdir'" >> tmp.$$
+        echo " from tar file '$TEMPDIR/$mun'" >> tmp.$$
+        mail -s 'parse_emails err_3b' $ADDRERR < tmp.$$
+        rm -f tmp.$$
+      fi
+      mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
+      continue
+    fi
 
-    #  select which Monthly Output Dir:
+    #-- select which Monthly Output Dir:
     locDir=$OUTDIR
     if test "x$monthDir" != x0 ; then
       dd=`echo $tdir | sed 's/_/ /g' | awk '{ for(i=1;i<=NF;i++) print $i }'\
@@ -237,7 +253,7 @@ for file in $all_files ; do
       fi
     fi
 
-    #  copy to $locDir and rename if necessary
+    #-- copy to $locDir and rename if necessary
     sdir=$tdir
     if test -e $locDir"/"$tdir ; then
 	ad=0
@@ -268,7 +284,7 @@ for file in $all_files ; do
     fi
     chmod -R a+rx $locDir"/"$sdir > /dev/null 2>&1
 
-    #  remove the original file
+    #-- remove the original file
     rm -f $INDIR"/"$file
 
 done
