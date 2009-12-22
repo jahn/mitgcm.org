@@ -1,4 +1,4 @@
-# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.9 2009/06/19 15:43:15 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.10 2009/11/04 00:06:49 jmc Exp $
 
 #-from: jmc@forge.csail.mit.edu 
 #  current output of: crontab -l
@@ -7,8 +7,8 @@
 50  * * * * /u/u2/jmc/testing/scripts/build_mitgcm_front
 25 00 * * * /u/u2/jmc/testing/scripts/daily_tarfile
 30 23 * * * /u/u2/jmc/testing/scripts/daily_update
-55 09 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
-55 08 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
+15 10 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
+15 09 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
 #06,21,36,51 * * * * /u/u2/jmc/testing/temp/try
 
 #-from: jmc@dickens.csail.mit.edu 
