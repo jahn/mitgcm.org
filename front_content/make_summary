@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.57 2009/10/05 16:50:09 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.58 2009/12/23 17:08:41 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -305,7 +305,7 @@ for mname in $MACHINES ; do
 	for tok in $tokens ; do
 	    echo $tok >> ./ms_tmp
 	done
-	DAY=`cat ./ms_tmp | awk '(length($1)==8 && substr($1,0,3)=="200")'`
+	DAY=`cat ./ms_tmp | awk '(length($1)==8 && substr($1,0,2)=="20")'`
 	rm -f ./ms_tmp
 
 	echo "$OPTFILE$kind $DAY $OPTFILE $kind $i $t_pass:$t_tot" >> ./mlist
