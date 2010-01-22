@@ -266,14 +266,11 @@
 
     <h4>Wow! CVS is so good, where can I learn more?</h4>
 
-    <p>The <a href="http://www.loria.fr/~molli/cvs/doc/cvs_toc.html">basic
-      manual</a> is a good reference. There is also an <a
-      href="http://web.mit.edu/afs/athena.mit.edu/project/gnu/doc/html/cvs_toc.html">online
-      tutorial</a> as well as an <a
-      href="http://www.loria.fr/~molli/cvs/cvstrain/cvstrain.html">training
-      manual</a>. For those who prefer the good old fashioned book there's <a
-      href="http://cvsbook.red-bean.com/">"Open Source Development With
-      CVS"</a>.</p>
+    <p>The <a 
+      href="http://web.mit.edu/afs/athena.mit.edu/project/gnu/doc/html/cvs_toc.html">basic 
+      manual</a> is a good reference.
+      For those who prefer the good old fashioned book there's
+      <a href="http://cvsbook.red-bean.com/">"Open Source Development With CVS"</a>.</p>
 
   </body>
 </html>
