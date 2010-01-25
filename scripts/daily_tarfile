@@ -1,10 +1,10 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/daily_tarfile,v 1.2 2009/07/10 00:27:16 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/daily_tarfile,v 1.3 2009/11/30 21:47:10 jmc Exp $
 
 # download the source code and make a tar file
 
-export CVSROOT=/u/gcmpack
+export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
 
 umask 0002
 
