@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.20 2009/10/01 15:52:13 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.21 2009/12/03 18:03:27 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -35,7 +35,8 @@ INDIR="/u/u2/jmc/Mail/MITgcm-test"
 BASEDIR="/u/u0/httpd/html/testing/results"
 monthDir=`date +%Y`"_"`date +%m`
 OUTDIR=
-TEMPDIR=./ptmp
+TEMPDIR=/tmp/prc_emails
+ERRMSG=/tmp/tmp.$$
 MUNPACK=munpack
 ADDRERR=
 PRT=1
@@ -150,12 +151,12 @@ for file in $all_files ; do
     fi
     if test "x$RETVAL" != x0 ; then
       if test "x$ADDRERR" != x ; then
-        echo "parsing email error" > tmp.$$
-        echo " processing file: '$INDIR/$file'" >> tmp.$$
-        echo -n "'mkdir $TEMPDIR' or 'cp $INDIR/$file $TEMPDIR'" >> tmp.$$
-        echo " returns error $RETVAL" >> tmp.$$
-        mail -s 'parse_emails err_0' $ADDRERR < tmp.$$
-        rm -f tmp.$$
+        echo "parsing email error" > $ERRMSG
+        echo " processing file: '$INDIR/$file'" >> $ERRMSG
+        echo -n "'mkdir $TEMPDIR' or 'cp $INDIR/$file $TEMPDIR'" >> $ERRMSG
+        echo " returns error $RETVAL" >> $ERRMSG
+        mail -s 'parse_emails err_0' $ADDRERR < $ERRMSG
+        rm -f $ERRMSG
       fi
       mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
       continue
@@ -166,11 +167,11 @@ for file in $all_files ; do
     RETVAL=$?
     if test "x$RETVAL" = x0 ; then
       if test "x$ADDRERR" != x ; then
-        echo "parsing email error" > tmp.$$
-        echo 'grep "Content-Type: message/partial" returns error:' $RETVAL >> tmp.$$
-        ls -l $INDIR"/"$file >> tmp.$$
-        mail -s 'parse_emails err_1' $ADDRERR < tmp.$$
-        rm -f tmp.$$
+        echo "parsing email error" > $ERRMSG
+        echo 'grep "Content-Type: message/partial" returns error:' $RETVAL >> $ERRMSG
+        ls -l $INDIR"/"$file >> $ERRMSG
+        mail -s 'parse_emails err_1' $ADDRERR < $ERRMSG
+        rm -f $ERRMSG
       fi
       mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
       continue
@@ -181,11 +182,11 @@ for file in $all_files ; do
     RETVAL=$?
     if test "x$RETVAL" != x0 ; then
       if test "x$ADDRERR" != x ; then
-        echo "parsing email error" > tmp.$$
-        echo "$MUNPACK $file returns error: $RETVAL" >> tmp.$$
-        ls -l $INDIR"/"$file >> tmp.$$
-        mail -s 'parse_emails err_2' $ADDRERR < tmp.$$
-        rm -f tmp.$$
+        echo "parsing email error" > $ERRMSG
+        echo "$MUNPACK $file returns error: $RETVAL" >> $ERRMSG
+        ls -l $INDIR"/"$file >> $ERRMSG
+        mail -s 'parse_emails err_2' $ADDRERR < $ERRMSG
+        rm -f $ERRMSG
       fi
       mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
       continue
@@ -199,12 +200,12 @@ for file in $all_files ; do
     RETVAL=$?
     if test "x$RETVAL" != x0 ; then
       if test "x$ADDRERR" != x ; then
-        echo "parsing email error" > tmp.$$
-        echo "tar -xzvf $mun returns error:" $RETVAL >> tmp.$$
-        ls -l $INDIR"/"$file >> tmp.$$
-        ls -l $mun >> tmp.$$
-        mail -s 'parse_emails err_3a' $ADDRERR < tmp.$$
-        rm -f tmp.$$
+        echo "parsing email error" > $ERRMSG
+        echo "tar -xzvf $mun returns error:" $RETVAL >> $ERRMSG
+        ls -l $INDIR"/"$file >> $ERRMSG
+        ls -l $mun >> $ERRMSG
+        mail -s 'parse_emails err_3a' $ADDRERR < $ERRMSG
+        rm -f $ERRMSG
       fi
       mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
       continue
@@ -215,11 +216,11 @@ for file in $all_files ; do
       rm -f $TEMPDIR"/out"
     else
       if test "x$ADDRERR" != x ; then
-        echo "parsing email error" > tmp.$$
-        echo " fail to get a dir output name 'tdir=$tdir'" >> tmp.$$
-        echo " from tar file '$TEMPDIR/$mun'" >> tmp.$$
-        mail -s 'parse_emails err_3b' $ADDRERR < tmp.$$
-        rm -f tmp.$$
+        echo "parsing email error" > $ERRMSG
+        echo " fail to get a dir output name 'tdir=$tdir'" >> $ERRMSG
+        echo " from tar file '$TEMPDIR/$mun'" >> $ERRMSG
+        mail -s 'parse_emails err_3b' $ADDRERR < $ERRMSG
+        rm -f $ERRMSG
       fi
       mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
       continue
@@ -241,11 +242,11 @@ for file in $all_files ; do
         if test ! -d $locDir ; then
           if test $PRT = 2 ; then echo "NO DIR: '$locDir' => '$tdir' POSTPONED" ; fi
           if test "x$ADDRERR" != x ; then
-            echo "parsing email error" > tmp.$$
-            echo "no dir '$locDir' for outp. '$tdir'" > tmp.$$
-            ls -l $INDIR"/"$file >> tmp.$$
-            mail -s 'parse_emails err_4' $ADDRERR < tmp.$$
-            rm -f tmp.$$
+            echo "parsing email error" > $ERRMSG
+            echo "no dir '$locDir' for outp. '$tdir'" > $ERRMSG
+            ls -l $INDIR"/"$file >> $ERRMSG
+            mail -s 'parse_emails err_4' $ADDRERR < $ERRMSG
+            rm -f $ERRMSG
           fi
           continue
         fi
@@ -272,12 +273,12 @@ for file in $all_files ; do
     RETVAL=$?
     if test "x$RETVAL" != x0 ; then
       if test "x$ADDRERR" != x ; then
-        echo "parsing email error" > tmp.$$
-        echo "mv $TEMPDIR/$tdir $locDir/$sdir returns error:" $RETVAL >> tmp.$$
-        echo -n "in dir: $TEMPDIR : " ; ls -l $TEMPDIR  >> tmp.$$
-        echo -n "in dir: $OUTDIR : " ; ls -l $locDir  >> tmp.$$
-        mail -s 'parse_emails err_5' $ADDRERR < tmp.$$
-        rm -f tmp.$$
+        echo "parsing email error" > $ERRMSG
+        echo "mv $TEMPDIR/$tdir $locDir/$sdir returns error:" $RETVAL >> $ERRMSG
+        echo -n "in dir: $TEMPDIR : " ; ls -l $TEMPDIR  >> $ERRMSG
+        echo -n "in dir: $OUTDIR : " ; ls -l $locDir  >> $ERRMSG
+        mail -s 'parse_emails err_5' $ADDRERR < $ERRMSG
+        rm -f $ERRMSG
       fi
       mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
       continue
