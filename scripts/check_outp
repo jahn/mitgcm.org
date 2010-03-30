@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.20 2009/12/23 17:15:22 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.21 2010/03/22 14:45:20 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -11,7 +11,7 @@ usage()
 {
     echo
     echo "Usage:  $0 [OPTIONS]"
-    echo 
+    echo
     echo "where possible OPTIONS are:"
     echo "  (-h|-help)            print usage"
     echo "  (-v|-verbose)         verbose mode"
@@ -28,7 +28,7 @@ usage()
     echo "                         [def=\"$NBLDIFF\"]"
     echo "  (-a |-addr )ADDRESS   send summary to mail ADDRESS list"
     echo "                         [def=\"$ADDRESS\"]"
-    echo 
+    echo
     exit 1
 }
 
@@ -36,33 +36,66 @@ usage()
 make_resdir_list()
 {
       if test $monthDir == 1 ; then
-	dir_list=`grep $mname ./dir_all`
+	dir_list=`grep '.._'$mname ./dir_all`
       else
-	dir_list=`( cd $INDIR ; ls -1 -t ../$PREV_P/*${mname}*/summary.txt 2> /dev/null | sed 's/\/summary.txt//' )`
+	dir_list=`( cd $INDIR ; ls -1 -t ../$PREV_P/??_*${mname}*/summary.txt 2> /dev/null | sed 's/\/summary.txt//' )`
 	#echo "dir_list='$dir_list'"
       fi
 	for i in $dir_list ; do
 
 	    dir=$INDIR"/"$i
+	    #--- get the opfile used to run testreport
 	    OPTFILE=
 	    if test -r $dir/summary.txt ; then
 		comm=`grep 'OPTFILE=' $dir/summary.txt`
 		eval $comm
-		OPTFILE=${OPTFILE##*/}
 	    fi
 	    if test "x$OPTFILE" = x -a -r "$dir/genmake_state" ; then
 		comm=`grep 'OPTFILE=' $dir/genmake_state 2>/dev/null`
 		eval $comm
-		OPTFILE=${OPTFILE##*/}
 	    fi
 	    if test "x$OPTFILE" = x ; then
 		comm=`grep '^# OPTFILE=' $dir/*/Makefile* 2>/dev/null | head -1`
 		comm=${comm##*#}
 		eval $comm
-		OPTFILE=${OPTFILE##*/}
 	    fi
 	    if test "x$OPTFILE" = x ; then
 		OPTFILE="not_explicitly_specified"
+	    else
+		OPTFILE=${OPTFILE##*/}
+	    fi
+	    #--- case select test run by 1 user: get user who did run testreport
+	    if test "x$sUser" != x ; then
+		tUser=
+		if test -f $dir/genmake_state ; then
+                   nn=`sed -n '/^# executed by:/=' $dir/genmake_state`
+		   if test "x$nn" != x ; then
+		     nn=`expr $nn + 1`
+		     tUser=`sed -n "$nn s/^# *// p" $dir/genmake_state | sed 's/@.*$//'`
+		   fi
+		fi
+		if test "x$tUser" = "x" ; then
+		   mkfile=`ls $dir/*/Makefile* 2>/dev/null | head -1`
+		   if test "x$mkfile" = 'x' ; then
+		     echo "no Makefile => discard test from: $i" | tee -a $OUTPFIL
+		     continue
+		   fi
+		   nn=`sed -n '/^# executed by:/=' $mkfile`
+		   if test "x$nn" != x ; then
+		     nn=`expr $nn + 1`
+		     tUser=`sed -n "$nn s/^# *// p" $mkfile | sed 's/@.*$//'`
+		   fi
+		fi
+		if test "x$tUser" = x ; then
+		     echo "no User found => discard test from: $i" | tee -a $OUTPFIL
+		     continue
+		fi
+		if test $tUser != $sUser ; then
+		   if test $dBug = 't' ; then
+			echo "  discard test from: $i" | tee -a $OUTPFIL
+		   fi
+		   continue
+		fi
 	    fi
 
 	    ADJOINT=
@@ -232,7 +265,7 @@ echo "PERIOD='$PERIOD' , PREV_P='$PREV_P'" >> $OUTPFIL
 echo "INDIR='$INDIR'" >> $OUTPFIL
 echo "Checking latest output from $FIRSTDAY until $LASTDAY" >> $OUTPFIL
 
-if test $dBug = 't' ; then 
+if test $dBug = 't' ; then
   echo "PERIOD='$PERIOD' , PREV_P='$PREV_P'"
   echo "FIRSTDAY='$FIRSTDAY' , LASTDAY='$LASTDAY'"
 fi
@@ -267,7 +300,7 @@ echo "     name     checked   comp    Diff    lines"  >> $OUTPSUM
 ( cd $INDIR ; ls -1 -t */summary.txt | sed 's/\/summary.txt//' ) > ./dir_all
 
 if test "x$MACHINES" = "x_All_" ; then
-  MACHINES="faulks meander lagoon aces dickens danton beagle harbor"
+  MACHINES="faulks meander lagoon aces.jmc aces.ce107 dickens danton beagle harbor"
   MACHINES="$MACHINES columbia pleiades iblade rays solssrv solasrv sx8"
   MACHINES="$MACHINES trane dodongo dokdo bigred"
 
@@ -275,7 +308,8 @@ if test "x$MACHINES" = "x_All_" ; then
   for madd in $MALL ; do
     present=0
     for m in $MACHINES ; do
-        echo $madd | grep $m > /dev/null 2>&1
+        mm=`echo $m | sed 's/\./ /g' | awk '{print $1}'`
+        echo $madd | grep $mm > /dev/null 2>&1
         RETVAL=$?
         test $RETVAL = 0  &&  present=1
         continue
@@ -283,14 +317,22 @@ if test "x$MACHINES" = "x_All_" ; then
     test $present = 0  &&  MACHINES="$MACHINES $madd"
   done
 fi
+#echo "MACHINES=$MACHINES" ; exit
 
-for mname in $MACHINES ; do
+for pname in $MACHINES ; do
 
-    if test $dBug = 't' ; then echo "  $mname" ; fi
-    echo " name='$mname'" >> $OUTPFIL
+    mname=`echo $pname | sed 's/\./ /g' | awk '{print $1}'`
+    sUser=
+    if test $mname != $pname ; then
+      # to select results from user "sUser"
+      sUser=`echo $pname | sed 's/\./ /g' | awk '{print $2}'`
+    fi
+
+    if test $dBug = 't' ; then echo "  $pname" ; fi
+    echo " name='$pname'" >> $OUTPFIL
     ctot=0 ; cmis=0 ; cdif=0
 
-    # put results from selected period in "slist", 
+    # put results from selected period in "slist",
     #     results from previous period in "plist"
     rm -f ./plist ./slist ; touch ./plist ./slist
 
@@ -319,12 +361,12 @@ for mname in $MACHINES ; do
           fi
 	  #- discard unsafe test:
 	  dd=`echo $optf | grep -c 'gfortran+mth'`
-	  #if test $mname = 'lagoon' -a $dd = 1 ; then num=-1 ; fi
-	  #if test $mname = 'harbor' -a $dd = 1 ; then num=-1 ; fi
+	  if test $mname = 'lagoon' -a $dd = 1 ; then num=-1 ; fi
+	  if test $mname = 'harbor' -a $dd = 1 ; then num=-1 ; fi
 	  #if test $mname = 'aces' -a $optf = 'linux_ia32_open64' ; then num=-1 ; fi
 	  #if test $mname = 'aces' -a $optf = 'linux_ia32_g95' ; then num=-1 ; fi
 	  dd=`echo $optf | grep -c 'bigred.*+mth'`
-	  #if test $mname = 'bigred' -a $dd = 1 ; then num=-1 ; fi
+	  if test $mname = 'bigred' -a $dd = 1 ; then num=-1 ; fi
 	  if test $num -lt 0 ; then
 	    echo "  discard $sdir : $type , of='$optf'" | tee -a $OUTPFIL
             cmis=`expr $cmis + 1`
@@ -333,7 +375,7 @@ for mname in $MACHINES ; do
             cmis=`expr $cmis + 1`
 	  else
 	    pline=`grep "^$key " ./plist | head -1`
-	    if test $dBug = 't' ; then 
+	    if test $dBug = 't' ; then
 		echo "s='$sline'" | tee -a $OUTPFIL
 		echo "p='$pline'" | tee -a $OUTPFIL
 	    fi
@@ -391,9 +433,9 @@ for mname in $MACHINES ; do
 		echo "< "`head -1 $outs`" ( $score_s )" >> $OUTPFIL
 		echo "> "`head -1 $outp`" ( $score_p )" >> $OUTPFIL
 		cat tmpdf >> $OUTPFIL
-                if [ $cdif -eq 0 ] ; then 
+                if [ $cdif -eq 0 ] ; then
 		  clin=`printf '%3i (%5s,%5s)' $ndf $score_s $score_p`
-		else 
+		else
 		  clin="$clin,"`printf '%3i (%5s,%5s)' $ndf $score_s $score_p`
 		fi
                 cdif=`expr $cdif + 1`
@@ -405,9 +447,9 @@ for mname in $MACHINES ; do
           fi
 	done
         if [ $cmis -gt 0 ] ; then tmis='(-'$cmis')' ; else tmis='(--)' ; fi
-        printf '%11s :  %3i      %4s   %3i  ' $mname $ctot $tmis $cdif >> $OUTPSUM
-        if [ $cdif -gt 0 ] ; then 
-          echo "   $clin" >> $OUTPSUM 
+        printf '%11s :  %3i      %4s   %3i  ' $pname $ctot $tmis $cdif >> $OUTPSUM
+        if [ $cdif -gt 0 ] ; then
+          echo "   $clin" >> $OUTPSUM
        else echo "" >> $OUTPSUM ; fi
     fi
 
