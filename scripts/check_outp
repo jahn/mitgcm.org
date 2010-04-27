@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.21 2010/03/22 14:45:20 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.22 2010/03/30 15:06:54 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -365,7 +365,7 @@ for pname in $MACHINES ; do
 	  if test $mname = 'harbor' -a $dd = 1 ; then num=-1 ; fi
 	  #if test $mname = 'aces' -a $optf = 'linux_ia32_open64' ; then num=-1 ; fi
 	  #if test $mname = 'aces' -a $optf = 'linux_ia32_g95' ; then num=-1 ; fi
-	  dd=`echo $optf | grep -c 'bigred.*+mth'`
+	  dd=`echo $optf | grep -c 'bigred.*noieee'`
 	  if test $mname = 'bigred' -a $dd = 1 ; then num=-1 ; fi
 	  if test $num -lt 0 ; then
 	    echo "  discard $sdir : $type , of='$optf'" | tee -a $OUTPFIL
