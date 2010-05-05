@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.21 2009/12/03 18:03:27 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.22 2010/02/17 22:25:46 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -265,8 +265,8 @@ for file in $all_files ; do
     fi
     if test $PRT = 2 ; then
       if test "x$locDir" = "x$OUTDIR"
-      then echo " '$sdir'"
-      else echo " '$sdir' => '$locDir'"
+      then echo " '$sdir' ($file)"
+      else echo " '$sdir' ($file) => '$locDir'"
       fi
     fi
     mv $TEMPDIR"/"$tdir $locDir"/"$sdir > /dev/null 2>&1
