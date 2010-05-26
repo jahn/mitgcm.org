@@ -1,4 +1,4 @@
-# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.11 2009/12/22 17:24:16 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.12 2010/03/23 18:24:34 jmc Exp $
 
 #---------------------------------------------------------
 #-from: jmc@forge.csail.mit.edu
@@ -6,10 +6,10 @@
 
 10,40 * * * * /u/u2/jmc/testing/scripts/process_emails
 50  * * * * /u/u2/jmc/testing/scripts/build_mitgcm_front
-25 00 * * * /u/u2/jmc/testing/scripts/daily_tarfile
 30 23 * * * /u/u2/jmc/testing/scripts/daily_update
+25 00 * * * /u/u2/jmc/testing/scripts/daily_tarfile
 45 08 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
-15 14 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
+15 15 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
 15 09 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
 #06,21,36,51 * * * * /u/u2/jmc/testing/temp/try
 #05 14 * * *  cd /u/u2/jmc/testing/front_content && ./make_summary -d 2010_02
@@ -19,17 +19,20 @@
 #  current output of: crontab -l
 
 15 00 * * *        /u/u2/jmc/testing/csail/test_dickens
+#50 6,8,10,12,14,16,18,20,23  * * * /u/u2/jmc/testing/scripts/build_mitgcm_front
 05 15 * * *    cd /u/u0/httpd/html/build_manual && /u/u2/jmc/testing/scripts/bld_manual.sh > bld_manual.log 2>&1 ; cp -p bld_manual.log /u/u2/jmc/testing/logs/bld_manual.$$
-#55 09 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
-#55 08 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
+#45 08 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
+#15 15 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
+#15 09 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
 #45 10 * * *  /u/u2/jmc/testing/temp/test_dickens
 
 #---------------------------------------------------------
 #-from: jmc@faulks.csail.mit.edu
 #  current output of: crontab -l
 
-#50 23 * * *  cd /u/u2/jmc/testing/csail && cvs -q update -P -d
+#30 23 * * * /u/u2/jmc/testing/scripts/daily_update
 05 00 * * *  /u/u2/jmc/testing/csail/test_faulks
+#20 14,16,18,20,23  * * * /u/u2/jmc/testing/scripts/build_mitgcm_front
 #01,16,31,46 * * * * /u/u2/jmc/testing/temp/try
 
 #---------------------------------------------------------
