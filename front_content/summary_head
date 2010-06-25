@@ -34,9 +34,7 @@
       <tr bgcolor="#bbddff">
         <td> Intel P4 </td> <td>"lagoon"</td> <td>Ubuntu 9.10 </td> </tr>
       <!--
-      <tr bgcolor="#bbffdd">
         <td> Intel Celeron (P4) </td> <td>"mdvia32"</td> <td>Mandriva 2009.1 </td> </tr>
-      <tr bgcolor="#bbddff">
         <td> Intel Celeron (P4) </td> <td>"jauntyia32"</td> <td>Ubuntu 9.04 </td> </tr>
       -->
       <tr bgcolor="#bbffdd">
@@ -45,96 +43,87 @@
       <tr bgcolor="#bbddff">
         <td> Intel Xeon (5xxx series) </td> <td>"debathena"</td> <td> Ubuntu 9.04</td> </tr>
       <tr bgcolor="#bbffdd">
-        <td> Intel Xeon (Woodcrest) </td> <td>"dickens"</td> <td>Fedora 10 (x86_64)</td> </tr>
+        <td> AMD Opteron </td> <td>"mseas", "path"</td> <td> Centos 5.2 </td> </tr>
       <tr bgcolor="#bbddff">
+        <td> Intel Xeon (Woodcrest) </td> <td>"dickens"</td> <td>Fedora 10 (x86_64)</td> </tr>
+      <tr bgcolor="#bbffdd">
         <td> Intel Core 2 duo </td> <td>"danton"</td> <td>Fedora 11 (x86_64)</td> </tr>
 
-      <tr bgcolor="#bbffdd">
-        <td> <a href="http://acesgrid.org">ACESgrid Dell Xeon</a> </td>
-        <td>"aces"</td><td>Fedora Core 2</td> </tr>
-
       <tr bgcolor="#bbddff">
-        <td><a href="http://www.darwinproject.mit.edu/wiki/">Intel Xeon (Woodcrest) cluster</a>
-        </td> <td>"beagle"</td><td>Rocks 5.2 (x86_64)</td> </tr>
+        <td> ACESgrid Dell cluster (Xeon) </td>
+        <td><a href="http://acesgrid.org"> "aces"</a> </td>
+        <td>Fedora Core 2</td> </tr>
+
+      <tr bgcolor="#bbffdd">
+        <td> Intel Xeon (Woodcrest) cluster </td>
+        <td><a href="http://www.darwinproject.mit.edu/wiki/"> "beagle"</a></td>
+        <td>Rocks 5.2 (x86_64)</td> </tr>
 
       <!--
-      <tr bgcolor="#bbffdd">
         <td> Intel P3/P4 Beowulf </td> <td>"myrinet"</td>
         <td><a href="http://mitgcm.org/projects/MITGCM_CLUSTER/">MITgcm cluster
         facility </a></td> </tr>
-      <tr bgcolor="#bbddff">
         <td>Alpha cluster</td> <td>"halem"</td>
         <td><a href="http://nccstag.gsfc.nasa.gov/halem/quickstart_halem.html">
         NASA NCCS Halem</a></td> </tr>
-      <tr bgcolor="#bbffdd">
         <td> SGI Origin 2000 </td> <td>"hopper"</td>
         <td><a href="http://www.nas.nasa.gov/User/Systemsdocs/O2K/o2k.html">
         NAS SGI Origin 2000 </a></td> </tr>
-      <tr bgcolor="#bbddff">
         <td> SGI Origin 3000</td><td>"lomax"/"turing"</td>
         <td><a href="http://www.nas.nasa.gov/User/Systemsdocs/O3K/o3k.html">
         NAS SGI Origin 3000 </a></td> </tr>
-      -->
-
-      <tr bgcolor="#bbffdd">
         <td> SGI Altix Cluster </td> <td>"columbia"</td>
         <td><a href="http://www.nas.nasa.gov/Resources/Systems/columbia.html">
         NAS Columbia </a></td> </tr>
+      -->
 
       <tr bgcolor="#bbddff">
-        <td> IBM Power6 </td> <td>"iblade"</td> <td> AIX </td> </tr>
+        <td> SGI Altix XE cluster (Intel Xeon) </td>
+        <td><a href="http://www.nas.nasa.gov/Resources/Systems/pleiades.html">
+        "pleiades"</a></td> 
+        <td> SuSE Linux </td> </tr>
+
       <tr bgcolor="#bbffdd">
-        <td> IBM Power6 </td> <td>"bluefire"</td> <td> AIX 5L </td> </tr>
+        <td> IBM Power6 </td> <td>"iblade"</td> <td> AIX </td> </tr>
       <tr bgcolor="#bbddff">
+        <td> IBM Power6 </td> <td>"bluefire"</td> <td> AIX 5L </td> </tr>
+      <tr bgcolor="#bbffdd">
         <td> AMD Opteron Barcelona </td> <td>"hpcdistro"</td> 
                             <td> OpenSolaris x86 2009.06</td> </tr>
       <!--
-        <td> AMD Opteron </td> <td>"mseas"</td> <td> Centos 5.2 </td> </tr>
-        <td> AMD Opteron </td> <td>"path"</td> <td> Centos 5.2 </td> </tr>
-      <tr bgcolor="#bbddff">
         <td> IBM POWER5+ SP </td> <td>"blueice"</td>
         <td><a href="http://www.scd.ucar.edu/computers/blueice/">NCAR Blueice
         </a></td> </tr>
-
-      <tr bgcolor="#bbffdd">
         <td> AMD Opteron </td> <td>"starp"</td> <td>SuSE SLES 10 (AMD64)</td> </tr>
-      <tr bgcolor="#bbddff">
-      <tr bgcolor="#bbffdd">
       -->
 
-      <tr bgcolor="#bbffdd">
-        <td> AMD Opteron </td> <td>"solasrv"</td> <td>Solaris 10</td> </tr>
       <tr bgcolor="#bbddff">
+        <td> AMD Opteron </td> <td>"solasrv"</td> <td>Solaris 10</td> </tr>
+      <tr bgcolor="#bbffdd">
         <td> Sun UltraSparc IV </td> <td>"rays"</td> <td>Solaris 10</td> </tr>
       <!--
         <td> Sun UltraSparc IV </td> <td>"solssrv"</td> <td>Solaris 10</td> </tr>
         <td> Sun UltraSparc IV </td> <td>"model"</td> <td>Solaris 9</td> </tr>
       -->
-      <tr bgcolor="#bbffdd">
-        <td> Sun UltraSparc III </td> <td>"sunathena"</td> <td> Solaris 10 </td> </tr>
       <tr bgcolor="#bbddff">
-        <td> NEC SX-8 </td> <td>"sx8"</td> <td>Super-UX </td> </tr>
+        <td> Sun UltraSparc III </td> <td>"sunathena"</td> <td> Solaris 10 </td> </tr>
       <tr bgcolor="#bbffdd">
+        <td> NEC SX-8 </td> <td>"sx8"</td> <td>Super-UX </td> </tr>
+      <tr bgcolor="#bbddff">
         <td> PowerPC970MP cluster </td> <td>"bigred"</td>
         <td>SuSE SLES 9 (PPC) </td> </tr>
 
       <!--
-      <tr bgcolor="#bbddff">
         <td> Cray XD1 (AMD Opteron) </td> <td>"xd1"</td>
         <td>Cray HPC enhanced Linux 2.6.5 </td> </tr>
-      <tr bgcolor="#bbffdd">
         <td><a href="http://www.testdrive.hp.com/current.shtml"> HP test-drive </a>
         (Pentium III) </td> <td>"td152"</td> <td> FreeBSD 6.2 </td> </tr>
-      <tr bgcolor="#bbddff">
         <td><a href="http://www.testdrive.hp.com/current.shtml"> HP test-drive </a>
         (Itanium II) </td> <td>"td187"</td> <td>SuSE SLES 10 </td> </tr>
-      <tr bgcolor="#bbffdd">
         <td><a href="http://www.testdrive.hp.com/current.shtml"> HP test-drive </a>
         (PA-RISC 8900) </td> <td>"td191"</td> <td> HP-UX 11i 11.11 </td> </tr>
-      <tr bgcolor="#bbddff">
         <td><a href="http://www.testdrive.hp.com/current.shtml"> HP test-drive </a>
         (Itanium II) </td> <td>"td194"</td> <td> HP-UX 11i v3 </td> </tr>
-      <tr bgcolor="#bbffdd">
       -->
 
       <!--
