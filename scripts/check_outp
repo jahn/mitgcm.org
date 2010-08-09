@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.22 2010/03/30 15:06:54 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.23 2010/04/27 19:51:50 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -22,6 +22,8 @@ usage()
     echo "                         [def=\"$FIRSTDAY\"]"
     echo "  (-u |-upto )LASTDAY   until last day=\"YYYYMMDD\" (=selected period)"
     echo "                         [def=\"FIRSTDAY\"]"
+    echo "  (-b |-before)BEFORE   compare with output from before \"YYYYMMDD\""
+    echo "                         (=previous period) [def=\"FIRSTDAY\"]"
     echo "  (-o |-outp )OUTPFIL   output file (-1 removed when exit)"
     echo "                         [def=\"$OUTPFIL\"]"
     echo "  (-n |-nldf )NBLDIFF   max number of diff lines to echo"
@@ -126,9 +128,9 @@ make_resdir_list()
   	    ttt=`echo $day | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
   	    day=`echo $ttt | sed -e 's|_| |g' |awk '{print $NF}'`
 
-            if [ $day -lt $FIRSTDAY ] ; then
+            if [ $day -lt $BEFORE ] ; then
 		echo "$OPTFILE$kind $day $OPTFILE $kind $i" >> ./plist
-            elif [ $day -le $LASTDAY ] ; then
+            elif [ $day -ge $FIRSTDAY -a $day -le $LASTDAY ] ; then
 		echo "$OPTFILE$kind $day $OPTFILE $kind $i" >> ./slist
 	    else
 		if test $dBug = 't' ; then
@@ -160,6 +162,7 @@ CURR_DAY=`date +%Y%m%d`
 MACHINES='_All_'
 FIRSTDAY=$CURR_DAY
 LASTDAY="30000000"
+BEFORE="30000000"
 OUTPFIL=`basename $0`'.log'
 NBLDIFF=5
 ADDRESS='none'
@@ -203,6 +206,11 @@ for ac_option ; do
         -upto=* | --upto=*)
             LASTDAY=$ac_optarg ;;
 
+        -before | --before | -b | --b)
+            ac_prev=BEFORE ;;
+        -before=* | --before=*)
+            BEFORE=$ac_optarg ;;
+
         -outp | --outp | -o | --o)
             ac_prev=OUTPFIL ;;
         -outp=* | --outp=*)
@@ -237,13 +245,14 @@ if test "x$ttt" != 'xyz' ; then
   exit 2
 fi
 if test $LASTDAY = "30000000" ; then LASTDAY=$FIRSTDAY ; fi
+if test  $BEFORE = "30000000" ; then  BEFORE=$FIRSTDAY ; fi
 CMDLINE=$0
 for xx in "$@" ; do nw=`echo $xx | wc -w`
   if test $nw = '1' ; then CMDLINE="$CMDLINE $xx"
                       else CMDLINE="$CMDLINE '$xx'" ; fi
 done
 
-PERIOD=`echo $FIRSTDAY | sed 's/[0-9][0-9]$//'`
+PERIOD=`echo $LASTDAY | sed 's/[0-9][0-9]$//'`
 PP=`expr $PERIOD - 1`
 PM=`echo $PP | sed 's/^[0-9][0-9][0-9][0-9]//'`
 PY=`echo $PP | sed 's/[0-9][0-9]$//'`
@@ -264,10 +273,11 @@ echo "CMDLINE='$CMDLINE'" > $OUTPFIL
 echo "PERIOD='$PERIOD' , PREV_P='$PREV_P'" >> $OUTPFIL
 echo "INDIR='$INDIR'" >> $OUTPFIL
 echo "Checking latest output from $FIRSTDAY until $LASTDAY" >> $OUTPFIL
+echo "  versus latest from before $BEFORE" >> $OUTPFIL
 
 if test $dBug = 't' ; then
   echo "PERIOD='$PERIOD' , PREV_P='$PREV_P'"
-  echo "FIRSTDAY='$FIRSTDAY' , LASTDAY='$LASTDAY'"
+  echo "FIRSTDAY='$FIRSTDAY' , LASTDAY='$LASTDAY' , BEFORE='$BEFORE'"
 fi
 if test -d $INDIR ; then
   dirP=`echo $INDIR | sed "s/$PERIOD/$PREV_P/"`
@@ -283,7 +293,7 @@ else
 fi
 
 #- a short summary of this checking :
-OUTPSUM=`echo $FIRSTDAY | sed 's/^20../_/'`
+OUTPSUM=`echo $LASTDAY | sed 's/^20../_/'`
 OUTPSUM=`basename $0`"$OUTPSUM.txt"
 if test -e $OUTPSUM ; then mv -f $OUTPSUM $OUTPSUM'_bak' ; fi
 echo ' '$CMDLINE > $OUTPSUM
@@ -293,7 +303,11 @@ if test $FIRSTDAY = $LASTDAY ; then
 else
   echo -n "Checking latest output from $FIRSTDAY until $LASTDAY" | tee -a $OUTPSUM
 fi
-echo " versus latest prior to this period" | tee -a $OUTPSUM
+if test $FIRSTDAY = $BEFORE ; then
+  echo " versus latest prior to this period" | tee -a $OUTPSUM
+else
+  echo " versus latest from before $BEFORE" | tee -a $OUTPSUM
+fi
 echo "    Machine   Tot. Nb.   no    Nb with  Nb diff" >> $OUTPSUM
 echo "     name     checked   comp    Diff    lines"  >> $OUTPSUM
 
