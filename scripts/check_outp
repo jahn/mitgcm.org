@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.25 2010/10/29 20:18:55 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.26 2010/11/24 16:22:08 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -70,7 +70,7 @@ make_resdir_list()
 	    if test "x$sUser" != x ; then
 		tUser=
 		if test -f $dir/genmake_state ; then
-                   nn=`sed -n '/^# executed by:/=' $dir/genmake_state`
+		   nn=`sed -n '/^# executed by:/=' $dir/genmake_state`
 		   if test "x$nn" != x ; then
 		     nn=`expr $nn + 1`
 		     tUser=`sed -n "$nn s/^# *// p" $dir/genmake_state | sed 's/@.*$//'`
@@ -124,13 +124,13 @@ make_resdir_list()
 	    if test "x$NOI3E" = x1 ; then
 		OPTFILE="${OPTFILE}.noieee"
 	    fi
-  	    day=`echo $i   | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
-  	    ttt=`echo $day | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
-  	    day=`echo $ttt | sed -e 's|_| |g' |awk '{print $NF}'`
+	    day=`echo $i   | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
+	    ttt=`echo $day | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
+	    day=`echo $ttt | sed -e 's|_| |g' |awk '{print $NF}'`
 
             if [ $day -lt $BEFORE ] ; then
 		echo "$OPTFILE$kind $day $OPTFILE $kind $i" >> ./plist
-            elif [ $day -ge $FIRSTDAY -a $day -le $LASTDAY ] ; then
+	    elif [ $day -ge $FIRSTDAY -a $day -le $LASTDAY ] ; then
 		echo "$OPTFILE$kind $day $OPTFILE $kind $i" >> ./slist
 	    else
 		if test $dBug = 't' ; then
@@ -186,50 +186,32 @@ for ac_option ; do
 
     case $ac_option in
 	
-	-help | --help | -h | --h)
-	    usage ;;
-	-verbose | --verbose | -v | --v)
-	    dBug=t ;;
+	-help | --help | -h | --h) usage ;;
+	-verbose | --verbose | -v | --v) dBug=t ;;
 	
-        -list  | --list  | -l | --l)
-            ac_prev=MACHINES ;;
-        -list=* | --list=*)
-            MACHINES=$ac_optarg ;;
+	-list  | --list  | -l | --l) ac_prev=MACHINES ;;
+	-list=* | --list=*) MACHINES=$ac_optarg ;;
 
-        -day  | --day  | -d | --d)
-            ac_prev=FIRSTDAY ;;
-        -day=* | --day=*)
-            FIRSTDAY=$ac_optarg ;;
+	-day  | --day  | -d | --d) ac_prev=FIRSTDAY ;;
+	-day=* | --day=*) FIRSTDAY=$ac_optarg ;;
 
-        -upto | --upto | -u | --u)
-            ac_prev=LASTDAY ;;
-        -upto=* | --upto=*)
-            LASTDAY=$ac_optarg ;;
+	-upto | --upto | -u | --u) ac_prev=LASTDAY ;;
+	-upto=* | --upto=*) LASTDAY=$ac_optarg ;;
 
-        -before | --before | -b | --b)
-            ac_prev=BEFORE ;;
-        -before=* | --before=*)
-            BEFORE=$ac_optarg ;;
+	-before | --before | -b | --b) ac_prev=BEFORE ;;
+	-before=* | --before=*) BEFORE=$ac_optarg ;;
 
-        -outp | --outp | -o | --o)
-            ac_prev=OUTPFIL ;;
-        -outp=* | --outp=*)
-            OUTPFIL=$ac_optarg ;;
+	-outp | --outp | -o | --o) ac_prev=OUTPFIL ;;
+	-outp=* | --outp=*) OUTPFIL=$ac_optarg ;;
 
-        -nldf | --nldf | -n | --n)
-            ac_prev=NBLDIFF ;;
-        -nldf=* | --nldf=*)
-            NBLDIFF=$ac_optarg ;;
+	-nldf | --nldf | -n | --n) ac_prev=NBLDIFF ;;
+	-nldf=* | --nldf=*) NBLDIFF=$ac_optarg ;;
 
-        -addr | --addr | -a | --a)
-            ac_prev=ADDRESS ;;
-        -addr=* | --addr=*)
-            ADDRESS=$ac_optarg ;;
+	-addr | --addr | -a | --a) ac_prev=ADDRESS ;;
+	-addr=* | --addr=*) ADDRESS=$ac_optarg ;;
 
-        *)
-	    echo "Error: don't understand argument \"$ac_option\""
-	    usage
-            ;;
+	*) echo "Error: don't understand argument \"$ac_option\""
+	   usage ;;
 
      esac
 
@@ -322,11 +304,11 @@ if test "x$MACHINES" = "x_All_" ; then
   for madd in $MALL ; do
     present=0
     for m in $MACHINES ; do
-        mm=`echo $m | sed 's/\./ /g' | awk '{print $1}'`
-        echo $madd | grep $mm > /dev/null 2>&1
-        RETVAL=$?
-        test $RETVAL = 0  &&  present=1
-        continue
+	mm=`echo $m | sed 's/\./ /g' | awk '{print $1}'`
+	echo $madd | grep $mm > /dev/null 2>&1
+	RETVAL=$?
+	test $RETVAL = 0  &&  present=1
+	continue
     done
     test $present = 0  &&  MACHINES="$MACHINES $madd"
   done
@@ -363,16 +345,16 @@ for pname in $MACHINES ; do
 	for key in $keys ; do
           ctot=`expr $ctot + 1`
 	  sline=`grep "^$key " ./slist | head -1`
- 	  sdir=`echo $sline | cut -d " " -f 5`
-          type=`echo $sline | cut -d " " -f 4`
-          optf=`echo $sline | cut -d " " -f 3`
-          num=`grep -c "^$key" ./plist`
-          if test $num = 0 -a $monthDir = 1 ; then
-          #- add results from previous month directory to "plist".
-            monthDir=2
-            make_resdir_list
-            num=`grep -c "^$key" ./plist`
-          fi
+	  sdir=`echo $sline | cut -d " " -f 5`
+	  type=`echo $sline | cut -d " " -f 4`
+	  optf=`echo $sline | cut -d " " -f 3`
+	  num=`grep -c "^$key" ./plist`
+	  if test $num = 0 -a $monthDir = 1 ; then
+	  #- add results from previous month directory to "plist".
+	    monthDir=2
+	    make_resdir_list
+	    num=`grep -c "^$key" ./plist`
+	  fi
 	  #- discard unsafe test:
 	  dd=`echo $optf | grep -c 'gfortran+mth'`
 	  if test $mname = 'lagoon' -a $dd = 1 ; then num=-1 ; fi
@@ -383,25 +365,25 @@ for pname in $MACHINES ; do
 	  if test $mname = 'bigred' -a $dd = 1 ; then num=-1 ; fi
 	  if test $num -lt 0 ; then
 	    echo "  discard $sdir : $type , of='$optf'" | tee -a $OUTPFIL
-            cmis=`expr $cmis + 1`
-          elif test $num = '0' ; then
-            echo "no previous test for:" $key | tee -a $OUTPFIL
-            cmis=`expr $cmis + 1`
+	    cmis=`expr $cmis + 1`
+	  elif test $num = '0' ; then
+	    echo "no previous test for:" $key | tee -a $OUTPFIL
+	    cmis=`expr $cmis + 1`
 	  else
 	    pline=`grep "^$key " ./plist | head -1`
 	    if test $dBug = 't' ; then
 		echo "s='$sline'" | tee -a $OUTPFIL
 		echo "p='$pline'" | tee -a $OUTPFIL
 	    fi
- 	    pdir=`echo $pline | cut -d " " -f 5`
+	    pdir=`echo $pline | cut -d " " -f 5`
 	    outs="$INDIR/$sdir/summary.txt"
- 	    sed -n "5,$ p" $outs | sed '/^[YN] [YN] [YN] [YN]/ s/ \. //g' \
-				 | sed 's/ OPTFILE=.*\// OPTFILE=/g' \
-                                 | grep -v '^[A-S][a-t]* time:  ' > tmpfs
+	    xx=`( echo 5 ; sed -n '/^  OPTFILE=/=' $outs ) | tail -1`
+	    sed "1,$xx d" $outs | sed '/^[YN] [YN] [YN] [YN]/ s/ \. //g' \
+				| grep -v '^[A-S][a-t]* time:  ' > tmpfs
 	    outp="$INDIR/$pdir/summary.txt"
- 	    sed -n "5,$ p" $outp | sed '/^[YN] [YN] [YN] [YN]/ s/ \. //g' \
-				 | sed 's/ OPTFILE=.*\// OPTFILE=/g' \
-                                 | grep -v '^[A-S][a-t]* time:  ' > tmpfp
+	    xx=`( echo 5 ; sed -n '/^  OPTFILE=/=' $outp ) | tail -1`
+	    sed "1,$xx d" $outp | sed '/^[YN] [YN] [YN] [YN]/ s/ \. //g' \
+				| grep -v '^[A-S][a-t]* time:  ' > tmpfp
 	    #-- re-order list of exp (according to local "sort" order)
 	    listD=`grep '^[YN] [YN] [YN] [YN]' tmpfs | awk '{print $NF}' | sort`
 	    for xx in $listD
@@ -421,7 +403,7 @@ for pname in $MACHINES ; do
 	    diff tmpfs tmpfp > tmpdf
 	    yy=$?
 	    if test $yy != '0' ; then
-                echo " $type , of='$optf'" | tee -a $OUTPFIL
+		echo " $type , of='$optf'" | tee -a $OUTPFIL
 		#grep '^run: ' $outp
 		#grep '^run: ' $outs
 		#-- score for each test:
@@ -439,7 +421,7 @@ for pname in $MACHINES ; do
 		ndf=`expr $ndf / 2`
 		nn=`grep -c '^---' tmpdf`
 		ndf=`expr $ndf - $nn`
-                if [ $ndf -le $NBLDIFF ] ; then
+		if [ $ndf -le $NBLDIFF ] ; then
 		  cat tmpdf
 		else
 		  echo " $ndf lines differ ( $score_s , $score_p )"
@@ -447,24 +429,24 @@ for pname in $MACHINES ; do
 		echo "< "`head -1 $outs`" ( $score_s )" >> $OUTPFIL
 		echo "> "`head -1 $outp`" ( $score_p )" >> $OUTPFIL
 		cat tmpdf >> $OUTPFIL
-                if [ $cdif -eq 0 ] ; then
+		if [ $cdif -eq 0 ] ; then
 		  clin=`printf '%3i (%5s,%5s)' $ndf $score_s $score_p`
 		else
 		  clin="$clin,"`printf '%3i (%5s,%5s)' $ndf $score_s $score_p`
 		fi
-                cdif=`expr $cdif + 1`
+		cdif=`expr $cdif + 1`
 		echo '----------------------------------------' | tee -a $OUTPFIL
 	    else
 		echo " $type , of='$optf'" | tee -a $OUTPFIL
 	    fi
 	    rm -f tmpfs tmpfp tmpdf
-          fi
+	  fi
 	done
-        if [ $cmis -gt 0 ] ; then tmis='(-'$cmis')' ; else tmis='(--)' ; fi
-        printf '%11s :  %3i      %4s   %3i  ' $pname $ctot $tmis $cdif >> $OUTPSUM
-        if [ $cdif -gt 0 ] ; then
-          echo "   $clin" >> $OUTPSUM
-       else echo "" >> $OUTPSUM ; fi
+	if [ $cmis -gt 0 ] ; then tmis='(-'$cmis')' ; else tmis='(--)' ; fi
+	printf '%11s :  %3i      %4s   %3i  ' $pname $ctot $tmis $cdif >> $OUTPSUM
+	if [ $cdif -gt 0 ] ; then
+	  echo "   $clin" >> $OUTPSUM
+	else echo "" >> $OUTPSUM ; fi
     fi
 
 done
