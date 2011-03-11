@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.23 2010/05/05 15:16:41 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.24 2010/10/31 02:25:05 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -31,16 +31,21 @@ usage()
 }
 
 # defaults
+HERE=`pwd`
 INDIR="/u/u2/jmc/Mail/MITgcm-test"
 BASEDIR="/u/u0/httpd/html/testing/results"
 monthDir=`date +%Y`"_"`date +%m`
 OUTDIR=
-TEMPDIR=/tmp/prc_emails
-ERRMSG=/tmp/tmp.$$
-MUNPACK=munpack
 ADDRERR=
+MUNPACK=$HERE/munpack
+UnpTmpD="/var/tmp/m-prts-$USER"
+TR_LIST='TTT.'$$
+TEMPDIR=/tmp/prc_emails
+STDOUT=$TEMPDIR/'outp.'$$
+ERRMSG=/tmp/tmp.$$
 PRT=1
 
+#---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
 #  Parse options
 ac_prev=
 for ac_option ; do
@@ -55,14 +60,14 @@ for ac_option ; do
     ac_optarg=`expr "x$ac_option" : 'x[^=]*=\(.*\)'`
 
     case $ac_option in
-	
-	-help | --help | -h | --h)
-	    usage ;;
-	-s | --s | -silent | --silent)
+
+        -help | --help | -h | --h)
+            usage ;;
+        -s | --s | -silent | --silent)
             PRT=0 ;;
-	-v | --v | -verbose | --verbose)
+        -v | --v | -verbose | --verbose)
             PRT=2 ;;
-	
+
         -ind | --ind | -i | --i)
             ac_prev=INDIR ;;
         --ind=* | -ind=* | --i=* | -i=*)
@@ -89,10 +94,9 @@ for ac_option ; do
             ADDRERR=$ac_optarg ;;
 
         *)
-	    # copy the file list to FL_#
-	    date
-	    echo "Error: don't understand argument \"$ac_option\""
-	    usage
+            date
+            echo "Error: don't understand argument \"$ac_option\""
+            usage
             ;;
 
      esac
@@ -100,9 +104,9 @@ for ac_option ; do
 done
 
 if test ! -x $MUNPACK ; then
-	date
-	echo "ERROR: \"$MUNPACK\" is not executable"
-	exit 2
+        date
+        echo "ERROR: \"$MUNPACK\" is not executable"
+        exit 2
 fi
 if test "x$OUTDIR" = x ; then
   OUTDIR="$BASEDIR/$monthDir"
@@ -113,23 +117,29 @@ if test ! -e $OUTDIR ; then
     mkdir $OUTDIR
     RETVAL=$?
     if test "x$RETVAL" != x0 ; then
-	date
-	echo "ERROR: directory \"$OUTDIR\" doesn't exist and can't be created"
-	exit 3
+        date
+        echo "ERROR: directory \"$OUTDIR\" doesn't exist and can't be created"
+        exit 3
     else
-	echo "Successfully created new dir: \"$OUTDIR\""
+        echo "Successfully created new dir: \"$OUTDIR\""
     fi
     chgrp gcmpack $OUTDIR
     chmod 775 $OUTDIR
 fi
 
-all_files=`ls -1 $INDIR`
-nb_files=`echo "$all_files" | grep -c '^msg\.'`
+#---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
 
-if test $PRT = 1 ; then
+all_msg=`ls -1 $INDIR`
+nb_files=`echo "$all_msg" | grep -c '^msg\.'`
+
+if test $PRT = 2 ; then
   echo "Using OUTDIR=\"$OUTDIR\""
   echo "Using INDIR=\"$INDIR\""
-  echo -n "Unpacking the emails ..."
+  echo -n "Unpacking $nb_files emails ("`date`
+  if test "x$ADDRERR" != x ; then
+     echo -n ", err-msg: '$ADDRERR'"
+  fi
+  echo ")"
 elif test $nb_files != 0 ; then
   echo -n "Unpacking $nb_files emails ("`date`
   if test "x$ADDRERR" != x ; then
@@ -139,89 +149,250 @@ elif test $nb_files != 0 ; then
   echo " from '$INDIR' to '$OUTDIR'"
 fi
 
-for file in $all_files ; do
+#---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
 
-    #-- create local copy
+#-- process list of message to detect group of multi-part msgs:
+rm -f $TR_LIST
+touch $TR_LIST
+
+flag=0
+for xx in $all_msg
+do
+  in=`grep -c $xx $TR_LIST`
+  if test $in = 0 ; then
+    np=`grep -c 'Content-Type: message/partial' $INDIR/$xx`
+    if test $np = 0 ; then
+      echo $xx >> $TR_LIST
+    else
+      l=`sed -n '/Content-Type: message\/partial/=' $INDIR/$xx`
+      lp=`expr $l + 1`
+      id=`sed -n "$lp p" $INDIR/$xx`
+      partM=`( cd $INDIR ; grep -c "$id" msg.* | grep -v ':0$' | sed 's/:1$//' )`
+      echo $partM >> $TR_LIST
+      if test "x$ADDRERR" != x ; then flag=1
+        echo "multi-parts message:" $partM >> $ERRMSG
+        ( cd $INDIR ; ls -l $partM ) >> $ERRMSG
+      fi
+    fi
+  fi
+done
+if test $flag = 1 ; then
+    mail -s 'parse_emails Multi-parts msg' $ADDRERR < $ERRMSG
+    rm -f $ERRMSG
+fi
+#cat $TR_LIST ; echo '----------------------------------'
+
+#---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
+
+#-- process list of individual + group of multi-part messages
+Nbl=`wc -l $TR_LIST | cut -d ' ' -f 1`
+n=0
+while [ $n -lt $Nbl ] ; do
+    n=`expr $n + 1`
+    errFlg=0 ; prcM=''
+    grpM=`sed -n "$n p" $TR_LIST`
+    nm=`sed -n "$n p" $TR_LIST | wc -w | cut -d ' ' -f 1`
+
+#-  create local copy
     test -e $TEMPDIR  &&  rm -rf $TEMPDIR
     mkdir $TEMPDIR
     RETVAL=$?
     if test "x$RETVAL" = x0 ; then
-      cp $INDIR"/"$file $TEMPDIR
+      ( cd $INDIR ; cp $grpM $TEMPDIR )
       RETVAL=$?
     fi
     if test "x$RETVAL" != x0 ; then
       if test "x$ADDRERR" != x ; then
-        echo "parsing email error" > $ERRMSG
-        echo " processing file: '$INDIR/$file'" >> $ERRMSG
-        echo -n "'mkdir $TEMPDIR' or 'cp $INDIR/$file $TEMPDIR'" >> $ERRMSG
-        echo " returns error $RETVAL" >> $ERRMSG
+        echo "error parsing email '$grpM' :" > $ERRMSG
+        echo -n "'mkdir $TEMPDIR' or 'cp $INDIR/$grpM $TEMPDIR'" | tee -a $ERRMSG
+        echo " returns error $RETVAL" | tee -a $ERRMSG
         mail -s 'parse_emails err_0' $ADDRERR < $ERRMSG
         rm -f $ERRMSG
       fi
-      mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
+      ( cd $INDIR ; mv -f $grpM ../fail2process )
       continue
     fi
 
-    #-- ignore multi-part messages
-    grep "Content-Type: message/partial" $INDIR"/"$file > /dev/null 2>&1
-    RETVAL=$?
-    if test "x$RETVAL" = x0 ; then
+    #-check that we have all the parts
+    if [ $PRT -ge 1 -a $nm -gt 1 ] ; then
+      echo " group (nm=$nm) of multi-parts msg: '$grpM'"
+    fi
+    for xx in $grpM ; do
+      np=`grep 'Content-Type: message/partial' $TEMPDIR/$xx \
+               | sed 's/^Content.*total=//' | sed 's/;$//'`
+      if test "x$np" = x -a $nm = 1 ; then np=1 ; fi
+      if test "x$np" != "x$nm" ; then
+        if test $errFlg = 0 ; then errFlg=1
+          echo "error parsing email '$grpM' :" > $ERRMSG
+        fi
+        echo " - Error: Number of parts='$np' in $xx but got '$nm' msg-files" \
+             | tee -a $ERRMSG
+      fi
+    done
+    if test $errFlg = 1 ; then
       if test "x$ADDRERR" != x ; then
-        echo "parsing email error" > $ERRMSG
-        echo 'grep "Content-Type: message/partial" returns error:' $RETVAL >> $ERRMSG
-        ls -l $INDIR"/"$file >> $ERRMSG
         mail -s 'parse_emails err_1' $ADDRERR < $ERRMSG
-        rm -f $ERRMSG
       fi
-      mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
+      rm -f $ERRMSG
+      ( cd $INDIR ; mv -f $grpM ../fail2process )
       continue
     fi
 
-    #-- munpack
-    mun=`( cd $TEMPDIR ; $MUNPACK $file | cut -d ' ' -f 1 | head -1 )`
-    RETVAL=$?
-    if test "x$RETVAL" != x0 ; then
-      if test "x$ADDRERR" != x ; then
-        echo "parsing email error" > $ERRMSG
-        echo "$MUNPACK $file returns error: $RETVAL" >> $ERRMSG
-        ls -l $INDIR"/"$file >> $ERRMSG
-        mail -s 'parse_emails err_2' $ADDRERR < $ERRMSG
-        rm -f $ERRMSG
+    if test $nm = 1 ; then
+#-  unpack single part message:
+      xx=$grpM
+      prcM=$xx
+      if test $PRT = 2 ; then echo " unpack single-part msg: '$xx'" ; fi
+      ( cd $TEMPDIR ; $MUNPACK $xx > $STDOUT 2>&1 )
+      RETVAL=$?
+      if test "x$RETVAL" != x0 ; then errFlg=1
+          echo "error parsing email '$xx' :" > $ERRMSG
+          echo " - Error: $MUNPACK $xx returns: $RETVAL" | tee -a $ERRMSG
+          ls -l $INDIR"/"$xx >> $ERRMSG
+      else
+          trOutp=`tail -1 $STDOUT | cut -d ' ' -f 1`
+          if test ! -f $TEMPDIR/$trOutp ; then errFlg=1
+            echo "error parsing email '$xx' :" > $ERRMSG
+            echo " - Error: Missing output file '$trOutp' from $MUNPACK output:" \
+                 | tee -a $ERRMSG
+          fi
       fi
-      mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
-      continue
+      if test $errFlg = 1 ; then
+          cat $STDOUT | tee -a $ERRMSG
+          echo " <<<-----------------------"
+          if test "x$ADDRERR" != x ; then
+            mail -s 'parse_emails err_2s' $ADDRERR < $ERRMSG
+          fi
+          rm -f $ERRMSG
+      fi
+      rm -f $STDOUT
+
+    else
+#-  unpack group of multi-parts message:
+
+    #-unpack each part, in the right order:
+      j=0
+      while [ $j -lt $nm ] ; do
+        j=`expr $j + 1`
+        #- get the j^th part msg
+        xx=`( cd $TEMPDIR ; grep -c "Content-Type: message/partial; number=$j" $grpM \
+            | grep -v ':0$' | sed 's/:1$//' )`
+        if test $PRT = 2 ; then
+          echo -n " $j : xx='$xx' : "
+          grep 'Content-Type: message/partial' $TEMPDIR/$xx | sed 's/Content-Type: //'
+        fi
+        #- check
+        if test ! -f $TEMPDIR/$xx ; then
+            echo "error parsing email '$xx' :" > $ERRMSG
+            echo " - Error: Missing msg file '$xx' in $TEMPDIR:" | tee -a $ERRMSG
+            ls -l $TEMDIR | tee -a $ERRMSG
+            errFlg=1 ; echo " <<<-----------------------"
+            if test "x$ADDRERR" != x ; then
+              mail -s 'parse_emails err_2g' $ADDRERR < $ERRMSG
+            fi
+            rm -f $ERRMSG
+        else
+          if test $j = 1 ; then prcM=$xx ; else prcM="$prcM $xx" ; fi
+        #- do unpack
+          ( cd $TEMPDIR ; $MUNPACK $xx > $STDOUT 2>&1 )
+          RETVAL=$?
+          if test "x$RETVAL" != x0 ; then errFlg=1
+            echo "error parsing email '$xx' :" > $ERRMSG
+            echo " - Error: $MUNPACK $xx returns: $RETVAL" | tee -a $ERRMSG
+            ls -l $INDIR"/"$xx | tee -a $ERRMSG
+            cat $STDOUT | tee -a $ERRMSG
+            errFlg=1 ; echo " <<<-----------------------"
+            if test "x$ADDRERR" != x ; then
+              mail -s 'parse_emails err_2u' $ADDRERR < $ERRMSG
+            fi
+            rm -f $ERRMSG
+          fi
+        fi
+        if test $errFlg = 1 ; then j=`expr $nm + 1` ; fi
+
+        if [ $j -lt $nm ] ; then
+        #- if not last part:
+          pfix=`cat $STDOUT | tail -1 | awk '{print $NF}'`
+          if test -d $UnpTmpD/$pfix ; then
+            lock=$UnpTmpD/$pfix/CT
+            if test -e $lock ; then
+              if test $PRT = 2 ; then echo "    remove lock: $lock" ; fi
+              rm -f $lock
+            else
+              echo "error parsing email '$xx' :" > $ERRMSG
+              echo " - Error: lock file '$lock' not found from $MUNPACK output:" \
+                   | tee -a $ERRMSG
+              cat $STDOUT | tee -a $ERRMSG
+              errFlg=1 ; echo " <<<-----------------------"
+            fi
+          else
+              echo "error parsing email '$xx' :" > $ERRMSG
+              echo " - Error: found no dir '$UnpTmpD/$pfix' from $MUNPACK output:" \
+                   | tee -a $ERRMSG
+              cat $STDOUT | tee -a $ERRMSG
+              errFlg=1 ; echo " <<<-----------------------"
+          fi
+        elif [ $j -eq $nm ] ; then
+        #- if last part:
+           trOutp=`tail -1 $STDOUT | cut -d ' ' -f 1`
+           if test ! -f $TEMPDIR/$trOutp ; then
+              echo "error parsing email '$xx' :" > $ERRMSG
+              echo " - Error: Missing output file '$trOutp' from $MUNPACK output:" \
+                   | tee -a $ERRMSG
+              cat $STDOUT | tee -a $ERRMSG
+              errFlg=1 ; echo " <<<-----------------------"
+           fi
+        fi
+        if [ $errFlg -eq 1 -a $j -le $nm ] ; then j=$nm
+           if test "x$ADDRERR" != x ; then
+              mail -s 'parse_emails err_2m' $ADDRERR < $ERRMSG
+           fi
+           rm -f $ERRMSG
+        fi
+        rm -f $STDOUT
+      done
     fi
+    #--  in case of error: mv all $grpM msg to "fail2proc"
+    if test $errFlg = 1 ; then
+        ( cd $INDIR ; mv -f $grpM ../fail2process )
+        continue
+    fi
+    if test $PRT = 2 ; then
+          if test -f $TEMPDIR/$trOutp ; then ls -l $TEMPDIR/$trOutp ; fi
+    fi
+
+#---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
 
     #-- un-tar
-    #( cd $TEMPDIR ; tar -xzvf $mun > out )
+    #( cd $TEMPDIR ; tar -xzvf $trOutp > $STDOUT )
     #   to remove small files "._mydir" that some MAC OS are adding
     #   (for each file or dir) to a tar-file, use option "--exclude=":
-    ( cd $TEMPDIR ; tar -xzvf $mun --exclude="._*" > out )
+    ( cd $TEMPDIR ; tar -xzvf $trOutp --exclude="._*" > $STDOUT )
     RETVAL=$?
     if test "x$RETVAL" != x0 ; then
+      echo "parsing email error" > $ERRMSG
+      echo " - Error:  tar -xzvf $trOutp returns:" $RETVAL | tee -a $ERRMSG
+      ( cd $INDIR ; ls -l $prcM ) | tee -a $ERRMSG
+      ls -l $TEMPDIR/$trOutp  | tee -a $ERRMSG
       if test "x$ADDRERR" != x ; then
-        echo "parsing email error" > $ERRMSG
-        echo "tar -xzvf $mun returns error:" $RETVAL >> $ERRMSG
-        ls -l $INDIR"/"$file >> $ERRMSG
-        ls -l $mun >> $ERRMSG
         mail -s 'parse_emails err_3a' $ADDRERR < $ERRMSG
-        rm -f $ERRMSG
       fi
-      mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
+      rm -f $ERRMSG
+      ( cd $INDIR ; mv -f $grpM ../fail2process )
       continue
     fi
-    tdir=`cat $TEMPDIR"/out" | head -1 | sed -e 's|^./||g' | cut -d '/' -f 1`
+    tdir=`cat $STDOUT | head -1 | sed -e 's|^./||g' | cut -d '/' -f 1`
     if test -d $TEMPDIR/$tdir ; then
-      rm -f $TEMPDIR"/out"
+      rm -f $STDOUT
     else
+      echo "parsing email error" > $ERRMSG
+      echo " - Error: fail to get dir output name 'tdir=$tdir'" | tee -a $ERRMSG
+      echo "   (cont) from tar file '$TEMPDIR/$trOutp'" | tee -a $ERRMSG
       if test "x$ADDRERR" != x ; then
-        echo "parsing email error" > $ERRMSG
-        echo " fail to get a dir output name 'tdir=$tdir'" >> $ERRMSG
-        echo " from tar file '$TEMPDIR/$mun'" >> $ERRMSG
         mail -s 'parse_emails err_3b' $ADDRERR < $ERRMSG
-        rm -f $ERRMSG
       fi
-      mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
+      rm -f $ERRMSG
+      ( cd $INDIR ; mv -f $grpM ../fail2process )
       continue
     fi
 
@@ -232,24 +403,24 @@ for file in $all_files ; do
                | grep '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]' | tail -1`
       mn=`echo $dd | sed 's/..$//' | sed 's/..$/_&/'`
       if test "x$mn" != "x$monthDir" ; then
-       if test "x$mn" = x ; then
-        if test $PRT = 2 ; then echo " cannot get month from '$tdir'" ; fi
-       else
-       #  could comment out this line:
-       #if test $PRT = 2 ; then echo " chg month: '$mn' for '$tdir'" ; fi
-        locDir="$BASEDIR/$mn"
-        if test ! -d $locDir ; then
-          if test $PRT = 2 ; then echo "NO DIR: '$locDir' => '$tdir' POSTPONED" ; fi
-          if test "x$ADDRERR" != x ; then
-            echo "parsing email error" > $ERRMSG
-            echo "no dir '$locDir' for outp. '$tdir'" > $ERRMSG
-            ls -l $INDIR"/"$file >> $ERRMSG
-            mail -s 'parse_emails err_4' $ADDRERR < $ERRMSG
-            rm -f $ERRMSG
+        if test "x$mn" = x ; then
+          if [ $PRT -ge 1 ] ; then echo " cannot get month from '$tdir'" ; fi
+        else
+          locDir="$BASEDIR/$mn"
+          if test ! -d $locDir ; then
+            if [ $PRT -ge 1 ] ; then
+              echo "NO DIR: '$locDir' => '$tdir' POSTPONED"
+            fi
+            if test "x$ADDRERR" != x ; then
+              echo "parsing email error" > $ERRMSG
+              echo "  no dir '$locDir' for outp. '$tdir'" >> $ERRMSG
+              ( cd $INDIR ; ls -l $prcM ) >> $ERRMSG
+              mail -s 'parse_emails err_4' $ADDRERR < $ERRMSG
+              rm -f $ERRMSG
+            fi
+            continue
           fi
-          continue
         fi
-       fi
       fi
     fi
 
@@ -257,16 +428,16 @@ for file in $all_files ; do
     sdir=$tdir
     if test -e $locDir"/"$tdir ; then
         sdir=`echo $tdir | sed 's/_[0-9]*$//'`
-	ad=0
-	while test -e $locDir"/"$sdir"_"$ad ; do
-	    ad=$(( $ad + 1 ))
-	done
+        ad=0
+        while test -e $locDir"/"$sdir"_"$ad ; do
+            ad=$(( $ad + 1 ))
+        done
         sdir=$sdir"_"$ad
     fi
-    if test $PRT = 2 ; then
+    if [ $PRT -ge 1 ] ; then
       if test "x$locDir" = "x$OUTDIR"
-      then echo " '$sdir' ($file)"
-      else echo " '$sdir' ($file) => '$locDir'"
+      then echo " '$sdir' ($prcM)"
+      else echo " '$sdir' ($prcM) => '$locDir'"
       fi
     fi
     mv $TEMPDIR"/"$tdir $locDir"/"$sdir > /dev/null 2>&1
@@ -274,20 +445,22 @@ for file in $all_files ; do
     if test "x$RETVAL" != x0 ; then
       if test "x$ADDRERR" != x ; then
         echo "parsing email error" > $ERRMSG
-        echo "mv $TEMPDIR/$tdir $locDir/$sdir returns error:" $RETVAL >> $ERRMSG
-        echo -n "in dir: $TEMPDIR : " ; ls -l $TEMPDIR  >> $ERRMSG
-        echo -n "in dir: $OUTDIR : " ; ls -l $locDir  >> $ERRMSG
+        echo " - Error: mv $TEMPDIR/$tdir $locDir/$sdir returns:" $RETVAL \
+             | tee -a $ERRMSG
+        echo -n "   in dir: $TEMPDIR : " ; ls -l $TEMPDIR  | tee -a $ERRMSG
+        echo -n "   in dir: $OUTDIR : " ; ls -l $locDir | tee -a $ERRMSG
         mail -s 'parse_emails err_5' $ADDRERR < $ERRMSG
         rm -f $ERRMSG
       fi
-      mv -f $INDIR"/"$file $INDIR"/../fail2process/"$file
+      ( cd $INDIR ; mv -f $grpM ../fail2process )
       continue
     fi
     chmod -R a+rx $locDir"/"$sdir > /dev/null 2>&1
 
-    #-- remove the original file
-    rm -f $INDIR"/"$file
+    #-- remove the original message files
+    ( cd $INDIR ; rm -f $grpM )
 
 done
-if test $PRT = 1 ; then echo "  done" ; fi
+rm -f $TR_LIST
+if test $PRT = 2 ; then echo "  done" ; fi
 
