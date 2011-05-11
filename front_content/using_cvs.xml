@@ -34,12 +34,12 @@
       mechanism for "committing" or "checking in" changes (please see below).
       Using CVS pserver from the command line requires just a three commands.
       Using a Bourne, "bash", or "sh-compatible" shell they are:</p>
-    
+
 <pre>
   $ export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
-  $ cvs login 
+  $ cvs login
     ( enter the CVS password: "cvsanon" )
-  $ cvs co MITgcm
+  $ cvs co -P MITgcm
 </pre>
 
     <p>Using a "C", "csh", or "tcsh" shell the commands are:</p>
@@ -48,21 +48,25 @@
   $ setenv CVSROOT ':pserver:cvsanon@mitgcm.org:/u/gcmpack'
   $ cvs login
     ( enter the CVS password: "cvsanon" )
-  $ cvs co MITgcm
+  $ cvs co -P MITgcm
 </pre>
 
-    <p>A large amount of additional (optional!) content can be obtained from the
-      MITgcm_contrib directory that can be checked out using:
+    <p>using the "-P" option to check-out ("<i>cvs co -P</i>") prevents
+    to download unnecessary empty directories.</p>
+
+    <p>A large amount of additional (optional!) content is available
+    from the <i>MITgcm_contrib</i> directory; much of it is specific to certain
+    setups (eg. high-res setups, in-development material that is not yet part
+    of the "main" code, etc ...).
+    But rather than checking out the full content of MITgcm_contrib
+    ("<i>cvs co -P MITgcm_contrib</i>"), which takes a long time to download
+    (particularly from remote locations), we recommend to download only the
+    specific part of interest, e.g.: "<i>submesoscale</i>" directory,
+    which can be checked out using:</p>
 
 <pre>
-  $ cvs co MITgcm_contrib
+  $ cvs co -P MITgcm_contrib/submesoscale
 </pre>
-
-      In general, we do not recommend checking out all of MITgcm_contrib since
-      it takes a long time to download (particularly from remote locations) and
-      much of it is specific to certain setups (eg. high-res setups,
-      in-development material that is not yet part of the "main" code,
-      etc.).</p>
 
     <p>Note that you will only need to perform the "cvs login" once.  And for
       convenience, you may want to add the CVSROOT variable to your shell's
@@ -73,12 +77,12 @@
     <h4>Getting Parts of the Source "Tree"</h4>
 
     <p>The above commands demonstrate how to check out all of the MITgcm code
-      and the "contributed" (that is, unsupported by occasionally useful)
-      information within the "MITgcm_contrib" directory.  In many cases, this is
-      overkill and can result in long download times.  To reduce the volume of
-      information downloaded and thereby speedup the download times, one can
-      select one of the following pre-defined "aliases" that will provide a
-      sub-set of the entire MITgcm source "tree":</p>
+      and the "contributed" (that is, unsupported but occasionally useful)
+      information within the "<i>MITgcm_contrib</i>" directory. In many cases,
+      this is overkill and can result in long download times.
+      To reduce the volume of information downloaded and thereby speedup the
+      download times, one can select one of the following pre-defined "aliases"
+      that will provide a sub-set of the entire MITgcm source "tree":</p>
 
     <table align="center" border="0" cellpadding="10" width="90%" summary="CVS
       aliases">
@@ -130,7 +134,7 @@
       directories they create can be changed to a different name following the
       check-out:</p>
 <pre>
-  $ cvs co MITgcm_verif_basic
+  $ cvs co -P MITgcm_verif_basic
   $ mv MITgcm MITgcm_verif_basic
 </pre>
 
@@ -148,8 +152,8 @@
       option such as: </p>
 
 <pre>
-  $ cvs co -r release1_p5 MITgcm
-  $ cvs co -r checkpoint52a_post MITgcm
+  $ cvs co -P -r release1_p5 MITgcm
+  $ cvs co -P -r checkpoint52a_post MITgcm
 </pre>
 
     <p>By default (that is, when no tag is specified), CVS will retrieve the
