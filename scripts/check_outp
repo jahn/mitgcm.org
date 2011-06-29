@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.26 2010/11/24 16:22:08 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.27 2011/01/21 19:45:01 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -102,13 +102,18 @@ make_resdir_list()
 
 	    ADJOINT=
 	    RESTART=0
-	    NOI3E=0
+	    FAST=0
+	    DVLP=0
 	    MTH=0
 	    if test -r $dir/summary.txt ; then
 		comm=`grep 'ADJOINT=true' $dir/summary.txt 2>/dev/null`
 		eval $comm
 		RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
-		NOI3E=`grep -c "^run: .*testreport.* '*-noieee'*" $dir/summary.txt`
+		FAST=`grep -c "^run: .*testreport.* '*-fast'*" $dir/summary.txt`
+		if test "x$FAST" = x0 ; then
+		   FAST=`grep -c "^run: .*testreport.* '*-noieee'*" $dir/summary.txt`
+		fi
+		DVLP=`grep -c "^run: .*testreport.* '*-devel'*" $dir/summary.txt`
 		MTH=`grep -c "^run: .*testreport.* -mth" $dir/summary.txt`
 	    fi
 	    if test "x$RESTART" = x0 ; then
@@ -121,8 +126,11 @@ make_resdir_list()
 		yy=`echo $OPTFILE | grep -c '+mth$'`
 		if test $yy = 0 ; then OPTFILE="${OPTFILE}+mth" ; fi
 	    fi
-	    if test "x$NOI3E" = x1 ; then
-		OPTFILE="${OPTFILE}.noieee"
+	    if test "x$FAST" = x1 ; then
+		OPTFILE="${OPTFILE}.fast"
+	    fi
+	    if test "x$DVLP" = x1 ; then
+		OPTFILE="${OPTFILE}.dvlp"
 	    fi
 	    day=`echo $i   | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
 	    ttt=`echo $day | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
