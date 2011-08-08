@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.65 2010/11/19 04:41:18 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.66 2011/06/28 18:31:20 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -10,12 +10,12 @@ usage()
 {
     echo
     echo "Usage:  $0 [OPTIONS]"
-    echo 
+    echo
     echo "where possible OPTIONS are:"
     echo "  (-help|-h)           print usage"
     echo "  (-date |-d )PERIOD   run for PERIOD=\"YYYY_MM\""
     echo "                         [def=\"$PERIOD\"]"
-    echo 
+    echo
     exit 1
 }
 
@@ -85,7 +85,7 @@ EOF
 color="#bbffdd"
 ncolor="#bbddff"
 
-MACHINES="faulks meander aces baudelaire dickens danton beagle harbor"
+MACHINES="faulks meander aces acesgrid baudelaire dickens danton beagle harbor"
 MACHINES="$MACHINES pleiades iblade rays solasrv sx8"
 MACHINES="$MACHINES trane dodongo dokdo stomp bigred"
 
