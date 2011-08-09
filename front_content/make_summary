@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.66 2011/06/28 18:31:20 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.67 2011/08/08 18:22:07 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -85,7 +85,7 @@ EOF
 color="#bbffdd"
 ncolor="#bbddff"
 
-MACHINES="faulks meander aces acesgrid baudelaire dickens danton beagle harbor"
+MACHINES="faulks meander aces- acesgrid baudelaire dickens danton beagle harbor"
 MACHINES="$MACHINES pleiades iblade rays solasrv sx8"
 MACHINES="$MACHINES trane dodongo dokdo stomp bigred"
 
@@ -107,6 +107,7 @@ done
 for mname in $MACHINES ; do
 
     echo "  $mname"
+    sname=`echo $mname | sed 's/-$//'`
 
     dir_list=`grep $mname ./dir_all`
     echo -n "" > ./mlist
@@ -222,7 +223,7 @@ for mname in $MACHINES ; do
 	    URL="results/$PERIOD/$ldir"
 	    cat <<EOF >>$OUTFILE
 <tr bgcolor="$color">
-  <td height="0"> $mname </td>
+  <td height="0"> $sname </td>
   <td> $optf </td>
   <td> $kind </td>
   <td> <a href="$res_url$URL">$DAY</a> </td>
