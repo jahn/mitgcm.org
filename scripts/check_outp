@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.27 2011/01/21 19:45:01 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.28 2011/06/29 14:00:59 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -304,7 +304,7 @@ echo "     name     checked   comp    Diff    lines"  >> $OUTPSUM
 ( cd $INDIR ; ls -1 -t */summary.txt | sed 's/\/summary.txt//' ) > ./dir_all
 
 if test "x$MACHINES" = "x_All_" ; then
-  MACHINES="faulks meander aces.jmc aces.ce107 baudelaire dickens danton beagle harbor"
+  MACHINES="faulks meander aces- acesgrid baudelaire dickens danton beagle harbor"
   MACHINES="$MACHINES pleiades iblade rays solasrv sx8"
   MACHINES="$MACHINES trane dodongo dokdo stomp bigred"
 
@@ -325,6 +325,7 @@ fi
 
 for pname in $MACHINES ; do
 
+    sname=`echo $pname | sed 's/-$//'`
     mname=`echo $pname | sed 's/\./ /g' | awk '{print $1}'`
     sUser=
     if test $mname != $pname ; then
@@ -370,7 +371,7 @@ for pname in $MACHINES ; do
 	  #if test $mname = 'aces' -a $optf = 'linux_ia32_open64' ; then num=-1 ; fi
 	  #if test $mname = 'aces' -a $optf = 'linux_ia32_g95' ; then num=-1 ; fi
 	  dd=`echo $optf | grep -c 'bigred.*noieee'`
-	  if test $mname = 'bigred' -a $dd = 1 ; then num=-1 ; fi
+	  #if test $mname = 'bigred' -a $dd = 1 ; then num=-1 ; fi
 	  if test $num -lt 0 ; then
 	    echo "  discard $sdir : $type , of='$optf'" | tee -a $OUTPFIL
 	    cmis=`expr $cmis + 1`
@@ -451,7 +452,7 @@ for pname in $MACHINES ; do
 	  fi
 	done
 	if [ $cmis -gt 0 ] ; then tmis='(-'$cmis')' ; else tmis='(--)' ; fi
-	printf '%11s :  %3i      %4s   %3i  ' $pname $ctot $tmis $cdif >> $OUTPSUM
+	printf '%11s :  %3i      %4s   %3i  ' $sname $ctot $tmis $cdif >> $OUTPSUM
 	if [ $cdif -gt 0 ] ; then
 	  echo "   $clin" >> $OUTPSUM
 	else echo "" >> $OUTPSUM ; fi
