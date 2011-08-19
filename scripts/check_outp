@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.28 2011/06/29 14:00:59 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.29 2011/08/09 16:40:29 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -104,7 +104,9 @@ make_resdir_list()
 	    RESTART=0
 	    FAST=0
 	    DVLP=0
+	    MPI=0
 	    MTH=0
+	    UR4=0
 	    if test -r $dir/summary.txt ; then
 		comm=`grep 'ADJOINT=true' $dir/summary.txt 2>/dev/null`
 		eval $comm
@@ -114,13 +116,28 @@ make_resdir_list()
 		   FAST=`grep -c "^run: .*testreport.* '*-noieee'*" $dir/summary.txt`
 		fi
 		DVLP=`grep -c "^run: .*testreport.* '*-devel'*" $dir/summary.txt`
+		MPI=`grep -c "^run: .*testreport.* -mpi " $dir/summary.txt`
+		if test "x$MPI" = x0 ; then
+		   MPI=`grep -c "^run: .*testreport.* -MPI " $dir/summary.txt`
+		fi
 		MTH=`grep -c "^run: .*testreport.* -mth" $dir/summary.txt`
+		UR4=`grep -c "^run: .*testreport.* -use_r4 " $dir/summary.txt`
+		if test "x$UR4" = x0 ; then
+		   UR4=`grep -c "^run: .*testreport.* -ur4 " $dir/summary.txt`
+		fi
 	    fi
 	    if test "x$RESTART" = x0 ; then
 		kind="forward"
 		test "x$ADJOINT" = xtrue  &&  kind="adjoint"
 	    else
 		kind="restart"
+	    fi
+	    if test "x$UR4" = x1 ; then
+		OPTFILE="${OPTFILE}.use_r4"
+	    fi
+	    if test "x$MPI" = x1 ; then
+		yy=`echo $OPTFILE | grep -c '+mpi'`
+		if test $yy = 0 ; then OPTFILE="${OPTFILE}+mpi" ; fi
 	    fi
 	    if test "x$MTH" = x1 ; then
 		yy=`echo $OPTFILE | grep -c '+mth$'`
