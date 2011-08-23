@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.68 2011/08/09 16:35:32 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.69 2011/08/19 20:38:19 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -102,7 +102,7 @@ for madd in $MALL ; do
     done
     test $present = 0  &&  MACHINES="$MACHINES $madd"
 done
-#MACHINES="faulks"
+#MACHINES="baudelaire"
 
 for mname in $MACHINES ; do
 
@@ -162,11 +162,12 @@ for mname in $MACHINES ; do
 	       UR4=`grep -c "^run: .*testreport.* -ur4 " $dir/summary.txt`
 	    fi
 	fi
-	if test "x$RESTART" = x0 ; then
-	    kind="forward"
-	    test "x$ADJOINT" = xtrue  &&  kind="adjoint"
+	if test "x$ADJOINT" = xtrue ; then 
+	    kind="adjoint" ; order='000'
+	elif test "x$RESTART" = x0 ; then
+	    kind="forward" ; order='001'
 	else
-	    kind="restart"
+	    kind="restart" ; order='002'
 	fi
 	if test "x$UR4" = x1 ; then
 	    OPTFILE="${OPTFILE}.use_r4"
@@ -204,7 +205,7 @@ for mname in $MACHINES ; do
 	DAY=`cat ./ms_tmp | awk '(length($1)==8 && substr($1,0,2)=="20")'`
 	rm -f ./ms_tmp
 
-	echo "$OPTFILE$kind $DAY $OPTFILE $kind $i $t_pass:$t_tot" >> ./mlist
+	echo "$OPTFILE$order $DAY $OPTFILE $kind $i $t_pass:$t_tot" >> ./mlist
 
     done
 
