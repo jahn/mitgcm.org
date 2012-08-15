@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.69 2011/08/19 20:38:19 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.70 2011/08/23 18:14:10 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -38,19 +38,19 @@ for ac_option ; do
     ac_optarg=`expr "x$ac_option" : 'x[^=]*=\(.*\)'`
 
     case $ac_option in
-	
+
 	-help | --help | -h | --h)
 	    usage ;;
-	
-        -date | --date | -d | --d)
-            ac_prev=PERIOD ;;
-        --date=* | -date=*)
-            PERIOD=$ac_optarg ;;
 
-        *)
+	-date | --date | -d | --d)
+	    ac_prev=PERIOD ;;
+	--date=* | -date=*)
+	    PERIOD=$ac_optarg ;;
+
+	*)
 	    echo "Error: don't understand argument \"$ac_option\""
 	    usage
-            ;;
+	    ;;
 
      esac
 
@@ -95,10 +95,10 @@ MALL=`cat ./dir_all | sed -e 's|_| |g' | awk '{print $2}' | sort | uniq`
 for madd in $MALL ; do
     present=0
     for m in $MACHINES ; do
-        echo $madd | grep $m > /dev/null 2>&1
-        RETVAL=$?
-        test $RETVAL = 0  &&  present=1
-        continue
+	echo $madd | grep $m > /dev/null 2>&1
+	RETVAL=$?
+	test $RETVAL = 0  &&  present=1
+	continue
     done
     test $present = 0  &&  MACHINES="$MACHINES $madd"
 done
@@ -137,6 +137,7 @@ for mname in $MACHINES ; do
 	fi
 
 	ADJOINT=
+	TANGLIN=
 	RESTART=0
 	FAST=0
 	DVLP=0
@@ -145,6 +146,8 @@ for mname in $MACHINES ; do
 	UR4=0
 	if test -r $dir/summary.txt ; then
 	    comm=`grep 'ADJOINT=true' $dir/summary.txt 2>/dev/null`
+	    eval $comm
+	    comm=`grep 'TANGLIN=true' $dir/summary.txt 2>/dev/null`
 	    eval $comm
 	    RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
 	    FAST=`grep -c "^run: .*testreport.* '*-fast'*" $dir/summary.txt`
@@ -162,12 +165,14 @@ for mname in $MACHINES ; do
 	       UR4=`grep -c "^run: .*testreport.* -ur4 " $dir/summary.txt`
 	    fi
 	fi
-	if test "x$ADJOINT" = xtrue ; then 
+	if test "x$ADJOINT" = xtrue ; then
 	    kind="adjoint" ; order='000'
+	elif test "x$TANGLIN" = xtrue ; then
+	    kind="tang-lin" ; order='001'
 	elif test "x$RESTART" = x0 ; then
-	    kind="forward" ; order='001'
+	    kind="forward" ; order='002'
 	else
-	    kind="restart" ; order='002'
+	    kind="restart" ; order='003'
 	fi
 	if test "x$UR4" = x1 ; then
 	    OPTFILE="${OPTFILE}.use_r4"
@@ -217,9 +222,9 @@ for mname in $MACHINES ; do
     if test $num -gt 0 ; then
 
 	# swap colors
-        ctmp=$color
-        color=$ncolor
-        ncolor=$ctmp
+	ctmp=$color
+	color=$ncolor
+	ncolor=$ctmp
 
 	keys=`cat ./mlist | cut -d " " -f 1 | sort | uniq`
 
