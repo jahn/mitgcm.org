@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.70 2011/08/23 18:14:10 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.71 2012/08/15 18:27:54 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -168,7 +168,7 @@ for mname in $MACHINES ; do
 	if test "x$ADJOINT" = xtrue ; then
 	    kind="adjoint" ; order='000'
 	elif test "x$TANGLIN" = xtrue ; then
-	    kind="tang-lin" ; order='001'
+	    kind="tanglin" ; order='001'
 	elif test "x$RESTART" = x0 ; then
 	    kind="forward" ; order='002'
 	else
