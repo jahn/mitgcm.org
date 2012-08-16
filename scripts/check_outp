@@ -1,11 +1,10 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.30 2011/08/19 20:38:19 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.31 2011/08/23 18:14:10 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
 #    same optfile)
-
 
 usage()
 {
@@ -101,6 +100,7 @@ make_resdir_list()
 	    fi
 
 	    ADJOINT=
+	    TANGLIN=
 	    RESTART=0
 	    FAST=0
 	    DVLP=0
@@ -109,6 +109,8 @@ make_resdir_list()
 	    UR4=0
 	    if test -r $dir/summary.txt ; then
 		comm=`grep 'ADJOINT=true' $dir/summary.txt 2>/dev/null`
+		eval $comm
+		comm=`grep 'TANGLIN=true' $dir/summary.txt 2>/dev/null`
 		eval $comm
 		RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
 		FAST=`grep -c "^run: .*testreport.* '*-fast'*" $dir/summary.txt`
@@ -128,10 +130,12 @@ make_resdir_list()
 	    fi
 	    if test "x$ADJOINT" = xtrue ; then
 		kind="adjoint" ; order='000'
+	    elif test "x$TANGLIN" = xtrue ; then
+		kind="tanglin" ; order='001'
 	    elif test "x$RESTART" = x0 ; then
-		kind="forward" ; order='001'
+		kind="forward" ; order='002'
 	    else
-		kind="restart" ; order='002'
+		kind="restart" ; order='003'
 	    fi
 	    if test "x$UR4" = x1 ; then
 		OPTFILE="${OPTFILE}.use_r4"
@@ -154,7 +158,7 @@ make_resdir_list()
 	    ttt=`echo $day | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
 	    day=`echo $ttt | sed -e 's|_| |g' |awk '{print $NF}'`
 
-            if [ $day -lt $BEFORE ] ; then
+	    if [ $day -lt $BEFORE ] ; then
 		echo "$OPTFILE$order $day $OPTFILE $kind $i" >> ./plist
 	    elif [ $day -ge $FIRSTDAY -a $day -le $LASTDAY ] ; then
 		echo "$OPTFILE$order $day $OPTFILE $kind $i" >> ./slist
@@ -203,9 +207,9 @@ for ac_option ; do
 
     # If the previous option needs an argument, assign it.
     if test -n "$ac_prev"; then
-        eval "$ac_prev=\$ac_option"
-        ac_prev=
-        continue
+	eval "$ac_prev=\$ac_option"
+	ac_prev=
+	continue
     fi
 
     ac_optarg=`expr "x$ac_option" : 'x[^=]*=\(.*\)'`
