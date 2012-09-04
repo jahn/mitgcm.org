@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.71 2012/08/15 18:27:54 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.72 2012/08/16 02:42:56 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -136,9 +136,11 @@ for mname in $MACHINES ; do
 	    OPTFILE="not_explicitly_specified"
 	fi
 
+	# EXTRA = non-standard list of experiment
 	ADJOINT=
 	TANGLIN=
 	RESTART=0
+	EXTRA=0
 	FAST=0
 	DVLP=0
 	MPI=0
@@ -150,30 +152,39 @@ for mname in $MACHINES ; do
 	    comm=`grep 'TANGLIN=true' $dir/summary.txt 2>/dev/null`
 	    eval $comm
 	    RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
-	    FAST=`grep -c "^run: .*testreport.* '*-fast'*" $dir/summary.txt`
+	    comm=`grep '^run: .*testreport.* ' $dir/summary.txt`
+	    EXTRA=`echo "$comm" | grep -c " -*-tdir\>"`
+	    if test "x$EXTRA" = x0 ; then
+		EXTRA=`echo "$comm" | grep -c " -*-t\>"`
+	    fi
+	    FAST=`echo "$comm" | grep -c " -*-fast\>"`
 	    if test "x$FAST" = x0 ; then
-	      FAST=`grep -c "^run: .*testreport.* '*-noieee'*" $dir/summary.txt`
+	      FAST=`echo "$comm" | grep -c " '*-noieee'*"`
 	    fi
-	    DVLP=`grep -c "^run: .*testreport.* '*-devel'*" $dir/summary.txt`
-	    MPI=`grep -c "^run: .*testreport.* -mpi " $dir/summary.txt`
+	    DVLP=`echo "$comm" | grep -c " -*-devel\>"`
+	    MPI=`echo "$comm" | grep -c " -*-mpi\>"`
 	    if test "x$MPI" = x0 ; then
-	       MPI=`grep -c "^run: .*testreport.* -MPI " $dir/summary.txt`
+	       MPI=`echo "$comm" | grep -c " -*-MPI\>"`
 	    fi
-	    MTH=`grep -c "^run: .*testreport.* -mth " $dir/summary.txt`
-	    UR4=`grep -c "^run: .*testreport.* -use_r4 " $dir/summary.txt`
+	    MTH=`echo "$comm" | grep -c " -*-mth\>"`
+	    UR4=`echo "$comm" | grep -c " -*-use_r4\>"`
 	    if test "x$UR4" = x0 ; then
-	       UR4=`grep -c "^run: .*testreport.* -ur4 " $dir/summary.txt`
+	       UR4=`echo "$comm" | grep -c " -*-ur4\>"`
 	    fi
 	fi
 	if test "x$ADJOINT" = xtrue ; then
-	    kind="adjoint" ; order='000'
+	    kind="adjoint" ; order=0
 	elif test "x$TANGLIN" = xtrue ; then
-	    kind="tanglin" ; order='001'
+	    kind="tanglin" ; order=1
 	elif test "x$RESTART" = x0 ; then
-	    kind="forward" ; order='002'
+	    kind="forward" ; order=2
 	else
-	    kind="restart" ; order='003'
+	    kind="restart" ; order=3
 	fi
+	if test "x$EXTRA" != x0 ; then
+	    order=`expr $order + 4`
+	fi
+	order=`printf '%3.3i' $order`
 	if test "x$UR4" = x1 ; then
 	    OPTFILE="${OPTFILE}.use_r4"
 	fi
