@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.72 2012/08/16 02:42:56 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.73 2012/09/04 20:12:20 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -30,9 +30,9 @@ for ac_option ; do
 
     # If the previous option needs an argument, assign it.
     if test -n "$ac_prev"; then
-        eval "$ac_prev=\$ac_option"
-        ac_prev=
-        continue
+	eval "$ac_prev=\$ac_option"
+	ac_prev=
+	continue
     fi
 
     ac_optarg=`expr "x$ac_option" : 'x[^=]*=\(.*\)'`
@@ -155,11 +155,11 @@ for mname in $MACHINES ; do
 	    comm=`grep '^run: .*testreport.* ' $dir/summary.txt`
 	    EXTRA=`echo "$comm" | grep -c " -*-tdir\>"`
 	    if test "x$EXTRA" = x0 ; then
-		EXTRA=`echo "$comm" | grep -c " -*-t\>"`
+	       EXTRA=`echo "$comm" | grep -c " -*-t\>"`
 	    fi
 	    FAST=`echo "$comm" | grep -c " -*-fast\>"`
 	    if test "x$FAST" = x0 ; then
-	      FAST=`echo "$comm" | grep -c " '*-noieee'*"`
+	       FAST=`echo "$comm" | grep -c " '*-noieee'*"`
 	    fi
 	    DVLP=`echo "$comm" | grep -c " -*-devel\>"`
 	    MPI=`echo "$comm" | grep -c " -*-mpi\>"`
