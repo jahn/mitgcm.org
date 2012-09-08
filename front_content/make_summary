@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.73 2012/09/04 20:12:20 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.74 2012/09/04 20:29:22 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -107,7 +107,6 @@ done
 for mname in $MACHINES ; do
 
     echo "  $mname"
-    sname=`echo $mname | sed 's/-$//'`
 
     dir_list=`grep $mname ./dir_all`
     echo -n "" > ./mlist
@@ -140,7 +139,7 @@ for mname in $MACHINES ; do
 	ADJOINT=
 	TANGLIN=
 	RESTART=0
-	EXTRA=0
+	EXTRA=
 	FAST=0
 	DVLP=0
 	MPI=0
@@ -153,23 +152,33 @@ for mname in $MACHINES ; do
 	    eval $comm
 	    RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
 	    comm=`grep '^run: .*testreport.* ' $dir/summary.txt`
-	    EXTRA=`echo "$comm" | grep -c " -*-tdir\>"`
-	    if test "x$EXTRA" = x0 ; then
-	       EXTRA=`echo "$comm" | grep -c " -*-t\>"`
+	    EXTRA=`echo "$comm" | grep " -*-tdir\>" | sed -e "s/^.* -*-tdir\>//" -e "s/ -.*$//"`
+	    if test "x$EXTRA" = x ; then
+		EXTRA=`echo "$comm" | grep " -*-t\>" | sed -e "s/^.*-*-t\>//" -e "s/ -.*$//"`
+	    fi
+	    if test "x$EXTRA" = x ; then EXTRA=0 ; else
+		#echo -n "EXTRA=$EXTRA"
+		nn0=`echo $EXTRA | sed "s/ *' *//g" | wc -w`
+		nn1=`echo $EXTRA | sed "s/ *' *//g" | tr ' ' '\n' | grep -c "\<monod_"`
+		nn2=`echo $EXTRA | sed "s/ *' *//g" | tr ' ' '\n' | grep -c "\<darwin_"`
+		EXTRA=1
+                if [ $nn1 -ge 2 ] ; then EXTRA=2 ; fi
+                if [ $nn2 -ge 2 ] ; then EXTRA=3 ; fi
+		#echo " : nn0=$nn0 ; nn1=$nn1 ; nn2=$nn2"
 	    fi
 	    FAST=`echo "$comm" | grep -c " -*-fast\>"`
 	    if test "x$FAST" = x0 ; then
-	       FAST=`echo "$comm" | grep -c " '*-noieee'*"`
+		FAST=`echo "$comm" | grep -c " '*-noieee'*"`
 	    fi
 	    DVLP=`echo "$comm" | grep -c " -*-devel\>"`
 	    MPI=`echo "$comm" | grep -c " -*-mpi\>"`
 	    if test "x$MPI" = x0 ; then
-	       MPI=`echo "$comm" | grep -c " -*-MPI\>"`
+		MPI=`echo "$comm" | grep -c " -*-MPI\>"`
 	    fi
 	    MTH=`echo "$comm" | grep -c " -*-mth\>"`
 	    UR4=`echo "$comm" | grep -c " -*-use_r4\>"`
 	    if test "x$UR4" = x0 ; then
-	       UR4=`echo "$comm" | grep -c " -*-ur4\>"`
+		UR4=`echo "$comm" | grep -c " -*-ur4\>"`
 	    fi
 	fi
 	if test "x$ADJOINT" = xtrue ; then
@@ -181,9 +190,7 @@ for mname in $MACHINES ; do
 	else
 	    kind="restart" ; order=3
 	fi
-	if test "x$EXTRA" != x0 ; then
-	    order=`expr $order + 4`
-	fi
+	order=`expr $order + 10 \* $EXTRA`
 	order=`printf '%3.3i' $order`
 	if test "x$UR4" = x1 ; then
 	    OPTFILE="${OPTFILE}.use_r4"
@@ -247,6 +254,11 @@ for mname in $MACHINES ; do
 	    optf=`echo $tline | cut -d " " -f 3`
 	    DAY=`echo $tline | cut -d " " -f 2`
 	    URL="results/$PERIOD/$ldir"
+	    #-- machine name to print:
+	    sname=`echo $mname | sed 's/-$//'`
+	    alt=`echo $key | sed "s/$optf//"`
+	   #if   [ $alt -ge 30 ] ; then sname="${sname}.darwin"
+	   #elif [ $alt -ge 20 ] ; then sname="${sname}.monod" ; fi
 	    cat <<EOF >>$OUTFILE
 <tr bgcolor="$color">
   <td height="0"> $sname </td>
