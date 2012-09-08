@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.32 2012/08/16 02:48:24 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.33 2012/09/04 20:34:31 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -102,7 +102,7 @@ make_resdir_list()
 	    ADJOINT=
 	    TANGLIN=
 	    RESTART=0
-	    EXTRA=0
+	    EXTRA=
 	    FAST=0
 	    DVLP=0
 	    MPI=0
@@ -115,9 +115,19 @@ make_resdir_list()
 		eval $comm
 		RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
 		comm=`grep '^run: .*testreport.* ' $dir/summary.txt`
-		EXTRA=`echo "$comm" | grep -c " -*-tdir\>"`
-		if test "x$EXTRA" = x0 ; then
-		   EXTRA=`echo "$comm" | grep -c " -*-t\>"`
+		EXTRA=`echo "$comm" | grep " -*-tdir\>" | sed -e "s/^.* -*-tdir\>//" -e "s/ -.*$//"`
+		if test "x$EXTRA" = x ; then
+		    EXTRA=`echo "$comm" | grep " -*-t\>" | sed -e "s/^.*-*-t\>//" -e "s/ -.*$//"`
+		fi
+		if test "x$EXTRA" = x ; then EXTRA=0 ; else
+		    #echo -n "EXTRA=$EXTRA"
+		    nn0=`echo $EXTRA | sed "s/ *' *//g" | wc -w`
+		    nn1=`echo $EXTRA | sed "s/ *' *//g" | tr ' ' '\n' | grep -c "\<monod_"`
+		    nn2=`echo $EXTRA | sed "s/ *' *//g" | tr ' ' '\n' | grep -c "\<darwin_"`
+		    EXTRA=1
+		    if [ $nn1 -ge 2 ] ; then EXTRA=2 ; fi
+		    if [ $nn2 -ge 2 ] ; then EXTRA=3 ; fi
+		    #echo " : nn0=$nn0 ; nn1=$nn1 ; nn2=$nn2"
 		fi
 		FAST=`echo "$comm" | grep -c " -*-fast\>"`
 		if test "x$FAST" = x0 ; then
@@ -143,9 +153,7 @@ make_resdir_list()
 	    else
 		kind="restart" ; order=3
 	    fi
-	    if test "x$EXTRA" != x0 ; then
-		order=`expr $order + 4`
-	    fi
+	    order=`expr $order + 10 \* $EXTRA`
 	    order=`printf '%3.3i' $order`
 	    if test "x$UR4" = x1 ; then
 		OPTFILE="${OPTFILE}.use_r4"
