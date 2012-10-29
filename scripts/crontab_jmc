@@ -1,8 +1,8 @@
-# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.17 2011/11/29 01:09:17 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.18 2012/10/25 15:18:59 jmc Exp $
 
 #---------------------------------------------------------
 #-from: jmc@forge.csail.mit.edu
-#  current output of: crontab -l
+#  current output of "crontab -l":
 
 15,45 * * * * /u/u2/jmc/testing/scripts/process_emails
 50  * * * * /u/u2/jmc/testing/scripts/build_mitgcm_front
@@ -18,11 +18,11 @@
 
 #---------------------------------------------------------
 #-from: jmc@baudelaire.csail.mit.edu
-#  current output of: crontab -l
+#  current output of "crontab -l":
 
 MAILTO=jmc@ocean.mit.edu
 
-10 00 * * *  /u/u2/jmc/testing/csail/test_baudelaire
+05 00 * * *  /u/u2/jmc/testing/csail/test_baudelaire
 05 15 * * *    cd /u/u0/httpd/html/build_manual && /u/u2/jmc/testing/scripts/bld_manual.sh > bld_manual.log 2>&1 ; cp -p bld_manual.log /u/u2/jmc/testing/logs/bld_manual.$$
 #40 10 * * * /u/u2/jmc/testing/temp/test_baudelaire
 #40 20 * * * /u/u2/jmc/testing/temp/test_crontab
@@ -40,7 +40,7 @@ MAILTO=jmc@ocean.mit.edu
 
 #---------------------------------------------------------
 #-from: jmc@dickens.csail.mit.edu
-#  current output of: crontab -l
+#  current output of "crontab -l":
 
 MAILTO=jmc@ocean.mit.edu
 
