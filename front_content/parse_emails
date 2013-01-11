@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.24 2010/10/31 02:25:05 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.25 2011/03/11 18:18:44 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -426,14 +426,14 @@ while [ $n -lt $Nbl ] ; do
 
     #-- copy to $locDir and rename if necessary
     sdir=$tdir
-    if test -e $locDir"/"$tdir ; then
+#   if test -e $locDir"/"$tdir ; then
         sdir=`echo $tdir | sed 's/_[0-9]*$//'`
         ad=0
         while test -e $locDir"/"$sdir"_"$ad ; do
             ad=$(( $ad + 1 ))
         done
         sdir=$sdir"_"$ad
-    fi
+#   fi
     if [ $PRT -ge 1 ] ; then
       if test "x$locDir" = "x$OUTDIR"
       then echo " '$sdir' ($prcM)"
