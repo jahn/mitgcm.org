@@ -18,21 +18,25 @@
   </head>
   <body>
     <p>The MITgcm model is tested
-      (compiled and run) in an automated fashion on a varirety of
+      (compiled and run) in an automated fashion on a variety of
       different machines.  The following is a summary of the MITgcm
       verification suite for the time period: <b>_PERIOD</b>.</p>
 
     <p>The machine naming scheme is:<br /></p>
     <table align="center" cellpadding="0" border="0">
+      <!--
       <tr bgcolor="#00cccc"> <td><b>Machine Type</b></td> <td><b>Nickname</b></td>
         <td><b>Notes</b></td> </tr>
+      -->
+      <tr bgcolor="#00cccc"> <td><b>Nickname</b></td> <td><b>Processor Type</b></td>
+        <td><b>Operating System</b></td> </tr>
 
       <tr bgcolor="#bbffdd">
-        <td> Intel Xeon </td> <td>"baudelaire"</td> <td>Fedora 13 (x86_64)</td> </tr>
+        <td>"baudelaire"</td> <td> Intel Xeon </td> <td>Fedora 13 (x86_64)</td> </tr>
       <tr bgcolor="#bbddff">
-        <td> Intel Xeon (Woodcrest) </td> <td>"dickens"</td> <td>Fedora 10 (x86_64)</td> </tr>
+        <td>"dickens"</td> <td> Intel Xeon (Woodcrest) </td> <td>Fedora 10 (x86_64)</td> </tr>
       <tr bgcolor="#bbffdd">
-        <td> Intel Core 2 duo </td> <td>"danton"</td> <td>Fedora 17 (x86_64)</td> </tr>
+        <td>"danton"</td> <td> Intel Core 2 duo </td> <td>Fedora 17 (x86_64)</td> </tr>
 
       <!--
         <td> Intel Celeron (P4) </td> <td>"mdvia32"</td> <td>Mandriva 2009.1 </td> </tr>
@@ -48,17 +52,17 @@
       -->
 
       <tr bgcolor="#bbddff">
-        <td> ACESgrid Dell (old)cluster (Xeon) </td>
         <td><a href="http://acesgrid.org"> "aces"</a> </td>
+        <td> ACESgrid Dell (old)cluster (Xeon) </td>
         <td>Fedora Core 2</td> </tr>
       <tr bgcolor="#bbffdd">
-        <td>Intel Xeon (Westmere-EP) cluster</td>
         <td><a href="http://acesgrid.org"> "acesgrid"</a> </td>
+        <td>Intel Xeon (Westmere-EP) cluster</td>
         <td>Fedora 15 (x86_64)</td> </tr>
 
       <tr bgcolor="#bbddff">
-        <td> Intel Xeon (Woodcrest) cluster </td>
         <td><a href="http://www.darwinproject.mit.edu/wiki/"> "beagle"</a></td>
+        <td> Intel Xeon (Woodcrest) cluster </td>
         <td>Rocks 5.2 (x86_64)</td> </tr>
 
       <!--
@@ -80,13 +84,13 @@
       -->
 
       <tr bgcolor="#bbffdd">
-        <td> SGI Altix XE cluster (Intel Xeon) </td>
         <td><a href="http://www.nas.nasa.gov/Resources/Systems/pleiades.html">
         "pleiades"</a></td>
-        <td> SuSE Linux </td> </tr>
+        <td> SGI Altix XE cluster (Intel Xeon) </td>
+        <td> Suse Linux </td> </tr>
 
       <tr bgcolor="#bbddff">
-        <td> IBM Power6 </td> <td>"iblade"</td> <td> AIX </td> </tr>
+        <td>"iblade"</td> <td> IBM Power6 </td> <td> AIX </td> </tr>
       <!--
         <td> IBM Power6 </td> <td>"bluefire"</td> <td> AIX 5L </td> </tr>
         <td> AMD Opteron Barcelona </td> <td>"hpcdistro"</td>
@@ -98,18 +102,19 @@
       -->
 
       <tr bgcolor="#bbffdd">
-        <td> ?? </td> <td>"uv100"</td> <td> ?? (x86_64)</td> </tr>
+        <td>"uv100"</td>
+        <td> Intel Xeon (Westmere-EX) SGI cluster </td>
+        <td> Suse SLES 11 (x86_64)</td> </tr>
       <tr bgcolor="#bbddff">
-        <td> AMD Opteron </td> <td>"solasrv"</td> <td>Solaris 10</td> </tr>
+        <td>"solasrv"</td> <td> AMD Opteron </td> <td>Solaris 10</td> </tr>
       <!--
         <td> Sun UltraSparc IV </td> <td>"rays"</td> <td>Solaris 10</td> </tr>
         <td> Sun UltraSparc IV </td> <td>"solssrv"</td> <td>Solaris 10</td> </tr>
         <td> Sun UltraSparc IV </td> <td>"model"</td> <td>Solaris 9</td> </tr>
+        <td> Sun UltraSparc III </td> <td>"sunathena"</td> <td> Solaris 10 </td> </tr>
       -->
       <tr bgcolor="#bbffdd">
-        <td> Sun UltraSparc III </td> <td>"sunathena"</td> <td> Solaris 10 </td> </tr>
-      <tr bgcolor="#bbddff">
-        <td> NEC SX-8 </td> <td>"sx8"</td> <td>Super-UX </td> </tr>
+        <td>"sx8"</td> <td> NEC SX-8 </td> <td>Super-UX </td> </tr>
       <!--
         <td> PowerPC970MP cluster </td> <td>"bigred"</td>
         <td>SuSE SLES 9 (PPC) </td> </tr>
@@ -124,10 +129,10 @@
         <td><a href="http://www.testdrive.hp.com/current.shtml"> HP test-drive </a>
         (Itanium II) </td> <td>"td194"</td> <td> HP-UX 11i v3 </td> </tr>
       -->
-      <tr bgcolor="#bbffdd">
-        <td> ?? </td> <td>"stomp"</td> <td>Ubuntu (x86-64)</td> </tr>
       <tr bgcolor="#bbddff">
-        <td> AMD athlon </td> <td>"weber"</td> <td>Ubuntu</td> </tr>
+        <td>"stomp"</td> <td> Intel Xeon </td> <td>Ubuntu (x86-64)</td> </tr>
+      <tr bgcolor="#bbffdd">
+         <td>"weber"</td> <td> AMD Athlon </td> <td>Ubuntu</td> </tr>
 
       <!--
       <tr bgcolor="#bbddff"> <td>  </td> <td>""</td>
