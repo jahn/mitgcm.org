@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.74 2012/09/04 20:29:22 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.75 2012/09/08 14:22:08 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -85,9 +85,8 @@ EOF
 color="#bbffdd"
 ncolor="#bbddff"
 
-MACHINES="faulks meander aces- acesgrid baudelaire dickens danton beagle harbor"
-MACHINES="$MACHINES pleiades iblade rays solasrv sx8"
-MACHINES="$MACHINES trane dodongo dokdo stomp bigred"
+MACHINES="aces- acesgrid baudelaire dickens danton beagle"
+MACHINES="$MACHINES pleiades iblade sx8 uv100 solasrv stomp weber"
 
 ( cd $INDIR ; ls -1 -t */summary.txt | sed 's/\/summary.txt//' ) > ./dir_all
 
