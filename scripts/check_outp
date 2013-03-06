@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.34 2012/09/08 14:25:13 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.35 2013/02/24 15:29:05 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -14,6 +14,8 @@ usage()
     echo "where possible OPTIONS are:"
     echo "  (-h|-help)            print usage"
     echo "  (-v|-verbose)         verbose mode"
+    echo "  (-t|-test4update)     do nothing if previous output newer than"
+    echo "                         emails-processing log-file '$PRC_MAILS'"
     echo "  (-l |-list )MACHINES  check platforms from this list"
     echo "                         [def=\"$MACHINES\"]"
     echo "  (-d |-day  )FIRSTDAY  select output from day=\"YYYYMMDD\""
@@ -206,6 +208,7 @@ make_resdir_list()
 
 #CURR_PER=`date +%Y`"_"`date +%m`
 CURR_DAY=`date +%Y%m%d`
+PRC_MAILS='prc_emails_'`date +%m%d`
 # defaults
 MACHINES='_All_'
 FIRSTDAY=$CURR_DAY
@@ -215,6 +218,7 @@ OUTPFIL=`basename $0`'.log'
 NBLDIFF=5
 ADDRESS='none'
 dBug=f
+t4update=0
 sTime=`date`
 #- to get case insensitive "ls" (and order of tested experiments)
 export LC_ALL="en_US.UTF-8"
@@ -236,6 +240,7 @@ for ac_option ; do
 	
 	-help | --help | -h | --h) usage ;;
 	-verbose | --verbose | -v | --v) dBug=t ;;
+	-test4update | --test4update | -t | --t) t4update=1 ;;
 	
 	-list  | --list  | -l | --l) ac_prev=MACHINES ;;
 	-list=* | --list=*) MACHINES=$ac_optarg ;;
@@ -294,12 +299,33 @@ PERIOD=`echo $PERIOD | sed 's/^[0-9][0-9][0-9][0-9]/&_/'`
 INDIR="/u/u0/httpd/html/testing/results/$PERIOD"
 #INDIR="/export/export-7/u/u2/jmc/mitgcm/test_web/results/$PERIOD"
 
+#- a short summary of this checking :
+OUTPSUM=`echo $LASTDAY | sed 's/^20../_/'`
+OUTPSUM=`basename $0`"$OUTPSUM.txt"
+
 if test $OUTPFIL = '-1' ; then
   OUTPFIL='TTT.'$$
+fi
+if test $t4update = 1 ; then
+  if test -f $PRC_MAILS -a -f $OUTPSUM -a $FIRSTDAY = $CURR_DAY ; then
+    #- if update-log-file is older than previous output summary, just return
+    if test $PRC_MAILS -ot $OUTPSUM ; then
+      echo " t4update: skip "`basename $0`" ( $PRC_MAILS older than $OUTPSUM )" | tee -a $OUTPFIL
+      exit 0
+    else
+      if test -e $OUTPFIL ; then mv -f $OUTPFIL $OUTPFIL'_bak' ; fi
+      echo " t4update: run "`basename $0`" ( $PRC_MAILS newer than $OUTPSUM )" | tee $OUTPFIL
+    fi
+  else
+      if test -e $OUTPFIL ; then mv -f $OUTPFIL $OUTPFIL'_bak' ; fi
+      echo " t4update ignored (not current day or $PRC_MAILS or $OUTPSUM missing)" | tee $OUTPFIL
+  fi
 elif test -e $OUTPFIL ; then
   mv -f $OUTPFIL $OUTPFIL'_bak'
+  touch $OUTPFIL
 fi
-echo "CMDLINE='$CMDLINE'" > $OUTPFIL
+
+echo "CMDLINE='$CMDLINE'" >> $OUTPFIL
 echo "PERIOD='$PERIOD' , PREV_P='$PREV_P'" >> $OUTPFIL
 echo "INDIR='$INDIR'" >> $OUTPFIL
 echo "Checking latest output from $FIRSTDAY until $LASTDAY" >> $OUTPFIL
@@ -322,9 +348,6 @@ else
   exit 3
 fi
 
-#- a short summary of this checking :
-OUTPSUM=`echo $LASTDAY | sed 's/^20../_/'`
-OUTPSUM=`basename $0`"$OUTPSUM.txt"
 if test -e $OUTPSUM ; then mv -f $OUTPSUM $OUTPSUM'_bak' ; fi
 echo ' '$CMDLINE > $OUTPSUM
 
