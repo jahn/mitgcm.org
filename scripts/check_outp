@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.35 2013/02/24 15:29:05 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.36 2013/03/06 20:30:29 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -310,7 +310,9 @@ if test $t4update = 1 ; then
   if test -f $PRC_MAILS -a -f $OUTPSUM -a $FIRSTDAY = $CURR_DAY ; then
     #- if update-log-file is older than previous output summary, just return
     if test $PRC_MAILS -ot $OUTPSUM ; then
-      echo " t4update: skip "`basename $0`" ( $PRC_MAILS older than $OUTPSUM )" | tee -a $OUTPFIL
+      echo ' '$CMDLINE | tee -a $OUTPSUM
+      echo " t4update: skip "`basename $0`" ( $PRC_MAILS older than $OUTPSUM )" | tee -a $OUTPSUM
+      echo "End  time:   "`date` | tee -a $OUTPSUM
       exit 0
     else
       if test -e $OUTPFIL ; then mv -f $OUTPFIL $OUTPFIL'_bak' ; fi
@@ -324,6 +326,8 @@ elif test -e $OUTPFIL ; then
   mv -f $OUTPFIL $OUTPFIL'_bak'
   touch $OUTPFIL
 fi
+if test -e $OUTPSUM ; then mv -f $OUTPSUM $OUTPSUM'_bak' ; fi
+echo ' '$CMDLINE > $OUTPSUM
 
 echo "CMDLINE='$CMDLINE'" >> $OUTPFIL
 echo "PERIOD='$PERIOD' , PREV_P='$PREV_P'" >> $OUTPFIL
@@ -347,9 +351,6 @@ else
   echo "$INDIR is not a directory"
   exit 3
 fi
-
-if test -e $OUTPSUM ; then mv -f $OUTPSUM $OUTPSUM'_bak' ; fi
-echo ' '$CMDLINE > $OUTPSUM
 
 if test $FIRSTDAY = $LASTDAY ; then
   echo -n "Checking latest output from $FIRSTDAY" | tee -a $OUTPSUM
