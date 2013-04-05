@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.75 2012/09/08 14:22:08 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.76 2013/02/24 15:27:58 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -135,8 +135,9 @@ for mname in $MACHINES ; do
 	fi
 
 	# EXTRA = non-standard list of experiment
-	ADJOINT=
-	TANGLIN=
+	ADJOINT=0
+	TANGLIN=0
+	OPENAD=0
 	RESTART=0
 	EXTRA=
 	FAST=0
@@ -145,10 +146,14 @@ for mname in $MACHINES ; do
 	MTH=0
 	UR4=0
 	if test -r $dir/summary.txt ; then
-	    comm=`grep 'ADJOINT=true' $dir/summary.txt 2>/dev/null`
-	    eval $comm
-	    comm=`grep 'TANGLIN=true' $dir/summary.txt 2>/dev/null`
-	    eval $comm
+	    ADJOINT=`grep -c -i '^ADJOINT' $dir/summary.txt`
+	    if test "x$ADJOINT" = x1 ; then
+	      OPENAD=`grep -c '^Adjoint .* OpenAD' $dir/summary.txt`
+            fi
+	    TANGLIN=`grep -c -i '^TANGLIN' $dir/summary.txt`
+	    if test "x$TANGLIN" = x1 ; then
+	      OPENAD=`grep -c '^TangLin .* OpenAD' $dir/summary.txt`
+            fi
 	    RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
 	    comm=`grep '^run: .*testreport.* ' $dir/summary.txt`
 	    EXTRA=`echo "$comm" | grep " -*-tdir\>" | sed -e "s/^.* -*-tdir\>//" -e "s/ -.*$//"`
@@ -180,14 +185,20 @@ for mname in $MACHINES ; do
 		UR4=`echo "$comm" | grep -c " -*-ur4\>"`
 	    fi
 	fi
-	if test "x$ADJOINT" = xtrue ; then
-	    kind="adjoint" ; order=0
-	elif test "x$TANGLIN" = xtrue ; then
-	    kind="tanglin" ; order=1
+	if test "x$ADJOINT" = x1 ; then
+	    kind="adjoint-taf" ; order=0
+	  if test "x$OPENAD" = x1 ; then
+	    kind="adjoint-oad" ; order=2
+          fi
+	elif test "x$TANGLIN" = x1 ; then
+	    kind="tanglin-taf" ; order=1
+	  if test "x$OPENAD" = x1 ; then
+	    kind="tanglin-oad" ; order=3
+          fi
 	elif test "x$RESTART" = x0 ; then
-	    kind="forward" ; order=2
+	    kind="forward" ; order=4
 	else
-	    kind="restart" ; order=3
+	    kind="restart" ; order=5
 	fi
 	order=`expr $order + 10 \* $EXTRA`
 	order=`printf '%3.3i' $order`
