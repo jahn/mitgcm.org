@@ -1,16 +1,16 @@
-# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.19 2012/10/29 15:13:20 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.20 2013/02/28 03:45:07 jmc Exp $
 
 #---------------------------------------------------------
 #-from: jmc@forge.csail.mit.edu
 #  current output of "crontab -l":
 
 15,45 * * * * /u/u2/jmc/testing/scripts/process_emails
-55  * * * * /u/u2/jmc/testing/scripts/build_mitgcm_front
-30 23 * * * /u/u2/jmc/testing/scripts/daily_update
-25 00 * * * /u/u2/jmc/testing/scripts/daily_tarfile
-46 08,12,15 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
-16 09 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
-#05 14 * * *  cd /u/u2/jmc/testing/front_content && ./make_summary -d 2010_02
+#55  * * * * /u/u2/jmc/testing/scripts/build_mitgcm_front
+#30 23 * * * /u/u2/jmc/testing/scripts/daily_update
+#25 00 * * * /u/u2/jmc/testing/scripts/daily_tarfile
+#16 07,09,11,14,17 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -t -a jmc@ocean.mit.edu > chk_outp.stdout
+#26 09 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
+##05 14 * * *  cd /u/u2/jmc/testing/front_content && ./make_summary -d 2010_02
 
 #---------------------------------------------------------
 #-from: jmc@baudelaire.csail.mit.edu
@@ -24,12 +24,13 @@ MAILTO=jmc@ocean.mit.edu
 
 #- from forge:
 #15,45 * * * * /u/u2/jmc/testing/scripts/process_emails
-#55  * * * * /u/u2/jmc/testing/scripts/build_mitgcm_front
-#30 23 * * * /u/u2/jmc/testing/scripts/daily_update
-#25 00 * * * /u/u2/jmc/testing/scripts/daily_tarfile
-#46 08,12,15 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
-#16 09 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
-##05 14 * * *  cd /u/u2/jmc/testing/front_content && ./make_summary -d 2010_02
+55  * * * * /u/u2/jmc/testing/scripts/build_mitgcm_front
+30 23 * * * /u/u2/jmc/testing/scripts/daily_update
+25 00 * * * /u/u2/jmc/testing/scripts/daily_tarfile
+16 07,09,11,14,17 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -t -a jmc@ocean.mit.edu > chk_outp.stdout
+46 08,12,15 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu > chk_outp.stdout
+26 09 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
+#05 14 * * *  cd /u/u2/jmc/testing/front_content && ./make_summary -d 2010_02
 
 #---------------------------------------------------------
 #-from: jmc@dickens.csail.mit.edu
