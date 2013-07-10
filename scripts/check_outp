@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.37 2013/03/07 21:57:45 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.38 2013/04/05 21:15:52 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -304,7 +304,7 @@ PERIOD=`echo $PERIOD | sed 's/^[0-9][0-9][0-9][0-9]/&_/'`
 
 #INDIR="/net/orwell/export/export-9/mitgcm-testing/results/$PERIOD"
 INDIR="/u/u0/httpd/html/testing/results/$PERIOD"
-#INDIR="/export/export-7/u/u2/jmc/mitgcm/test_web/results/$PERIOD"
+#INDIR="/u/u2/jmc/mitgcm/test_web/results/$PERIOD"
 
 #- a short summary of this checking :
 OUTPSUM=`echo $LASTDAY | sed 's/^20../_/'`
@@ -422,7 +422,7 @@ for pname in $MACHINES ; do
 	keys=`cat ./slist | cut -d " " -f 1 | sort | uniq`
 
 	for key in $keys ; do
-          ctot=`expr $ctot + 1`
+	  ctot=`expr $ctot + 1`
 	  sline=`grep "^$key " ./slist | head -1`
 	  sdir=`echo $sline | cut -d " " -f 5`
 	  type=`echo $sline | cut -d " " -f 4`
@@ -463,21 +463,34 @@ for pname in $MACHINES ; do
 	    xx=`( echo 5 ; sed -n '/^  OPTFILE=/=' $outp ) | tail -1`
 	    sed "1,$xx d" $outp | sed '/^[YN] [YN] [YN] [YN]/ s/ \. //g' \
 				| grep -v '^[A-S][a-t]* time:  ' > tmpfp
-	    #-- re-order list of exp (according to local "sort" order)
-	    listD=`grep '^[YN] [YN] [YN] [YN]' tmpfs | awk '{print $NF}' | sort`
-	    for xx in $listD
-	    do
-		sed "/ $xx\$/d" tmpfs > tmpfn
-		sed -n "/ $xx\$/p" tmpfs >> tmpfn
-		mv tmpfn tmpfs
-	    done
-	    listD=`grep '^[YN] [YN] [YN] [YN]' tmpfp | awk '{print $NF}' | sort`
-	    for xx in $listD
-	    do
-		sed "/ $xx\$/d" tmpfp > tmpfn
-		sed -n "/ $xx\$/p" tmpfp >> tmpfn
-		mv tmpfn tmpfp
-	    done
+	    #-- check if list of exp are the same (and in the same order)
+	    sed 's/  (e=.*, w=.*)$//' tmpfs > tmpfn
+	    listDs=`grep '^[YN] [YN] [YN] [YN]' tmpfn | awk '{print $NF}'`
+	    #mv -f tmpfn tmpfs
+	    rm -f tmpfn
+	    sed 's/  (e=.*, w=.*)$//' tmpfp > tmpfn
+	    listDp=`grep '^[YN] [YN] [YN] [YN]' tmpfn | awk '{print $NF}'`
+	    #mv -f tmpfn tmpfp
+	    rm -f tmpfn
+	    #echo "listDs='$listDs'" ;  echo "listDp='$listDp'"
+	    if test "$listDs" != "$listDp" ; then
+		if test $dBug = 't' ; then echo ' -> re-order list of exp' ; fi
+		#-- re-order list of exp (according to local "sort" order)
+		listDs=`echo "$listDs" | sort`
+		for xx in $listDs ; do
+		    sed -e "/ $xx\$/d" -e "/ $xx /d" tmpfs > tmpfn
+		    sed -n -e "/ $xx\$/p" -e "/ $xx /p" tmpfs >> tmpfn
+		    mv -f tmpfn tmpfs
+		done
+		listDp=`echo "$listDp" | sort`
+		for xx in $listDp ; do
+		    sed -e "/ $xx\$/d" -e "/ $xx /d" tmpfp > tmpfn
+		    sed -n -e "/ $xx\$/p" -e "/ $xx /p" tmpfp >> tmpfn
+		    mv -f tmpfn tmpfp
+		done
+	    #else
+	    #   echo 'same list of exp => skip re-ordering'
+	    fi
 	    echo -n "=== diff $sdir $pdir :" | tee -a $OUTPFIL
 	    diff tmpfs tmpfp > tmpdf
 	    yy=$?
