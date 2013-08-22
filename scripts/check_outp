@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.38 2013/04/05 21:15:52 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.39 2013/07/10 16:32:53 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -39,7 +39,7 @@ usage()
 make_resdir_list()
 {
       if test $monthDir == 1 ; then
-	dir_list=`grep '.._'$mname ./dir_all`
+	dir_list=`grep '.._'$mname $TMP.dir_all`
       else
 	dir_list=`( cd $INDIR ; ls -1 -t ../$PREV_P/??_*${mname}*/summary.txt 2> /dev/null | sed 's/\/summary.txt//' )`
 	#echo "dir_list='$dir_list'"
@@ -186,9 +186,9 @@ make_resdir_list()
 	    day=`echo $ttt | sed -e 's|_| |g' |awk '{print $NF}'`
 
 	    if [ $day -lt $BEFORE ] ; then
-		echo "$OPTFILE$order $day $OPTFILE $kind $i" >> ./plist
+		echo "$OPTFILE$order $day $OPTFILE $kind $i" >> $TMP.plist
 	    elif [ $day -ge $FIRSTDAY -a $day -le $LASTDAY ] ; then
-		echo "$OPTFILE$order $day $OPTFILE $kind $i" >> ./slist
+		echo "$OPTFILE$order $day $OPTFILE $kind $i" >> $TMP.slist
 	    else
 		if test $dBug = 't' ; then
 		   echo "discard day='$day' from: $i" | tee -a $OUTPFIL
@@ -199,12 +199,12 @@ make_resdir_list()
 	if test $dBug = 't' ; then
 	  if test $monthDir == 1 ; then
 	    echo "---- current list (n=$monthDir) :" | tee -a $OUTPFIL
-		cat ./slist | tee -a $OUTPFIL
+		cat $TMP.slist | tee -a $OUTPFIL
 	  fi
-          num1=`wc -l ./slist | awk '{print $1}'`
+          num1=`wc -l $TMP.slist | awk '{print $1}'`
 	  if test $num1 -gt 0 ; then
 	  echo   ".... previous list (n=$monthDir):" | tee -a $OUTPFIL
-		cat ./plist | tee -a $OUTPFIL | head -20
+		cat $TMP.plist | tee -a $OUTPFIL | head -20
 	  fi
           echo "----" | tee -a $OUTPFIL
 	fi
@@ -242,7 +242,6 @@ for ac_option ; do
     fi
 
     ac_optarg=`expr "x$ac_option" : 'x[^=]*=\(.*\)'`
-
     case $ac_option in
 	
 	-help | --help | -h | --h) usage ;;
@@ -272,10 +271,22 @@ for ac_option ; do
 
 	*) echo "Error: don't understand argument \"$ac_option\""
 	   usage ;;
-
      esac
 
 done
+
+#TMP=./chkoutp_$$
+#- try to put temporary files in system-local /tmp dir
+TMP=/tmp/chkoutp_$$
+touch $TMP ; retVal=$?
+if [ $retVal -eq 0 ] ; then
+  if test ! -r $TMP ; then TMP=./chkoutp_$$ ; fi
+else
+  TMP=./chkoutp_$$
+fi
+rm -f $TMP
+if test $dBug = 't' ; then echo "temp files: $TMP" ; fi
+
 #-- test FIRSTDAY content ; interpret as "date -d" arg. if not YYYYMMDD
 ttt=`echo "y$FIRSTDAY" | sed 's/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/z/'`
 if test "x$ttt" != 'xyz' ; then
@@ -319,7 +330,7 @@ if test $t4update = 1 ; then
     if test $PRC_MAILS -ot $OUTPSUM ; then
       echo ' '$CMDLINE | tee -a $OUTPSUM
       echo " t4update: skip "`basename $0`" ( $PRC_MAILS older than $OUTPSUM )" | tee -a $OUTPSUM
-      echo "End  time:   "`date` | tee -a $OUTPSUM
+      echo " End  time:  "`date` | tee -a $OUTPSUM
       exit 0
     else
       if test -e $OUTPFIL ; then mv -f $OUTPFIL $OUTPFIL'_bak' ; fi
@@ -372,13 +383,13 @@ fi
 echo "    Machine   Tot. Nb.   no    Nb with  Nb diff" >> $OUTPSUM
 echo "     name     checked   comp    Diff    lines"  >> $OUTPSUM
 
-( cd $INDIR ; ls -1 -t */summary.txt | sed 's/\/summary.txt//' ) > ./dir_all
+( cd $INDIR ; ls -1 -t */summary.txt | sed 's/\/summary.txt//' ) > $TMP.dir_all
 
 if test "x$MACHINES" = "x_All_" ; then
   MACHINES="aces- acesgrid baudelaire dickens danton beagle"
   MACHINES="$MACHINES pleiades iblade sx8 uv100 solasrv stomp weber"
 
-  MALL=`cat ./dir_all | sed -e 's|_| |g' | awk '{print $2}' | sort | uniq`
+  MALL=`cat $TMP.dir_all | sed -e 's|_| |g' | awk '{print $2}' | sort | uniq`
   for madd in $MALL ; do
     present=0
     for m in $MACHINES ; do
@@ -407,32 +418,32 @@ for pname in $MACHINES ; do
     echo " name='$pname'" >> $OUTPFIL
     ctot=0 ; cmis=0 ; cdif=0
 
-    # put results from selected period in "slist",
-    #     results from previous period in "plist"
-    rm -f ./plist ./slist ; touch ./plist ./slist
+    # put results from selected period in "TMP.slist",
+    #     results from previous period in "TMP.plist"
+    rm -f $TMP.plist $TMP.slist ; touch $TMP.plist $TMP.slist
 
     #- create list of results (slist & plist) from current month directory
     monthDir=1
     make_resdir_list
 
     #  Do we have any data?  If so, create the latest pointer.
-    num=`wc -l ./slist | awk '{print $1}'`
+    num=`wc -l $TMP.slist | awk '{print $1}'`
     if test $num -gt 0 ; then
 
-	keys=`cat ./slist | cut -d " " -f 1 | sort | uniq`
+	keys=`cat $TMP.slist | cut -d " " -f 1 | sort | uniq`
 
 	for key in $keys ; do
 	  ctot=`expr $ctot + 1`
-	  sline=`grep "^$key " ./slist | head -1`
+	  sline=`grep "^$key " $TMP.slist | head -1`
 	  sdir=`echo $sline | cut -d " " -f 5`
 	  type=`echo $sline | cut -d " " -f 4`
 	  optf=`echo $sline | cut -d " " -f 3`
-	  num=`grep -c "^$key" ./plist`
+	  num=`grep -c "^$key" $TMP.plist`
 	  if test $num = 0 -a $monthDir = 1 ; then
 	  #- add results from previous month directory to "plist".
 	    monthDir=2
 	    make_resdir_list
-	    num=`grep -c "^$key" ./plist`
+	    num=`grep -c "^$key" $TMP.plist`
 	  fi
 	  #- discard unsafe test:
 	  dd=`echo $optf | grep -c 'gfortran+mth'`
@@ -449,7 +460,7 @@ for pname in $MACHINES ; do
 	    echo "no previous test for:" $key | tee -a $OUTPFIL
 	    cmis=`expr $cmis + 1`
 	  else
-	    pline=`grep "^$key " ./plist | head -1`
+	    pline=`grep "^$key " $TMP.plist | head -1`
 	    if test $dBug = 't' ; then
 		echo "s='$sline'" | tee -a $OUTPFIL
 		echo "p='$pline'" | tee -a $OUTPFIL
@@ -458,69 +469,69 @@ for pname in $MACHINES ; do
 	    outs="$INDIR/$sdir/summary.txt"
 	    xx=`( echo 5 ; sed -n '/^  OPTFILE=/=' $outs ) | tail -1`
 	    sed "1,$xx d" $outs | sed '/^[YN] [YN] [YN] [YN]/ s/ \. //g' \
-				| grep -v '^[A-S][a-t]* time:  ' > tmpfs
+				| grep -v '^[A-S][a-t]* time:  ' > $TMP.fs
 	    outp="$INDIR/$pdir/summary.txt"
 	    xx=`( echo 5 ; sed -n '/^  OPTFILE=/=' $outp ) | tail -1`
 	    sed "1,$xx d" $outp | sed '/^[YN] [YN] [YN] [YN]/ s/ \. //g' \
-				| grep -v '^[A-S][a-t]* time:  ' > tmpfp
+				| grep -v '^[A-S][a-t]* time:  ' > $TMP.fp
 	    #-- check if list of exp are the same (and in the same order)
-	    sed 's/  (e=.*, w=.*)$//' tmpfs > tmpfn
-	    listDs=`grep '^[YN] [YN] [YN] [YN]' tmpfn | awk '{print $NF}'`
-	    #mv -f tmpfn tmpfs
-	    rm -f tmpfn
-	    sed 's/  (e=.*, w=.*)$//' tmpfp > tmpfn
-	    listDp=`grep '^[YN] [YN] [YN] [YN]' tmpfn | awk '{print $NF}'`
-	    #mv -f tmpfn tmpfp
-	    rm -f tmpfn
+	    sed 's/  (e=.*, w=.*)$//' $TMP.fs > $TMP.fn
+	    listDs=`grep '^[YN] [YN] [YN] [YN]' $TMP.fn | awk '{print $NF}'`
+	    #mv -f $TMP.fn $TMP.fs
+	    rm -f $TMP.fn
+	    sed 's/  (e=.*, w=.*)$//' $TMP.fp > $TMP.fn
+	    listDp=`grep '^[YN] [YN] [YN] [YN]' $TMP.fn | awk '{print $NF}'`
+	    #mv -f $TMP.fn $TMP.fp
+	    rm -f $TMP.fn
 	    #echo "listDs='$listDs'" ;  echo "listDp='$listDp'"
 	    if test "$listDs" != "$listDp" ; then
 		if test $dBug = 't' ; then echo ' -> re-order list of exp' ; fi
 		#-- re-order list of exp (according to local "sort" order)
 		listDs=`echo "$listDs" | sort`
 		for xx in $listDs ; do
-		    sed -e "/ $xx\$/d" -e "/ $xx /d" tmpfs > tmpfn
-		    sed -n -e "/ $xx\$/p" -e "/ $xx /p" tmpfs >> tmpfn
-		    mv -f tmpfn tmpfs
+		    sed -e "/ $xx\$/d" -e "/ $xx /d" $TMP.fs > $TMP.fn
+		    sed -n -e "/ $xx\$/p" -e "/ $xx /p" $TMP.fs >> $TMP.fn
+		    mv -f $TMP.fn $TMP.fs
 		done
 		listDp=`echo "$listDp" | sort`
 		for xx in $listDp ; do
-		    sed -e "/ $xx\$/d" -e "/ $xx /d" tmpfp > tmpfn
-		    sed -n -e "/ $xx\$/p" -e "/ $xx /p" tmpfp >> tmpfn
-		    mv -f tmpfn tmpfp
+		    sed -e "/ $xx\$/d" -e "/ $xx /d" $TMP.fp > $TMP.fn
+		    sed -n -e "/ $xx\$/p" -e "/ $xx /p" $TMP.fp >> $TMP.fn
+		    mv -f $TMP.fn $TMP.fp
 		done
 	    #else
 	    #   echo 'same list of exp => skip re-ordering'
 	    fi
 	    echo -n "=== diff $sdir $pdir :" | tee -a $OUTPFIL
-	    diff tmpfs tmpfp > tmpdf
+	    diff $TMP.fs $TMP.fp > $TMP.dif
 	    yy=$?
 	    if test $yy != '0' ; then
 		echo " $type , of='$optf'" | tee -a $OUTPFIL
 		#grep '^run: ' $outp
 		#grep '^run: ' $outs
 		#-- score for each test:
-		grep '^[YN] [YN] [YN] [YN]' tmpfs > tmploc 2>/dev/null
+		grep '^[YN] [YN] [YN] [YN]' $TMP.fs > tmploc 2>/dev/null
 		t_tot=`cat tmploc | wc -l | sed -e 's| ||g'`
 		t_pass=`grep '^Y Y Y Y' tmploc | grep 'pass ' | wc -l | sed -e 's| ||g'`
 		score_s=`printf '%2i' $t_pass`":$t_tot"
-		grep '^[YN] [YN] [YN] [YN]' tmpfp > tmploc 2>/dev/null
+		grep '^[YN] [YN] [YN] [YN]' $TMP.fp > tmploc 2>/dev/null
 		t_tot=`cat tmploc | wc -l | sed -e 's| ||g'`
 		t_pass=`grep '^Y Y Y Y' tmploc | grep 'pass ' | wc -l | sed -e 's| ||g'`
 		score_p=`printf '%2i' $t_pass`":$t_tot"
 		rm -f tmploc
 		#-- count Nb of different lines
-		ndf=`wc -l tmpdf | awk '{print $1}'`
+		ndf=`wc -l $TMP.dif | awk '{print $1}'`
 		ndf=`expr $ndf / 2`
-		nn=`grep -c '^---' tmpdf`
+		nn=`grep -c '^---' $TMP.dif`
 		ndf=`expr $ndf - $nn`
 		if [ $ndf -le $NBLDIFF ] ; then
-		  cat tmpdf
+		  cat $TMP.dif
 		else
 		  echo " $ndf lines differ ( $score_s , $score_p )"
 		fi
 		echo "< "`head -1 $outs`" ( $score_s )" >> $OUTPFIL
 		echo "> "`head -1 $outp`" ( $score_p )" >> $OUTPFIL
-		cat tmpdf >> $OUTPFIL
+		cat $TMP.dif >> $OUTPFIL
 		if [ $cdif -eq 0 ] ; then
 		  clin=`printf '%3i (%5s,%5s)' $ndf $score_s $score_p`
 		else
@@ -531,7 +542,7 @@ for pname in $MACHINES ; do
 	    else
 		echo " $type , of='$optf'" | tee -a $OUTPFIL
 	    fi
-	    rm -f tmpfs tmpfp tmpdf
+	    rm -f $TMP.fs $TMP.fp $TMP.dif
 	  fi
 	done
 	if [ $cmis -gt 0 ] ; then tmis='(-'$cmis')' ; else tmis='(--)' ; fi
@@ -544,9 +555,9 @@ for pname in $MACHINES ; do
 done
 
 echo "Start time:  $sTime" | tee -a $OUTPFIL
-echo "End  time:   "`date` | tee -a $OUTPFIL | tee -a $OUTPSUM
+echo "End time:    "`date` | tee -a $OUTPFIL | tee -a $OUTPSUM
 
-rm -f ./dir_all ./slist ./plist
+rm -f $TMP.dir_all $TMP.slist $TMP.plist
 if test $OUTPFIL = "TTT.$$" ; then rm -f $OUTPFIL ; fi
 if test "x$ADDRESS" != 'xnone' ; then
   echo ".. send $OUTPSUM to $ADDRESS"

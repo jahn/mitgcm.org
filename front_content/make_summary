@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.76 2013/02/24 15:27:58 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.77 2013/04/05 21:15:06 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -64,6 +64,18 @@ OUTDIR="/u/u0/httpd/html/testing/summary"
 OUTFILE=$OUTDIR"/output_"$PERIOD".html"
 res_url="http://mitgcm.org/testing/"
 
+#TMP=./mksum_$$
+#- try to put temporary files in system-local /tmp dir
+TMP=/tmp/mksum_$$
+touch $TMP ; retVal=$?
+if [ $retVal -eq 0 ] ; then
+  if test ! -r $TMP ; then TMP=./mksum_$$ ; fi
+else
+  TMP=./mksum_$$
+fi
+rm -f $TMP
+# echo "temp files: $TMP"
+
 #  Create the links in $OUTFILE :
 echo "Creating the \"latest\" file for each machine: "
 the_date=`date`
@@ -88,9 +100,9 @@ ncolor="#bbddff"
 MACHINES="aces- acesgrid baudelaire dickens danton beagle"
 MACHINES="$MACHINES pleiades iblade sx8 uv100 solasrv stomp weber"
 
-( cd $INDIR ; ls -1 -t */summary.txt | sed 's/\/summary.txt//' ) > ./dir_all
+( cd $INDIR ; ls -1 -t */summary.txt | sed 's/\/summary.txt//' ) > $TMP.dir_all
 
-MALL=`cat ./dir_all | sed -e 's|_| |g' | awk '{print $2}' | sort | uniq`
+MALL=`cat $TMP.dir_all | sed -e 's|_| |g' | awk '{print $2}' | sort | uniq`
 for madd in $MALL ; do
     present=0
     for m in $MACHINES ; do
@@ -107,8 +119,8 @@ for mname in $MACHINES ; do
 
     echo "  $mname"
 
-    dir_list=`grep $mname ./dir_all`
-    echo -n "" > ./mlist
+    dir_list=`grep $mname $TMP.dir_all`
+    echo -n "" > $TMP.mlist
 
     for i in $dir_list ; do
 
@@ -238,15 +250,15 @@ for mname in $MACHINES ; do
 	DAY=`cat ./ms_tmp | awk '(length($1)==8 && substr($1,0,2)=="20")'`
 	rm -f ./ms_tmp
 
-	echo "$OPTFILE$order $DAY $OPTFILE $kind $i $t_pass:$t_tot" >> ./mlist
+	echo "$OPTFILE$order $DAY $OPTFILE $kind $i $t_pass:$t_tot" >> $TMP.mlist
 
     done
 
     # helpful for debugging
-    # cat ./mlist
+    # cat $TMP.mlist
 
     #  Do we have any data?  If so, create the latest pointer.
-    num=`wc -l ./mlist | awk '{print $1}'`
+    num=`wc -l $TMP.mlist | awk '{print $1}'`
     if test $num -gt 0 ; then
 
 	# swap colors
@@ -254,10 +266,10 @@ for mname in $MACHINES ; do
 	color=$ncolor
 	ncolor=$ctmp
 
-	keys=`cat ./mlist | cut -d " " -f 1 | sort | uniq`
+	keys=`cat $TMP.mlist | cut -d " " -f 1 | sort | uniq`
 
 	for key in $keys ; do
-	    tline=`grep "^$key " ./mlist | head -1`
+	    tline=`grep "^$key " $TMP.mlist | head -1`
 	    ratio=`echo $tline | cut -d " " -f 6`
 	    ldir=`echo $tline | cut -d " " -f 5`
 	    kind=`echo $tline | cut -d " " -f 4`
@@ -301,7 +313,7 @@ MITgcm/tools/example_scripts</a>.</p>
 
 EOF
 
-rm -f ./dir_all ./mlist
+rm -f $TMP.dir_all $TMP.mlist
 
 #- put the file in place
 chgrp gcmpack $OUTFILE
