@@ -34,7 +34,7 @@
       Google (please <b>add</b> your search terms to the input box):</p>
     
     <center>
-      <form action="http://www.google.com/u/MITgcm" method=get>
+      <form action="http://www.google.com/search" method=get>
         <p>
 	  <input type=hidden name=domains value="mitgcm.org">
 	  <input type=hidden name=hq value="inurl:mitgcm.org">
