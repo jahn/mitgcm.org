@@ -39,9 +39,12 @@ InstallOLF:
 	mkdir -p $(TARGETDIR)/on-line-figs
 	cp -rp $(LATEXROOT)/on-line-figs/* $(TARGETDIR)/on-line-figs/
 
+#jmc: to speed up, use a "mv" of dir VDBROOT instead of a copy:
+#     but this prevents to do multiple "make quick" after a "make VDB"
 InstallVDB:
 	mkdir -p $(TARGETDIR)/code_reference
-	cp -rp $(VDBROOT) $(TARGETDIR)/code_reference/
+	#cp -rp $(VDBROOT) $(TARGETDIR)/code_reference/
+	mv $(VDBROOT) $(TARGETDIR)/code_reference/
 
 Bonniefy: $(TARGETDIR)
 	chmod -R u+w $(TARGETDIR)
