@@ -19,7 +19,7 @@
  div.c1 {text-align: center}
 </style>
   </head>
-  
+
   <body>
 
     <p>The older htdig-based search tool has been replaced with the following
@@ -27,12 +27,12 @@
       have any questings regarding this change or are having problems finding
       specific information, then please don't hesitate to <a
 	href="./contact_us.html">contact the MITgcm developers</a>.</p>
-    
+
     <br /><hr align="center" size="1" width="75%" /><br />
 	
     <p>Search the <a href="http://mitgcm.org/">mitgcm.org</a> domain using
       Google (please <b>add</b> your search terms to the input box):</p>
-    
+
     <center>
       <form action="http://www.google.com/search" method=get>
         <p>
@@ -52,7 +52,7 @@
     <center>
       <form action="http://www.google.com/search" method=get>
         <p>
-	  <input type=hidden name=sitesearch value="forge.csail.mit.edu/pipermail">
+	  <input type=hidden name=sitesearch value="mitgcm.org/pipermail">
           <input name=q size=40 value="">
           <input type=submit value="Google Search" name="submit">
         </p>
