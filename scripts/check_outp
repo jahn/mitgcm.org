@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.41 2014/01/01 18:13:50 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.42 2014/10/12 17:40:26 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -386,8 +386,8 @@ echo "     name     checked   comp    Diff    lines"  >> $OUTPSUM
 ( cd $INDIR ; ls -1 -t */summary.txt | sed 's/\/summary.txt//' ) > $TMP.dir_all
 
 if test "x$MACHINES" = "x_All_" ; then
-  MACHINES="aces- acesgrid baudelaire dickens danton pleiades"
-  MACHINES="$MACHINES iblade sx8 uv100 stomp octopus svante saramago"
+  MACHINES="aces- acesgrid baudelaire danton iblade sx8 uv100 pleiades"
+  MACHINES="$MACHINES stomp octopus engaging saramago svante glacier"
 
   MALL=`cat $TMP.dir_all | sed -e 's|_| |g' | awk '{print $2}' | sort | uniq`
   for madd in $MALL ; do
