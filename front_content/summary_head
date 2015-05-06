@@ -54,11 +54,11 @@
         <td>Fedora 15 (x86_64)</td> </tr>
 
       <tr bgcolor="#bbddff">
-        <td>"svante"</td> <td> Intel Xeon (Sandy Bridge) </td> <td> Linux (x86_64)</td> </tr>
+        <td>"svante"</td> <td> Intel Xeon (Sandy Bridge) </td> <td> Fedora 19 (x86_64)</td> </tr>
 
       <tr bgcolor="#bbffdd">
         <td><a href="http://www.mghpcc.org/"> "engaging"</a></td>
-        <td> Intel </td> <td>Linux </td> </tr>
+        <td> Intel Xeon (Sandy Bridge) </td> <td> CentOS 6 </td> </tr>
       <!--
         <td><a href="http://www.darwinproject.mit.edu/wiki/"> "beagle"</a></td>
         <td> Intel Xeon (Woodcrest) cluster </td>
