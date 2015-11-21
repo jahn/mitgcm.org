@@ -53,15 +53,6 @@
 
     <p>using the "-P" option to check-out ("<i>cvs co -P</i>") prevents
     to download unnecessary empty directories.</p>
-
-
-    <p>Note that it is possible to checkout code without "cvs login" and without
-setting any shell environment variables by specifying the pserver name and
-password in one line, for example:</p>
-
-<pre>
-  $ cvs -d :pserver:cvsanon:cvsanon@mitgcm.org:/u/gcmpack co -P MITgcm
-</pre>
     
     <p>A large amount of additional (optional!) content is available
     from the <i>MITgcm_contrib</i> directory; much of it is specific to certain
@@ -82,6 +73,13 @@ password in one line, for example:</p>
       environment (that is, define it within your "~/.bashrc" or "~/.chsrc"
       files).</p>
 
+    <p>Also note that it is possible to checkout code without "cvs login" and
+      without setting any shell environment variables by specifying the
+      pserver name and password in one line, for example:</p>
+
+<pre>
+  $ cvs -d :pserver:cvsanon:cvsanon@mitgcm.org:/u/gcmpack co -P MITgcm
+</pre>
 
     <h4>Getting Parts of the Source "Tree"</h4>
 
