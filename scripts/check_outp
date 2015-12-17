@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.44 2015/06/13 16:27:20 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.45 2015/12/16 23:29:11 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -224,6 +224,7 @@ BEFORE="30000000"
 OUTPFIL=`basename $0`'.log'
 NBLDIFF=5
 ADDRESS='none'
+MAILCMD="mail"
 dBug=f
 t4update=0
 sTime=`date`
@@ -561,8 +562,13 @@ echo "End time:    "`date` | tee -a $OUTPFIL | tee -a $OUTPSUM
 rm -f $TMP.dir_all $TMP.slist $TMP.plist
 if test $OUTPFIL = "TTT.$$" ; then rm -f $OUTPFIL ; fi
 if test "x$ADDRESS" != 'xnone' ; then
-  echo ".. send $OUTPSUM to $ADDRESS"
-  mail -s 'check_outp summary' $ADDRESS < $OUTPSUM
+  #- change default sender address ("From:") using "mail -r" option
+  #  since, by default, baudelaire uses USER@localhost.localdomain
+  fullNam=`hostname -A | awk '{print $1}'`
+  MAILCMD="$MAILCMD -r ${USER}@${fullNam}"
+  #---
+  echo ".. send $OUTPSUM to '$ADDRESS' using '$MAILCMD'"
+  $MAILCMD -s 'check_outp summary' $ADDRESS < $OUTPSUM
 fi
 echo ".. cat $OUTPSUM"
 cat $OUTPSUM
