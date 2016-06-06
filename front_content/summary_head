@@ -33,30 +33,28 @@
 
       <tr bgcolor="#bbffdd">
         <td>"baudelaire"</td> <td> Intel Xeon </td> <td>Fedora 13 (x86_64)</td> </tr>
-      <tr bgcolor="#bbddff">
-        <td>"dickens"</td> <td> Intel Xeon (Woodcrest) </td> <td>Fedora 10 (x86_64)</td> </tr>
-      <tr bgcolor="#bbffdd">
-        <td>"danton"</td> <td> Intel Core 2 duo </td> <td>Fedora 19 (x86_64)</td> </tr>
 
       <!--
+      <tr bgcolor="#bbffdd">
+        <td>"dickens"</td> <td> Intel Xeon (Woodcrest) </td> <td>Fedora 10 (x86_64)</td> </tr>
         <td> Intel P4 </td> <td>"meander"</td> <td>Ubuntu 8.10 </td> </tr>
         <td> Intel P4 </td> <td>"lagoon"</td> <td>Ubuntu 9.10 </td> </tr>
         <td>Intel P4</td> <td>"faulks"</td> <td>Fedora Core 6 </td> </tr>
-      -->
 
       <tr bgcolor="#bbddff">
         <td><a href="http://acesgrid.org"> "aces"</a> </td>
         <td> ACESgrid Dell (old)cluster (Xeon) </td>
         <td>Fedora Core 2</td> </tr>
-      <tr bgcolor="#bbffdd">
+      -->
+      <tr bgcolor="#bbddff">
         <td><a href="http://acesgrid.org"> "acesgrid"</a> </td>
         <td>Intel Xeon (Westmere-EP) cluster</td>
         <td>Fedora 15 (x86_64)</td> </tr>
 
-      <tr bgcolor="#bbddff">
+      <tr bgcolor="#bbffdd">
         <td>"svante"</td> <td> Intel Xeon (Sandy Bridge) </td> <td> Fedora 19 (x86_64)</td> </tr>
 
-      <tr bgcolor="#bbffdd">
+      <tr bgcolor="#bbddff">
         <td><a href="http://www.mghpcc.org/"> "engaging"</a></td>
         <td> Intel Xeon (Sandy Bridge) </td> <td> CentOS 6 </td> </tr>
       <!--
@@ -81,15 +79,21 @@
         NAS Columbia </a></td> </tr>
       -->
 
-      <tr bgcolor="#bbddff">
+      <tr bgcolor="#bbffdd">
         <td><a href="http://www.nas.nasa.gov/Resources/Systems/pleiades.html">
         "pleiades"</a></td>
         <td> SGI Altix XE cluster (Intel Xeon) </td>
         <td> Suse Linux </td> </tr>
+      <tr bgcolor="#bbddff">
+        <td><a href="http://www.archer.ac.uk/"> "archer"</a></td>
+        <td> Cray XC30 </td> <td> Linux</td> </tr>
 
       <tr bgcolor="#bbffdd">
-        <td>"iblade"</td> <td> IBM Power6 </td> <td> AIX </td> </tr>
+        <td><a href="https://swrepo1.awi.de/plugins/mediawiki/wiki/hpc/index.php/System_Overview">
+        "ollie"</td> <td> Cray CS400 </td> <td> CentOS </td> </tr>
       <!--
+      <tr bgcolor="#bbffdd">
+        <td>"iblade"</td> <td> IBM Power6 </td> <td> AIX </td> </tr>
         <td> IBM Power6 </td> <td>"bluefire"</td> <td> AIX 5L </td> </tr>
         <td> AMD Opteron Barcelona </td> <td>"hpcdistro"</td>
                             <td> OpenSolaris x86 2009.06</td> </tr>
@@ -128,8 +132,8 @@
         (Itanium II) </td> <td>"td194"</td> <td> HP-UX 11i v3 </td> </tr>
       -->
       <tr bgcolor="#bbddff">
-        <td><a href="http://www.archer.ac.uk/"> "archer"</a></td>
-        <td> Cray XC30 </td> <td> Linux</td> </tr>
+        <td>"jaures"</td> <td> Intel Core i7-4900MQ </td> <td>Fedora 23 (x86_64)</td> </tr>
+
       <tr bgcolor="#bbffdd">
         <td>"stomp"</td> <td> Intel Xeon </td> <td>Ubuntu (x86-64)</td> </tr>
       <tr bgcolor="#bbddff">
