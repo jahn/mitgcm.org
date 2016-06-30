@@ -1,4 +1,4 @@
-# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.22 2014/01/01 18:34:27 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.23 2014/09/06 20:44:54 jmc Exp $
 
 #---------------------------------------------------------
 #-from: jmc@forge.csail.mit.edu
@@ -16,8 +16,8 @@
 #  current output of "crontab -l":
 MAILTO=jmc@ocean.mit.edu
 
-05 00 * * * /u/u2/jmc/testing/csail/test_baudelaire
-15 00 * * * /u/u2/jmc/testing/csail/test_baudelaire_2
+05 00 * * * /u/u2/jmc/testing/csail/test_baudelaire a
+15 00 * * * /u/u2/jmc/testing/csail/test_baudelaire b
 01 15 * * * cd /u/u0/httpd/html/build_manual && /u/u2/jmc/testing/scripts/bld_manual.sh > bld_manual.log 2>&1 ; cp -p bld_manual.log /u/u2/jmc/testing/logs/bld_manual.$$
 #40 13 * * * /u/u2/jmc/testing/temp/test_baudelaire
 #33 10 * * * /u/u2/jmc/testing/temp/test_baudelaire_2
