@@ -1,4 +1,4 @@
-# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.23 2014/09/06 20:44:54 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.24 2016/06/30 16:30:32 jmc Exp $
 
 #---------------------------------------------------------
 #-from: jmc@forge.csail.mit.edu
@@ -30,8 +30,8 @@ MAILTO=jmc@ocean.mit.edu
 25 00 * * * /u/u2/jmc/testing/scripts/daily_tarfile
 #05 14 * * * cd /u/u2/jmc/testing/front_content && ./make_summary -d 2010_02
 
-16 07,13,16,18 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -t -a jmc@ocean.mit.edu > chk_outp.stdout
-46 09,11,14    * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -t -a jmc@ocean.mit.edu > chk_outp.stdout
-50 09 * * * cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
+16 07,13,16,18 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -t -a jmc@mit.edu > chk_outp.stdout
+46 09,11,14    * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -t -a jmc@mit.edu > chk_outp.stdout
+50 09 * * * cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@mit.edu -d yesterday > chk_outp.stdout
 
 #---------------------------------------------------------
