@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.46 2015/12/17 23:51:18 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.47 2016/07/01 17:00:10 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -564,8 +564,8 @@ if test $OUTPFIL = "TTT.$$" ; then rm -f $OUTPFIL ; fi
 if test "x$ADDRESS" != 'xnone' ; then
   #- change default sender address ("From:") using "mail -r" option
   #  since, by default, baudelaire uses USER@localhost.localdomain
-  fullNam=`hostname -A | awk '{print $1}'`
-  MAILCMD="$MAILCMD -r ${USER}@${fullNam}"
+  #fullNam=`hostname -A | awk '{print $1}'`
+  #MAILCMD="$MAILCMD -r ${USER}@${fullNam}"
   #---
   echo ".. send $OUTPSUM to '$ADDRESS' using '$MAILCMD'"
   $MAILCMD -s 'check_outp summary' $ADDRESS < $OUTPSUM
