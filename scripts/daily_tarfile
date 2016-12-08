@@ -1,9 +1,12 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/daily_tarfile,v 1.4 2010/01/25 22:46:27 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/daily_tarfile,v 1.5 2011/04/22 00:01:01 jmc Exp $
 
 # download the source code and make a tar file
 
+#export CVSROOT=/u/gcmpack
+#- to allow users to use cvs update/diff on their untar version of the code,
+#  switch to pserver method (stored everywhere in the tree in dirs CVS/Root)
 export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
 
 umask 0002
@@ -34,7 +37,7 @@ echo 'Done!'
 #-- test for new checkpoint
 cd ..
 version_file="daily_snapshot/MITgcm/doc/tag-index"
-backupDir="other_checkpoints" 
+backupDir="other_checkpoints"
 if test -f $version_file ; then
     thischkpt=`awk '/^checkpoint/{print $1; exit}' $version_file`
     short=`echo $thischkpt | sed 's/checkpoint/c/'`
@@ -70,7 +73,7 @@ if test -f $version_file ; then
         for xx in $listTar ; do
           if test $xx != $chkptar.tar.gz ; then
             if test -f other_checkpoints/$xx ; then
-              echo "error: $backupDir/$xx already exist" 
+              echo "error: $backupDir/$xx already exist"
             else
               echo " mv $xx $backupDir"
               mv $xx $backupDir
