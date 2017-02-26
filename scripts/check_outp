@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.48 2016/09/23 19:41:25 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.49 2016/11/28 20:31:34 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -162,14 +162,14 @@ make_resdir_list()
 	    else
 		kind="restart" ; order=5
 	    fi
-	    order=`expr $order + 10 \* $EXTRA`
-	    order=`printf '%3.3i' $order`
 	    if test "x$UR4" = x1 ; then
 		OPTFILE="${OPTFILE}.use_r4"
 	    fi
 	    if test "x$MPI" = x1 ; then
 		yy=`echo $OPTFILE | grep -c '+mpi'`
-		if test $yy = 0 ; then OPTFILE="${OPTFILE}+mpi" ; fi
+		if test $yy = 0 ; then yy=`echo $OPTFILE | grep -c '+impi'` ; fi
+		if test $yy = 0 ; then OPTFILE="${OPTFILE}+mpi"
+				else order=`expr $order + 200` ; fi
 	    fi
 	    if test "x$MTH" = x1 ; then
 		yy=`echo $OPTFILE | grep -c '+mth$'`
@@ -181,6 +181,8 @@ make_resdir_list()
 	    if test "x$DVLP" = x1 ; then
 		OPTFILE="${OPTFILE}.dvlp"
 	    fi
+	    order=`expr $order + 10 \* $EXTRA`
+	    order=`printf '%3.3i' $order`
 	    day=`echo $i   | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
 	    ttt=`echo $day | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
 	    day=`echo $ttt | sed -e 's|_| |g' |awk '{print $NF}'`
