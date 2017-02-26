@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.81 2015/03/24 18:20:16 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.82 2016/07/01 16:59:47 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -211,14 +211,14 @@ for mname in $MACHINES ; do
 	else
 	    kind="restart" ; order=5
 	fi
-	order=`expr $order + 10 \* $EXTRA`
-	order=`printf '%3.3i' $order`
 	if test "x$UR4" = x1 ; then
 	    OPTFILE="${OPTFILE}.use_r4"
 	fi
 	if test "x$MPI" = x1 ; then
 	    yy=`echo $OPTFILE | grep -c '+mpi'`
-	    if test $yy = 0 ; then OPTFILE="${OPTFILE}+mpi" ; fi
+	    if test $yy = 0 ; then yy=`echo $OPTFILE | grep -c '+impi'` ; fi
+	    if test $yy = 0 ; then OPTFILE="${OPTFILE}+mpi"
+			      else order=`expr $order + 200` ; fi
 	fi
 	if test "x$MTH" = x1 ; then
 	    yy=`echo $OPTFILE | grep -c '+mth$'`
@@ -230,6 +230,8 @@ for mname in $MACHINES ; do
 	if test "x$DVLP" = x1 ; then
 	    OPTFILE="${OPTFILE}.dvlp"
 	fi
+	order=`expr $order + 10 \* $EXTRA`
+	order=`printf '%3.3i' $order`
 
 	t_pass="--"
 	t_tot="--"
