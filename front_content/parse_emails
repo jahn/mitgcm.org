@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.25 2011/03/11 18:18:44 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.26 2013/01/11 20:49:13 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -130,20 +130,22 @@ fi
 #---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
 
 all_msg=`ls -1 $INDIR`
-nb_files=`echo "$all_msg" | grep -c '^msg\.'`
+nb_msg=`echo "$all_msg" | grep -c '^msg\.'`
+nb_tar=`echo "$all_msg" | grep -c '\.tar\.gz$'`
+nb_files=`expr $nb_msg + $nb_tar`
 
 if test $PRT = 2 ; then
   echo "Using OUTDIR=\"$OUTDIR\""
   echo "Using INDIR=\"$INDIR\""
-  echo -n "Unpacking $nb_files emails ("`date`
+  echo -n "Unpacking $nb_msg msg + $nb_tar tar-file ("`date`
   if test "x$ADDRERR" != x ; then
-     echo -n ", err-msg: '$ADDRERR'"
+     echo -n ", err: $ADDRERR"
   fi
   echo ")"
 elif test $nb_files != 0 ; then
-  echo -n "Unpacking $nb_files emails ("`date`
+  echo -n "Unpacking $nb_msg msg + $nb_tar tar-file ("`date`
   if test "x$ADDRERR" != x ; then
-     echo -n ", err-msg: '$ADDRERR'"
+     echo -n ", err: $ADDRERR"
   fi
   echo ")"
   echo " from '$INDIR' to '$OUTDIR'"
@@ -160,18 +162,23 @@ for xx in $all_msg
 do
   in=`grep -c $xx $TR_LIST`
   if test $in = 0 ; then
-    np=`grep -c 'Content-Type: message/partial' $INDIR/$xx`
-    if test $np = 0 ; then
-      echo $xx >> $TR_LIST
+    it=`echo $xx | grep -c '\.tar\.gz$'`
+    if test $it = 1 ; then
+        echo $xx >> $TR_LIST
     else
-      l=`sed -n '/Content-Type: message\/partial/=' $INDIR/$xx`
-      lp=`expr $l + 1`
-      id=`sed -n "$lp p" $INDIR/$xx`
-      partM=`( cd $INDIR ; grep -c "$id" msg.* | grep -v ':0$' | sed 's/:1$//' )`
-      echo $partM >> $TR_LIST
-      if test "x$ADDRERR" != x ; then flag=1
-        echo "multi-parts message:" $partM >> $ERRMSG
-        ( cd $INDIR ; ls -l $partM ) >> $ERRMSG
+      np=`grep -c 'Content-Type: message/partial' $INDIR/$xx`
+      if test $np = 0 ; then
+        echo $xx >> $TR_LIST
+      else
+        l=`sed -n '/Content-Type: message\/partial/=' $INDIR/$xx`
+        lp=`expr $l + 1`
+        id=`sed -n "$lp p" $INDIR/$xx`
+        partM=`( cd $INDIR ; grep -c "$id" msg.* | grep -v ':0$' | sed 's/:1$//' )`
+        echo $partM >> $TR_LIST
+        if test "x$ADDRERR" != x ; then flag=1
+          echo "multi-parts message:" $partM >> $ERRMSG
+          ( cd $INDIR ; ls -l $partM ) >> $ERRMSG
+        fi
       fi
     fi
   fi
@@ -212,6 +219,13 @@ while [ $n -lt $Nbl ] ; do
       ( cd $INDIR ; mv -f $grpM ../fail2process )
       continue
     fi
+
+#---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
+  it=`echo $grpM | grep -c '\.tar\.gz$'`
+  if test $it = 1 ; then
+    #- nothing to do: already a tar file!
+    trOutp=$grpM ; prcM=$grpM
+  else
 
     #-check that we have all the parts
     if [ $PRT -ge 1 -a $nm -gt 1 ] ; then
@@ -361,6 +375,7 @@ while [ $n -lt $Nbl ] ; do
           if test -f $TEMPDIR/$trOutp ; then ls -l $TEMPDIR/$trOutp ; fi
     fi
 
+  fi
 #---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
 
     #-- un-tar
