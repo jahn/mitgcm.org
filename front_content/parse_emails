@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.26 2013/01/11 20:49:13 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.27 2017/03/11 23:04:33 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -382,10 +382,14 @@ while [ $n -lt $Nbl ] ; do
     #( cd $TEMPDIR ; tar -xzvf $trOutp > $STDOUT )
     #   to remove small files "._mydir" that some MAC OS are adding
     #   (for each file or dir) to a tar-file, use option "--exclude=":
-    ( cd $TEMPDIR ; tar -xzvf $trOutp --exclude="._*" > $STDOUT )
+    ( cd $TEMPDIR ; tar -xzvf $trOutp --exclude="._*" > $STDOUT 2> $ERRMSG )
     RETVAL=$?
+    #echo "--- content of file $STDOUT (STDOUT):"
+    #cat $STDOUT
+    #echo "--- content of file $ERRMSG (ERRMSG):"
+    #cat $ERRMSG
     if test "x$RETVAL" != x0 ; then
-      echo "parsing email error" > $ERRMSG
+      echo "parsing email error" >> $ERRMSG
       echo " - Error:  tar -xzvf $trOutp returns:" $RETVAL | tee -a $ERRMSG
       ( cd $INDIR ; ls -l $prcM ) | tee -a $ERRMSG
       ls -l $TEMPDIR/$trOutp  | tee -a $ERRMSG
@@ -396,6 +400,8 @@ while [ $n -lt $Nbl ] ; do
       ( cd $INDIR ; mv -f $grpM ../fail2process )
       continue
     fi
+    test -f $ERRMSG && rm -f $ERRMSG
+    #--
     tdir=`cat $STDOUT | head -1 | sed -e 's|^./||g' | cut -d '/' -f 1`
     if test -d $TEMPDIR/$tdir ; then
       rm -f $STDOUT
