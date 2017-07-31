@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: $
+# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.1 2017/07/31 20:19:08 jmc Exp $
 
 # download the source code from github and make a tar file
 repo='altMITgcm'
@@ -17,7 +17,7 @@ if test $outp != 0 ; then
 fi
 test -e $code &&  rm -rf $code
 
-echo"Make a clone of $code from repo: $repo ..."
+echo "Make a clone of $code from repo: $repo ..."
 git clone --depth 1 https://github.com/$repo/$code.git
 #  chgrp gcmpack $code
 #  chmod 775 $code
