@@ -1,0 +1,88 @@
+#! /usr/bin/env bash
+
+# $Header: $
+
+# download the source code from github and make a tar file
+repo='altMITgcm'
+code='MITgcm66h'
+
+umask 0002
+
+echo 'Changing dir. to /u/httpd/html/download/git_snapshot'
+cd /u/httpd/html/download/git_snapshot
+outp=$?
+if test $outp != 0 ; then
+   echo " Error in cd : $outp"
+   exit
+fi
+test -e $code &&  rm -rf $code
+
+echo"Make a clone of $code from repo: $repo ..."
+git clone --depth 1 https://github.com/$repo/$code.git
+#  chgrp gcmpack $code
+#  chmod 775 $code
+
+echo 'Creating the archive file...'
+rm -rf MITgcm_ss_*
+arName='MITgcm_ss_'`date +%Y%m%d`'.tar'
+( cd $code ; git archive -o ../$arName master )
+gzip -9 $arName
+#chmod 664 ${arName}.gz
+ls -l ${arName}*
+
+echo 'Done!'
+exit
+
+#-- test for new checkpoint
+cd ..
+version_file="daily_snapshot/MITgcm/doc/tag-index"
+backupDir="other_checkpoints"
+if test -f $version_file ; then
+    thischkpt=`awk '/^checkpoint/{print $1; exit}' $version_file`
+    short=`echo $thischkpt | sed 's/checkpoint/c/'`
+    chkptar="MITgcm_$short"
+    if test -f $chkptar.tar.gz ; then
+      echo "tar file ($chkptar) exist for current tag: $thischkpt"
+    else
+      echo -n "Checking out $thischkpt ..."
+      rm -f checkout.out checkout.err
+      cvs co -P -d $chkptar -r $thischkpt MITgcm 1> checkout.out 2> checkout.err
+      outp=$?
+      if test $outp != 0 ; then
+         echo " Error in cvs checkout: $outp"
+         cat checkout.err
+         exit
+      fi
+      echo -n " ; making tar file ... "
+      rm -f checkout.out checkout.err
+      tar -cf $chkptar.tar $chkptar
+      outp=$?
+      if test $outp != 0 ; then
+         echo " Error in tar command: $outp"
+         exit
+      else
+         echo " Done"
+         rm -r -f $chkptar
+      fi
+      gzip $chkptar.tar
+      ls -l $chkptar.tar*
+      #-- move previous tar file to backupDir
+      listTar=`ls MITgcm_c*.tar.gz`
+      if test -d $backupDir ; then
+        for xx in $listTar ; do
+          if test $xx != $chkptar.tar.gz ; then
+            if test -f other_checkpoints/$xx ; then
+              echo "error: $backupDir/$xx already exist"
+            else
+              echo " mv $xx $backupDir"
+              mv $xx $backupDir
+            fi
+          fi
+        done
+      else
+         echo " no dir: $backupDir"
+         exit
+      fi
+    fi
+fi
+
