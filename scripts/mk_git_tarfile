@@ -1,10 +1,10 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.1 2017/07/31 20:19:08 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.2 2017/07/31 20:22:37 jmc Exp $
 
 # download the source code from github and make a tar file
 repo='altMITgcm'
-code='MITgcm66h'
+code='MITgcm'
 
 umask 0002
 
