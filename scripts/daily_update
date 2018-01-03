@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/daily_update,v 1.1 2008/09/06 19:48:45 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/daily_update,v 1.2 2009/06/05 21:00:54 jmc Exp $
 
 # update several dir. which are used for:
 # - front_page building
@@ -25,9 +25,9 @@ echo -n 'Update dir:' ; pwd
 chg=`cvs -q update -P -d | tee $tmpFil | sed '/^?/d' | wc -l`
 #echo "chg ='$chg'"
 cat $tmpFil ; rm -f $tmpFil
-if test "x$chg" != x0 ; then 
-  if test -f $exe ; then echo " removing: $exe force re-build." ; fi 
-  rm -f $exe 
+if test "x$chg" != x0 ; then
+  if test -f $exe ; then echo " removing: $exe force re-build." ; fi
+  rm -f $exe
 fi
 
 #- update front-page building dir:
@@ -38,7 +38,7 @@ cd /u/u2/jmc/testing/front_content && pwd && cvs -q update -P -d
 cd /u/u2/jmc/testing/logs
 n=$(( `ls bld_manual.* | wc -l` - 10 ))
 if test $n -gt 0 ; then
-  echo -n ' remove files: ' 
+  echo -n ' remove files: '
     ls -lt bld_manual.* | tail -"$n"
     ls -t  bld_manual.* | tail -"$n" | xargs rm -f
 fi
@@ -53,5 +53,4 @@ if test $n -gt 0 ; then
     ls -lt check_outp_*.txt | tail -"$n"
     ls -t  check_outp_*.txt | tail -"$n" | xargs rm -f
 fi
-
 
