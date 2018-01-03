@@ -1,0 +1,40 @@
+#! /usr/bin/env bash
+
+# $Header: /u/gcmpack/mitgcm.org/scripts/process_emails,v 1.6 2011/03/10 16:53:43 jmc Exp $
+
+#cat <<EOF
+#==========================================================
+#Parsing MITgcm testing emails :
+#==========================================================
+#
+#EOF
+
+#-- build munpack if needed:
+unpck=/home/jm_c/testing/tools_mpack/munpack
+if test ! -x $unpck ; then
+ MPACKDIR=`dirname $unpck`
+ cd $MPACKDIR
+ ./configure && make
+fi
+
+#-- create a daily log file (if not already there)
+cd /home/jm_c/testing/logs
+logpfx="prc_emails_" ; sfx=`date +%m%d`
+logfile="../logs/${logpfx}$sfx"
+if test -e $logfile ; then :
+else
+#-- clean-up old log files:
+  echo -n '-- in dir: ' ; pwd
+  n=$(( `ls ${logpfx}* | wc -l` - 10 ))
+  if test $n -gt 0 ; then
+  echo -n ' remove files: '
+    ls -lt ${logpfx}* | tail -"$n"
+    ls -t  ${logpfx}* | tail -"$n" | xargs rm -f
+  fi
+  echo ' create new log file:' $logfile
+  touch $logfile
+fi
+
+#-- parse emails :
+cd /home/jm_c/testing/front_content && ./get+parse_msg -u $unpck -a jmc@ocean.mit.edu >> $logfile 2>&1
+#cd /home/jm_c/testing/temp && ./get+parse_msg -u $unpck -a jmc@ocean.mit.edu >> $logfile 2>&1
