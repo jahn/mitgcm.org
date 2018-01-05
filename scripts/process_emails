@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/process_emails,v 1.5 2008/03/05 00:56:11 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/process_emails,v 1.6 2011/03/10 16:53:43 jmc Exp $
 
 #cat <<EOF
 #==========================================================
@@ -27,12 +27,13 @@ else
   echo -n '-- in dir: ' ; pwd
   n=$(( `ls ${logpfx}* | wc -l` - 10 ))
   if test $n -gt 0 ; then
-  echo -n ' remove files: ' 
+  echo -n ' remove files: '
     ls -lt ${logpfx}* | tail -"$n"
     ls -t  ${logpfx}* | tail -"$n" | xargs rm -f
   fi
   echo ' create new log file:' $logfile
   touch $logfile
+  chmod 664 $logfile
 fi
 
 #-- parse emails :
