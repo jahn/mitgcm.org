@@ -1,11 +1,10 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.28 2017/05/25 18:31:04 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/get+parse_msg,v 1.1 2018/01/03 23:17:49 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
 #  reasonable location.
-
 
 usage()
 {
@@ -175,6 +174,11 @@ if test $nbMsg != 0 ; then
     #        therefore we do not terminate if non-zero
        #exit 6
     fi
+#- This is the log file that current "check_outp" (run on baudelaire) is checking:
+  logpfx="prc_emails_" ; sfx=`date +%m%d`
+  logfile="/net/zany/data/ORWELL/export-7/u/jmc/testing/logs/${logpfx}$sfx"
+#- update log-file to trigger a new "check_outp":
+  if test -e  $logfile ; then touch $logfile ; fi
 fi
 #echo 'Start processing msg locally'
 #exit
