@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/prc_tr_emails,v 1.2 2018/01/06 20:50:35 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/prc_tr_emails,v 1.3 2018/01/08 14:17:59 jmc Exp $
 
 #cat <<EOF
 #==========================================================
@@ -10,15 +10,17 @@
 #EOF
 
 #-- build munpack if needed:
-unpck=/home/jm_c/testing/tools_mpack/munpack
+unpck=$HOME/testing/tools_mpack/munpack
 if test ! -x $unpck ; then
  MPACKDIR=`dirname $unpck`
  cd $MPACKDIR
  ./configure && make
 fi
+unpck=$HOME/testing/munpack.$HOSTTYPE
+#ls -l $unpck
 
 #-- create a daily log file (if not already there)
-cd /home/jm_c/testing/logs
+cd $HOME/testing/logs
 logpfx="prc_emails_" ; sfx=`date +%m%d`
 logfile="../logs/${logpfx}$sfx"
 if test -e $logfile ; then :
@@ -37,5 +39,5 @@ else
 fi
 
 #-- get and parse emails :
-cd /home/jm_c/testing/front_content && ./get+parse_msg -u $unpck -a jmc@ocean.mit.edu >> $logfile 2>&1
-#cd /home/jm_c/testing/temp && ./get+parse_msg -u $unpck -a jmc@ocean.mit.edu >> $logfile 2>&1
+cd $HOME/testing/front_content && ./get+parse_msg -u $unpck -a jmc@ocean.mit.edu >> $logfile 2>&1
+#cd $HOMEtesting/temp && ./get+parse_msg -u $unpck -a jmc@ocean.mit.edu >> $logfile 2>&1
