@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.27 2017/03/11 23:04:33 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/parse_emails,v 1.28 2017/05/25 18:31:04 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -40,7 +40,7 @@ ADDRERR=
 MUNPACK=$HERE/munpack
 UnpTmpD="/var/tmp/m-prts-$USER"
 TR_LIST='TTT.'$$
-TEMPDIR=/tmp/prc_emails
+TEMPDIR="/tmp/prc_emails_$USER"
 STDOUT=$TEMPDIR/'outp.'$$
 ERRMSG=/tmp/tmp.$$
 PRT=1
