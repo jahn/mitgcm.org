@@ -1,17 +1,17 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/build_mitgcm_front,v 1.3 2008/03/05 00:56:11 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/build_mitgcm_front,v 1.4 2008/09/18 20:05:26 jmc Exp $
 
 #-- create a daily log file (if not already there)
-cd /u/u2/jmc/testing/logs
+cd $HOME/testing/logs
 logpfx="bld_front_" ; sfx=`date +%m%d`
 logfile="../logs/${logpfx}$sfx"
 if test -e $logfile ; then :
 else
 #-- clean-up old log files:
-  n=$(( `ls ${logpfx}* | wc -l` - 10 ))
+  n=$(( `ls ${logpfx}* 2>/dev/null | wc -l` - 10 ))
   if test $n -gt 0 ; then
-  echo -n ' remove files: ' 
+  echo -n ' remove files: '
     ls -lt ${logpfx}* | tail -"$n"
     ls -t  ${logpfx}* | tail -"$n" | xargs rm -f
   fi
@@ -26,9 +26,10 @@ cat >> $logfile <<EOF
 Building the mitgcm.org front pages:
 ==========================================================
 EOF
-#export CVSROOT='/u/gcmpack' 
-#cd /u/u2/jmc/testing/front_content && cvs -q update -P -d
-cd /u/u2/jmc/testing/front_content && make install >> $logfile 2>&1
+#export CVSROOT='/u/gcmpack'
+#cd $HOME/testing/front_content && cvs -q update -P -d
+#-----------
+cd $HOME/testing/front_content && make install >> $logfile 2>&1
 retval=$?
 if test "x$retval" != x0 ; then
   echo "'make install' return with ERROR $retval"
