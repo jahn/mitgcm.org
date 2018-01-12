@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/process_emails,v 1.8 2018/01/08 14:17:59 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/process_emails,v 1.9 2018/01/11 21:59:04 jmc Exp $
 
 #cat <<EOF
 #==========================================================
@@ -41,4 +41,4 @@ fi
 
 #-- parse emails :
 cd $HOME/testing/front_content && ./parse_emails -u $unpck -a jmc@ocean.mit.edu >> $logfile 2>&1
-
+#cd $HOME/testing/temp && ./parse_emails -u $unpck -a jmc@ocean.mit.edu >> $logfile 2>&1
