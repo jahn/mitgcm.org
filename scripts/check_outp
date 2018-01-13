@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.49 2016/11/28 20:31:34 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.50 2017/02/26 22:18:18 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -316,9 +316,9 @@ if test $PM == '00' ; then PM='12' ; PY=`expr $PY - 1` ; fi
 PREV_P="${PY}_${PM}";
 PERIOD=`echo $PERIOD | sed 's/^[0-9][0-9][0-9][0-9]/&_/'`
 
-#INDIR="/net/orwell/export/export-9/mitgcm-testing/results/$PERIOD"
+#INDIR="/net/zany.mit.edu/data/ORWELL/export-9/mitgcm-testing/results/$PERIOD"
 INDIR="/u/u0/httpd/html/testing/results/$PERIOD"
-#INDIR="/u/u2/jmc/mitgcm/test_web/results/$PERIOD"
+#INDIR="$HOME/mitgcm/test_web/results/$PERIOD"
 
 #- a short summary of this checking :
 OUTPSUM=`echo $LASTDAY | sed 's/^20../_/'`
