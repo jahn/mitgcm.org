@@ -1,8 +1,6 @@
-#  $Header: /u/gcmpack/mitgcm.org/front_content/Makefile,v 1.18 2011/12/07 00:25:34 jmc Exp $
+#  $Header: /u/gcmpack/mitgcm.org/front_content/Makefile,v 1.19 2018/01/12 21:46:46 jmc Exp $
 #
 #  Makefile for the "front-end" of the mitgcm.org domain.
-#
-
 
 all:
 	-rm -rf html
@@ -13,7 +11,7 @@ all:
 install:
 	@make all
 	chmod 664 html/*.html
-	cp html/*.html /u/u0/httpd/html/public/
+	/bin/cp -pf html/*.html /u/u0/httpd/html/public/
 	#cp `ls html/*.html | grep -v 'html/news.html'` /u/u0/httpd/html/public/
 
 tidy:
@@ -21,5 +19,4 @@ tidy:
 
 clean:
 	-rm -rf html ptmp
-
 
