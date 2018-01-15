@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/daily_tarfile,v 1.5 2011/04/22 00:01:01 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/daily_tarfile,v 1.6 2016/12/08 14:35:27 jmc Exp $
 
 # download the source code and make a tar file
 
@@ -11,28 +11,37 @@ export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
 
 umask 0002
 
-echo 'Changing dir. to /u/httpd/html/download/daily_snapshot'
-cd /u/httpd/html/download/daily_snapshot
+echo 'Changing dir. to /u/u0/httpd/html/download/daily_snapshot'
+cd /u/u0/httpd/html/download/daily_snapshot
 outp=$?
 if test $outp != 0 ; then
    echo " Error in cd : $outp"
-   exit
+   exit 1
 fi
 test -e MITgcm  &&  rm -rf MITgcm
 
-echo 'Checking out MITgcm...'
-cvs co -P MITgcm > /dev/null
+echo -n 'Checking out MITgcm ... '
+cvs -q co -P MITgcm > /dev/null
+outp=$?
+if test $outp = 0 ; then
+   echo 'Done!'
+else
+   echo " Error in cvs checkout: $outp"
+   exit 2
+fi
 #chgrp gcmpack MITgcm
 #chmod 775 MITgcm
 
-echo 'Creating the tar file...'
-rm -rf MITgcm_ss_*
+rm -f MITgcm_ss_*
 tname='MITgcm_ss_'`date +%Y%m%d`'.tar.gz'
+
+echo -n 'Creating the tar file ... '
 tar -czf $tname ./MITgcm
+#- should check if successful, it not -> exit 3
+echo 'Done!'
+
 #chmod 664 $tname
 ls -l $tname
-
-echo 'Done!'
 
 #-- test for new checkpoint
 cd ..
@@ -47,12 +56,12 @@ if test -f $version_file ; then
     else
       echo -n "Checking out $thischkpt ..."
       rm -f checkout.out checkout.err
-      cvs co -P -d $chkptar -r $thischkpt MITgcm 1> checkout.out 2> checkout.err
+      cvs -q co -P -d $chkptar -r $thischkpt MITgcm 1> checkout.out 2> checkout.err
       outp=$?
       if test $outp != 0 ; then
          echo " Error in cvs checkout: $outp"
          cat checkout.err
-         exit
+         exit 4
       fi
       echo -n " ; making tar file ... "
       rm -f checkout.out checkout.err
@@ -60,7 +69,7 @@ if test -f $version_file ; then
       outp=$?
       if test $outp != 0 ; then
          echo " Error in tar command: $outp"
-         exit
+         exit 5
       else
          echo " Done"
          rm -r -f $chkptar
@@ -82,8 +91,7 @@ if test -f $version_file ; then
         done
       else
          echo " no dir: $backupDir"
-         exit
+         exit 6
       fi
     fi
 fi
-
