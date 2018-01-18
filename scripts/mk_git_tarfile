@@ -1,41 +1,55 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.2 2017/07/31 20:22:37 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.3 2017/12/13 18:18:52 jmc Exp $
 
 # download the source code from github and make a tar file
 repo='altMITgcm'
 code='MITgcm'
+tmpFil="/tmp/"`basename $0`".$$"
 
 umask 0002
 
-echo 'Changing dir. to /u/httpd/html/download/git_snapshot'
-cd /u/httpd/html/download/git_snapshot
+echo 'Changing dir. to /u/u0/httpd/html/download/git_snapshot'
+cd /u/u0/httpd/html/download/git_snapshot
 outp=$?
 if test $outp != 0 ; then
    echo " Error in cd : $outp"
-   exit
+   exit 1
 fi
-test -e $code &&  rm -rf $code
+test -e $code && rm -rf $code
 
 echo "Make a clone of $code from repo: $repo ..."
-git clone --depth 1 https://github.com/$repo/$code.git
+git clone --depth 1 https://github.com/$repo/$code.git 2> $tmpFil
+outp=$?
+if test $outp = 0 ; then
+   echo ' --> done!'
+   rm -f $tmpFil
+else
+   echo " Error: 'git clone' returned: $outp"
+   cat $tmpFil
+   rm -f $tmpFil
+   exit 2
+fi
 #  chgrp gcmpack $code
-#  chmod 775 $code
+   chmod 775 $code
 
-echo 'Creating the archive file...'
 rm -rf MITgcm_ss_*
 arName='MITgcm_ss_'`date +%Y%m%d`'.tar'
+
+echo -n 'Creating the archive file ... '
 ( cd $code ; git archive -o ../$arName master )
 gzip -9 $arName
+#- should check if successful, it not -> exit 3
+echo 'Done!'
+
 #chmod 664 ${arName}.gz
 ls -l ${arName}*
 
-echo 'Done!'
 exit
 
 #-- test for new checkpoint
 cd ..
-version_file="daily_snapshot/MITgcm/doc/tag-index"
+version_file="git_snapshot/$code/doc/tag-index"
 backupDir="other_checkpoints"
 if test -f $version_file ; then
     thischkpt=`awk '/^checkpoint/{print $1; exit}' $version_file`
@@ -44,14 +58,14 @@ if test -f $version_file ; then
     if test -f $chkptar.tar.gz ; then
       echo "tar file ($chkptar) exist for current tag: $thischkpt"
     else
-      echo -n "Checking out $thischkpt ..."
-      rm -f checkout.out checkout.err
-      cvs co -P -d $chkptar -r $thischkpt MITgcm 1> checkout.out 2> checkout.err
+    # echo -n "Checking out $thischkpt ..."
+    # rm -f checkout.out checkout.err
+    # cvs co -P -d $chkptar -r $thischkpt MITgcm 1> checkout.out 2> checkout.err
       outp=$?
       if test $outp != 0 ; then
          echo " Error in cvs checkout: $outp"
          cat checkout.err
-         exit
+         exit 4
       fi
       echo -n " ; making tar file ... "
       rm -f checkout.out checkout.err
@@ -59,7 +73,7 @@ if test -f $version_file ; then
       outp=$?
       if test $outp != 0 ; then
          echo " Error in tar command: $outp"
-         exit
+         exit 5
       else
          echo " Done"
          rm -r -f $chkptar
@@ -81,8 +95,7 @@ if test -f $version_file ; then
         done
       else
          echo " no dir: $backupDir"
-         exit
+         exit 6
       fi
     fi
 fi
-
