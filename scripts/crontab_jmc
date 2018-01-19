@@ -1,38 +1,53 @@
-# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.26 2017/07/31 20:19:08 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.27 2018/01/04 17:02:49 jmc Exp $
 
 #---------------------------------------------------------
-#-from: jmc@forge.csail.mit.edu
-#  current output of "crontab -l":
-
-15,45 * * * * /u/u2/jmc/testing/scripts/process_emails
-#55  * * * * /u/u2/jmc/testing/scripts/build_mitgcm_front
-#30 23 * * * /u/u2/jmc/testing/scripts/daily_update
-#25 00 * * * /u/u2/jmc/testing/scripts/daily_tarfile
-#16 07,09,11,14,17 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -t -a jmc@ocean.mit.edu > chk_outp.stdout
-#26 09 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@ocean.mit.edu -d yesterday > chk_outp.stdout
-
-#---------------------------------------------------------
-#-from: jmc@baudelaire.csail.mit.edu
+#-Formerly from: jmc@forge.csail.mit.edu -- Now on: jmc@mitgcmcvs.mit.edu:
 #  current output of "crontab -l":
 MAILTO=jmc@ocean.mit.edu
 
-05 00 * * * /u/u2/jmc/testing/csail/test_baudelaire a
-15 00 * * * /u/u2/jmc/testing/csail/test_baudelaire b
-01 15 * * * cd /u/u0/httpd/html/build_manual && /u/u2/jmc/testing/scripts/bld_manual.sh > bld_manual.log 2>&1 ; cp -p bld_manual.log /u/u2/jmc/testing/logs/bld_manual.$$
-#40 13 * * * /u/u2/jmc/testing/temp/test_baudelaire
-#33 10 * * * /u/u2/jmc/testing/temp/test_baudelaire_2
-#46 10 * * * /u/u2/jmc/testing/temp/test_crontab
+14,44 * * * * /u/jmc/testing/scripts/process_emails
+30 23 * * * cd /u/jmc/testing && ./daily_update && cp -p scripts/daily_update .
 
-#- from forge:
-#15,45 * * * * /u/u2/jmc/testing/scripts/process_emails
-55  * * * * /u/u2/jmc/testing/scripts/build_mitgcm_front
-30 23 * * * cd /u/u2/jmc/testing && ./daily_update && cp -p scripts/daily_update .
-25 00 * * * /u/u2/jmc/testing/scripts/daily_tarfile
-35 00 * * * /u/u2/jmc/testing/scripts/mk_git_tarfile
-#05 16 * * * cd /u/u2/jmc/testing/front_content && ./make_summary -d 2017_12
+#- Note: testreport output emails sent to: "jmc@dev.mitgcm.org" are put in
+#        ~jmc/Mail/MITgcm-test/ on: forge.csail.mit.edu by procmail, 
+#        using following ~/.procmailrc :
+-----> File starts here:
 
-16 07,13,16,18 * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -t -a jmc@mit.edu > chk_outp.stdout
-46 09,11,14    * * *  cd /u/u2/jmc/testing/logs && ../scripts/check_outp -t -a jmc@mit.edu > chk_outp.stdout
-50 09 * * * cd /u/u2/jmc/testing/logs && ../scripts/check_outp -a jmc@mit.edu -d yesterday > chk_outp.stdout
+PATH=/bin:/usr/bin
+MAILDIR=$HOME/Mail      #you'd better make sure it exists
+DEFAULT=$MAILDIR/default
+LOGFILE=$MAILDIR/log    #recommended
+
+#  :0 c
+:0
+* ^Subject:.*MITgcm-test
+MITgcm-test
+
+:0
+! jmc@ocean.mit.edu
+
+<----- File Ends here.
+#---------------------------------------------------------
+#-from: jmc@baudelaire.mit.edu
+#  current output of "crontab -l":
+MAILTO=jmc@ocean.mit.edu
+
+05 00 * * * /u/jmc/testing/csail/test_baudelaire a
+15 00 * * * /u/jmc/testing/csail/test_baudelaire b
+01 15 * * * cd /u/u0/httpd/html/build_manual && /u/jmc/testing/scripts/bld_manual.sh > bld_manual.log 2>&1 ; cp -p bld_manual.log /u/jmc/testing/logs/bld_manual.$$
+#40 13 * * * /u/jmc/testing/temp/test_baudelaire a
+#46 10 * * * /u/jmc/testing/temp/test_crontab
+
+#- Inherited from forge, now commented out (moved to: jm_c@mitgcmcvs.mit.edu, see: crontab_gcm):
+# #15,45 * * * * /u/jmc/testing/scripts/process_emails
+# 55  * * * * /u/jmc/testing/scripts/build_mitgcm_front
+# 30 23 * * * cd /u/jmc/testing && ./daily_update && cp -p scripts/daily_update .
+# 25 00 * * * /u/jmc/testing/scripts/daily_tarfile
+# 35 00 * * * /u/jmc/testing/scripts/mk_git_tarfile
+# #05 16 * * * cd /u/jmc/testing/front_content && ./make_summary -d 2017_12
+
+# 16 07,13,16,18 * * *  cd /u/jmc/testing/logs && ../scripts/check_outp -t -a jmc@mit.edu > chk_outp.stdout
+# 46 09,11,14    * * *  cd /u/jmc/testing/logs && ../scripts/check_outp -t -a jmc@mit.edu > chk_outp.stdout
+# 50 09 * * * cd /u/jmc/testing/logs && ../scripts/check_outp -a jmc@mit.edu -d yesterday > chk_outp.stdout
 
 #---------------------------------------------------------

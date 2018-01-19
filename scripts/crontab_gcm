@@ -1,0 +1,42 @@
+# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.27 2018/01/04 17:02:49 jmc Exp $
+
+#---------------------------------------------------------
+#-from: jm_c@mitgcmcvs.mit.edu
+#  current output of "crontab -l":
+MAILTO=jmc@ocean.mit.edu
+
+15,45 * * * * /home/jm_c/testing/scripts/prc_tr_emails
+55  * * * * /home/jm_c/testing/scripts/build_mitgcm_front
+35 23 * * * cd /home/jm_c/testing && ./daily_update && cp -p scripts/daily_update .
+25 00 * * * /home/jm_c/testing/scripts/daily_tarfile
+35 00 * * * /home/jm_c/testing/scripts/mk_git_tarfile
+#05 16 * * * cd /home/jm_c/testing/front_content && ./make_summary -d 2017_12
+
+16 07,13,16,18 * * *  cd /home/jm_c/testing/logs && ../scripts/check_outp -t -a jmc@mit.edu > chk_outp.stdout
+46 09,11,14    * * *  cd /home/jm_c/testing/logs && ../scripts/check_outp -t -a jmc@mit.edu > chk_outp.stdout
+50 09 * * * cd /home/jm_c/testing/logs && ../scripts/check_outp -d yesterday -a jmc@mit.edu > chk_outp.stdout
+
+#- Note: testreport output emails sent to: "jm_c@mitgcm.org" are put in
+#        ~/Mail/MITgcm-test on: jm_c@mitgcm-mm.mit.edu by procmail, using:
+#  1) ~/.forward :
+-----> File starts here:
+"| /usr/bin/procmail"
+<----- File Ends here.
+#  2) ~/.procmailrc :
+-----> File starts here:
+
+PATH=/bin:/usr/bin
+MAILDIR=$HOME/Mail      #you'd better make sure it exists
+DEFAULT=$MAILDIR/default
+LOGFILE=$MAILDIR/log    #recommended
+
+#  :0 c
+:0
+* ^Subject:.*MITgcm-test
+MITgcm-test
+
+:0
+! jmc@ocean.mit.edu
+
+<----- File Ends here.
+#---------------------------------------------------------
