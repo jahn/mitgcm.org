@@ -48,9 +48,20 @@
 	    <a href="./devel_HOWTO/devel_HOWTO.ps"> PostScript file
 		</a></li>
 	  </ul>
-	  <br />
-	</li>
+	<br /></li>
 	
+	<li>New: Documentation is getting reformatted into sphinx/rst format and hosted at
+	  <a href="https://mitgcm-example.readthedocs.io/en/latest/"> readthedocs</a>.
+	  Note that the conversion from the old manual is currently under way 
+	  so that this new document is not yet complete.
+	  Both the new documentation source files and the associated 
+	  -- but currently frozen -- MITgcm code
+          are available from a single
+	  <a href="https://github.com/altMITgcm/MITgcm"> prototype repository</a>
+          on GitHub. This repository is used to explore a transition from CVS to Git
+	  which is planned to happen soon.
+	<br /><br /></li>
+
       </ul>
     </p>
 
