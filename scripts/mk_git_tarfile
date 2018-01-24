@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.3 2017/12/13 18:18:52 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.4 2018/01/18 19:22:17 jmc Exp $
 
 # download the source code from github and make a tar file
 repo='altMITgcm'
@@ -37,7 +37,7 @@ rm -rf MITgcm_ss_*
 arName='MITgcm_ss_'`date +%Y%m%d`'.tar'
 
 echo -n 'Creating the archive file ... '
-( cd $code ; git archive -o ../$arName master )
+( cd $code ; git archive --prefix MITgcm/ -o ../$arName master )
 gzip -9 $arName
 #- should check if successful, it not -> exit 3
 echo 'Done!'
