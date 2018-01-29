@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/daily_update,v 1.3 2018/01/03 16:40:30 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/daily_update,v 1.4 2018/01/08 23:51:57 jmc Exp $
 
 # Run in: ~/testing/ to update several dir. which are used for:
 # - front_page building
@@ -16,10 +16,10 @@ if test -d scripts ; then
  ( cd scripts && pwd && cvs -q update -P -d )
 fi
 
-#- update csail testing scripts:
-if test -d csail ; then
+#- update ref_machine testing scripts:
+if test -d ref_machine ; then
  echo -n 'Update dir: '
- ( cd csail && pwd && cvs -q update -P -d )
+ ( cd ref_machine && pwd && cvs -q update -P -d )
 fi
 
 #-- update tools/mpack-1.6 dir:
