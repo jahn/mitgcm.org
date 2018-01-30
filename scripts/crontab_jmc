@@ -1,4 +1,4 @@
-# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.27 2018/01/04 17:02:49 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.28 2018/01/19 20:05:38 jmc Exp $
 
 #---------------------------------------------------------
 #-Formerly from: jmc@forge.csail.mit.edu -- Now on: jmc@mitgcmcvs.mit.edu:
@@ -34,7 +34,8 @@ MAILTO=jmc@ocean.mit.edu
 
 05 00 * * * /u/jmc/testing/csail/test_baudelaire a
 15 00 * * * /u/jmc/testing/csail/test_baudelaire b
-01 15 * * * cd /u/u0/httpd/html/build_manual && /u/jmc/testing/scripts/bld_manual.sh > bld_manual.log 2>&1 ; cp -p bld_manual.log /u/jmc/testing/logs/bld_manual.$$
+#- comment out manual built on Jan 23, 2018 (frozen)
+# 01 15 * * * cd /u/u0/httpd/html/build_manual && /u/jmc/testing/scripts/bld_manual.sh > bld_manual.log 2>&1 ; cp -p bld_manual.log /u/jmc/testing/logs/bld_manual.$$
 #40 13 * * * /u/jmc/testing/temp/test_baudelaire a
 #46 10 * * * /u/jmc/testing/temp/test_crontab
 
