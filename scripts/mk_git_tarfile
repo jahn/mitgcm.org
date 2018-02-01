@@ -1,10 +1,10 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.4 2018/01/18 19:22:17 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.5 2018/01/24 21:19:30 jmc Exp $
 
 # download the source code from github and make a tar file
-repo='altMITgcm'
-code='MITgcm'
+  git_repo='MITgcm';  git_code='MITgcm'
+# git_repo='altMITgcm'; #git_code='MITgcm66h'
 tmpFil="/tmp/"`basename $0`".$$"
 
 umask 0002
@@ -16,10 +16,11 @@ if test $outp != 0 ; then
    echo " Error in cd : $outp"
    exit 1
 fi
-test -e $code && rm -rf $code
+test -e $git_code && rm -rf $git_code
 
-echo "Make a clone of $code from repo: $repo ..."
-git clone --depth 1 https://github.com/$repo/$code.git 2> $tmpFil
+echo "Make a clone of $git_code from repo: $git_repo ..."
+#git clone --depth 1 https://github.com/$git_repo/$git_code.git 2> $tmpFil
+ git clone https://github.com/$git_repo/$git_code.git 2> $tmpFil
 outp=$?
 if test $outp = 0 ; then
    echo ' --> done!'
@@ -30,14 +31,14 @@ else
    rm -f $tmpFil
    exit 2
 fi
-#  chgrp gcmpack $code
-   chmod 775 $code
+#  chgrp gcmpack $git_code
+   chmod 775 $git_code
 
 rm -rf MITgcm_ss_*
 arName='MITgcm_ss_'`date +%Y%m%d`'.tar'
 
 echo -n 'Creating the archive file ... '
-( cd $code ; git archive --prefix MITgcm/ -o ../$arName master )
+( cd $git_code ; git archive --prefix MITgcm/ -o ../$arName master )
 gzip -9 $arName
 #- should check if successful, it not -> exit 3
 echo 'Done!'
@@ -45,57 +46,70 @@ echo 'Done!'
 #chmod 664 ${arName}.gz
 ls -l ${arName}*
 
-exit
+#exit
+backupDir="other_checkpoints"
+if test -d ../$backupDir ; then
+ #ls -ld ../$backupDir
+else
+  echo -n " make dir: $backupDir"
+  mkdir ../$backupDir
+  outp=$?
+  if test $outp != 0 ; then
+     echo " Error in mkdir command: $outp"
+     exit 4
+  else
+     echo " Done"
+     ls -ld ../$backupDir
+  fi
+fi
+
+savRepo="${git_code}_git"
+echo -n 'Make a tar file of the full git repo ...'
+  test -e $savRepo.tar    && mv -f $savRepo.tar    ../$backupDir
+  test -e $savRepo.tar.gz && mv -f $savRepo.tar.gz ../$backupDir
+  tar -cf $savRepo.tar $git_code
+  gzip -9 $savRepo.tar
+#- should check if successful, it not -> exit 5
+echo ' Done !'
+ls -l ${savRepo}*
 
 #-- test for new checkpoint
-cd ..
-version_file="git_snapshot/$code/doc/tag-index"
-backupDir="other_checkpoints"
+version_file="$git_code/doc/tag-index"
 if test -f $version_file ; then
-    thischkpt=`awk '/^checkpoint/{print $1; exit}' $version_file`
-    short=`echo $thischkpt | sed 's/checkpoint/c/'`
-    chkptar="MITgcm_$short"
-    if test -f $chkptar.tar.gz ; then
-      echo "tar file ($chkptar) exist for current tag: $thischkpt"
+  thischkpt=`awk '/^checkpoint/{print $1; exit}' $version_file`
+  short=`echo $thischkpt | sed 's/checkpoint/c/'`
+  chkptar="MITgcm_$short"
+  if test -f ../$chkptar.tar.gz ; then
+    echo "tar file ($chkptar) exist for current tag: $thischkpt"
+  else
+    echo -n " ; checkpoint archive file ... "
+    ( cd $git_code ; git archive --prefix MITgcm/ -o ../$chkptar $thischkpt )
+    outp=$?
+    if test $outp != 0 ; then
+       echo " Error in 'git archive' command: $outp"
+       exit 5
     else
-    # echo -n "Checking out $thischkpt ..."
-    # rm -f checkout.out checkout.err
-    # cvs co -P -d $chkptar -r $thischkpt MITgcm 1> checkout.out 2> checkout.err
-      outp=$?
-      if test $outp != 0 ; then
-         echo " Error in cvs checkout: $outp"
-         cat checkout.err
-         exit 4
-      fi
-      echo -n " ; making tar file ... "
-      rm -f checkout.out checkout.err
-      tar -cf $chkptar.tar $chkptar
-      outp=$?
-      if test $outp != 0 ; then
-         echo " Error in tar command: $outp"
-         exit 5
-      else
-         echo " Done"
-         rm -r -f $chkptar
-      fi
-      gzip $chkptar.tar
-      ls -l $chkptar.tar*
-      #-- move previous tar file to backupDir
-      listTar=`ls MITgcm_c*.tar.gz`
-      if test -d $backupDir ; then
-        for xx in $listTar ; do
-          if test $xx != $chkptar.tar.gz ; then
-            if test -f other_checkpoints/$xx ; then
-              echo "error: $backupDir/$xx already exist"
-            else
-              echo " mv $xx $backupDir"
-              mv $xx $backupDir
-            fi
-          fi
-        done
-      else
-         echo " no dir: $backupDir"
-         exit 6
-      fi
+       echo " Done"
     fi
+    gzip $chkptar.tar
+    ls -l $chkptar.tar*
+    mv $chkptar.tar.gz ..
+    #-- move previous tar file to backupDir
+    cd ..
+    listTar=`ls MITgcm_c*.tar.gz`
+    for xx in $listTar ; do
+      if test $xx != $chkptar.tar.gz ; then
+        if test -f other_checkpoints/$xx ; then
+          echo "error: $backupDir/$xx already exist"
+        else
+          echo " mv $xx $backupDir"
+          mv $xx $backupDir
+        # echo " Remove $xx"
+        # /bin/rm -f $xx
+        fi
+      fi
+    done
+  fi
+else
+  echo "missing file '$version_file' !"
 fi
