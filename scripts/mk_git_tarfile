@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.5 2018/01/24 21:19:30 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.6 2018/02/01 01:16:38 jmc Exp $
 
 # download the source code from github and make a tar file
   git_repo='MITgcm';  git_code='MITgcm'
@@ -48,9 +48,7 @@ ls -l ${arName}*
 
 #exit
 backupDir="other_checkpoints"
-if test -d ../$backupDir ; then
- #ls -ld ../$backupDir
-else
+if test ! -d ../$backupDir ; then
   echo -n " make dir: $backupDir"
   mkdir ../$backupDir
   outp=$?
@@ -61,6 +59,8 @@ else
      echo " Done"
      ls -ld ../$backupDir
   fi
+#else
+# ls -ld ../$backupDir
 fi
 
 savRepo="${git_code}_git"
