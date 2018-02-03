@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/prc_tr_emails,v 1.4 2018/01/11 21:59:04 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/prc_tr_emails,v 1.5 2018/01/12 15:51:57 jmc Exp $
 
 #cat <<EOF
 #==========================================================
@@ -16,7 +16,8 @@ if test ! -x $unpck ; then
  cd $MPACKDIR
  ./configure && make
 fi
-unpck=$HOME/testing/munpack.$HOSTTYPE
+mTyp=`echo $HOSTTYPE | sed 's/-.*$//'`
+unpck=$HOME/testing/munpack.$mTyp
 #ls -l $unpck
 
 #-- create a daily log file (if not already there)
