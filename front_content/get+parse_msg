@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/get+parse_msg,v 1.4 2018/01/12 15:51:10 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/get+parse_msg,v 1.5 2018/01/13 16:26:20 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -31,6 +31,7 @@ usage()
 
 # defaults
 HERE=`pwd`
+sufx=$$
 #INDIR="/u/u2/jmc/Mail/MITgcm-test"
 #BASEDIR="/u/u0/httpd/html/testing/results"
 RHOST="jm_c@mitgcm-mm.mit.edu" ; M_DIR="Mail/MITgcm-test"
@@ -41,10 +42,10 @@ OUTDIR=
 ADDRERR=
 MUNPACK=$HERE/munpack
 UnpTmpD="/var/tmp/m-prts-$USER"
-TR_LIST='TTT.'$$
+TR_LIST="TTT.$sufx"
 TEMPDIR="/tmp/prc_emails_$USER"
-STDOUT=$TEMPDIR/'outp.'$$
-ERRMSG=/tmp/tmp.$$
+STDOUT="$TEMPDIR/outp.$sufx"
+ERRMSG="/tmp/tmp.$sufx"
 PRT=1
 
 #---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
@@ -110,11 +111,14 @@ if test ! -x $MUNPACK ; then
         echo "ERROR: \"$MUNPACK\" is not executable"
         exit 2
 fi
+
+#-- set OUTDIR (if not yet set) and create it (if not already there)
 if test "x$OUTDIR" = x ; then
   OUTDIR="$BASEDIR/$monthDir"
 else
   monthDir=0
 fi
+oldMsg=0
 if test ! -e $OUTDIR ; then
     mkdir $OUTDIR
     RETVAL=$?
@@ -127,10 +131,18 @@ if test ! -e $OUTDIR ; then
     fi
     chgrp gcmpack $OUTDIR
     chmod 775 $OUTDIR
+    #-- In case a new-outpdir is made, process old files from "postponed"
+    #   (if any old msg there) by changing INDIR to ../postponed
+    oldMsg=`ls -1 ${INDIR}/../postponed | wc -l`
+    if test $oldMsg != 0 ; then
+      newInD=`dirname $INDIR`
+      INDIR="$newInD/postponed"
+      echo " Change INDIR to '$INDIR' ($oldMsg old messages)"
+      oldMsg=1
+    fi
 fi
 
-#---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
-#- 0) check that $TEMPDIR exist (needed for STDOUT)
+#-- check that $TEMPDIR exist (needed for STDOUT)
 if test ! -d $TEMPDIR ; then
     mkdir $TEMPDIR
     RETVAL=$?
@@ -141,17 +153,21 @@ if test ! -d $TEMPDIR ; then
     fi
 fi
 
+
+#---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
+if test $oldMsg = 0 ; then
+
 #- 1) check that $INDIR is empty
-nbMsg=`ls -1 $INDIR | wc -l`
-if test $nbMsg != 0 ; then
+  nbMsg=`ls -1 $INDIR | wc -l`
+  if test $nbMsg != 0 ; then
     date
     echo "ERROR: '$INDIR' is not empty ! --> exit"
     exit 5
-fi
+  fi
 
-nbMsg=0; ORIG=${RHOST}:$M_DIR
-#- 2) scp all msg from ORIG to INDIR
-cd $INDIR
+  nbMsg=0; ORIG=${RHOST}:$M_DIR
+  #- 2) scp all msg from ORIG to INDIR
+  cd $INDIR
     scp -p ${RHOST}:$M_DIR/\* . > $STDOUT 2>&1
     RETVAL=$?
     if test "x$RETVAL" != x0 ; then
@@ -169,13 +185,17 @@ cd $INDIR
     if test $nbMsg != 0 ; then
         echo "> scp $nbMsg msg from '$ORIG' to '$INDIR'"
         listMsg=`ls -1`
+	#- And rename msg by adding unique suffix
+	for xx in $listMsg ; do
+          mv $xx $xx.$sufx
+        done
     fi
    #rm -f $STDOUT
-cd $HERE
-#echo " nbMsg='$nbMsg' ; listMsg='$listMsg'"
+  cd $HERE
+  #echo " nbMsg='$nbMsg' ; listMsg='$listMsg'"
 
 #- 3) remove from ORIG all msg that we got here (this way it should be safe)
-if test $nbMsg != 0 ; then
+  if test $nbMsg != 0 ; then
    #echo "ssh $RHOST cd $M_DIR \; /bin/rm -f $listMsg"
     ssh $RHOST cd $M_DIR \; /bin/rm -f $listMsg
     RETVAL=$?
@@ -185,16 +205,17 @@ if test $nbMsg != 0 ; then
     #        therefore we do not terminate if non-zero
       # exit 7
     fi
-#- This is the log file that "check_outp" (run on baudelaire) was checking:
+  #- This is the log file that "check_outp" (run on baudelaire) was checking:
   # logpfx="prc_emails_" ; sfx=`date +%m%d`
   # logfile="/net/zany/data/ORWELL/export-7/u/jmc/testing/logs/${logpfx}$sfx"
-#- update log-file to trigger a new "check_outp":
+  #- update log-file to trigger a new "check_outp":
   # if test -e  $logfile ; then touch $logfile ; fi
-fi
-#echo 'Start processing msg locally'
-#exit
+  fi
+  #echo 'Start processing msg locally'
 
+fi
 #---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
+#exit
 
 all_msg=`ls -1 $INDIR`
 nb_msg=`echo "$all_msg" | grep -c '^msg\.'`
@@ -205,12 +226,14 @@ if test $PRT = 2 ; then
   echo "Using OUTDIR=\"$OUTDIR\""
   echo "Using INDIR=\"$INDIR\""
   echo -n "Unpacking $nb_msg msg + $nb_tar tar-file ("`date`
+  echo -n ", sfx=$sufx"
   if test "x$ADDRERR" != x ; then
      echo -n ", err: $ADDRERR"
   fi
   echo ")"
 elif test $nb_files != 0 ; then
   echo -n "Unpacking $nb_msg msg + $nb_tar tar-file ("`date`
+  echo -n ", sfx=$sufx"
   if test "x$ADDRERR" != x ; then
      echo -n ", err: $ADDRERR"
   fi
@@ -507,6 +530,7 @@ while [ $n -lt $Nbl ] ; do
               mail -s 'parse_emails err_4' $ADDRERR < $ERRMSG
               rm -f $ERRMSG
             fi
+            ( cd $INDIR ; mv -f $grpM ../postponed )
             continue
           fi
         fi
