@@ -22,53 +22,57 @@
 
   <body>
 
-    <p>The MITgcm code and documentation are under continuous development.  The
-      last official release was called "Release1_patch8" and the current
-      development is stabilizing in anticipation of a "Release2_beta"
-      announcement.  Both the last stable release and the current CVS
-      contents can be obtained at:
-      
-	  <ul>
-	    
-	    <li>View through the
-		<!-- <a href="http://mitgcm.org/cgi-bin/viewcvs.cgi/MITgcm">CVS code browser</a> -->
-		<a href="http://mitgcm.org/viewvc/MITgcm/MITgcm">CVS code browser</a>
-	    </li>
-	    
-	    <!-- <b>WARNING: cvs pserver has been temporarily
-		disabled and will be returned ASAP.  In the mean time, please
-		download one of the <a
-		href="http://mitgcm.org/download/daily_snapshot/">daily
-		snap-shots</a> if an up-to-date version of MITgcm is required.
-		These snap-shots include CVS information so they are useful for
-	      comparisons.</b><br />-->
+    <p>The MITgcm code and documentation are under continuous development.
+      For a while, MITgcm was developped and maintained under
+	    <a href="./using_cvs.html"> CVS </a>
+      but has been recently migrated to "git" on Feb 2018.
+      Note that all the previous development history has been kept in the
+      new MITgcm git repository while the former CVS repository is now frozen.
+    </p>
 
-	    <li>Download <a href="./using_cvs.html">using CVS pserver</a>
+    <p>The MITgcm code and its companion documentation are now
+      hosted at <a href="https://github.com">GitHub</a> under a single repository.
+
+      <!-- Both the last stable release and the current CVS
+      contents can be obtained at: -->
+
+	  <ul>
+	
+	    <li>Access the
+		<a href="https://github.com/MITgcm/MITgcm">MITgcm</a> repository
+	    </li><br />
+	
+	    <li>Detailed instructions on how to
+<a href="https://mitgcm-example.readthedocs.io/en/latest/getting_started/getting_started.html">download</a>
+                the code:<br />
+
+	    download a clone of the repository:
 
 <pre>
-  bash or sh shell:
-    $ export CVSROOT=':pserver:cvsanon@mitgcm.org:/u/gcmpack'
-    $ cvs login 
-      ( enter the CVS password: "cvsanon" )
-    $ cvs co -P MITgcm
-
-  tcsh or csh shell:
-    $ setenv CVSROOT ':pserver:cvsanon@mitgcm.org:/u/gcmpack'
-    $ cvs login 
-      ( enter the CVS password: "cvsanon" )
-    $ cvs co -P MITgcm
+    % git clone https://github.com/MITgcm/MITgcm.git
 </pre>
-	      
-	    </li>
 
-	    <li>Download the most recent checkpoint 
-                <a href="/download/">as a "tar" file.</a></li>
-	    
-	    <li>Download one of the 
-		<a href="/download/daily_snapshot/">daily snap-shots</a>.<br /><br /></li>
-	    
+	    or just get a one-time archive of MITgcm code:
+
+	  <ul>
+	    <li>the most recent checkpoint "tar" or "zip" file<br />
+		from <a href="https://github.com/MITgcm/MITgcm/releases">GitHub</a>
+		or from <a href="/download/">here</a>.</li>
+	
+	    <li>the latest
+		<a href="https://github.com/MITgcm/MITgcm/archive/master.tar.gz">"tar"</a> or
+		<a href="https://github.com/MITgcm/MITgcm/archive/master.zip">"zip"</a> archive<br />
+		or the daily <a href="/download/git_snapshot/"> "tar" file</a>.<br /></li>
+	
+	  </ul>
+	    </li>
 	  </ul>
 
+    </p>
+
+    <p>Note: Some outlying pieces (e.g., contrib area) are still alive under CVS
+	     and can be viewed through the
+          <a href="http://mitgcm.org/viewvc/MITgcm/MITgcm">CVS</a> code browser.
     </p>
 
 
