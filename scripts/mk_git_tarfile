@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.6 2018/02/01 01:16:38 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.7 2018/02/01 06:48:54 jmc Exp $
 
 # download the source code from github and make a tar file
   git_repo='MITgcm';  git_code='MITgcm'
@@ -78,11 +78,11 @@ version_file="$git_code/doc/tag-index"
 if test -f $version_file ; then
   thischkpt=`awk '/^checkpoint/{print $1; exit}' $version_file`
   short=`echo $thischkpt | sed 's/checkpoint/c/'`
-  chkptar="MITgcm_$short"
-  if test -f ../$chkptar.tar.gz ; then
+  chkptar="MITgcm_${short}.tar"
+  if test -f ../$chkptar.gz ; then
     echo "tar file ($chkptar) exist for current tag: $thischkpt"
   else
-    echo -n " ; checkpoint archive file ... "
+    echo -n 'Creating the checkpoint archive file ... '
     ( cd $git_code ; git archive --prefix MITgcm/ -o ../$chkptar $thischkpt )
     outp=$?
     if test $outp != 0 ; then
@@ -91,14 +91,14 @@ if test -f $version_file ; then
     else
        echo " Done"
     fi
-    gzip $chkptar.tar
-    ls -l $chkptar.tar*
-    mv $chkptar.tar.gz ..
-    #-- move previous tar file to backupDir
+    gzip -9 $chkptar
+    ls -l ${chkptar}*
+    mv $chkptar.gz ..
+  #-- move previous tar file to backupDir
     cd ..
     listTar=`ls MITgcm_c*.tar.gz`
     for xx in $listTar ; do
-      if test $xx != $chkptar.tar.gz ; then
+      if test $xx != $chkptar.gz ; then
         if test -f other_checkpoints/$xx ; then
           echo "error: $backupDir/$xx already exist"
         else
