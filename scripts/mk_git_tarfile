@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.7 2018/02/01 06:48:54 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.8 2018/02/06 15:43:47 jmc Exp $
 
 # download the source code from github and make a tar file
   git_repo='MITgcm';  git_code='MITgcm'
@@ -44,7 +44,7 @@ gzip -9 $arName
 echo 'Done!'
 
 #chmod 664 ${arName}.gz
-ls -l ${arName}*
+ls -l ${arName}* | tee -a $HOME/testing/logs/tar_file_list
 
 #exit
 backupDir="other_checkpoints"
