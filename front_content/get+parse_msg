@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/get+parse_msg,v 1.5 2018/01/13 16:26:20 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/get+parse_msg,v 1.6 2018/02/03 15:52:10 jmc Exp $
 #
 #  The purpose of this script is to parse the emails produced by the
 #  MITgcm/verificaton/testreport script and store the data in a
@@ -133,7 +133,9 @@ if test ! -e $OUTDIR ; then
     chmod 775 $OUTDIR
     #-- In case a new-outpdir is made, process old files from "postponed"
     #   (if any old msg there) by changing INDIR to ../postponed
-    oldMsg=`ls -1 ${INDIR}/../postponed | wc -l`
+    if test $monthDir != 0 ; then
+      oldMsg=`ls -1 ${INDIR}/../postponed | wc -l`
+    fi
     if test $oldMsg != 0 ; then
       newInD=`dirname $INDIR`
       INDIR="$newInD/postponed"
@@ -157,8 +159,8 @@ fi
 #---+----1----+----2----+----3----+----4----+----5----+----6----+----7-|--+----|
 if test $oldMsg = 0 ; then
 
-#- 1) check that $INDIR is empty
-  nbMsg=`ls -1 $INDIR | wc -l`
+#- 1) check that $INDIR is empty (except .tar.gz files)
+  nbMsg=`ls -1 $INDIR | grep -v '\.tar\.gz$' | wc -l`
   if test $nbMsg != 0 ; then
     date
     echo "ERROR: '$INDIR' is not empty ! --> exit"
@@ -166,9 +168,9 @@ if test $oldMsg = 0 ; then
   fi
 
   nbMsg=0; ORIG=${RHOST}:$M_DIR
-  #- 2) scp all msg from ORIG to INDIR
+#- 2) scp all msg from ORIG to INDIR
   cd $INDIR
-    scp -p ${RHOST}:$M_DIR/\* . > $STDOUT 2>&1
+    scp -p ${RHOST}:$M_DIR/msg.\* . > $STDOUT 2>&1
     RETVAL=$?
     if test "x$RETVAL" != x0 ; then
      #echo " RETVAL='$RETVAL'"
@@ -181,10 +183,10 @@ if test $oldMsg = 0 ; then
        #rm -f $STDOUT
         exit 6
     fi
-    nbMsg=`ls -1 | wc -l`
+    listMsg='' ; nbMsg=`ls -1 msg.* 2>/dev/null | wc -l`
     if test $nbMsg != 0 ; then
         echo "> scp $nbMsg msg from '$ORIG' to '$INDIR'"
-        listMsg=`ls -1`
+        listMsg=`ls -1 msg.*`
 	#- And rename msg by adding unique suffix
 	for xx in $listMsg ; do
           mv $xx $xx.$sufx
