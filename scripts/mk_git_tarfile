@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.8 2018/02/06 15:43:47 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.9 2018/02/25 16:43:19 jmc Exp $
 
 # download the source code from github and make a tar file
   git_repo='MITgcm';  git_code='MITgcm'
@@ -74,9 +74,12 @@ echo ' Done !'
 ls -l ${savRepo}*
 
 #-- test for new checkpoint
-version_file="$git_code/doc/tag-index"
+ version_file="$git_code/doc/tag-index"
+#version_file="$git_code/.git/config"
 if test -f $version_file ; then
   thischkpt=`awk '/^checkpoint/{print $1; exit}' $version_file`
+ #- better way to get latest tag ( but only works with git version 2 )
+ #thischkpt=`(cd $git_code ; git tag -l --sort=-authordate | head -n 1 )`
   short=`echo $thischkpt | sed 's/checkpoint/c/'`
   chkptar="MITgcm_${short}.tar"
   if test -f ../$chkptar.gz ; then
