@@ -1,0 +1,30 @@
+# $Header:  $
+
+On mitgcmcvs.mit.edu , as jm_c :
+1) in /home/jm_c/testing :
+ with: CVS_RSH=ssh
+       CVSROOT=:ext:jmc@mitgcm.org:/u/gcmpack
+ downloaded those 2 dir:
+
+  > cvs co -P -d front_content mitgcm.org/front_content
+  > cvs co -P -d scripts       mitgcm.org/scripts
+  > cp -p scripts/daily_update .
+
+2) since we are not able to configure & compile stuff here to
+ generate executables "mpack" and "munpack", take dir "tools/mpack-1.6"
+ (already compiled) from villon (or batsi):
+ a) make a tar file of:
+   jm_c@villon.mit.edu:/home/jm_c/mitgcm/gcm_current/tools/mpack-1.6/
+ b) copy it here (in /home/jm_c/testing) as: "tools_mpack"
+  > tar -xf tools_mpack.tar
+  > mv mpack-1.6 tools_mpack"
+ c) and finaly:
+  > ln -s tools_mpack/munpack munpack.x86_64
+
+3) created empty dirs in /home/jm_c/testing:
+  > mkdir logs MITgcm-test fail2process postponed
+
+4) dir & scripts used:
+ more scripts/crontab_gcm
+
+-----------------------------------------------------------------------------------
