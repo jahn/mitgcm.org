@@ -1,4 +1,4 @@
-# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.27 2018/01/04 17:02:49 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_gcm,v 1.1 2018/01/19 20:05:38 jmc Exp $
 
 #---------------------------------------------------------
 #-from: jm_c@mitgcmcvs.mit.edu
@@ -8,7 +8,7 @@ MAILTO=jmc@ocean.mit.edu
 15,45 * * * * /home/jm_c/testing/scripts/prc_tr_emails
 55  * * * * /home/jm_c/testing/scripts/build_mitgcm_front
 35 23 * * * cd /home/jm_c/testing && ./daily_update && cp -p scripts/daily_update .
-25 00 * * * /home/jm_c/testing/scripts/daily_tarfile
+#25 00 * * * /home/jm_c/testing/scripts/daily_tarfile
 35 00 * * * /home/jm_c/testing/scripts/mk_git_tarfile
 #05 16 * * * cd /home/jm_c/testing/front_content && ./make_summary -d 2017_12
 
