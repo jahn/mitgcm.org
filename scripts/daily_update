@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/daily_update,v 1.4 2018/01/08 23:51:57 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/daily_update,v 1.5 2018/01/29 20:36:59 jmc Exp $
 
 # Run in: ~/testing/ to update several dir. which are used for:
 # - front_page building
@@ -23,20 +23,20 @@ if test -d ref_machine ; then
 fi
 
 #-- update tools/mpack-1.6 dir:
-if test -d tools_mpack ; then
- echo -n 'Update dir: '
- tmpFil=/tmp/TTT.daily_snapshot.$$
- exe=munpack
- ( cd tools_mpack ; pwd
-   chg=`cvs -q update -P -d | tee $tmpFil | sed '/^?/d' | wc -l`
-  #echo "chg ='$chg'"
-   cat $tmpFil ; rm -f $tmpFil
-   if test "x$chg" != x0 ; then
-     if test -f $exe ; then echo " removing: $exe force re-build." ; fi
-     rm -f $exe
-   fi
- )
-fi
+# if test -d tools_mpack ; then
+#  echo -n 'Update dir: '
+#  tmpFil=/tmp/TTT.daily_snapshot.$$
+#  exe=munpack
+#  ( cd tools_mpack ; pwd
+#    chg=`cvs -q update -P -d | tee $tmpFil | sed '/^?/d' | wc -l`
+#   #echo "chg ='$chg'"
+#    cat $tmpFil ; rm -f $tmpFil
+#    if test "x$chg" != x0 ; then
+#      if test -f $exe ; then echo " removing: $exe force re-build." ; fi
+#      rm -f $exe
+#    fi
+#  )
+# fi
 
 #- update front-page building dir:
 if test -d front_content ; then
