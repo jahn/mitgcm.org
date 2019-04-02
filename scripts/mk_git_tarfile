@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.9 2018/02/25 16:43:19 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.10 2018/05/05 16:27:10 jmc Exp $
 
 # download the source code from github and make a tar file
   git_repo='MITgcm';  git_code='MITgcm'
@@ -34,17 +34,26 @@ fi
 #  chgrp gcmpack $git_code
    chmod 775 $git_code
 
-rm -rf MITgcm_ss_*
 arName='MITgcm_ss_'`date +%Y%m%d`'.tar'
+fixName=MITgcm_today_snapshot.tar.gz
+rm -rf MITgcm_ss_* $fixName
 
 echo -n 'Creating the archive file ... '
 ( cd $git_code ; git archive --prefix MITgcm/ -o ../$arName master )
-gzip -9 $arName
+ gzip -9 $arName
 #- should check if successful, it not -> exit 3
-echo 'Done!'
-
-#chmod 664 ${arName}.gz
-ls -l ${arName}* | tee -a $HOME/testing/logs/tar_file_list
+if test -e ${arName}.gz ; then
+   echo 'Done!'
+  #chmod 664 ${arName}.gz
+   ls -l ${arName}* | tee -a $HOME/testing/logs/tar_file_list
+#- make a link to a fixed name:
+   ln -s ${arName}.gz $fixName
+   ls -l $fixName
+else
+   echo 'Fail: no gzip archive file!'
+   ls -l ${arName}*
+   exit 3
+fi
 
 #exit
 backupDir="other_checkpoints"
