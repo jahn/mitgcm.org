@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.82 2016/07/01 16:59:47 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.83 2017/02/26 22:17:05 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -305,8 +305,8 @@ cat >> $OUTFILE << EOF
     </table>
 
 <p>Examples of the scripts used for these testing runs can be obtained from: <a
-href="http://mitgcm.org/viewvc/MITgcm/MITgcm/tools/example_scripts/">
-MITgcm/tools/example_scripts</a>.</p>
+href="http://mitgcm.org/viewvc/MITgcm/MITgcm_contrib/test_scripts/">
+MITgcm_contrib/test_scripts</a>.</p>
 
   </body>
 </html>
