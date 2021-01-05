@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.84 2019/08/19 16:02:07 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.85 2019/09/18 16:17:55 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -150,6 +150,7 @@ for mname in $MACHINES ; do
 	TANGLIN=0
 	OPENAD=0
 	RESTART=0
+	Special=0
 	EXTRA=
 	FAST=0
 	DVLP=0
@@ -160,12 +161,18 @@ for mname in $MACHINES ; do
 	    ADJOINT=`grep -c -i '^ADJOINT' $dir/summary.txt`
 	    if test "x$ADJOINT" = x1 ; then
 	      OPENAD=`grep -c '^Adjoint .* OpenAD' $dir/summary.txt`
-            fi
+	    fi
 	    TANGLIN=`grep -c -i '^TANGLIN' $dir/summary.txt`
 	    if test "x$TANGLIN" = x1 ; then
 	      OPENAD=`grep -c '^TangLin .* OpenAD' $dir/summary.txt`
-            fi
+	    fi
 	    RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
+	    #- special label for "darwin" tests
+	    Special=`echo $i | grep -c '\-darwin[0-9]'`
+	    if test $Special != 0 ; then
+		Special=`echo $i | sed -e "s/.*$mname/$mname/" -e "s/_/ /g" -e "s/-/ /g"`
+		Special=`echo $Special | awk '{print $2}' | sed 's/darwin//'`
+	    fi
 	    comm=`grep '^run: .*testreport.* ' $dir/summary.txt`
 	    EXTRA=`echo "$comm" | grep " -*-tdir\>" | sed -e "s/^.* -*-tdir\>//" -e "s/ -.*$//"`
 	    if test "x$EXTRA" = x ; then
@@ -174,11 +181,11 @@ for mname in $MACHINES ; do
 	    if test "x$EXTRA" = x ; then EXTRA=0 ; else
 		#echo -n "EXTRA=$EXTRA"
 		nn0=`echo $EXTRA | sed "s/ *' *//g" | wc -w`
-		nn1=`echo $EXTRA | sed "s/ *' *//g" | tr ' ' '\n' | grep -c "\<monod_"`
-		nn2=`echo $EXTRA | sed "s/ *' *//g" | tr ' ' '\n' | grep -c "\<darwin_"`
-		EXTRA=1
-                if [ $nn1 -ge 2 ] ; then EXTRA=2 ; fi
-                if [ $nn2 -ge 2 ] ; then EXTRA=3 ; fi
+		nn1=`echo $EXTRA | sed "s/ *' *//g" | tr ' ' '\n' | grep -c "\<darwin_"`
+		nn2=`echo $EXTRA | sed "s/ *' *//g" | tr ' ' '\n' | grep -c "\<monod_"`
+		EXTRA=9
+		if [ $nn1 -ge 2 ] ; then EXTRA=1 ; fi
+		if [ $nn2 -ge 2 ] ; then EXTRA=2 ; fi
 		#echo " : nn0=$nn0 ; nn1=$nn1 ; nn2=$nn2"
 	    fi
 	    FAST=`echo "$comm" | grep -c " -*-fast\>"`
@@ -195,17 +202,17 @@ for mname in $MACHINES ; do
 	    if test "x$UR4" = x0 ; then
 		UR4=`echo "$comm" | grep -c " -*-ur4\>"`
 	    fi
-	fi
+	else EXTRA=0 ; fi
 	if test "x$ADJOINT" = x1 ; then
 	    kind="adjoint-taf" ; order=0
 	  if test "x$OPENAD" = x1 ; then
 	    kind="adjoint-oad" ; order=2
-          fi
+	  fi
 	elif test "x$TANGLIN" = x1 ; then
 	    kind="tanglin-taf" ; order=1
 	  if test "x$OPENAD" = x1 ; then
 	    kind="tanglin-oad" ; order=3
-          fi
+	  fi
 	elif test "x$RESTART" = x0 ; then
 	    kind="forward" ; order=4
 	else
@@ -230,7 +237,11 @@ for mname in $MACHINES ; do
 	if test "x$DVLP" = x1 ; then
 	    OPTFILE="${OPTFILE}.dvlp"
 	fi
-	order=`expr $order + 10 \* $EXTRA`
+	if [ $Special -eq 0 ] ; then
+	    order=`expr $order + 10 \* $EXTRA`
+	else
+	    order=`expr $order + 10 \* $Special`
+	fi
 	order=`printf '%3.3i' $order`
 
 	t_pass="--"
