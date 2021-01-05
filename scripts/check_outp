@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.52 2018/08/24 14:18:18 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.53 2019/09/18 16:17:55 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -105,6 +105,7 @@ make_resdir_list()
 	    TANGLIN=0
 	    OPENAD=0
 	    RESTART=0
+	    Special=0
 	    EXTRA=
 	    FAST=0
 	    DVLP=0
@@ -121,21 +122,31 @@ make_resdir_list()
 		  OPENAD=`grep -c '^TangLin .* OpenAD' $dir/summary.txt`
 		fi
 		RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
+		#- special label for "darwin" test
+		Special=`echo $i | grep -c '\-darwin[0-9]'`
+		if test $Special != 0 ; then
+		    Special=`echo $i | sed -e "s/.*$mname/$mname/" -e "s/_/ /g" -e "s/-/ /g"`
+		    if test $dBug = 't' ; then echo -n " Special='$Special' ;" | tee -a $OUTPFIL ;  fi
+		    Special=`echo $Special | awk '{print $2}' | sed 's/darwin//'`
+		fi
 		comm=`grep '^run: .*testreport.* ' $dir/summary.txt`
 		EXTRA=`echo "$comm" | grep " -*-tdir\>" | sed -e "s/^.* -*-tdir\>//" -e "s/ -.*$//"`
 		if test "x$EXTRA" = x ; then
 		    EXTRA=`echo "$comm" | grep " -*-t\>" | sed -e "s/^.*-*-t\>//" -e "s/ -.*$//"`
 		fi
 		if test "x$EXTRA" = x ; then EXTRA=0 ; else
-		    #echo -n "EXTRA=$EXTRA"
+		    #if test $dBug = 't' ; then echo -n " EXTRA='$EXTRA' ;" | tee -a $OUTPFIL ;  fi
 		    nn0=`echo $EXTRA | sed "s/ *' *//g" | wc -w`
-		    nn1=`echo $EXTRA | sed "s/ *' *//g" | tr ' ' '\n' | grep -c "\<monod_"`
-		    nn2=`echo $EXTRA | sed "s/ *' *//g" | tr ' ' '\n' | grep -c "\<darwin_"`
-		    EXTRA=1
-		    if [ $nn1 -ge 2 ] ; then EXTRA=2 ; fi
-		    if [ $nn2 -ge 2 ] ; then EXTRA=3 ; fi
+		    nn1=`echo $EXTRA | sed "s/ *' *//g" | tr ' ' '\n' | grep -c "\<darwin_"`
+		    nn2=`echo $EXTRA | sed "s/ *' *//g" | tr ' ' '\n' | grep -c "\<monod_"`
+		    EXTRA=9
+		    if [ $nn1 -ge 2 ] ; then EXTRA=1 ; fi
+		    if [ $nn2 -ge 2 ] ; then EXTRA=2 ; fi
 		    #echo " : nn0=$nn0 ; nn1=$nn1 ; nn2=$nn2"
 		fi
+		if test $dBug = 't' ; then if [ $Special -ne 0 -o $EXTRA -ne 0 ] ; then
+		    echo "	Special='$Special' ; EXTRA='$EXTRA'" | tee -a $OUTPFIL
+		fi ; fi
 		FAST=`echo "$comm" | grep -c " -*-fast\>"`
 		if test "x$FAST" = x0 ; then
 		   FAST=`echo "$comm" | grep -c " '*-noieee'*"`
@@ -150,7 +161,7 @@ make_resdir_list()
 		if test "x$UR4" = x0 ; then
 		   UR4=`echo "$comm" | grep -c " -*-ur4\>"`
 		fi
-	    fi
+	    else EXTRA=0 ; fi
 	    if test "x$ADJOINT" = x1 ; then
 		kind="adm-TAF" ; order=0
 		if test "x$OPENAD" = x1 ; then kind="adm-OAD" ; order=2 ; fi
@@ -181,7 +192,11 @@ make_resdir_list()
 	    if test "x$DVLP" = x1 ; then
 		OPTFILE="${OPTFILE}.dvlp"
 	    fi
-	    order=`expr $order + 10 \* $EXTRA`
+	    if [ $Special -eq 0 ] ; then
+	        order=`expr $order + 10 \* $EXTRA`
+	    else
+	        order=`expr $order + 10 \* $Special`
+	    fi
 	    order=`printf '%3.3i' $order`
 	    day=`echo $i   | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
 	    ttt=`echo $day | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
@@ -203,12 +218,12 @@ make_resdir_list()
 	    echo "---- current list (n=$monthDir) :" | tee -a $OUTPFIL
 		cat $TMP.slist | tee -a $OUTPFIL
 	  fi
-          num1=`wc -l $TMP.slist | awk '{print $1}'`
+	  num1=`wc -l $TMP.slist | awk '{print $1}'`
 	  if test $num1 -gt 0 ; then
 	  echo   ".... previous list (n=$monthDir):" | tee -a $OUTPFIL
 		cat $TMP.plist | tee -a $OUTPFIL | head -20
 	  fi
-          echo "----" | tee -a $OUTPFIL
+	  echo "----" | tee -a $OUTPFIL
 	fi
 }
 
@@ -455,8 +470,8 @@ for pname in $MACHINES ; do
 	  fi
 	  #- discard unsafe test:
 	  dd=`echo $optf | grep -c 'gfortran+mth'`
-	  if test $mname = 'lagoon' -a $dd = 1 ; then num=-1 ; fi
-	  if test $mname = 'harbor' -a $dd = 1 ; then num=-1 ; fi
+	  #if test $mname = 'lagoon' -a $dd = 1 ; then num=-1 ; fi
+	  #if test $mname = 'harbor' -a $dd = 1 ; then num=-1 ; fi
 	  #if test $mname = 'aces' -a $optf = 'linux_ia32_open64' ; then num=-1 ; fi
 	  #if test $mname = 'aces' -a $optf = 'linux_ia32_g95' ; then num=-1 ; fi
 	  dd=`echo $optf | grep -c 'bigred.*noieee'`
