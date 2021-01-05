@@ -1,5 +1,12 @@
-# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.28 2018/01/19 20:05:38 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/crontab_jmc,v 1.29 2018/01/30 14:43:24 jmc Exp $
 
+Note:
+ 1) processing emails (scripts/process_emails) has been commented out from
+    crontab on jmc@mitgcmcvs.mit.edu (on Feb 02, 2018) since no testreport
+    email was sent anymore to this address: jmc@dev.mitgcm.org
+ 2) running ./daily_update was kept for longer, until Jan 05, 2021, since the
+    update of ref_machine testing scripts was used for baudelaire testing (which
+    ended after Feb 21, 2020).
 #---------------------------------------------------------
 #-Formerly from: jmc@forge.csail.mit.edu -- Now on: jmc@mitgcmcvs.mit.edu:
 #  current output of "crontab -l":
@@ -9,7 +16,7 @@ MAILTO=jmc@ocean.mit.edu
 30 23 * * * cd /u/jmc/testing && ./daily_update && cp -p scripts/daily_update .
 
 #- Note: testreport output emails sent to: "jmc@dev.mitgcm.org" are put in
-#        ~jmc/Mail/MITgcm-test/ on: forge.csail.mit.edu by procmail, 
+#        ~jmc/Mail/MITgcm-test/ on: forge.csail.mit.edu by procmail,
 #        using following ~/.procmailrc :
 -----> File starts here:
 
