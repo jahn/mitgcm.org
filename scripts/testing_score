@@ -1,0 +1,184 @@
+#! /usr/bin/env bash
+
+# $Header: $
+#
+#  The purpose of this script is to print the testing score of all testreport results
+#  stored in the monthly archive dir, either from few selected platform or from all platform
+
+#INDIR="/net/orwell/export/export-9/mitgcm-testing/results/$PERIOD"
+INDIR="/u/u0/httpd/html/testing/results/$PERIOD"
+#INDIR="./2009_06"
+INDIR="."
+
+YYMM=`( cd $INDIR ; pwd | sed 's/\// /g' | awk '{print $NF}' | sed 's/_//' )`
+xx=`echo $YYMM | sed 's/[0-9]*/x/'`
+#echo "YYMM='$YYMM' ; xx='$xx'"
+if test $xx != x ; then YYMM=`date +%Y%m` ; fi
+( cd $INDIR ; ls -1 *_${YYMM}??_*/summary.txt | sed 's/\/summary.txt//' ) > ./dir_all
+#( cd $INDIR ; ls -1 -t *_${YYMM}??_*/summary.txt | sed 's/\/summary.txt//' ) > ./dir_all
+
+#MALL=`cat ./dir_all | sed -e 's|_| |g' | awk '{print $2}' | sort | uniq`
+MALL=`cat ./dir_all | sed -e 's|_| |g' | sed -e 's|\-| |'  | sed -e 's|\+| |' | awk '{print $2}' | sort | uniq`
+addHost=0
+if [ $# -gt 0 ] ; then if test $1 = '+h' ; then
+  addHost=1 ; shift
+fi ; fi
+#echo $MALL
+if test $# = 0 ; then
+  MACHINES=$MALL
+else
+  MACHINES=$*
+fi
+
+for mname in $MACHINES ; do
+
+    #echo "  $mname"
+    printf '== %-30s ======================\n' "$mname :"
+
+    dir_list=`grep $mname ./dir_all`
+    #echo -n "" > ./mlist
+
+    #- re-order dir_list:
+    sub_list=`grep $mname ./dir_all | sed "s/_$YYMM.._/_YYYYMMDD_/g" | sort | uniq`
+    #echo 'sub_list=' $sub_list '<'
+    dir_list=''
+    for i in $sub_list ; do
+      pp=`echo $i | sed 's/_YYYYMMDD_.*$//'`
+      ss=`echo $i | sed 's/^.*_YYYYMMDD_//'`
+      #add=`grep "${pp}_${YYMM}.._${ss}$" ./dir_all`
+      #dir_list="$dir_list $add"
+      dir_list="$dir_list "`grep "${pp}_${YYMM}.._${ss}$" ./dir_all`
+    done
+    #echo 'dir_list=' $dir_list '<'
+
+    for i in $dir_list ; do
+
+	dir=$INDIR"/"$i
+	OPTFILE=
+	if test -r $dir/summary.txt ; then
+	    comm=`grep 'OPTFILE=' $dir/summary.txt`
+	    eval $comm
+	    OPTFILE=${OPTFILE##*/}
+	fi
+	if test "x$OPTFILE" = x -a -r "$dir/genmake_state" ; then
+	    comm=`grep 'OPTFILE=' $dir/genmake_state 2>/dev/null`
+	    eval $comm
+	    OPTFILE=${OPTFILE##*/}
+	fi
+	if test "x$OPTFILE" = x ; then
+	    comm=`grep '^# OPTFILE=' $dir/*/Makefile* 2>/dev/null | head -1`
+	    comm=${comm##*#}
+	    eval $comm
+	    OPTFILE=${OPTFILE##*/}
+	fi
+	if test "x$OPTFILE" = x ; then
+	    OPTFILE="not_explicitly_specified"
+	fi
+
+	ADJOINT=0
+	TANGLIN=0
+	OPENAD=0
+	RESTART=0
+	EXTRA=
+	FAST=0
+	DVLP=0
+	MPI=0
+	MTH=0
+	UR4=0
+	HOST=''
+	if test -r $dir/summary.txt ; then
+	    ADJOINT=`grep -c -i '^ADJOINT' $dir/summary.txt`
+	    if test "x$ADJOINT" = x1 ; then
+		OPENAD=`grep -c '^Adjoint .* OpenAD' $dir/summary.txt`
+	    fi
+	    TANGLIN=`grep -c -i '^TANGLIN' $dir/summary.txt`
+	    if test "x$TANGLIN" = x1 ; then
+		OPENAD=`grep -c '^TangLin .* OpenAD' $dir/summary.txt`
+	    fi
+	    RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
+	    FAST=`grep -c "^run: .*testreport.* '*-fast'*" $dir/summary.txt`
+	    if test "x$FAST" = x0 ; then
+		FAST=`grep -c "^run: .*testreport.* '*-noieee'*" $dir/summary.txt`
+	    fi
+	    DVLP=`grep -c "^run: .*testreport.* '*-devel'*" $dir/summary.txt`
+	    MPI=`grep -c "^run: .*testreport.* -mpi " $dir/summary.txt`
+	    if test "x$MPI" = x0 ; then
+		MPI=`grep -c "^run: .*testreport.* -MPI " $dir/summary.txt`
+	    fi
+	    MTH=`grep -c "^run: .*testreport.* -mth " $dir/summary.txt`
+	    UR4=`grep -c "^run: .*testreport.* -use_r4 " $dir/summary.txt`
+	    if test "x$UR4" = x0 ; then
+		UR4=`grep -c "^run: .*testreport.* -ur4 " $dir/summary.txt`
+	    fi
+	    if test $addHost = 1 ; then
+		HOST=`grep '^on : ' $dir/summary.txt \
+			| awk '{print $4}' | sed 's/\..*$//'`
+	    fi
+	fi
+	if test "x$ADJOINT" = x1 ; then
+	    kind="adm-TAF" ; order=0
+	    if test "x$OPENAD" = x1 ; then kind="adm-OAD" ; order=2 ; fi
+	elif test "x$TANGLIN" = x1 ; then
+	    kind="tlm-TAF" ; order=1
+	    if test "x$OPENAD" = x1 ; then kind="tlm-OAD" ; order=3 ; fi
+	elif test "x$RESTART" = x0 ; then
+	    kind="forward" ; order=4
+	else
+	    kind="restart" ; order=5
+	fi
+	if test "x$UR4" = x1 ; then
+	    OPTFILE="${OPTFILE}.use_r4"
+	fi
+	if test "x$MPI" = x1 ; then
+	    yy=`echo $OPTFILE | grep -c '+mpi'`
+	    if test $yy = 0 ; then OPTFILE="${OPTFILE}+mpi" ; fi
+	fi
+	if test "x$MTH" = x1 ; then
+	    yy=`echo $OPTFILE | grep -c '+mth$'`
+	    if test $yy = 0 ; then OPTFILE="${OPTFILE}+mth" ; fi
+	fi
+	if test "x$FAST" = x1 ; then
+	    OPTFILE="${OPTFILE}.fast"
+	fi
+	if test "x$DVLP" = x1 ; then
+	    OPTFILE="${OPTFILE}.dvlp"
+	fi
+
+	t_pass="--"
+	t_tot="--"
+	if test -r $dir/summary.txt ; then
+	    grep '^[YN] [YN] [YN] [YN]' $dir/summary.txt > ./all_tests 2>/dev/null
+	    t_tot=`cat ./all_tests | wc -l | sed -e 's| ||g'`
+	   #t_pass=`grep 'pass ' ./all_tests | wc -l | sed -e 's| ||g'`
+	    t_pass=`grep '^Y Y Y Y' $dir/summary.txt | grep 'pass ' | wc -l | sed -e 's| ||g'`
+	fi
+	rm -f ./all_tests
+	#echo "${dir##*/} : $t_pass out of $t_tot (of=$OPTFILE , $kind)"
+	if test $OPTFILE = 'sp5-32' -a $kind = 'forward' ; then
+	    echo "${dir##*/} : $t_pass out of $t_tot (of=$OPTFILE , $kind)"
+	fi
+
+	#echo "$OPTFILE$kind $DAY $OPTFILE $kind $i $t_pass:$t_tot" >> ./mlist
+	if test $addHost = 1 ; then
+	  if [ $t_tot -lt 100 ] ; then
+	    printf ' %3i:%2.2i  %-40s %s  %-40s %s\n' $t_pass $t_tot $i $kind $OPTFILE $HOST
+	  else
+	    printf  ' %3i:%3.3i %-40s %s  %-40s %s\n' $t_pass $t_tot $i $kind $OPTFILE $HOST
+	  fi
+	else
+	  if [ $t_tot -lt 100 ] ; then
+	    printf ' %3i:%2.2i  %-40s %s  %s\n' $t_pass $t_tot $i $kind $OPTFILE
+	  else
+	    printf  ' %3i:%3.3i %-40s %s  %s\n' $t_pass $t_tot $i $kind $OPTFILE
+	  fi
+	fi
+
+    done
+
+    # helpful for debugging
+    #cat ./mlist
+
+done
+
+#rm -f ./mlist
+rm -f ./dir_all
