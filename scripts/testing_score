@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/testing_score,v 1.1 2022/11/01 16:45:30 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/testing_score,v 1.2 2022/11/01 16:52:32 jmc Exp $
 #
 #  The purpose of this script is to print the testing score of all testreport results
 #  stored in the monthly archive dir, either from few selected platform or from all platform
@@ -29,8 +29,8 @@ if test $# = 0 ; then
  #MACHINES=$MALL
   #-- as done in "make_summary" (front_content/) and "check_outp" (scripts/):
   MALL=`cat ./dir_all | sed -e 's|_| |g' | awk '{print $2}' | sort | uniq`
-  MACHINES="villon batsi engaging1 engaging- svante"
-  MACHINES="$MACHINES glacier ollie pleiades"
+  MACHINES="villon batsi engaging1 engaging- svante glacier"
+  MACHINES="$MACHINES ollie albedo pleiades archer"
   for madd in $MALL ; do
      present=0
      for m in $MACHINES ; do
