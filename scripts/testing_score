@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/testing_score,v 1.2 2022/11/01 16:52:32 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/testing_score,v 1.3 2022/12/03 16:59:30 jmc Exp $
 #
 #  The purpose of this script is to print the testing score of all testreport results
 #  stored in the monthly archive dir, either from few selected platform or from all platform
@@ -30,7 +30,7 @@ if test $# = 0 ; then
   #-- as done in "make_summary" (front_content/) and "check_outp" (scripts/):
   MALL=`cat ./dir_all | sed -e 's|_| |g' | awk '{print $2}' | sort | uniq`
   MACHINES="villon batsi engaging1 engaging- svante glacier"
-  MACHINES="$MACHINES ollie albedo pleiades archer"
+  MACHINES="$MACHINES albedo pleiades archer"
   for madd in $MALL ; do
      present=0
      for m in $MACHINES ; do
@@ -93,6 +93,7 @@ for mname in $MACHINES ; do
 	ADJOINT=0
 	TANGLIN=0
 	OPENAD=0
+	TAPENAD=0
 	RESTART=0
 	EXTRA=
 	FAST=0
@@ -102,13 +103,11 @@ for mname in $MACHINES ; do
 	UR4=0
 	HOST=''
 	if test -r $dir/summary.txt ; then
+	    TAPENAD=`grep -c ' Tapenade$' $dir/summary.txt`
 	    ADJOINT=`grep -c -i '^ADJOINT' $dir/summary.txt`
+	    TANGLIN=`grep -c -i '^TANGLIN' $dir/summary.txt`
 	    if test "x$ADJOINT" = x1 ; then
 		OPENAD=`grep -c '^Adjoint .* OpenAD' $dir/summary.txt`
-	    fi
-	    TANGLIN=`grep -c -i '^TANGLIN' $dir/summary.txt`
-	    if test "x$TANGLIN" = x1 ; then
-		OPENAD=`grep -c '^TangLin .* OpenAD' $dir/summary.txt`
 	    fi
 	    RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
 	    FAST=`grep -c "^run: .*testreport.* '*-fast'*" $dir/summary.txt`
@@ -132,14 +131,18 @@ for mname in $MACHINES ; do
 	fi
 	if test "x$ADJOINT" = x1 ; then
 	    kind="adm-TAF" ; order=0
-	    if test "x$OPENAD" = x1 ; then kind="adm-OAD" ; order=2 ; fi
+	    if test "x$TAPENAD" = x1 ; then
+		kind="adm-TAP" ; order=2
+	    elif test "x$OPENAD" = x1 ; then
+		kind="adm-OAD" ; order=4
+	    fi
 	elif test "x$TANGLIN" = x1 ; then
 	    kind="tlm-TAF" ; order=1
-	    if test "x$OPENAD" = x1 ; then kind="tlm-OAD" ; order=3 ; fi
+	    if test "x$TAPENAD" = x1 ; then kind="tlm-TAP" ; order=3 ; fi
 	elif test "x$RESTART" = x0 ; then
-	    kind="forward" ; order=4
+	    kind="forward" ; order=6
 	else
-	    kind="restart" ; order=5
+	    kind="restart" ; order=7
 	fi
 	if test "x$UR4" = x1 ; then
 	    OPTFILE="${OPTFILE}.use_r4"
