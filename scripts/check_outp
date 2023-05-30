@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.55 2021/02/26 18:47:43 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/check_outp,v 1.56 2022/12/03 16:59:30 jmc Exp $
 #
 #  The purpose of this script is to compare
 #  the latest output with the previous one (from the same platform with
@@ -104,6 +104,7 @@ make_resdir_list()
 	    ADJOINT=0
 	    TANGLIN=0
 	    OPENAD=0
+	    TAPENAD=0
 	    RESTART=0
 	    Special=0
 	    EXTRA=
@@ -113,13 +114,11 @@ make_resdir_list()
 	    MTH=0
 	    UR4=0
 	    if test -r $dir/summary.txt ; then
+		TAPENAD=`grep -c ' Tapenade$' $dir/summary.txt`
 		ADJOINT=`grep -c -i '^ADJOINT' $dir/summary.txt`
+		TANGLIN=`grep -c -i '^TANGLIN' $dir/summary.txt`
 		if test "x$ADJOINT" = x1 ; then
 		  OPENAD=`grep -c '^Adjoint .* OpenAD' $dir/summary.txt`
-		fi
-		TANGLIN=`grep -c -i '^TANGLIN' $dir/summary.txt`
-		if test "x$TANGLIN" = x1 ; then
-		  OPENAD=`grep -c '^TangLin .* OpenAD' $dir/summary.txt`
 		fi
 		RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
 		#- special label for "darwin" test
@@ -164,14 +163,18 @@ make_resdir_list()
 	    else EXTRA=0 ; fi
 	    if test "x$ADJOINT" = x1 ; then
 		kind="adm-TAF" ; order=0
-		if test "x$OPENAD" = x1 ; then kind="adm-OAD" ; order=2 ; fi
+		if test "x$TAPENAD" = x1 ; then
+		   kind="adm-TAP" ; order=2
+		elif test "x$OPENAD" = x1 ; then
+		   kind="adm-OAD" ; order=4
+		fi
 	    elif test "x$TANGLIN" = x1 ; then
 		kind="tlm-TAF" ; order=1
-		if test "x$OPENAD" = x1 ; then kind="tlm-OAD" ; order=3 ; fi
+		if test "x$TAPENAD" = x1 ; then kind="tlm-TAP" ; order=3 ; fi
 	    elif test "x$RESTART" = x0 ; then
-		kind="forward" ; order=4
+		kind="forward" ; order=6
 	    else
-		kind="restart" ; order=5
+		kind="restart" ; order=7
 	    fi
 	    if test "x$UR4" = x1 ; then
 		OPTFILE="${OPTFILE}.use_r4"
@@ -193,9 +196,9 @@ make_resdir_list()
 		OPTFILE="${OPTFILE}.dvlp"
 	    fi
 	    if [ $Special -eq 0 ] ; then
-	        order=`expr $order + 10 \* $EXTRA`
+		order=`expr $order + 10 \* $EXTRA`
 	    else
-	        order=`expr $order + 10 \* $Special`
+		order=`expr $order + 10 \* $Special`
 	    fi
 	    order=`printf '%3.3i' $order`
 	    day=`echo $i   | sed -e 's/_[0-9]$//' | sed -e 's/_[0-9][0-9]$//'`
@@ -410,7 +413,7 @@ echo "     name     checked   comp    Diff    lines"  >> $OUTPSUM
 
 if test "x$MACHINES" = "x_All_" ; then
   MACHINES="villon batsi engaging1 engaging- svante glacier"
-  MACHINES="$MACHINES ollie albedo pleiades archer"
+  MACHINES="$MACHINES albedo pleiades archer"
 
   MALL=`cat $TMP.dir_all | sed -e 's|_| |g' | awk '{print $2}' | sort | uniq`
   for madd in $MALL ; do

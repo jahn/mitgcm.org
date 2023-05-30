@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.87 2021/02/26 18:47:15 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/front_content/make_summary,v 1.88 2022/12/03 16:57:13 jmc Exp $
 #
 #  The purpose of this script is to create HTML summaries of the
 #  directories produced by the "parse_emails" script.
@@ -97,7 +97,7 @@ color="#bbffdd"
 ncolor="#bbddff"
 
 MACHINES="villon batsi engaging svante glacier"
-MACHINES="$MACHINES ollie albedo pleiades archer"
+MACHINES="$MACHINES albedo pleiades archer"
 
 ( cd $INDIR ; ls -1 -t */summary.txt | sed 's/\/summary.txt//' ) > $TMP.dir_all
 
@@ -149,6 +149,7 @@ for mname in $MACHINES ; do
 	ADJOINT=0
 	TANGLIN=0
 	OPENAD=0
+	TAPENAD=0
 	RESTART=0
 	Special=0
 	EXTRA=
@@ -158,13 +159,11 @@ for mname in $MACHINES ; do
 	MTH=0
 	UR4=0
 	if test -r $dir/summary.txt ; then
+	    TAPENAD=`grep -c ' Tapenade$' $dir/summary.txt`
 	    ADJOINT=`grep -c -i '^ADJOINT' $dir/summary.txt`
-	    if test "x$ADJOINT" = x1 ; then
-	      OPENAD=`grep -c '^Adjoint .* OpenAD' $dir/summary.txt`
-	    fi
 	    TANGLIN=`grep -c -i '^TANGLIN' $dir/summary.txt`
-	    if test "x$TANGLIN" = x1 ; then
-	      OPENAD=`grep -c '^TangLin .* OpenAD' $dir/summary.txt`
+	    if test "x$ADJOINT" = x1 ; then
+		OPENAD=`grep -c '^Adjoint .* OpenAD' $dir/summary.txt`
 	    fi
 	    RESTART=`grep -c 'test 2+2=4 summary' $dir/summary.txt`
 	    #- special label for "darwin" tests
@@ -205,18 +204,20 @@ for mname in $MACHINES ; do
 	else EXTRA=0 ; fi
 	if test "x$ADJOINT" = x1 ; then
 	    kind="adjoint-taf" ; order=0
-	  if test "x$OPENAD" = x1 ; then
-	    kind="adjoint-oad" ; order=2
+	  if test "x$TAPENAD" = x1 ; then
+	    kind="adjoint-Tap" ; order=2
+	  elif test "x$OPENAD" = x1 ; then
+	    kind="adjoint-oad" ; order=4
 	  fi
 	elif test "x$TANGLIN" = x1 ; then
 	    kind="tanglin-taf" ; order=1
-	  if test "x$OPENAD" = x1 ; then
-	    kind="tanglin-oad" ; order=3
+	  if test "x$TAPENAD" = x1 ; then
+	    kind="tanglin-Tap" ; order=3
 	  fi
 	elif test "x$RESTART" = x0 ; then
-	    kind="forward" ; order=4
+	    kind="forward" ; order=6
 	else
-	    kind="restart" ; order=5
+	    kind="restart" ; order=7
 	fi
 	if test "x$UR4" = x1 ; then
 	    OPTFILE="${OPTFILE}.use_r4"
