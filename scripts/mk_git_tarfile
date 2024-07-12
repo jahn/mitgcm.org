@@ -1,11 +1,13 @@
 #! /usr/bin/env bash
 
-# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.10 2018/05/05 16:27:10 jmc Exp $
+# $Header: /u/gcmpack/mitgcm.org/scripts/mk_git_tarfile,v 1.11 2019/04/02 14:06:06 jmc Exp $
 
-# download the source code from github and make a tar file
+# download (or update) the source code from github and make a tar file
   git_repo='MITgcm';  git_code='MITgcm'
 # git_repo='altMITgcm'; #git_code='MITgcm66h'
 tmpFil="/tmp/"`basename $0`".$$"
+# update: =0 : get a new clone ; =1 : just pull if clone already exists
+update=1
 
 umask 0002
 
@@ -16,23 +18,51 @@ if test $outp != 0 ; then
    echo " Error in cd : $outp"
    exit 1
 fi
-test -e $git_code && rm -rf $git_code
-
-echo "Make a clone of $git_code from repo: $git_repo ..."
-#git clone --depth 1 https://github.com/$git_repo/$git_code.git 2> $tmpFil
- git clone https://github.com/$git_repo/$git_code.git 2> $tmpFil
-outp=$?
-if test $outp = 0 ; then
-   echo ' --> done!'
-   rm -f $tmpFil
-else
-   echo " Error: 'git clone' returned: $outp"
-   cat $tmpFil
-   rm -f $tmpFil
-   exit 2
+# update: =0 : get a new clone ; =1 : just pull if clone already exists
+if test $update = 1 ; then
+  if test -d $git_code/.git ; then
+    echo " dir $git_code/.git exists, will try to pull from gitHub"
+  else
+    echo "missing dir $git_code/.git ==> will download a fresh clone"
+    update=0
+  fi
 fi
-#  chgrp gcmpack $git_code
-   chmod 775 $git_code
+
+if test $update = 0 ; then
+  test -e $git_code && rm -rf $git_code
+
+  echo "Make a clone of $git_code from repo: $git_repo ..."
+  #git clone --depth 1 https://github.com/$git_repo/$git_code.git 2> $tmpFil
+   git clone https://github.com/$git_repo/$git_code.git 2> $tmpFil
+  outp=$?
+  if test $outp = 0 ; then
+     echo ' --> done!'
+     rm -f $tmpFil
+  else
+     echo " Error: 'git clone' returned: $outp"
+     cat $tmpFil
+     rm -f $tmpFil
+     exit 2
+  fi
+else
+  echo "Updating existing clone $git_code using 'git pull' ..."
+  ( cd $git_code
+    git pull 2> $tmpFil
+    outp=$?
+  )
+  if test $outp = 0 ; then
+     echo ' --> done!'
+     rm -f $tmpFil
+  else
+     echo " Error: 'git pull' returned: $outp"
+     cat $tmpFil
+     rm -f $tmpFil
+     exit 3
+  fi
+fi
+
+# chgrp gcmpack $git_code
+  chmod 775 $git_code
 
 arName='MITgcm_ss_'`date +%Y%m%d`'.tar'
 fixName=MITgcm_today_snapshot.tar.gz
@@ -41,7 +71,7 @@ rm -rf MITgcm_ss_* $fixName
 echo -n 'Creating the archive file ... '
 ( cd $git_code ; git archive --prefix MITgcm/ -o ../$arName master )
  gzip -9 $arName
-#- should check if successful, it not -> exit 3
+#- should check if successful, it not -> exit 4
 if test -e ${arName}.gz ; then
    echo 'Done!'
   #chmod 664 ${arName}.gz
@@ -52,7 +82,7 @@ if test -e ${arName}.gz ; then
 else
    echo 'Fail: no gzip archive file!'
    ls -l ${arName}*
-   exit 3
+   exit 5
 fi
 
 #exit
@@ -63,7 +93,7 @@ if test ! -d ../$backupDir ; then
   outp=$?
   if test $outp != 0 ; then
      echo " Error in mkdir command: $outp"
-     exit 4
+     exit 6
   else
      echo " Done"
      ls -ld ../$backupDir
@@ -99,7 +129,7 @@ if test -f $version_file ; then
     outp=$?
     if test $outp != 0 ; then
        echo " Error in 'git archive' command: $outp"
-       exit 5
+       exit 7
     else
        echo " Done"
     fi
